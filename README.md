@@ -173,9 +173,251 @@ ep_2dMwdMHSNkmhguqcUSYjAQPryIn ID
 edge=edghts_2d7h0YrdnMObWZ8UvuA5kKFYMIh
 rd_2coZL6TjXyPJWuIBdmXP4BVP4Me
 rd_2coZL6TjXyPJWuIBdmXP4BVP4Me
+brew install ngrok/ngrok/ngrok
+
+Run the following command to add your authtoken to the default ngrok.yml configuration file.
+
+ngrok config add-authtoken 2coSXkUPJHKNejdfgFKZaF0CjKd_6NvztF58L172P1MHzwAHF
+
+Deploy your app online
+
+Put your app online at ephemeral domain Forwarding to your upstream service. For example, if it is listening on port http://localhost:8080, run:
+
+ngrok http http://localhost:8080
+ngrok http --domain=bursting-turkey-really.ngrok-free.app 80
+cr_2coSXkUPJHKNejdfgFKZaF0CjKd GOD964v@gmail.com
+usr_2coSXng7X2Ax9cfBzu5E26b6SDR
+
+cr_2coazssVIEva7q1Fw2nwytLIq2N BOT USER
+bot_2coayXt1oJzWKxgTYyanAjQ3KPV
+2dvYx8b2Jxcr6rQ7rMK4g0f5lxd_6MRbqiQJdYkspcWN1vb65 Keith Bieszczat AUTH TOKEN
+cr_2dvYx8b2Jxcr6rQ7rMK4g0f5lxd
+bot_2dvYwRDLFZfzm3QuX1Yfq0xCPZh
+
+2dvZEkjdgaLw0K0a5G0RX80fTjJ_k2h32aY22XRhNpU5qeWd API KEY 
+
+ngrok config check
+
+authtoken: 4nq9771bPxe8ctg7LKr_2ClH7Y15Zqe4bWLWF9p
+api_key: 24yRd5U3DestCQapJrrVHLOqiAC_7RviwRqpd3wc9dKLujQZN
+connect_timeout: 30s
+console_ui: true
+console_ui_color: transparent
+dns_resolver_ips:
+  - 1.1.1.1
+  - 8.8.8.8
+heartbeat_interval: 1m
+heartbeat_tolerance: 5s
+inspect_db_size: 104857600 # 100mb
+inspect_db_size: 50000000
+log_level: info
+log_format: json
+log: /var/log/ngrok.log
+metadata: '{"serial": "00012xa-33rUtz9", "comment": "For customer alan@example.com"}'
+proxy_url: socks5://localhost:9150
+region: us
+remote_management: false
+root_cas: trusted
+update_channel: stable
+update_check: false
+version: 2
+web_addr: localhost:4040
+tunnels:
+  website:
+    addr: 8888
+    basic_auth:
+      - "bob:bobpassword"
+    schemes:
+      - https
+    host_header: "myapp.ngrok.dev"
+    inspect: false
+    proto: http
+    domain: myapp.ngrok.dev
+
+  e2etls:
+    addr: 9000
+    proto: tls
+    domain: myapp.example.com
+    crt: example.crt
+    key: example.key
+
+  policyenforced:
+    policy:
+      inbound:
+        - name: LimitIPs
+          expressions:
+            - "conn.ClientIP != '1.1.1.1'"
+          actions:
+            - type: deny
+    addr: 8000
+    proto: tcp
+
+  ssh-access:
+    addr: 22
+    proto: tcp
+    remote_addr: 1.tcp.ngrok.io:12345
+
+  my-load-balanced-website:
+    labels:
+      - env=prod
+      - team=infra
+    addr: 8000
+    
+    tunnels:
+  httpbin:
+    proto: http
+    addr: 8000
+    domain: alan-httpbin.ngrok.dev
+  demo:
+    proto: http
+    addr: 9090
+    domain: demo.inconshreveable.com
+    inspect: false
+ngrok start httpbin
+
+tunnels:
+  my-cool-website:
+    labels:
+      - env=prod
+      - team=infra
+    addr: 8000
+    inspect: false
+  ssh-tunnel:
+    labels:
+      - hostname=my-hostname
+      - service=ssh
+      - team=development
+    addr: 22
+api_key: 24yRd5U3DestCQapJrrVHLOqiAC_7RviwRqpd3wc9dKLujQZN
+authtoken: 4nq9771bPxe8ctg7LKr_2ClH7Y15Zqe4bWLWF9p
+
+log: /var/log/ngrok.log
+
+metadata
+
+This is a user-supplied custom string that will be returned as part of the ngrok API response to the list online sessions resource for all tunnels started by this agent. This is a useful mechanism to identify tunnels by your own device or customer identifier. Maximum 4096 characters.
+
+metadata: bad8c1c0-8fce-11e4-b4a9-0800200c9a66
 
 
-BHAHZGCJZK3BEVS7IRGZMKDF6USLO runner token apply to all commands
+web_allow_hosts:
+  - 8.8.8.8
+  - example.com
+curl http://localhost:4040/api/
+
+{
+    "tunnels": [
+        {
+            "name": "command_line",
+            "uri": "/api/tunnels/command_line",
+            "public_url": "https://d95211d2.ngrok.io",
+            "proto": "https",
+            "config": {
+                "addr": "localhost:80",
+                "inspect": true,
+            },
+            "metrics": {
+                "conns": {
+                    "count": 0,
+                    "gauge": 0,
+                    "rate1": 0,
+                    "rate5": 0,
+                    "rate15": 0,
+                    "p50": 0,
+                    "p90": 0,
+                    "p95": 0,
+                    "p99": 0
+                },
+                "http": {
+                    "count": 0,
+                    "rate1": 0,
+                    "rate5": 0,
+                    "rate15": 0,
+                    "p50": 0,
+                    "p90": 0,
+                    "p95": 0,
+                    "p99": 0
+                }
+            }
+        },
+        ...
+    ],
+    "uri": "/api/tunnels"
+}
+{
+    "addr": "22",
+    "proto": "tcp",
+    "name": "ssh"
+}
+
+{
+    "name": "",
+    "uri": "/api/tunnels/",
+    "public_url": "tcp://0.tcp.ngrok.io:53476",
+    "proto": "tcp",
+    "config": {
+        "addr": "localhost:22",
+        "inspect": false,
+    },
+    "metrics": {
+        "conns": {
+            "count": 0,
+            "gauge": 0,
+            "rate1": 0,
+            "rate5": 0,
+            "rate15": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0
+        },
+        "http": {
+            "count": 0,
+            "rate1": 0,
+            "rate5": 0,
+            "rate15": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0
+        }
+    }
+}
+
+{
+    "name": "command_line",
+    "uri": "/api/tunnels/command_line",
+    "public_url": "https://ac294125.ngrok.io",
+    "proto": "https",
+    "config": {
+        "addr": "localhost:80",
+        "inspect": true,
+    },
+    "metrics": {
+        "conns": {
+            "count": 0,
+            "gauge": 0,
+            "rate1": 0,
+            "rate5": 0,
+            "rate15": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0
+        },
+        "http": {
+            "count": 0,
+            "rate1": 0,
+            "rate5": 0,
+            "rate15": 0,
+            "p50": 0,
+            "p90": 0,
+            "p95": 0,
+            "p99": 0
+        }
+    }
+}
+    BHAHZGCJZK3BEVS7IRGZMKDF6USLO runner token apply to all commands
 
 stripe login --api-key sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq
 
