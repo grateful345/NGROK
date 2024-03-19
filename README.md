@@ -1,3 +1,180 @@
+# AGENCY-WEBHOOK
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    k8s.ngrok.com/modules: ngrok-module-set
+spec:
+  ingressClassName: ngrok
+  rules:
+    - host: app.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: example-service
+                port:
+                  number: 80
+
+                  
+---
+kind: NgrokModuleSet
+apiVersion: ingress.k8s.ngrok.com/v1alpha1
+metadata:
+  name: ngrok-module-set
+modules:
+  oauth:
+    google:
+      optionsPassthrough: false
+      inactivityTimeout: 4h
+      maximumDuration: 24h
+      authCheckInterval: 1h
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    k8s.ngrok.com/modules: ngrok-module-set
+spec:
+  ingressClassName: ngrok
+  rules:
+    - host: your-domain.ngrok.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: example-service
+                port:
+                  number: 80
+                  
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-service
+  annotations:
+    k8s.ngrok.com/app-protocols: '{"example-https-port":"HTTPS"}'
+spec:
+  ports:
+    - name: example-https-port
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+  selector:
+    app-name: some-example-app-label
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    k8s.ngrok.com/modules: ngrok-module-set
+spec:
+  ingressClassName: ngrok
+  rules:
+    - host: app.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: example-service
+                port:
+                  number: 443
+
+kind: NgrokModuleSet
+apiVersion: ingress.k8s.ngrok.com/v1alpha1
+metadata:
+  name: ngrok-module-set
+modules:
+  headers:
+    request:
+      add:
+        host: "localhost"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    k8s.ngrok.com/modules: ngrok-module-set
+spec:
+  ingressClassName: ngrok
+  rules:
+    - host: your-domain.ngrok.app
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: example-service
+                port:
+                  number: 80
+
+
+ngrok http 80 --request-header-remove "foo" --request-header-add "foo: new-value"
+
+This will cause the HTTP request in this case to become:
+
+GET / HTTP/1.1
+host: example.ngrok.app
+foo: new-value
+
+ngrok http https://httpbin.org --domain your-domain.ngrok.app
+
+In another terminal, curl that endpoint:
+
+curl https://your-domain.ngrok.app/headers
+
+{
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip",
+    "Host": "your-domain.ngrok.app",
+    "User-Agent": "curl/7.85.0",
+    "X-Amzn-Trace-Id": "Root=1-64d939d7-638343a031ac3f895e36af65"
+  }
+}
+
+Now, let's try manipulating the headers. We'll remove the user-agent header and add a header of our own with geo data. Stop your previous instance of ngrok with Ctrl+C and then restart ngrok with a new command.
+
+ngrok http https://httpbin.org \
+  --domain your-domain.ngrok.app \
+  --request-header-remove='user-agent' \
+  --request-header-add='country: ${.ngrok.geo.country_code}'
+
+curl https://your-domain.ngrok.app/headers
+
+{
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip",
+    "Country": "US",
+    "Host": "your-domain.ngrok.app",
+    "X-Amzn-Trace-Id": "Root=1-64d93b73-689c799b056568ff13546ef4"
+  }
+}   
+2coSXkUPJHKNejdfgFKZaF0CjKd_6NvztF58L172P1MHzwAHF NGOK AUTH TOKEN
+$ ngrok config add-authtoken 2coSXkUPJHKNejdfgFKZaF0CjKd_6NvztF58L172P1MHzwAHF
+Configuration File
+Alternatively, you can directly add the Authtoken to your ngrok.yml configuration file. Use ngrok config edit to open the file.
+
+# in ngrok.yml
+authtoken: 2coSXkUPJHKNejdfgFKZaF0CjKd_6NvztF58L172P1MHzwAHF
+ep_2dMwdMHSNkmhguqcUSYjAQPryIn ID
+[
+](https://bursting-turkey-really.ngrok-free.app)
+edge=edghts_2d7h0YrdnMObWZ8UvuA5kKFYMIh
+rd_2coZL6TjXyPJWuIBdmXP4BVP4Me
+rd_2coZL6TjXyPJWuIBdmXP4BVP4Me
+
+
 BHAHZGCJZK3BEVS7IRGZMKDF6USLO runner token apply to all commands
 
 stripe login --api-key sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq
