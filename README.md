@@ -1,4 +1,24 @@
 # AGENCY-WEBHOOK
+
+HystrixCommand command = new HystrixCommand(arg1, arg2);
+
+HystrixObservableCommand command = new HystrixObservableCommand(arg1, arg2);
+
+K             value   = command.execute();
+Future<K>     fValue  = command.queue();
+Observable<K> ohValue = command.observe();         //hot observable
+Observable<K> ocValue = command.toObservable();    //cold observable
+Account account = new UserGetAccount(accountId).execute();
+
+//or
+
+Observable<Account> accountObservable = new UserGetAccount(accountId).observe();
+
+K             value   = command.execute();
+Future<K>     fValue  = command.queue();
+Observable<K> ohValue = command.observe();         //hot observable
+Observable<K> ocValue = command.toObservable();    //cold observable
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
