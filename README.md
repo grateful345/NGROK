@@ -1,5 +1,14 @@
 NGROK
 
+gpg --encrypt --recipient 05D02D3D57ABFF46 FILENAME
+This creates FILENAME.gpg with the following information:
+Key ID: 05D02D3D57ABFF46
+Key type: RSA
+Key size: 2048 bits
+Fingerprint: C330 33E4 B583 FE61 2EDE 877C 05D0 2D3D 57AB FF46
+User ID: Stripe <security@stripe.com>
+
+
 API ID  KEY SECRET KEY : 	pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV
 cr_2coazssVIEva7q1Fw2nwytLIq2N BOT USER bot_2coayXt1oJzWKxgTYyanAjQ3KPV 
 
