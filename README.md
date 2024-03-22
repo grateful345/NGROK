@@ -1,5 +1,63 @@
 NGROK
+[Windows.Foundation.Metadata.MarshalingBehavior(Windows.Foundation.Metadata.MarshalingType.Agile)]
+[Windows.Foundation.Metadata.Threading(Windows.Foundation.Metadata.ThreadingModel.Both)]
+[Windows.Foundation.Metadata.ContractVersion(typeof(Microsoft.Windows.ApplicationModel.WindowsAppRuntime.DeploymentContract), 65536)]
+public static class DeploymentManager
 
+<ItemGroup>
+   <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.1">
+       <IncludeAssets>build</IncludeAssets>
+   </PackageReference>
+</ItemGroup>
+Get-Appxlog
+Get-Appxlog | Out-GridView
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\ProfSvc\Parameters\UseProfilePathExtensionVersion
+GpUpdate /Force
+Get-Command -module ActiveDirectory
+Get-Help New-ADReplicationSite
+Get-ADReplicationAttributeMetadata -object "cn=domain admins,cn=users,dc=corp,dc=contoso,dc=com" -server dc1.corp.contoso.com -showalllinkedvalues | format-list
+
+
+Get-ADObject -filter 'objectclass -eq "group"' | Get-ADReplicationAttributeMetadata -server dc1.corp.contoso.com | where-object {$_.lastoriginatingchangetime -like "*1/13/2012*" -and $_.attributename -eq "name"} | format-table object
+
+Get-ADReplicationAttributeMetadata -object "cn=domain admins,cn=users,dc=corp,dc=contoso,dc=com" -server dc1.corp.contoso.com -showalllinkedvalues | format-table -wrap
+Get-ADObject -filter 'objectclass -eq "group"' | Get-ADReplicationAttributeMetadata -server dc1.corp.contoso.com -showalllinkedvalues | where-object {$_.attributevalue -like "*tony wang*"} | format-table object,LastOriginatingChangeTime,version -auto
+Get-ADObject -filter 'objectclass -like "*"' | Get-ADReplicationAttributeMetadata -server dc1.corp.contoso.com | where-object {$_.version -gt "100000" -and $_.attributename -eq "name"} | format-table object,LastOriginatingChangeTime
+Get-ADObject -filter 'objectclass -eq "user"' | Get-ADReplicationAttributeMetadata -server dc1.corp.contoso.com -showalllinkedvalues | export-csv allgroupmetadata.csv
+Get-ADReplicationPartnerMetadata -target dc1.corp.contoso.com
+
+Get-ADReplicationPartnerMetadata -target dc1.corp.contoso.com | format-table lastreplicationattempt,lastreplicationresult,partner -auto
+Get-ADReplicationFailure dc1.corp.contoso.com
+
+
+Get-ADReplicationFailure -scope site -target default-first-site-name | format-table server,firstfailuretime,failurecount,lasterror,partner -auto
+
+Get-ADDomainController -filter * | foreach {Sync-ADObject -object "cn=tony wang,cn=users,dc=corp,dc=contoso,dc=com" -source dc1 -destination $_.hostname}
+
+Import-Csv -path C:\newsites.csv | new-adreplicationsite
+
+New-ADReplicationSiteLink -name "chicago<-->waukegan" -sitesincluded chicago,waukegan -cost 50 -replicationfrequencyinminutes 15
+
+New-ADReplicationSiteLink -name "chicago<-->waukegan" -sitesincluded chicago,waukegan -cost 50 -replicationfrequencyinminutes 15
+
+Get-ADReplicationSiteLink -filter * | set-adobject -replace @{options=$($_.options -bor 1)}
+
+
+Get-ADReplicationSite -filter * -property subnets | where-object {!$_.subnets -eq "*"} | format-table name
+
+
+
+
+
+
+    $(UniversalCRT_IncludePath)
+    $(UniversalCRT_LibraryPath_x86)
+    $(UniversalCRT_LibraryPath_x64)
+    $(UniversalCRT_LibraryPath_arm)         Release DLLs   (/MD ): msvcrt.lib   vcruntime.lib      ucrt.lib
+    Debug DLLs     (/MDd): msvcrtd.lib  vcruntimed.lib     ucrtd.lib
+    Release Static (/MT ): libcmt.lib   libvcruntime.lib   libucrt.lib
+    Debug Static   (/MTd): libcmtd.lib  libvcruntimed.lib  libucrtd.lib
 gpg --encrypt --recipient 05D02D3D57ABFF46 FILENAME
 This creates FILENAME.gpg with the following information:
 Key ID: 05D02D3D57ABFF46
