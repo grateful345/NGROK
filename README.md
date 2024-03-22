@@ -1,4 +1,7 @@
 NGROK
+
+git-daemon-export-ok
+
 [Windows.Foundation.Metadata.MarshalingBehavior(Windows.Foundation.Metadata.MarshalingType.Agile)]
 [Windows.Foundation.Metadata.Threading(Windows.Foundation.Metadata.ThreadingModel.Both)]
 [Windows.Foundation.Metadata.ContractVersion(typeof(Microsoft.Windows.ApplicationModel.WindowsAppRuntime.DeploymentContract), 65536)]
@@ -45,6 +48,1401 @@ Get-ADReplicationSiteLink -filter * | set-adobject -replace @{options=$($_.optio
 
 
 Get-ADReplicationSite -filter * -property subnets | where-object {!$_.subnets -eq "*"} | format-table name
+
+git rebase [-i | --interactive] [<options>] [--exec <cmd>]
+	[--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+git rebase [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+	--root [<branch>]
+git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
+
+A---B---C topic
+         /
+    D---E---F---G master
+From this point, the result of either of the following commands:
+
+git rebase master
+git rebase master topic
+would be:
+
+                  A'--B'--C' topic
+                 /
+    D---E---F---G master
+NOTE: The latter form is just a short-hand of git checkout topic followed by git rebase master. When rebase exits topic will remain the checked-out branch.
+
+If the upstream branch already contains a change you have made (e.g., because you mailed a patch which was applied upstream), then that commit will be skipped and warnings will be issued (if the merge backend is used). For example, running git rebase master on the following history (in which A' and A introduce the same set of changes, but have different committer information):
+
+          A---B---C topic
+         /
+    D---E---A'---F master
+will result in:
+
+                   B'---C' topic
+                  /
+    D---E---A'---F master
+Here is how you would transplant a topic branch based on one branch to another, to pretend that you forked the topic branch from the latter branch, using rebase --onto.
+
+First let’s assume your topic is based on branch next. For example, a feature developed in topic depends on some functionality which is found in next.
+
+    o---o---o---o---o  master
+         \
+          o---o---o---o---o  next
+                           \
+                            o---o---o  topic
+We want to make topic forked from branch master; for example, because the functionality on which topic depends was merged into the more stable master branch. We want our tree to look like this:
+
+    o---o---o---o---o  master
+        |            \
+        |             o'--o'--o'  topic
+         \
+          o---o---o---o---o  next
+We can get this using the following command:
+
+git rebase --onto master next topic
+Another example of --onto option is to rebase part of a branch. If we have the following situation:
+
+                            H---I---J topicB
+                           /
+                  E---F---G  topicA
+                 /
+    A---B---C---D  master
+then the command
+
+git rebase --onto master topicA topicB
+would result in:
+
+                 H'--I'--J'  topicB
+                /
+                | E---F---G  topicA
+                |/
+    A---B---C---D  master
+This is useful when topicB does not depend on topicA.
+
+A range of commits could also be removed with rebase. If we have the following situation:
+
+    E---F---G---H---I---J  topicA
+then the command
+
+git rebase --onto topicA~5 topicA~3 topicA
+would result in the removal of commits F and G:
+
+    E---H'---I'---J'  topicA
+This is useful if F and G were flawed in some way, or should not be part of topicA. Note that the argument to --onto and the <upstream> parameter can be any valid commit-ish.
+
+In case of conflict, git rebase will stop at the first problematic commit and leave conflict markers in the tree. You can use git diff to locate the markers (<<<<<<) and make edits to resolve the conflict. For each file you edit, you need to tell Git that the conflict has been resolved, typically this would be done with
+
+git add <filename>
+After resolving the conflict manually and updating the index with the desired resolution, you can continue the rebasing process with
+
+git rebase --continue
+mkdir Cats
+
+cd Cats
+
+Now, initialize the new repository and set the name of the default branch to main.
+If you're running Git version 2.28.0 or later, use the following commands:
+Bash
+
+Copy
+git init --initial-branch=main
+git init -b main
+
+For earlier versions of Git, use these commands:
+Bash
+
+Copy
+git init
+git checkout -b main
+
+Configure Git by adding your credentials. Replace <USER_NAME> and <USER_EMAIL> with your own information (for example, "User Name" and "user-name@contoso.com").
+Bash
+
+Copy
+git config user.name "<USER_NAME>"
+git config user.email "<USER_EMAIL>"
+
+Create some files by using the touch command, and then stage and commit the files by using Git:
+Bash
+
+Copy
+touch index.html
+mkdir CSS
+touch CSS/site.css
+git add .
+git commit -m "Create empty index.html, site.css files"
+
+Add some HTML to your index.html file by using the Cloud Shell code editor, which you can open by using the code command at the terminal prompt:
+Bash
+
+Copy
+code index.html
+
+Paste in this HTML code:
+HTML
+
+Copy
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <title>Our Feline Friends</title>
+    <link rel="stylesheet" href="CSS/site.css">
+  </head>
+  <body>
+    <h1>Our Feline Friends</h1>
+    <p>Eventually we will put cat pictures here.</p>
+    <hr>
+  </body>
+</html>
+Save the file and close the editor. You can select the ellipsis "..." in the right corner of the editor, or use the accelerator key (Ctrl+S on Windows and Linux, Cmd+S on macOS).
+Change to the CSS directory and open site.css in the editor:
+Bash
+
+Copy
+cd CSS
+code site.css
+
+Add the following CSS to site.css:
+css
+
+Copy
+h1, h2, h3, h4, h5, h6 { font-family: sans-serif; }
+body { font-family: serif; }
+Then, save the file and close the editor.
+Go back to the Cats directory.
+Bash
+
+Copy
+cd ..
+
+Finally, commit your changes again:
+Bash
+
+Copy
+git add .
+git commit -m "Add simple HTML and stylesheet"
+
+Quickly check your Git log to make sure everything looks good:
+Bash
+
+Copy
+git log --oneline
+
+Check the output. You should see output like this example:
+Output
+
+Copy
+2bf69ab Add simple HTML and stylesheet
+bb371c8 Create empty index.html, site.css files
+Clone a repository
+Now, let's assume the role of Alice and practice cloning a repository to collaborate on.
+To simulate Alice cloning your repo onto their computer, you'll create a directory named Alice on your computer and clone your project directory into it. In real life, you would accomplish this collaboration by setting up a network share or a remote that's reachable by URL.
+Create a directory named Alice to clone the repo into. It must not be a subdirectory of your project directory (Cats), so cd up again to the parent directory from your project directory to make Alice a sibling of the project directory. Then, cd into the Alice directory.
+Bash
+
+Copy
+cd ..
+mkdir Alice
+cd Alice
+
+Now, use git clone to clone the repo that's in your project directory into the Alice directory. Be sure to include the period at the end of the command:
+Bash
+
+Copy
+git clone ../Cats .
+
+../Cats tells Git where to clone from and . tells Git where to clone to. In Unix, . refers to your current directory.
+Check the output. Git should display this text to let you know that it worked:
+Output
+
+Copy
+Cloning into '.'...
+done.
+
+cd ..
+mkdir Shared.git
+cd Shared.git
+git init --bare
+
+When a repo is still bare, the git checkout command can't be used to set the name of the default branch. To accomplish this task, you can change the HEAD branch to point at a different branch; in this case, it's the main branch:
+Bash
+
+Copy
+git symbolic-ref HEAD refs/heads/main
+
+The next step is to get the contents of your repo into the shared repo. Use these commands to return to the project directory where your repo is stored, set up an origin remote, and perform an initial push:
+Bash
+
+Copy
+cd ../Cats
+git remote add origin ../Shared.git
+git push origin main
+
+Check the output. The output should indicate success:
+Output
+
+Copy
+Counting objects: 12, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (12/12), 1.07 KiB | 0 bytes/s, done.
+Total 12 (delta 1), reused 0 (delta 0)
+To ../Shared.git
+ * [new branch]      main -> main
+You want push and pull to use the main branch of origin by default, as if you had made your repo by cloning it in the first place. But first, you need to tell Git which branch to track.
+Bash
+
+Copy
+git branch --set-upstream-to origin/main
+
+Check for this output:
+Output
+
+Copy
+Branch main set up to track remote branch main from origin.
+cd ..
+mkdir Bob
+cd Bob
+
+Now, clone the shared repo (be sure to include the period at the end of the command):
+Bash
+
+Copy
+git clone ../Shared.git .
+
+Currently, Alice's repo is configured to push to and pull from their own repo. Use the following commands to change to the Alice directory and change origin to point to the shared repo:
+Bash
+
+Copy
+cd ../Alice
+git remote set-url origin ../Shared.git
+
+cd ../Bob
+git config user.name Bob
+git config user.email bob@contoso.com
+
+Open index.html and replace the <hr> element with this line (found at the end of the <body> element):
+HTML
+
+Copy
+<footer><hr>Copyright (c) 2021 Contoso Cats</footer>
+Then, save the file and close the editor.
+Commit the changes and push to the remote origin:
+Bash
+
+Copy
+git commit -a -m "Put a footer at the bottom of the page"
+git push
+
+Check the output. If you see a warning like the following example, don't worry. This warning just lets users know about a change to Git's default behaviors. If you'd like to make sure that you don't see this warning again, you can run git config --global push.default simple.
+Output
+
+Copy
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+While Bob is editing the site, Alice is, too. Alice decides to add a nav bar to the page. This addition requires Alice to modify two files: index.html and site.css. Begin by returning to the Alice directory:
+Bash
+
+Copy
+cd ../Alice
+
+Now, open index.html and insert the following line right after the <body> tag on line 8:
+HTML
+
+Copy
+<nav><a href="./index.html">home</a></nav>
+Then, save the file and close the editor.
+Then, open site.css in the CSS folder and add the following line at the bottom:
+css
+
+Copy
+nav { background-color: #C0D8DF; }
+Save the file and close the editor.
+Now, let's assume that Alice receives an e-mail from Bob saying that Bob made changes to the site. Alice decides to pull Bob's changes before committing their own. (If Alice had already committed their changes, they would have a different problem, which is discussed in another module.) Alice runs this command:
+Bash
+
+Copy
+git pull
+
+Check the output. From the output, it looks as if Git has prevented a problem:
+Output
+
+Copy
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 2), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From ../Shared
+   843d142..2cf6cbf  main     -> origin/main
+Updating 843d142..2cf6cbf
+error: Your local changes to the following files would be overwritten by merge:
+        index.html
+Please commit your changes or stash them before you can merge.
+Aborting
+Git warns that the pull would overwrite Alice's version of index.html and lose their changes. That's because Bob modified index.html, too. If Alice hadn't changed index.html, Git would have committed the merge.
+Use a git diff command to see what changes Bob made to index.html:
+Bash
+
+Copy
+git diff origin -- index.html
+
+Check the output. From the output, it's evident that Alice's changes and Bob's changes don't overlap. Now, Alice can stash their changes.
+git stash saves the state of the working tree and index by making a couple temporary commits. Think of the stash as a way to save your current work while you do something else, without making a "real" commit or affecting your repository history.
+In reality, Alice should have stashed or committed their changes before they tried to pull. Pulling to a "dirty" working tree is risky, because it can do things from which you can't easily recover.
+Use the following command to stash Alice's changes:
+Bash
+
+Copy
+git stash
+
+Check the output. It should look like this example:
+Output
+
+Copy
+Saved working directory and index state WIP on main: 95bbc3b Change background color to light blue
+HEAD is now at 95bbc3b Change background color to light blue
+Now, it's safe for Alice to pull, after which they can "pop" the stash, which is organized as a stack. (In fact, git stash is shorthand for git stash push. It's a lot like the stack where you put bills that you haven't gotten around to paying yet.) Run these commands:
+Bash
+
+Copy
+git pull
+git stash pop
+
+Popping the stash merges the changes. If changes overlap, there might be a conflict. You can learn how to resolve those situations in a more advanced Git module from Microsoft Learn.
+Check the output. Alice should see this output, which lets them know that the merge was successful and that their changes are back, but not yet staged for commit:
+Output
+
+Copy
+Auto-merging index.html
+On branch main
+Your branch is up-to-date with 'origin/main'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   CSS/site.css
+        modified:   index.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (0cfb7b75d56611d9fc6a6ab660a51f5582b8d9c5)
+At this point, Alice can continue working or just commit and push their changes. Let's make another change as Alice by assigning footers the same style as nav bars.
+Open site.css in the CSS folder and replace the third line—the one that styles <nav> elements—with this shared CSS rule. Then, as usual, save your changes and close the editor.
+HTML
+
+Copy
+nav, footer { background-color: #C0D8DF; }
+Now, commit the changes and push them to the shared repo:
+Bash
+
+Copy
+git commit -a -m "Stylize the nav bar"
+git push
+
+The updated site is now in the shared repo.
+Finish up returning to the project directory and doing a pull:
+Bash
+
+Copy
+cd ../Cats
+git pull
+
+Open index.html (the one in the project directory) to confirm that the changes made by both Bob and Alice are present in your local repo by. Verify that index.html has the most up-to-date code:
+HTML
+
+Copy
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8'>
+    <title>Our Feline Friends</title>
+    <link rel="stylesheet" href="CSS/site.css">
+  </head>
+  <body>
+    <nav><a href="./index.html">home</a></nav>
+    <h1>Our Feline Friends</h1>
+    <p>Eventually we will put cat pictures here.</p>
+    <footer><hr>Copyright (c) 2021 Contoso Cats</footer>
+  </body>
+</html>
+At the moment, your repo and Alice's repo are synced, but Bob's repo is not. Finish up by getting Bob up to date, too:
+Bash
+
+Copy
+cd ../Bob
+git pull
+
+cd ..
+zip -r Cats.zip Cats
+
+Download the zipped file:
+Bash
+
+Copy
+download Cats.zip
+
+obtained by typing:
+
+$ git clone git://repo.or.cz/gitmagic.git  # Creates "gitmagic" directory.
+
+$ git clone git://github.com/blynn/gitmagic.git
+$ git clone git://git.assembla.com/gitmagic.git
+$ git clone git@bitbucket.org:blynn/gitmagic.git
+GitHub, Assembla, and
+Key
+Ever played one of those games where at the push of a button (“the boss key”), the screen would instantly display a spreadsheet or something? So if the boss walked in the office while you were playing the game you could quickly hide it away?
+
+In some directory:
+
+$ echo "I'm smarter than my boss" > myfile.txt
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+We have created a Git repository that tracks one text file containing a certain message. Now type:
+
+$ git checkout -b boss  # nothing seems to change after this
+$ echo "My boss is smarter than me" > myfile.txt
+$ git commit -a -m "Another commit"
+It looks like we’ve just overwritten our file and committed it. But it’s an illusion. Type:
+
+$ git checkout master  # switch to original version of the file
+
+$ git checkout boss  # switch to version suitable for boss' eyes
+$ git commit -a
+$ git checkout HEAD~3
+Now you can add ugly temporary code all over the place. You can even commit these changes. When you’re done,
+
+$ git checkout master
+to return to your original work. Observe that any uncommitted changes are carried over.
+
+What if you wanted to save the temporary changes after all? Easy:
+
+$ git checkout -b dirty
+and commit before switching back to the master branch. Whenever you want to return to the dirty changes, simply type:
+
+$ git checkout dirty
+
+everything and fix a newly discovered bug in commit 1b6d...:
+
+$ git commit -a
+$ git checkout -b fixes 1b6d
+Then once you’ve fixed the bug:
+
+$ git commit -a -m "Bug fixed"
+$ git checkout master
+and resume work on your original task. You can even merge in the freshly baked bugfix:
+
+$ git merge fixes
+
+$ git log HEAD^2
+You may omit the number for the first parent. For example, to show the differences with the first parent:
+
+$ git diff HEAD^
+You can combine this notation with other types. For example:
+
+$ git checkout 1b6d^^2~10 -b ancient
+starts
+$ git checkout -b part2
+Next, work on Part II, committing your changes along the way. To err is human, and often you’ll want to go back and fix something in Part I. If you’re lucky, or very good, you can skip these lines.
+
+$ git checkout master  # Go back to Part I.
+$ fix_problem
+$ git commit -a        # Commit the fixes.
+$ git checkout part2   # Go back to Part II.
+$ git merge master     # Merge in those fixes.
+Eventually, Part I is approved:
+
+$ git checkout master  # Go back to Part I.
+$ submit files         # Release to the world!
+$ git merge part2      # Merge in Part II.
+$ git branch -d part2  # Delete "part2" branch.
+Now you’re in the master branch again, with Part II in the working directory.
+
+It’s easy to extend this trick for any number of parts. It’s also easy to branch off retroactively: suppose you belatedly realize you should have created a branch 7 commits ago. Then type:
+
+$ git branch -m master part2  # Rename "master" branch to "part2".
+$ git branch master HEAD~7    # Create new "master", 7 commits upstream.
+
+$ git checkout HEAD~7 -b master  # Create a branch, and switch to it.
+
+$ git branch sanitized    # Create a branch for sanitized commits.
+$ git checkout -b medley  # Create and switch to a branch to work in.
+code, and so forth, committing often along the way. Then:
+
+$ git checkout sanitized
+$ git cherry-pick medley^^
+applies the grandparent of the head commit of the “medley” branch to the “sanitized” branch. With appropriate cherry-picks you can construct a branch that contains only permanent code, and has related commits grouped together.
+
+Managing Branches
+List all branches by typing:
+
+$ git branch
+$ git stash
+This saves the current state in a temporary location (a stash) and restores the previous state. Your working directory appears exactly as it was before you started editing, and you can fix bugs, pull in upstream changes, and so on. When you want to go back to the stashed state, type:
+
+$ git stash apply  # You may need to resolve some conflicts.
+
+commit refs/heads/master
+committer Alice <alice@example.com> Thu, 01 Jan 1970 00:00:00 +0000
+data <<EOT
+Initial commit.
+EOT
+
+M 100644 inline hello.c
+data <<EOT
+#include <stdio.h>
+
+int main() {
+  printf("Hello, world!\n");
+  return 0;
+}
+EOT
+
+
+commit refs/heads/master
+committer Bob <bob@example.com> Tue, 14 Mar 2000 01:59:26 -0800
+data <<EOT
+Replace printf() with write().
+EOT
+
+M 100644 inline hello.c
+data <<EOT
+#include <unistd.h>
+
+int main() {
+  write(1, "Hello, world!\n", 14);
+  return 0;
+}
+EOT
+Then create a Git repository from this temporary file by typing:
+
+$ mkdir project; cd project; git init
+$ git fast-import --date-format=rfc2822 < /tmp/history
+You can checkout the latest version of the project with:
+
+$ git checkout master .
+
+
+I can tolerate making tarballs or using rsync for backups and basic syncing. But sometimes I edit on my laptop, other times on my desktop, and the two may not have talked to each other in between.
+
+Initialize a Git repository and commit your files on one machine. Then on the other:
+
+$ git clone other.computer:/path/to/files
+to create a second copy of the files and Git repository. From now on,
+
+$ git commit -a
+
+$ git pull other.computer:/path/to/files HEAD
+will pull in the state of the files on the other computer into the one you’re working on. If you’ve recently made conflicting edits in the same file, Git will let you know and you should commit again after resolving them.
+
+Classic Source Control
+Initialize a Git repository for your files:
+
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+On the central server, initialize a bare repository in some directory:
+
+$ mkdir proj.git
+$ cd proj.git
+$ git --bare init
+$ touch proj.git/git-daemon-export-ok
+Start the Git daemon if necessary:
+
+$ git daemon --detach  # it may already be running
+For Git hosting services, follow the instructions to setup the initially empty Git repository. Typically one fills in a form on a webpage.
+
+Push your project to the central server with:
+
+$ git push central.server/path/to/proj.git HEAD
+To check out the source, a developer types:
+
+$ git clone central.server/path/to/proj.git
+After making changes, the developer saves changes locally:
+
+$ git commit -a
+To update to the latest version:
+
+$ git pull
+Any merge conflicts should be resolved then committed:
+
+$ git commit -a
+To check in local changes into the central repository:
+
+$ git push
+If the main server has new changes due to activity by other developers, the push fails, and the developer should pull the latest version, resolve any merge conflicts, then try again.
+
+Developers must have SSH access for the above pull and push commands. However, anyone can see the source by typing:
+
+$ git clone git://central.server/path/to/proj.git
+git-daemon-export-ok
+
+$ git clone . /some/new/directory
+Thanks to hardlinking, local clones require less time and space than a plain backup.
+
+You can now work on two independent features simultaneously. For example, you can edit one clone while the other is compiling. At any time, you can commit and pull changes from the other clone:
+
+$ git pull /the/other/clone HEAD
+Guerilla Version Control
+Are you working on a project that uses some other version control system, and you sorely miss Git? Then initialize a Git repository in your working directory:
+
+$ git init
+$ git add .
+$ git commit -m "Initial commit"
+then clone it:
+
+$ git clone . /some/new/directory
+Now go to the new directory and work here instead, using Git to your heart’s content. Once in a while, you’ll want to sync with everyone else, in which case go to the original directory, sync using the other version control system, and type:
+
+$ git add .
+$ git commit -m "Sync with everyone else"
+Then go to the new directory and run:
+
+$ git commit -a -m "Description of my changes"
+$ git pull
+
+$GIT_REPO. After creating a new Google Code project, initialize an intermediary repository and fetch the Git tree:
+$ git svn clone --username you https://your-project.googlecode.com/svn/trunk
+$ cd trunk
+$ git fetch $GIT_REPO
+The Subversion repository must be nonempty. A new Google Code project contains one revision by default, but if you reset it, you should also create a first revision.
+
+Create a temporary branch for the fetched repository, and tag its head:
+$ git branch tmp $(cut -b-40 .git/FETCH_HEAD)
+$ git tag -a -m "Last fetch" last tmp
+2. Apply initial commit
+
+Unfortunately, Git treats the initial commit specially, and in particular, cannot rebase it. Work around this as follows:
+
+$ INIT_COMMIT=$(git log tmp --pretty=format:%H | tail -1)
+$ git checkout $INIT_COMMIT .
+$ git commit -C $INIT_COMMIT
+3. Rebase and submit
+
+Apply all the other commits to the temporary branch, and make it the new master branch:
+$ git rebase master tmp
+$ git branch -M tmp master
+Lastly, commit the changes to Google Code:
+$ git svn dcommit
+To more faithfully represent deleted subdirectories and copies of unmodified files, run dcommit with the options --rmdir and --find-copies-harder. Be aware the latter option can be expensive.
+4. Update Google Code
+
+Later, export Git repository updates to Google Code as follows:
+
+$ git fetch $GIT_REPO
+$ git branch tmp $(cut -b-40 .git/FETCH_HEAD)
+$ git tag -a -m "Last fetch" newlast tmp
+$ git rebase --onto master last tmp
+$ git branch -M tmp master
+$ git svn dcommit
+$ mv .git/refs/tags/newlast .git/refs/tags
+
+$GIT_REPO. After creating a new Google Code project, initialize an intermediary repository and fetch the Git tree:
+$ git svn clone --username you https://your-project.googlecode.com/svn/trunk
+$ cd trunk
+$ git fetch $GIT_REPO
+The Subversion repository must be nonempty. A new Google Code project contains one revision by default, but if you reset it, you should also create a first revision.
+
+Create a temporary branch for the fetched repository, and tag its head:
+$ git branch tmp $(cut -b-40 .git/FETCH_HEAD)
+$ git tag -a -m "Last fetch" last tmp
+2. Apply initial commit
+
+Unfortunately, Git treats the initial commit specially, and in particular, cannot rebase it. Work around this as follows:
+
+$ INIT_COMMIT=$(git log tmp --pretty=format:%H | tail -1)
+$ git checkout $INIT_COMMIT .
+$ git commit -C $INIT_COMMIT
+3. Rebase and submit
+
+Apply all the other commits to the temporary branch, and make it the new master branch:
+$ git rebase master tmp
+$ git branch -M tmp master
+Lastly, commit the changes to Google Code:
+$ git svn dcommit
+To more faithfully represent deleted subdirectories and copies of unmodified files, run dcommit with the options --rmdir and --find-copies-harder. Be aware the latter option can be expensive.
+4. Update Google Code
+
+Later, export Git repository updates to Google Code as follows:
+
+$ git fetch $GIT_REPO
+$ git branch tmp $(cut -b-40 .git/FETCH_HEAD)
+$ git tag -a -m "Last fetch" newlast tmp
+$ git rebase --onto master last tmp
+$ git branch -M tmp master
+$ git svn dcommit
+$ mv .git/refs/tags/newlast .git/refs/tags
+
+adprep {/forestprep | /domainprep | /domainprep /gpprep | /rodcprep | /wssg | /silent }
+adprep /forestprep
+The following example prepares a domain for a domain controller that runs Windows Server 2008:
+
+Copy
+adprep /domainprep
+The following example prepares a domain for an RODC:
+
+Copy
+adprep /rodcprep
+
+id != 0 order by lastmodified desc
+
+curl --version
+your_email@atlassian.net:1234567
+Use an online tool or an application to encode the string into base64 format. The result is a string of letters and numbers like this:
+1
+eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc=
+You'll use this encoded string in the Authorization header when you make the call.
+Making the call
+Once you have encoded your credentials, you can use cURL to make a call to the REST API. The syntax is:
+1
+2
+3
+curl --request <method> '<https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?oldid=2862>?<parameters>' \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic <eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc=>'
+You'll be making a GET request to the search REST API using parameters to specify a CQL query and a limit to the number of results. Here are the steps:
+Build a URL made up of your Atlassian site plus the path to the REST endpoint. For this tutorial, use the search endpoint. For example:
+1
+https://your_site_name.atlassian.net/wiki/rest/api/search
+Add the limit and cql parameters to specify the results you want. Remember to URL-encode the spaces by changing them to %20 characters:
+1
+?limit=1&cql=id%20!=%200%20order%20by%20lastmodified%20desc
+Finally, build the entire cURL command using the URL, parameters, and your encoded credentials. Specify the GET request method. For example:
+1
+2
+3
+4
+curl --request GET 'https://your_site_name.atlassian.net/wiki/rest/api/search?limit=1&cql=id%20!=%200%20order%20by%20lastmodified%20desc' \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc='
+atlas-connect new rest-tutorial
+
+curl -v https://mysite.atlassian.net --user god964v@gmail.com :ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E
+
+12
+{
+   "hosts" : {
+      "<your-confluence-domain>": {
+         "product" : "confluence",
+         "username" : "<god964v@gmail.com>",
+         "password" : "<ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E>"
+      }
+   },
+   "ngrok": {
+      "authtoken": "your-ngrok-token"
+   }
+}
+app.get('/hello-world', addon.authenticate(), (req, res) => {
+
+         const clientKey = req.context.clientKey;
+         const httpClient = addon.httpClient({
+             clientKey: clientKey  
+         });
+
+         httpClient.get(
+             '/rest/api/content/search?limit=1&cql= id != 0 order by lastmodified desc',
+             function(err, response, contents){
+                 if(err || (response.statusCode < 200 || response.statusCode > 299)) {
+                     console.log(err);
+                     res.render('<strong>An error has occurred : '+ response.statusCode +'</strong>');
+                 }
+                 contents = JSON.parse(contents);
+                 console.log(contents);
+              
+                 let page_title;
+             
+                 if(contents.size > 0){
+                   page_title = contents.results[0].title;
+                 }else{
+                   page_title = "Error: no results";
+                 }
+
+                 res.render(
+                   'hello-world.hbs', 
+                   {
+                     title: 'Atlassian Connect', 
+                     updated_page: page_title
+                   });
+             }
+         );   
+     });
+Edit hello-world.hbs (inside the views directory), adding the following line after the Welcome to {{title}} line:
+1
+      <p>The most recently updated page is: <b>{{updated_page}}</b>!</p>
+
+<div id="more_info"></div>
+  <script>
+     AP.request({
+       url: '/rest/api/content/search?limit=1&cql=id!=0 order by lastmodified desc',
+        success: function(response) {
+          response = JSON.parse(response);
+          if(response.size > 0){
+            document.getElementById('more_info').innerHTML = 
+              '<ul><li>Type: ' + response.results[0].type + 
+              '</li><li>ID: ' + response.results[0].id + 
+              '</li></ul>'
+            } else {
+              document.getElementById('more_info').innerHTML = "<b>No results found.</b>";
+            }
+        },
+        error: function() {
+          console.log(arguments);
+        }  
+      });
+  </script>
+17
+{
+  "statusCode": 404,
+  "data": {
+    "authorized": false,
+    "valid": false,
+    "errors": [
+      {
+        "message": {
+          "translation": "This is an example error message.",
+          "args": []
+        }
+      }
+    ],
+    "successful": false
+  },
+  "message": "This is an example error message."
+}
+GET /wiki/rest/api/content/{id}?expand=space,metadata.labels
+
+GET /wiki/rest/api/content?start=4&limit=10
+JSON.parse(text)
+JSON.parse(text, reviver)
+const transformedObj1 = JSON.parse('[1,5,{"s":1}]', (key, value) => {
+  return typeof value === "object" ? undefined : value;
+});
+
+console.log(transformedObj1); // undefined
+
+const bigJSON = '{"gross_gdp": 12345678901234567890}';
+const bigObj = JSON.parse(bigJSON, (key, value, context) => {
+  if (key === "gross_gdp") {
+    // Ignore the value because it has already lost precision
+    return BigInt(context.source);
+  }
+  return value;
+});
+JSON.parse("{}"); // {}
+JSON.parse("true"); // true
+JSON.parse('"foo"'); // "foo"
+JSON.parse('[1, 5, "false"]'); // [1, 5, "false"]
+JSON.parse("null"); // null
+JSON.parse(
+  '{"p": 5}',
+  (key, value) =>
+    typeof value === "number"
+      ? value * 2 // return value * 2 for numbers
+      : value, // return everything else unchanged
+);
+// { p: 10 }
+
+JSON.parse('{"1": 1, "2": 2, "3": {"4": 4, "5": {"6": 6}}}', (key, value) => {
+  console.log(key);
+  return value;
+});
+// 1
+// 2
+// 4
+// 6
+// 5
+// 3
+// ""
+// Maps are normally serialized as objects with no properties.
+// We can use the replacer to specify the entries to be serialized.
+const map = new Map([
+  [1, "one"],
+  [2, "two"],
+  [3, "three"],
+]);
+
+const jsonText = JSON.stringify(map, (key, value) =>
+  value instanceof Map ? Array.from(value.entries()) : value,
+);
+
+console.log(jsonText);
+// [[1,"one"],[2,"two"],[3,"three"]]
+
+const map2 = JSON.parse(jsonText, (key, value) =>
+  Array.isArray(value) ? new Map(value) : value,
+);
+
+console.log(map2);
+// Map { 1 => "one", 2 => "two", 3 => "three" }
+JSON.stringify(value)
+JSON.stringify(value, replacer)
+JSON.stringify(value, replacer, space)
+
+JSON.stringify({}); // '{}'
+JSON.stringify(true); // 'true'
+JSON.stringify("foo"); // '"foo"'
+JSON.stringify([1, "false", false]); // '[1,"false",false]'
+JSON.stringify([NaN, null, Infinity]); // '[null,null,null]'
+JSON.stringify({ x: 5 }); // '{"x":5}'
+
+JSON.stringify(new Date(1906, 0, 2, 15, 4, 5));
+// '"1906-01-02T15:04:05.000Z"'
+
+JSON.stringify({ x: 5, y: 6 });
+// '{"x":5,"y":6}'
+JSON.stringify([new Number(3), new String("false"), new Boolean(false)]);
+// '[3,"false",false]'
+
+// String-keyed array elements are not enumerable and make no sense in JSON
+const a = ["foo", "bar"];
+a["baz"] = "quux"; // a: [ 0: 'foo', 1: 'bar', baz: 'quux' ]
+JSON.stringify(a);
+// '["foo","bar"]'
+
+JSON.stringify({ x: [10, undefined, function () {}, Symbol("")] });
+// '{"x":[10,null,null,null]}'
+
+// Standard data structures
+JSON.stringify([
+  new Set([1]),
+  new Map([[1, 2]]),
+  new WeakSet([{ a: 1 }]),
+  new WeakMap([[{ a: 1 }, 2]]),
+]);
+// '[{},{},{},{}]'
+
+// TypedArray
+JSON.stringify([new Int8Array([1]), new Int16Array([1]), new Int32Array([1])]);
+// '[{"0":1},{"0":1},{"0":1}]'
+JSON.stringify([
+  new Uint8Array([1]),
+  new Uint8ClampedArray([1]),
+  new Uint16Array([1]),
+  new Uint32Array([1]),
+]);
+// '[{"0":1},{"0":1},{"0":1},{"0":1}]'
+JSON.stringify([new Float32Array([1]), new Float64Array([1])]);
+// '[{"0":1},{"0":1}]'
+
+// toJSON()
+JSON.stringify({
+  x: 5,
+  y: 6,
+  toJSON() {
+    return this.x + this.y;
+  },
+});
+// '11'
+
+// Symbols:
+JSON.stringify({ x: undefined, y: Object, z: Symbol("") });
+// '{}'
+JSON.stringify({ [Symbol("foo")]: "foo" });
+// '{}'
+JSON.stringify({ [Symbol.for("foo")]: "foo" }, [Symbol.for("foo")]);
+// '{}'
+JSON.stringify({ [Symbol.for("foo")]: "foo" }, (k, v) => {
+  if (typeof k === "symbol") {
+    return "a symbol";
+  }
+});
+// undefined
+
+// Non-enumerable properties:
+JSON.stringify(
+  Object.create(null, {
+    x: { value: "x", enumerable: false },
+    y: { value: "y", enumerable: true },
+  }),
+);
+// '{"y":"y"}'
+
+// BigInt values throw
+JSON.stringify({ x: 2n });
+// TypeError: BigInt value can't be serialized in JSON
+function replacer(key, value) {
+  // Filtering out properties
+  if (typeof value === "string") {
+    return undefined;
+  }
+  return value;
+}
+
+const foo = {
+  foundation: "Mozilla",
+  model: "box",
+  week: 45,
+  transport: "car",
+  month: 7,
+};
+JSON.stringify(foo, replacer);
+// '{"week":45,"month":7}'
+
+function makeReplacer() {
+  let isInitial = true;
+
+  return (key, value) => {
+    if (isInitial) {
+      isInitial = false;
+      return value;
+    }
+    if (key === "") {
+      // Omit all properties with name "" (except the initial object)
+      return undefined;
+    }
+    return value;
+  };
+}
+
+const replacer = makeReplacer();
+console.log(JSON.stringify({ "": 1, b: 2 }, replacer)); // "{"b":2}"
+
+const foo = {
+  foundation: "Mozilla",
+  model: "box",
+  week: 45,
+  transport: "car",
+  month: 7,
+};
+
+JSON.stringify(foo, ["week", "month"]);
+// '{"week":45,"month":7}', only keep "week" and "month" properties
+
+# Retrieves content properties associated with a piece of content with ID 12345
+curl -u god964v@gmail.com:ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E -X GET "https://your-domain.atlassian.net/wiki/rest/api/content/12345/property" | python -mjson.tool
+
+# Stores a JSON document under the key "myprop" against content with ID 12345
+curl --request PUT \
+  --user email@example.com:<ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E> \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{ 
+              "key": "my-property",
+              "version": { "number": 1 },
+              "value": {"party": { "attendees": ["andrew","becky","charlie","dave"], "attendeeCount": 4 }}
+          }' \
+  --url 'https://your-domain.atlassian.net/wiki/rest/api/content/12345/property/my-property'
+
+curl --request PUT \
+  --user email@example.com:<ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E> \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{ 
+              "key": "my-property",
+              "version": { "number": 2 },
+              "value": {"party": { "attendees": ["andrew","becky","charlie","dave", "evie"], "attendeeCount": 5 }}
+          }' \
+  --url 'https://your-domain.atlassian.net/wiki/rest/api/content/12345/property/my-property'
+curl --request PUT \
+  --user email@example.com:<ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E> \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --data '{ 
+              "key": "my-property",
+              "version": { "number": 2 },
+              "value": {"party": { "attendees": ["andrew","becky","charlie","dave", "evie"], "attendeeCount": 5 }}
+          }' \
+  --url 'https://your-domain.atlassian.net/wiki/rest/api/content/12345/property/my-property'
+
+curl \
+    --request POST \
+    --url https://example.atlassian.net/gateway/api/compass/v1/metrics \
+    --user "$god964v@gmail.com:$ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E" \
+    --header "Accept: application/json" \
+    --header "Content-Type: application/json" \
+    --data "{
+      \"metricSourceId\": \"ari:cloud:compass:...:metric-source/.../...\",
+      \"value\": $METRIC_VALUE,
+      \"timestamp\": \"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"
+    }"
+   
+   # fetch properties at the same time as fetching content, note the expand=metadata.properties.myprop
+curl -u god964v@gmail.com:ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E -X GET 
+    "https://your-domain.atlassian.net/wiki/rest/api/content/12345?expand=metadata.properties.myprop" | python -mjson.tool
+{   
+    id: "12345",
+    type: "page",
+    status: "current",
+    title: "New in the platform team? Read me first",
+    metadata: {
+        _expandable: {
+            currentuser: "",
+            labels: ""
+            properties: {
+                my-property: {
+                    "id": "507f1f77bcf86cd799439011",
+                    "editDate": "2000-01-01T11:00:00.000+11:00",
+                    "version": { "number": 2 },
+                    "value": {"party": { "attendees": ["andrew","becky","charlie","dave", "evie"], "attendeeCount": 5 }}
+                    }
+            }
+        }
+    }
+}
+
+9
+{
+    "id": "507f1f77bcf86cd799439011",
+    "editDate": "2000-01-01T11:00:00.000+11:00",
+    "description": "If you have any questions please address them to admin@example.com",
+    "content": {
+        "likes": 5,
+        "tags": ["cql", "confluence"]
+    }
+}
+13
+"confluenceContentProperties": [{
+    "name": {
+        "value" :"Attachments index",
+        "i18n": "attachments.index"
+    },
+    "keyConfigurations": [{
+        "propertyKey" : "attachments",
+        "extractions" : [{
+            "objectName" : "id",
+            "type" : "string"
+        }]
+    }]
+}]
+content.property[attachments].editDate >= 2001-01-01
+content.property[attachments].description ~ "questions"
+content.property[metadata].content.tags IN ("cql", "help")
+content.property[metadata].content.likes <= 5
+curl --request PUT \ 
+--user 'email@example.com:<ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E' \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data '{"string":"string-value","number":5}' \
+ 'https://your-domain.atlassian.net/wiki/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}'
+
+curl --request GET \ 
+ --user 'email@example.com:<ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E>' \
+ --header "Accept: application/json" \
+ --url 'https://your-domain.atlassian.net/wiki/rest/atlassian-connect/1/addons/{addonKey}/properties/{propertyKey}'
+
+AP.require(['request'], function(request) {
+   request({
+       url: '/rest/atlassian-connect/1/addons/my-app-key/properties/my-property-key?jsonValue=true',
+       success: function(response) {
+           // Convert the string response to JSON
+           response = JSON.parse(response);
+           alert(response);
+       },
+       error: function(response) {
+           console.log("Error loading API (" + uri + ")");
+           console.log(arguments);
+       },
+       contentType: "application/json"
+   });
+});
+{
+    "condition": "addon_property_equal_to",
+    "params": {
+        "propertyKey": "activated",
+        "objectName": "for-users"  
+        "value": "true"
+    }
+}
+{
+    "for-anonymous": false,
+    "for-users": true,
+    "for-admins": true,
+}
+
+{
+    "condition": "addon_property_contains_any_user_group",
+    "params": {
+        "propertyKey": "myListOfGroups"
+    }
+}
+GET /wiki/rest/api/content/{id}?expand=space,metadata.labels
+
+GET /wiki/rest/api/content?start=4&limit=10
+
+curl -D- \
+   -u <your_email@domain.com>:<ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E> \
+   -X GET \
+   -H "Content-Type: application/json" \
+   https://<https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?oldid=2862>/wiki/rest/api/space
+   
+   echo -n your_email@domain.com:your_user_api_token | base64
+   
+$Text = ‘god964v@gmail.com:ATATT3xFfGF0MehNWz-hcEtTOqtq3vI_vmJlWyS0Du0yKRq-QF2sGGmVFXhpUUHamS8dYbQc3_QJavaNrMuI4dIueJLL0DYW-8TNLcZ2OdO5jtwHAjW-nR6CCrEnXxMegVGqbIBwdTSomXmmS3liNel-_-MmZ8feo8iuG5ABpQVZj-BZxCVrMXc=9460FC6E’
+$Bytes = [System.Text.Encoding]::UTF8.GetBytes($Text)
+$EncodedText = [Convert]::ToBase64String($Bytes)
+$EncodedText
+
+curl -D- \
+   -X GET \
+   -H "Authorization: Basic <Authorization: Basic eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=>" \
+   -H "Content-Type: application/json" \
+   "https://<https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?oldid=2862>/wiki/rest/api/space"
+   
+   space = "TEST"
+   (type=page and Space=DEV) OR (creator="99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and type=blogpost)
+   
+   (type=page and Space=DEV) OR (creator="99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and type=blogpost)
+   (type=page and Space=DEV) OR (creator="99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and type=blogpost)
+   
+label = "performance" and type = "blogpost"
+
+
+
+type = page and creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and space = DEV
+
+mention = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and creator != "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+
+space = IDEAS or label = idea
+lastModified < startOfYear() or label = needs_review
+   label = cql and not space = dev 
+   
+   space = DEV order by created
+   
+   space = DEV order by created desc, title
+   creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" order by space, title asc
+   
+   creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+   
+   title = "Advanced Searching"
+   
+   space = DEV and not creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+   
+   space = DEV and creator != "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+   
+   
+   creator = currentUser() and mention != currentUser()
+   
+   created > now("-4w")
+   
+   created > startOfMonth() and type = attachment
+   
+   created >= "2008/12/31"
+   
+   lastModified < startOfYear() and type = page
+      created >= startOfWeek("-1w") and type = blogpost
+      
+       creator IN ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7") is the same as typing creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" OR creator = "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01" OR creator = "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7".
+EXAMPLES
+Find all content that mentions any of the users with the accountIds 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e,48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01, or 2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7
+
+mention in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7")
+
+accountId 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e or the user with the accountId 48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01
+
+creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01") or contributor in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+
+NOT IN ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7") is the same as typing creator != "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" AND creator != "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01" AND creator != "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7".
+EXAMPLES
+Find all content where the creator is someone other than the users with the accountIds 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e,48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01, or 2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7
+
+space = DEV and creator not in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7")
+
+creator.fullname ~ "keith_Bieszczat"
+
+title ~ win
+Find all content where the title contains a wild-card match for the word "win":
+1
+title ~ "win*"
+Find all content where the text contains the word "advanced" and the word "search":
+1
+text ~ "advanced search"
+
+space = DEV and title !~ run
+
+ancestor
+
+1
+ancestor = 123
+Find descendants of a group of ancestor pages
+1
+ancestor in (123, 456, 789)
+Content
+Search for content that have a given content ID. This is an alias of the ID field.
+SYNTAX
+1
+content
+
+content = 123
+Find content in a set of content ids
+1
+content in (123, 223, 323)
+
+created
+
+created > 2014/09/01
+
+created >= now("-4w")
+
+creator
+
+creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+
+Find content created by the user with the accountId 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e or the user with the accountId 48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01
+
+creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+contributor
+contributor = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+contributor in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+
+favourite = currentUser()
+
+favourite = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+id
+id = 123
+Find content in a set of content IDs
+1
+id in (123, 223, 323)
+Label
+Search for content that has a particular label
+SYNTAX
+1
+label
+
+label = finished
+Find content that doesn't have the label draft or review
+1
+label not in (draft, review)
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -24990,7692 +26388,4 @@ DESCRIPTION
                      Match on traffic going to the specified destination.
 
               table (scalar)
-                     The table number to match for the route.   In  some  scenarios,  it  may  be
-                     useful  to  set  routes in a separate routing table.  It may also be used to
-                     refer to routes which also accept a table  parameter.   Allowed  values  are
-                     positive  integers starting from 1.  Some values are already in use to refer
-                     to specific routing tables: see /etc/iproute2/rt_tables.
-
-              priority (scalar)
-                     Specify a priority for the routing policy rule, to influence  the  order  in
-                     which  routing  rules  are processed.  A higher number means lower priority:
-                     rules are processed in order by increasing priority number.
-
-              mark (scalar)
-                     Have this routing policy rule match on traffic that has been marked  by  the
-                     iptables  firewall  with  this  value.  Allowed values are positive integers
-                     starting from 1.
-
-              type-of-service (scalar)
-                     Match this policy rule based on the type of service number  applied  to  the
-                     traffic.
-
-   Authentication
-       Netplan  supports  advanced  authentication  settings for ethernet and wifi interfaces, as
-       well as individual wifi networks, by means of the auth block.
-
-       auth (mapping)
-              Specifies  authentication  settings  for  a  device  of  type  ethernets:,  or   an
-              access-points: entry on a wifis: device.
-
-              The auth block supports the following properties:
-
-              key-management (scalar)
-                     The  supported  key  management modes are none (no key management); psk (WPA
-                     with pre-shared key, common for home wifi); eap (WPA with  EAP,  common  for
-                     enterprise   wifi);   and   802.1x   (used   primarily  for  wired  Ethernet
-                     connections).
-
-              password (scalar)
-                     The password string for EAP, or the pre-shared key for WPA-PSK.
-
-              The following properties can be used if key-management is eap or 802.1x:
-
-              method (scalar)
-                     The EAP method to use.  The  supported  EAP  methods  are  tls  (TLS),  peap
-                     (Protected EAP), and ttls (Tunneled TLS).
-
-              identity (scalar)
-                     The identity to use for EAP.
-
-              anonymous-identity (scalar)
-                     The  identity  to pass over the unencrypted channel if the chosen EAP method
-                     supports passing a different tunnelled identity.
-
-              ca-certificate (scalar)
-                     Path to  a  file  with  one  or  more  trusted  certificate  authority  (CA)
-                     certificates.
-
-              client-certificate (scalar)
-                     Path  to  a  file containing the certificate to be used by the client during
-                     authentication.
-
-              client-key (scalar)
-                     Path   to   a   file   containing   the   private   key   corresponding   to
-                     client-certificate.
-
-              client-key-password (scalar)
-                     Password  to use to decrypt the private key specified in client-key if it is
-                     encrypted.
-
-              phase2-auth (scalar)
-                     Phase 2 authentication mechanism.
-
-   Properties for device type ethernets:
-       Ethernet device definitions,  beyond  common  ones  described  above,  also  support  some
-       additional properties that can be used for SR-IOV devices.
-
-       link (scalar)
-              (SR-IOV  devices  only) The link property declares the device as a Virtual Function
-              of the selected Physical Function device, as identified by the given netplan id.
-
-       Example:
-
-              ethernets:
-                enp1: {...}
-                enp1s16f1:
-                  link: enp1
-
-       virtual-function-count (scalar)
-              (SR-IOV devices only) In certain special cases VFs  might  need  to  be  configured
-              outside   of  netplan.   For  such  configurations  virtual-function-count  can  be
-              optionally used to set an explicit  number  of  Virtual  Functions  for  the  given
-              Physical  Function.   If  unset,  the  default is to create only as many VFs as are
-              defined in the netplan configuration.  This should be used for special cases only.
-
-   Properties for device type modems:
-       GSM/CDMA  modem  configuration  is  only  supported  for   the   NetworkManager   backend.
-       systemd-networkd does not support modems.
-
-       apn (scalar)
-              Set  the  carrier  APN  (Access Point Name).  This can be omitted if auto-config is
-              enabled.
-
-       auto-config (bool)
-              Specify whether to try and autoconfigure the modem by doing a lookup of the carrier
-              against  the  Mobile  Broadband  Provider  database.   This  may  not  work for all
-              carriers.
-
-       device-id (scalar)
-              Specify the device ID (as given by the WWAN management service)  of  the  modem  to
-              match.  This can be found using mmcli.
-
-       network-id (scalar)
-              Specify the Network ID (GSM LAI format).  If this is specified, the device will not
-              roam networks.
-
-       number (scalar)
-              The number to dial to establish the connection to  the  mobile  broadband  network.
-              (Deprecated for GSM)
-
-       password (scalar)
-              Specify  the  password  used to authenticate with the carrier network.  This can be
-              omitted if auto-config is enabled.
-
-       pin (scalar)
-              Specify the SIM PIN to allow it to operate if a PIN is set.
-
-       sim-id (scalar)
-              Specify the SIM unique identifier (as given by the WWAN management  service)  which
-              this connection applies to.  If given, the connection will apply to any device also
-              allowed by device-id which contains a SIM card matching the given identifier.
-
-       sim-operator-id (scalar)
-              Specify the MCC/MNC string (such as  "310260"  or  "21601")  which  identifies  the
-              carrier  that this connection should apply to.  If given, the connection will apply
-              to any device also allowed by device-id  and  sim-id  which  contains  a  SIM  card
-              provisioned by the given operator.
-
-       username (scalar)
-              Specify  the  username  used  to authentiate with the carrier network.  This can be
-              omitted if auto-config is enabled.
-
-   Properties for device type wifis:
-       Note that systemd-networkd does not natively  support  wifi,  so  you  need  wpasupplicant
-       installed if you let the networkd renderer handle wifi.
-
-       access-points (mapping)
-              This provides pre-configured connections to NetworkManager.  Note that users can of
-              course select other access points/SSIDs.  The keys of the mapping  are  the  SSIDs,
-              and the values are mappings with the following supported properties:
-
-              password (scalar)
-                     Enable  WPA2  authentication and set the passphrase for it.  If neither this
-                     nor an auth block are given, the network is assumed to be open.  The setting
-
-                              password: "S3kr1t"
-
-                     is equivalent to
-
-                              auth:
-                                key-management: psk
-                                password: "S3kr1t"
-
-              mode (scalar)
-                     Possible access point modes are infrastructure (the default), ap (create  an
-                     access  point  to  which other devices can connect), and adhoc (peer to peer
-                     networks without a  central  access  point).   ap  is  only  supported  with
-                     NetworkManager.
-
-              bssid (scalar)
-                     If  specified,  directs  the  device to only associate with the given access
-                     point.
-
-              band (scalar)
-                     Possible bands are 5GHz (for 5GHz 802.11a) and 2.4GHz (for  2.4GHz  802.11),
-                     do  not  restrict  the  802.11  frequency  band of the network if unset (the
-                     default).
-
-              channel (scalar)
-                     Wireless channel to use for the Wi-Fi connection.  Because  channel  numbers
-                     overlap  between bands, this property takes effect only if the band property
-                     is also set.
-
-       wakeonwlan (sequence of scalars)
-              This enables WakeOnWLan on supported devices.  Not all drivers support all options.
-              May   be   any   combination  of  any,  disconnect,  magic_pkt,  gtk_rekey_failure,
-              eap_identity_req, four_way_handshake, rfkill_release or tcp (NetworkManager  only).
-              Or the exclusive default flag (the default).
-
-   Properties for device type bridges:
-       interfaces (sequence of scalars)
-              All  devices  matching  this  ID  list will be added to the bridge.  This may be an
-              empty list, in which case  the  bridge  will  be  brought  online  with  no  member
-              interfaces.
-
-              Example:
-
-                       ethernets:
-                         switchports:
-                           match: {name: "enp2*"}
-                       [...]
-                       bridges:
-                         br0:
-                           interfaces: [switchports]
-
-       parameters (mapping)
-              Customization  parameters for special bridging options.  Time intervals may need to
-              be expressed as a number of seconds or milliseconds:  the  default  value  type  is
-              specified below.  If necessary, time intervals can be qualified using a time suffix
-              (such as "s" for seconds, "ms" for milliseconds) to allow for more control over its
-              behavior.
-
-              ageing-time (scalar)
-                     Set  the  period  of  time  to keep a MAC address in the forwarding database
-                     after a packet is received.  This maps to the AgeingTimeSec=  property  when
-                     the  networkd  renderer  is used.  If no time suffix is specified, the value
-                     will be interpreted as seconds.
-
-              priority (scalar)
-                     Set the priority value for the  bridge.   This  value  should  be  a  number
-                     between  0  and  65535.  Lower values mean higher priority.  The bridge with
-                     the higher priority will be elected as the root bridge.
-
-              port-priority (scalar)
-                     Set the port priority to .  The priority value is a number between 0 and 63.
-                     This  metric  is  used  in  the  designated  port  and  root  port selection
-                     algorithms.
-
-              forward-delay (scalar)
-                     Specify the period of time the bridge will remain in Listening and  Learning
-                     states  before  getting  to  the  Forwarding  state.  This field maps to the
-                     ForwardDelaySec= property for the networkd renderer.  If no time  suffix  is
-                     specified, the value will be interpreted as seconds.
-
-              hello-time (scalar)
-                     Specify  the interval between two hello packets being sent out from the root
-                     and designated bridges.  Hello packets  communicate  information  about  the
-                     network  topology.   When  the  networkd  renderer is used, this maps to the
-                     HelloTimeSec= property.  If no time suffix is specified, the value  will  be
-                     interpreted as seconds.
-
-              max-age (scalar)
-                     Set  the  maximum  age of a hello packet.  If the last hello packet is older
-                     than that value, the bridge will attempt to become the  root  bridge.   This
-                     maps  to  the MaxAgeSec= property when the networkd renderer is used.  If no
-                     time suffix is specified, the value will be interpreted as seconds.
-
-              path-cost (scalar)
-                     Set the cost of a path on the bridge.  Faster interfaces should have a lower
-                     cost.   This  allows  a  finer  control  on the network topology so that the
-                     fastest paths are available whenever possible.
-
-              stp (bool)
-                     Define whether the bridge should use Spanning Tree  Protocol.   The  default
-                     value is "true", which means that Spanning Tree should be used.
-
-   Properties for device type bonds:
-       interfaces (sequence of scalars)
-              All devices matching this ID list will be added to the bond.
-
-              Example:
-
-                       ethernets:
-                         switchports:
-                           match: {name: "enp2*"}
-                       [...]
-                       bonds:
-                         bond0:
-                           interfaces: [switchports]
-
-       parameters (mapping)
-              Customization  parameters  for special bonding options.  Time intervals may need to
-              be expressed as a number of seconds or milliseconds:  the  default  value  type  is
-              specified below.  If necessary, time intervals can be qualified using a time suffix
-              (such as "s" for seconds, "ms" for milliseconds) to allow for more control over its
-              behavior.
-
-              mode (scalar)
-                     Set  the  bonding  mode  used for the interfaces.  The default is balance-rr
-                     (round robin).  Possible values are balance-rr, active-backup,  balance-xor,
-                     broadcast, 802.3ad, balance-tlb, and balance-alb.
-
-              lacp-rate (scalar)
-                     Set  the  rate  at  which  LACPDUs  are transmitted.  This is only useful in
-                     802.3ad mode.  Possible values are slow  (30  seconds,  default),  and  fast
-                     (every second).
-
-              mii-monitor-interval (scalar)
-                     Specifies  the interval for MII monitoring (verifying if an interface of the
-                     bond has carrier).  The default is 0; which disables MII  monitoring.   This
-                     is  equivalent  to the MIIMonitorSec= field for the networkd backend.  If no
-                     time suffix is specified, the value will be interpreted as milliseconds.
-
-              min-links (scalar)
-                     The minimum number of links up in a bond to consider the bond  interface  to
-                     be up.
-
-              transmit-hash-policy (scalar)
-                     Specifies  the  transmit  hash  policy for the selection of slaves.  This is
-                     only useful in balance-xor, 802.3ad and balance-tlb modes.  Possible  values
-                     are layer2, layer3+4, layer2+3, encap2+3, and encap3+4.
-
-              ad-select (scalar)
-                     Set  the aggregation selection mode.  Possible values are stable, bandwidth,
-                     and count.  This option is only used in 802.3ad mode.
-
-              all-slaves-active (bool)
-                     If the bond should drop duplicate frames received  on  inactive  ports,  set
-                     this option to false.  If they should be delivered, set this option to true.
-                     The  default  value  is  false,  and  is  the  desirable  behavior  in  most
-                     situations.
-
-              arp-interval (scalar)
-                     Set the interval value for how frequently ARP link monitoring should happen.
-                     The default value is 0, which disables ARP  monitoring.   For  the  networkd
-                     backend,  this  maps  to the ARPIntervalSec= property.  If no time suffix is
-                     specified, the value will be interpreted as milliseconds.
-
-              arp-ip-targets (sequence of scalars)
-                     IPs of other hosts on the link which should be sent ARP requests in order to
-                     validate  that a slave is up.  This option is only used when arp-interval is
-                     set to a value other than 0.  At least one IP address must be given for  ARP
-                     link  monitoring  to  function.  Only IPv4 addresses are supported.  You can
-                     specify up to 16 IP addresses.  The default value is an empty list.
-
-              arp-validate (scalar)
-                     Configure  how  ARP  replies  are  to  be  validated  when  using  ARP  link
-                     monitoring.  Possible values are none, active, backup, and all.
-
-              arp-all-targets (scalar)
-                     Specify  whether to use any ARP IP target being up as sufficient for a slave
-                     to be considered up; or if all the targets must be up.  This  is  only  used
-                     for  active-backup  mode  when arp-validate is enabled.  Possible values are
-                     any and all.
-
-              up-delay (scalar)
-                     Specify the delay before enabling a link once the  link  is  physically  up.
-                     The  default  value  is  0.   This  maps to the UpDelaySec= property for the
-                     networkd renderer.  This option is only valid for the miimon  link  monitor.
-                     If   no  time  suffix  is  specified,  the  value  will  be  interpreted  as
-                     milliseconds.
-
-              down-delay (scalar)
-                     Specify the delay before disabling a link once the link has been lost.   The
-                     default  value  is  0.   This  maps  to  the  DownDelaySec= property for the
-                     networkd renderer.  This option is only valid for the miimon  link  monitor.
-                     If   no  time  suffix  is  specified,  the  value  will  be  interpreted  as
-                     milliseconds.
-
-              fail-over-mac-policy (scalar)
-                     Set whether to set all slaves to the same MAC address when  adding  them  to
-                     the  bond, or how else the system should handle MAC addresses.  The possible
-                     values are none, active, and follow.
-
-              gratuitous-arp (scalar)
-                     Specify how many ARP packets to send after failover.  Once a link is up on a
-                     new slave, a notification is sent and possibly repeated if this value is set
-                     to a number greater than 1.  The default value is 1  and  valid  values  are
-                     between 1 and 255.  This only affects active-backup mode.
-
-                     For historical reasons, the misspelling gratuitious-arp is also accepted and
-                     has the same function.
-
-              packets-per-slave (scalar)
-                     In balance-rr mode, specifies the number of packets to transmit on  a  slave
-                     before  switching  to  the  next.   When  this value is set to 0, slaves are
-                     chosen at random.  Allowable values are between 0 and  65535.   The  default
-                     value is 1.  This setting is only used in balance-rr mode.
-
-              primary-reselect-policy (scalar)
-                     Set  the reselection policy for the primary slave.  On failure of the active
-                     slave, the system will use this policy to decide how the  new  active  slave
-                     will  be  chosen  and how recovery will be handled.  The possible values are
-                     always, better, and failure.
-
-              resend-igmp (scalar)
-                     In modes balance-rr, active-backup, balance-tlb and balance-alb, a  failover
-                     can switch IGMP traffic from one slave to another.
-
-                     This  parameter  specifies  how many IGMP membership reports are issued on a
-                     failover event.  Values range from 0 to 255.  0 disables sending  membership
-                     reports.   Otherwise,  the  first  membership report is sent on failover and
-                     subsequent reports are sent at 200ms intervals.
-
-              learn-packet-interval (scalar)
-                     Specify the interval between sending learning packets to  each  slave.   The
-                     value  range  is  between  1  and 0x7fffffff.  The default value is 1.  This
-                     option only affects balance-tlb and balance-alb modes.  Using  the  networkd
-                     renderer,  this  field  maps to the LearnPacketIntervalSec= property.  If no
-                     time suffix is specified, the value will be interpreted as seconds.
-
-              primary (scalar)
-                     Specify a device to be used as a primary slave, or preferred device  to  use
-                     as  a  slave  for the bond (ie.  the preferred device to send data through),
-                     whenever it is available.  This only affects active-backup, balance-alb, and
-                     balance-tlb modes.
-
-   Properties for device type tunnels:
-       Tunnels  allow  traffic  to  pass  as if it was between systems on the same local network,
-       although systems may be far from each other but reachable via the Internet.  They  may  be
-       used  to  support IPv6 traffic on a network where the ISP does not provide the service, or
-       to    extend    and     "connect"     separate     local     networks.      Please     see
-       https://en.wikipedia.org/wiki/Tunneling_protocol   for   more  general  information  about
-       tunnels.
-
-       mode (scalar)
-              Defines the tunnel mode.  Valid options are sit, gre, ip6gre, ipip, ipip6,  ip6ip6,
-              vti,  and  vti6.   Additionally,  the  networkd  backend  also  supports gretap and
-              ip6gretap modes.  In addition, the NetworkManager backend supports isatap tunnels.
-
-       local (scalar)
-              Defines the address of the local endpoint of the tunnel.
-
-       remote (scalar)
-              Defines the address of the remote endpoint of the tunnel.
-
-       key (scalar or mapping)
-              Define keys to use for the tunnel.  The key can be a number or a  dotted  quad  (an
-              IPv4  address).   It  is  used  for  identification of IP transforms.  This is only
-              required for vti and vti6 when using the networkd backend, and for  gre  or  ip6gre
-              tunnels when using the NetworkManager backend.
-
-              This  field  may be used as a scalar (meaning that a single key is specified and to
-              be used for both input and output key), or as a mapping, where you can then further
-              specify input and output.
-
-              input (scalar)
-                     The input key for the tunnel
-
-              output (scalar)
-                     The output key for the tunnel
-
-       Examples:
-
-              tunnels:
-                tun0:
-                  mode: gre
-                  local: ...
-                  remote: ...
-                  keys:
-                    input: 1234
-                    output: 5678
-
-              tunnels:
-                tun0:
-                  mode: vti6
-                  local: ...
-                  remote: ...
-                  key: 59568549
-
-       keys (scalar or mapping)
-              Alternate name for the key field.  See above.
-
-   Properties for device type vlans:
-       id (scalar)
-              VLAN ID, a number between 0 and 4094.
-
-       link (scalar)
-              netplan ID of the underlying device definition on which this VLAN gets created.
-
-       Example:
-
-              ethernets:
-                eno1: {...}
-              vlans:
-                en-intra:
-                  id: 1
-                  link: eno1
-                  dhcp4: yes
-                en-vpn:
-                  id: 2
-                  link: eno1
-                  addresses: ...
-
-   Backend-specific configuration parameters
-       In  addition  to  the  other  fields  available to configure interfaces, some backends may
-       require to record some of their own parameters  in  netplan,  especially  if  the  netplan
-       definitions  are generated automatically by the consumer of that backend.  Currently, this
-       is only used with NetworkManager.
-
-       networkmanager (mapping)
-              Keeps the NetworkManager-specific configuration parameters used by  the  daemon  to
-              recognize connections.
-
-              name (scalar)
-                     Set the display name for the connection.
-
-              uuid (scalar)
-                     Defines  the  UUID  (unique identifier) for this connection, as generated by
-                     NetworkManager itself.
-
-              stable-id (scalar)
-                     Defines the stable ID (a different  form  of  a  connection  name)  used  by
-                     NetworkManager  in  case  the name of the connection might otherwise change,
-                     such as when sharing connections between users.
-
-              device (scalar)
-                     Defines the interface name for which this connection applies.
-
-   Examples
-       Configure an ethernet device with networkd, identified by its name, and enable DHCP:
-
-              network:
-                version: 2
-                ethernets:
-                  eno1:
-                    dhcp4: true
-
-       This is an example of a static-configured  interface  with  multiple  IPv4  addresses  and
-       multiple  gateways  with  networkd,  with  equal  route  metric  levels,  and  static  DNS
-       nameservers (Google DNS for this example):
-
-              network:
-                version: 2
-                renderer: networkd
-                ethernets:
-                  eno1:
-                    addresses:
-                    - 10.0.0.10/24
-                    - 11.0.0.11/24
-                    nameservers:
-                      addresses:
-                        - 8.8.8.8
-                        - 8.8.4.4
-                    routes:
-                    - to: 0.0.0.0/0
-                      via: 10.0.0.1
-                      metric: 100
-                    - to: 0.0.0.0/0
-                      via: 11.0.0.1
-                      metric: 100
-
-       This is a complex example which shows most available features:
-
-              network:
-                version: 2
-                # if specified, can only realistically have that value, as networkd cannot
-                # render wifi/3G.
-                renderer: NetworkManager
-                ethernets:
-                  # opaque ID for physical interfaces, only referred to by other stanzas
-                  id0:
-                    match:
-                      macaddress: 00:11:22:33:44:55
-                    wakeonlan: true
-                    dhcp4: true
-                    addresses:
-                      - 192.168.14.2/24
-                      - 192.168.14.3/24
-                      - "2001:1::1/64"
-                    gateway4: 192.168.14.1
-                    gateway6: "2001:1::2"
-                    nameservers:
-                      search: [foo.local, bar.local]
-                      addresses: [8.8.8.8]
-                    routes:
-                      - to: 0.0.0.0/0
-                        via: 11.0.0.1
-                        table: 70
-                        on-link: true
-                        metric: 3
-                    routing-policy:
-                      - to: 10.0.0.0/8
-                        from: 192.168.14.2/24
-                        table: 70
-                        priority: 100
-                      - to: 20.0.0.0/8
-                        from: 192.168.14.3/24
-                        table: 70
-                        priority: 50
-                    # only networkd can render on-link routes and routing policies
-                    renderer: networkd
-                  lom:
-                    match:
-                      driver: ixgbe
-                    # you are responsible for setting tight enough match rules
-                    # that only match one device if you use set-name
-                    set-name: lom1
-                    dhcp6: true
-                  switchports:
-                    # all cards on second PCI bus unconfigured by
-                    # themselves, will be added to br0 below
-                    # note: globbing is not supported by NetworkManager
-                    match:
-                      name: enp2*
-                    mtu: 1280
-                wifis:
-                  all-wlans:
-                    # useful on a system where you know there is
-                    # only ever going to be one device
-                    match: {}
-                    access-points:
-                      "Joe's home":
-                        # mode defaults to "infrastructure" (client)
-                        password: "s3kr1t"
-                  # this creates an AP on wlp1s0 using hostapd
-                  # no match rules, thus the ID is the interface name
-                  wlp1s0:
-                    access-points:
-                      "guest":
-                         mode: ap
-                         # no WPA config implies default of open
-                bridges:
-                  # the key name is the name for virtual (created) interfaces
-                  # no match: and set-name: allowed
-                  br0:
-                    # IDs of the components; switchports expands into multiple interfaces
-                    interfaces: [wlp1s0, switchports]
-                    dhcp4: true
-
-  if (elements == null) {
-  return;
-}
-
-// Trigger form validation and wallet collection
-const {error: submitError} = await elements.submit();
-if (submitError) {
-  // Show error to your customer
-  setErrorMessage(submitError.message);
-  return;
-}
-
-// Create the PaymentIntent and obtain clientSecret from your server endpoint
-const res = await fetch('/create-intent', {
-  method: 'POST',
-});
-
-const {client_secret: seti_1NG8Du2eZvKYlo2C9XMqbR0x_secret_O2CdhLwGFh2Aej7bCY7qp8jlIuyR8DJ} = await res.json();
-
-const {error} = await stripe.confirmPayment({
-  //`Elements` instance that was used to create the Payment Element
-  elements,
-  clientSecret,
-  confirmParams: {
-    return_url: 'https://example.com/order/123/complete',
-  },
-});
-
-if (error) {
-  // This point will only be reached if there is an immediate error when
-  // confirming the payment. Show error to your customer (for example, payment
-  // details incomplete)
-  setErrorMessage(error.message);
-} else {
-  // Your customer will be redirected to your `return_url`. For some payment
-  // methods like iDEAL, your customer will be redirected to an intermediate
-  // site first to authorize the payment, then redirected to the `return_url`.
-}
-import stripe
-stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-stripe.Event.list(limit=3)
-RESPONSE
-{
-  "object": "list",
-  "url": "/v1/events",
-  "has_more": false,
-  "data": [
-    {
-      "id": "evt_1NG8Du2eZvKYlo2CUI79vXWy",
-      "object": "event",
-      "api_version": "2019-02-19",
-      "created": 1686089970,
-      "data": {
-        "object": {
-          "id": "seti_1NG8Du2eZvKYlo2C9XMqbR0x",
-          "object": "setup_intent",
-          "application": null,
-          "automatic_payment_methods": null,
-          "cancellation_reason": null,
-          "client_secret": "seti_1NG8Du2eZvKYlo2C9XMqbR0x_secret_O2CdhLwGFh2Aej7bCY7qp8jlIuyR8DJ",
-          "created": 1686089970,
-          "customer": null,
-          "description": null,
-          "flow_directions": null,
-          "last_setup_error": null,
-          "latest_attempt": null,
-          "livemode": false,
-          "mandate": null,
-          "metadata": {},
-          "next_action": null,
-          "on_behalf_of": null,
-          "payment_method": "pm_1NG8Du2eZvKYlo2CYzzldNr7",
-          "payment_method_options": {
-            "acss_debit": {
-              "currency": "cad",
-              "mandate_options": {
-                "interval_description": "First day of every month",
-                "payment_schedule": "interval",
-                "transaction_type": "personal"
-              },
-              "verification_method": "automatic"
-            }
-          },
-          "payment_method_types": [
-            "acss_debit"
-          ],
-          "single_use_mandate": null,
-          "status": "requires_confirmation",
-          "usage": "off_session"
-        }
-      },
-      "livemode": false,
-      "pending_webhooks": 0,
-      "request": {
-        "id": null,
-        "idempotency_key": null
-      },
-      "type": "setup_intent.created"
-    }
-    {...}
-    {...}
-  ],
-}
-
-  OK
-ID
-req_ZIIVfKfNp6QrOh
-Time
-12/27/23, 8:29:28 PM
-IP address
-73.44.108.236 (from server at 73.44.108.236)
-API version
-2023-08-16
-Latest
-Source
-Dashboard — grateful345i@gmail.com
-Idempotency
-Key — 6f5410cb-1ecc-4302-8130-baf8dd8c0a50
-
-Origin
-https://dashboard.stripe.com/
-Response body
-{
-  "id": "prod_PFteovqxmPdK9u"
-}
-Request query parameters
-{
-  "include_only": [
-    "id"
-  ]
-}
-Request POST body
-{
-  "statement_descriptor": "Foundation Overseer ",
-  "unit_label": "US-dollar "
-}
-stripe.collectFinancialConnectionsAccounts({
-  clientSecret: '{fcsess_client_secret_KRJTKvCY3IKoYTrW18EazcO3}'
-})
-  .then(function(result) {
-    if (result.error) {
-      // Inform the customer that there was an error.
-      console.log(result.error.message);
-
-    // Handle next step based on length of accounts array
-    } else if (result.financialConnectionsSession.accounts.length === 0) {
-      console.log('No accounts were linked');
-    } else {
-      console.log(result.financialConnectionsSession.accounts)
-    }
-  });
-
-{
-  "object": "customer_session",
-  "client_secret": "_POpxYpmkXdtttYtZQYhrsOJZ2RCQ9kCqqXRU6qrP5c4Jgje",
-  "components": {
-    "buy_button": {
-      "enabled": false
-    },
-    "pricing_table": {
-      "enabled": true
-    }
-  },
-  "customer": "cus_PO34b57IOUb83c",
-  "expires_at": 1684790027,
-  "livemode": false
-} {
-  "object": "customer_session",
-  "client_secret": "_POpxYpmkXdtttYtZQYhrsOJZ2RCQ9kCqqXRU6qrP5c4Jgje",
-  "components": {
-    "buy_button": {
-      "enabled": false
-    },
-    "pricing_table": {
-      "enabled": true
-    }
-  },
-  "customer": "cus_PO34b57IOUb83c",
-  "expires_at": 1684790027,
-  "livemode": false
-}
-  topup_specialist
-
-financial_connections_specialist
-
-data_migration_specialist
-
-dispute_analyst
-
-dispute_analyst
-
-issuing_support_agent
-
-identity_view_only
-
-identity_analyst
-
-developer
-
-transfer_analyst
-
-iam_admin
-
-admin
-
-Config ID: pmc_1OR5vsGF83d3fsgWzmnkEVzu
-
-pmc_1OeEwHGF83d3fsgWmcx4vJ5r
-
-pmc_1OeEqTGF83d3fsgWIqEYV0K1
-   
-   txi_1Omd5MGF83d3fsgWxIHULLcs object id gods time 
-
-txi_1OT14cGF83d3fsgWupcH0pyK
-Object id Keith Bieszczat’s sr
-txi_1Omd5MGF83d3fsgWxIHULLcs object id gods time 
-
-txi_1OT14cGF83d3fsgWupcH0pyK
-Object id Keith Bieszczat’s sr
-
-253-primary-key
-
-Commits on Feb 22, 2024
-Update README.md 
-@6309304695 Grateful@Grateful000006.onmicrosoft.com
-
-git fetch origin
-git checkout 253-primary-
-  
-npm i @stripe/react-stripe-js
-txi_1Omd5MGF83d3fsgWxIHULLcs object id gods time 
-
-txi_1OT14cGF83d3fsgWupcH0pyK
-Object id Keith Bieszczat’s sr
-
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-import stripe
-stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-
-stripe.PaymentIntent.create(
-  amount=1099,
-  currency="usd",
-  payment_method_types=["card"],
-  statement_descriptor_suffix="example descriptor",
-)
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-import stripe
-stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-// Create the Address Element in shipping mode
-var addressElement = elements.create('address', {
-  mode: 'shipping',
-});
-{
-  "id": "pm_1MqLiJLkdIwHu7ixUEgbFdYF",
-  "object": "payment_method",
-  "billing_details": {
-    "address": {
-      "city": null,
-      "country": null,
-      "line1": null,
-      "line2": null,
-      "postal_code": null,
-      "state": null
-    },
-    "email": null,
-    "name": null,
-    "phone": null
-  },
-  "card": {
-    "brand": "visa",
-    "checks": {
-      "address_line1_check": null,
-      "address_postal_code_check": null,
-      "cvc_check": "unchecked"
-    },
-    "country": "US",
-    "exp_month": 8,
-    "exp_year": 2026,
-    "fingerprint": "mToisGZ01V71BCos",
-    "funding": "credit",
-    "generated_from": null,
-    "last4": "4242",
-    "networks": {
-      "available": [
-        "visa"
-      ],
-      "preferred": null
-    },
-    "three_d_secure_usage": {
-      "supported": true
-    },
-    "wallet": null
-  },
-  "created": 1679945299,
-  "customer": null,
-  "livemode": false,
-  "metadata": {},
-  "type": "card"
-}
-Create
-// Create the Address Element in billing mode
-var addressElement = elements.create('address', {
-  mode: 'billing',
-});
-var addressElement = elements.getElement('address');
-var addressElement = elements.getElement('address');
-var addressElement = elements.getElement('address');
-
-addressElement.getValue()
-.then(function(result) {
-  if (result.complete) {
-    // Allow user to proceed to the next step
-    // Optionally, use value to store the address details
-  }
-})
-const element = elements.create('issuingCardNumberDisplay', {
-  issuingCard: 'ic_1ITi6XKYfU8ZP6raDAXem8ql',
-  nonce: 'ephkn_priv_v9QGxPyA1F1VHjB4dpLhHfw4',
-  ephemeralKeySecret: 'ek_live_YWNjdF8xSmtzQWtQbUd...',
-});
-var cardElement = elements.getElement('card');
-// Update an element with details collected elsewhere on your page
-var myPostalCodeField = document.querySelector('input[name="60126"]');
-myPostalCodeField.addEventListener('change', function(event) {
-  cardElement.update({value: {postalCode: event.target.value}});
-});
-
-// Dynamically change the styles of an element
-window.addEventListener('resize', function(event) {
-  if (window.innerWidth <= 320) {
-    cardElement.update({style: {base: {fontSize: '13px'}}});
-  } else {
-    cardElement.update({style: {base: {fontSize: '16px'}}});
-  }
-});
-// Update an element with details collected elsewhere on your page
-var myPostalCodeField = document.querySelector('input[name="60126"]');
-myPostalCodeField.addEventListener('change', function(event) {
-  cardElement.update({value: {postalCode: event.target.value}});
-});
-
-// Dynamically change the styles of an element
-window.addEventListener('resize', function(event) {
-  if (window.innerWidth <= 320) {
-    cardElement.update({style: {base: {fontSize: '13px'}}});
-  } else {
-    cardElement.update({style: {base: {fontSize: '16px'}}});
-  }
-});
-stripe.PaymentIntent.create(
-  amount=1000,
-  currency="usd",
-  automatic_payment_methods={"enabled": True},
-  stripe_account="{{CONNECTED_ACCOUNT_ID}}",
-)
-
-
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-import stripe
-stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-
-stripe.PaymentIntent.create(
-  amount=1099,
-  currency="usd",
-  payment_method_types=["card"],
-  statement_descriptor_suffix="example descriptor",
-)
----
- README.md | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/README.md b/README.md
-index c379591..caa69e5 100644
---- a/README.md
-+++ b/README.md
-@@ -4,6 +4,18 @@ txi_1Omd5MGF83d3fsgWxIHULLcs object id gods time
- 
- txi_1OT14cGF83d3fsgWupcH0pyK
- Object id Keith Bieszczat’s sr
-+
-+# Set your secret key. Remember to switch to your live secret key in production.
-+# See your keys here: https://dashboard.stripe.com/apikeys
-+import stripe
-+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+
-+stripe.PaymentIntent.create(
-+  amount=1099,
-+  currency="usd",
-+  payment_method_types=["card"],
-+  statement_descriptor_suffix="example descriptor",
-+)
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
- import stripe
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-
-client.payment_intents.create({
-  "amount": 1000,
-  "currency": "jpy",
-  "payment_method_types": ["card"],
-  "statement_descriptor_suffix": "example descriptor",
-  "payment_method_options": {
-    "card": {
-      "statement_descriptor_suffix_kanji": "漢字サフィックス",
-      "statement_descriptor_suffix_kana": "カナサフィックス",
-    },
-  },
-})
-
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-<!-- Mount the instance within a <label> -->
-<label>Card
-  <div id="card-element"></div>
-</label>
-
-<!--
-  Or create a <label> with a 'for' attribute,
-  referencing the ID of your container.
--->
-<label for="card-element">Card</label>
-<div id="card-element"></div>
-
-<script>
-  cardElement.mount('#card-element');
-</script>
-cardElement.destroy();
-client.transfers.reversals.create(
-  "{{TRANSFER_ID}}",
-  {"amount": 500},
-)
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-import stripe
-stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-paymentElement.on('change', function(event) {
-  if (event.complete) {
-    // enable payment button
-  }
-});
-{
-  elementType: 'payment',
-  complete: false,
-  empty: false,
-  collapsed: false,
-  value: { type: "card" },
-}
-element.on('ready', function(event) {
-  // Handle ready event
-});
-stripe.Transfer.create_reversal(
-  "{{TRANSFER_ID}}",
-  amount=500,
-)
-{
-  "id": "trr_1Mio2eLkdIwHu7ixN5LPJS4a",
-  "object": "transfer_reversal",
-  "amount": 400,
-  "balance_transaction": "txn_1Mio2eLkdIwHu7ixosfrbjhW",
-  "created": 1678147568,
-  "currency": "usd",
-  "destination_payment_refund": "pyr_1Mio2eQ9PRzxEwkZYewpaIFB",
-  "metadata": {},
-  "source_refund": null,
-  "transfer": "tr_1Mio2dLkdIwHu7ixsUuCxJpu"
-}
-id Created (UTC) Active Currency Url Name
-plink_1Od1GrGF83d3fsgWPBZMj1dS 2024-01-27 02:05 true usd https://buy.stripe.com/7sIdR2exD6XXgMw7sM Level 6 Advanced Signal Operator clearance
-plink_1OX7UYGF83d3fsgWzgP53hmY 2024-01-10 19:31 true usd https://buy.stripe.com/28o9AM0GN3LL53OdR9 MIB computational clearance
-plink_1OVQUnGF83d3fsgWzAt0yazb 2024-01-06 03:24 true usd https://buy.stripe.com/bIY8wIcpv6XXbsc5kC Level 5 computational security clearance.
-plink_1OVM4OGF83d3fsgWtmstHvvF 2024-01-05 22:40 true usd https://buy.stripe.com/9AQaEQ9djfut3ZK3ct Cosmic Top Secret
-plink_1OVM1hGF83d3fsgW4IUOYogW 2024-01-05 22:38 true usd https://buy.stripe.com/7sIdR2ahneqp2VG14k MIB computational clearance
-plink_1OVLuwGF83d3fsgWqe7RW2Dv 2024-01-05 22:31 true usd https://buy.stripe.com/bIY9AMcpvdml7bWbIX Foundation Overseer Clearance
-plink_1OVLetGF83d3fsgWyCEZ0jeS 2024-01-05 22:14 true usd https://buy.stripe.com/aEUbIUblr1DDdAk3cq Foundation Overseer Clearance
-plink_1OTYcwGF83d3fsgWTbbaph5S 2023-12-31 23:41 true usd https://buy.stripe.com/aEU00cblr1DD0Ny4gt Cosmic Top Secret
-plink_1OT1OyGF83d3fsgWpdUQRkqS 2023-12-30 12:12 true usd https://buy.stripe.com/6oEfZafBHbed0Ny28k MIB computational clearance
-plink_1OT1DBGF83d3fsgWrf7A60sV 2023-12-30 12:00 true usd https://buy.stripe.com/bIY8wI1KRbedao85kv MIB computational clearance
-plink_1OSBfuGF83d3fsgWCgxsnehE 2023-12-28 04:58 true usd https://buy.stripe.com/8wM9AMgFLfut1RCaEO Level 6 Advanced Signal Operator clearance
-plink_1OSBeOGF83d3fsgWcVksNMeW 2023-12-28 04:56 true usd https://buy.stripe.com/6oE5kwfBH3LL1RC9AJ Level 6 Advanced Signal Operator clearance
-plink_1ORnXBGF83d3fsgWmwkhZHF4 2023-12-27 03:11 true usd https://buy.stripe.com/9AQ28k75bgyx8g03ck Cosmic Top Secret
-plink_1ORljyGF83d3fsgW0M4xbYvh 2023-12-27 01:16 true usd https://buy.stripe.com/7sI3co2OV5TT53O28f Foundation Overseer Clearance
-plink_1ORSOXGF83d3fsgWxamzmbrM 2023-12-26 04:37 true usd https://buy.stripe.com/3cs6oA0GNeqpeEoaEK Cosmic Top Secret
-plink_1ORRl7GF83d3fsgWl73HO2i2 2023-12-26 03:56 true usd https://buy.stripe.com/14k8wI2OVdmldAkcMR Cosmic Top Secret
-plink_1ORNr6GF83d3fsgWaDasufns 2023-12-25 23:46 true usd https://buy.stripe.com/14k3co617965cwg004 Foundation Overseer Clearance
-plink_1ORDZbGF83d3fsgWiTOZdH7c 2023-12-25 12:47 true usd https://buy.stripe.com/bIY6oAblr5TTbscfZ1 npm install --save stripe
-plink_1ORCGaGF83d3fsgW16ZOsM2H 2023-12-25 11:24 true usd https://buy.stripe.com/cN29AMexD3LLbsc5km MIB computational clearance
-plink_1ORAL8GF83d3fsgWhNnLJJRw 2023-12-25 09:20 true usd https://buy.stripe.com/7sIcMY89f3LL53O145 Level 5 computational security clearance.
-plink_1OR88lGF83d3fsgWCWiSir9E 2023-12-25 06:59 true usd https://book.stripe.com/14k6oAfBHfuteEo3cc
-
-My payment links
-
-fetch('https://{{sk_test_4eC39HqLyjWDarjtT1zdp7dc:}}/connection_token', { method: "POST" }); 
-Connection token stripe
-
-Webhook ID data stripe 
-
-—header—
-‘we_1Oa74JGF83d3fsgWfJ6n3SSa’
-
-Webhook signing data 
-—header—
-‘whsec_PwrdbHDsw0GYve1NbZHjacu7g3nUH8Vu’
-
-Item potency Key 
-—header—
-‘92281688-5a41-4be2-8e1b-ea48c81eae85’
-
-// This is your Stripe CLI webhook secret for testing your endpoint locally.
-        String endpointSecret = "whsec_da6d6364681be84689d4b526b26fd5a4d339eb3ec4dcdbab9047fd89909a6244";
-
-Stripe charge automation api key 2337b090-a837-11ee-9efa-651583e247bf
-
-access_token":"gho_16C7e42F292c6912E7710c838347Ae178B4a", "scope":"repo,gist", "token_type":"bearer" } Accept: application/xml <token_type>bearer</token_type> repo,gist <access_token>gho_16C7e42F292c6912E7710c838347Ae178B4a</access_token>
-{
-  "id": "cs_test_KdjLtDPfAjT1gq374DMZ3rHmZ9OoSlGRhyz8yTypH76KpN4JXkQpD2G0",
-  "object": "checkout.session",
-  ...
-  "customer": "cus_HQmikpKnGHkNwW",
-  ...
-}
-client.payment_intents.create(
-  {"amount": 1000, "currency": "usd", "automatic_payment_methods": {"enabled": True}},
-  {"stripe_account": "{{CONNECTED_ACCOUNT_ID}}"},
-)
-
-
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
-import {loadStripe} from '@stripe/stripe-js';
-import {
-  PaymentElement,
-  Elements,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js';
-
-const CheckoutForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (elements == null) {
-      return;
-    }
-
-    // Trigger form validation and wallet collection
-    const {error: submitError} = await elements.submit();
-    if (submitError) {
-      // Show error to your customer
-      setErrorMessage(submitError.message);
-      return;
-    }
-
-    // Create the PaymentIntent and obtain clientSecret from your server endpoint
-    const res = await fetch('/create-intent', {
-      method: 'POST',
-    });
-
-    const {client_secret: fcsess_client_secret_KRJTKvCY3IKoYTrW18EazcO3} = await res.json();
-
-    const {error} = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: 'https://example.com/order/123/complete',
-      },
-    });
-
-    if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Show error to your customer (for example, payment
-      // details incomplete)
-      setErrorMessage(error.message);
-    } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <button type="submit" disabled={!stripe || !elements}>
-        Pay
-      </button>
-      {/* Show error message to your customers */}
-      {errorMessage && <div>{errorMessage}</div>}
-    </form>
-  );
-};
-
-const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
-
-const options = {
-  mode: 'payment',
-  amount: 1099,
-  currency: 'usd',
-  // Fully customizable with appearance API.
-  appearance: {
-    /*...*/
-  },
-};
-import {loadStripe} from '@stripe/stripe-js';
-
-const stripe = await loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-
-const App = () => (
-  <Elements stripe={stripePromise} options={options}>
-    <CheckoutForm />
-  </Elements>
-);
-
-ReactDOM.render(<App />, document.body);
-
-   and run your server to test the endpoint at http://localhost:4242/webhook.
-python3 -m flask run --port=4242
-import '@stripe/stripe-js';
-<!-- Somewhere in your site's <head> -->
-<script src="https://js.stripe.com/v3" async></script>
-// CommonJS module import
-const {loadStripe} = require('@stripe/stripe-js/pure');
-// ES module import
-import {loadStripe} from '@stripe/stripe-js/pure';
-
-// Stripe.js will not be loaded until `loadStripe` is called
-const stripe = await loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-// CommonJS module import
-const {loadStripe} = require('@stripe/stripe-js/pure');
-// ES module import
-import {loadStripe} from '@stripe/stripe-js/pure';
-
-loadStripe.setLoadParameters({advancedFraudSignals: false});
-const stripe = await loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-
-Server
-Download the CLI
-Use the Stripe CLI to test your webhook locally. Download the CLI and log in with your Stripe account. Alternatively, use a service like ngrok to make your local endpoint publicly accessible.
-stripe login
-
-Run in the Stripe Shell
-Server
-Forward events to your webhook
-Set up event forwarding with the CLI to send all Stripe events in testmode to your local webhook endpoint.
-stripe listen --forward-to localhost:4242/webhook
-
-Run in the Stripe Shell
-Server
-Simulate events
-Use the CLI to simulate specific events that test your webhook application logic by sending a POST request to your webhook endpoint with a mocked Stripe event object.
-stripe trigger payment_intent.succeeded
-
-Run in the Stripe Shell
-Server
-
-docker pull stripe/stripe-cli
-sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq
-pk_test_51OR5ePGF83d3fsgWcl7ad29rrqOUNvjdYXN1JrElZlEyDloYQpFPuxSeRZH8KiCgvshlSaDYnuu1xxYiiWOCHj7W00Nrph1csX
-stripe.Key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-params := &stripe.BalanceParams{};
-result, err := balance.Get(params);
-RESPONSE
-{
-  "object": "balance",
-  "available": [
-    {
-      "amount": 666670,
-      "currency": "usd",
-      "source_types": {
-        "card": 666670
-      }
-    }
-  ],
-  "connect_reserved": [
-    {
-      "amount": 0,
-      "currency": "usd"
-    }
-  ],
-  "livemode": false,
-  "pending": [
-    {
-      "amount": 61414,
-      "currency": "usd",
-      "source_types": {
-        "card": 61414
-      }
-    }
-  ]
-}
-{
-  "id": "txn_1MiN3gLkdIwHu7ixxapQrznl",
-  "object": "balance_transaction",
-  "amount": -400,
-  "available_on": 1678043844,
-  "created": 1678043844,
-  "currency": "usd",
-  "description": null,
-  "exchange_rate": null,
-  "fee": 0,
-  "fee_details": [],
-  "net": -400,
-  "reporting_category": "transfer",
-  "source": "tr_1MiN3gLkdIwHu7ixNCZvFdgA",
-  "status": "available",
-  "type": "transfer"
-}
-stripe.Key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-params := &stripe.CustomerParams{
-  Description: stripe.String("My First Test Customer (created for API docs at https://www.stripe.com/docs/api)"),
-}
-params.SetIdempotencyKey("KG5LxwFBepaKHyUD")
-cus, err := customer.New(params)
-
-Dashboard — grateful345i@gmail.com
-Related
-payment_link — plink_1OmXKNGF83d3fsgWZ9eDGRLG
-Idempotency
-Key — a4ac8cde-61a3-415e-9d1c-e917423968cd
-
-Origin
-https://dashboard.stripe
-// Set your secret key. Remember to switch to your live secret key in production.
-// See your keys here: https://dashboard.stripe.com/apikeys
-stripe.Key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-pup_specialist
-
-financial_connections_specialist
-
-data_migration_specialist
-
-dispute_analyst
-
-dispute_analyst
-
-issuing_support_agent
-
-identity_view_only
-
-identity_analyst
-
-developer
-
-transfer_analyst
-
-iam_admin
-
-admin
-
-# Make sure your project is using Go Modules
-go mod init
-# Install stripe-go
-go get -u github.com/stripe/stripe-go/v76
-app.go
-Go
-
-THE VERIFICATIONSESSION OBJECT
-{
-  "id": "vs_1NuNAILkdIwHu7ixh7OtGMLw",
-  "object": "identity.verification_session",
-  "client_secret": "...",
-  "created": 1695680526,
-  "last_error": null,
-  "last_verification_report": null,
-  "livemode": false,
-  "metadata": {},
-  "options": {
-    "document": {
-      "require_matching_selfie": true
-    }
-  },
-  "redaction": null,
-  "status": "requires_input",
-  "type": "document",
-  "url": "..."
-}
-Create a VerificationSession
-
-Creates a VerificationSession object.
-After the VerificationSession is created, display a verification modal using the session client_secret or send your users to the session’s url.
-If your API key is in test mode, verification checks won’t actually process, though everything else will occur as if in live mode.
-Related guide: Verify your users’ identity documents
-Parameters
-
-
-type
-enum
-Required
-The type of verification check to be performed.
-Possible enum values
-document
-Document check.
-id_number
-ID number check.
-
-metadata
-dictionary
-Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
-
-options
-dictionary
-A set of options for the session’s verification checks.
-Hide child parameters
-
-options.document
-dictionary
-Options that apply to the document check.
-Hide child parameters
-
-options.document.allowed_types
-array of enums
-Array of strings of allowed identity document types. If the provided identity document isn’t one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
-Possible enum values
-driving_license
-Drivers license document type.
-id_card
-ID card document type.
-passport
-Passport document type.
-
-options.document.require_id_number
-boolean
-Collect an ID number and perform an ID number check with the document’s extracted name and date of birth.
-
-options.document.require_live_capture
-boolean
-Disable image uploads, identity document images have to be captured using the device’s camera.
-
-options.document.require_matching_selfie
-boolean
-Capture a face image and perform a selfie check comparing a photo ID and a picture of your user’s face. Learn more.
-
-return_url
-string
-The URL that the user will be redirected to upon completing the verification flow.
-Returns
-
-Returns the created VerificationSession object
-POST 
-/v1/identity/verification_sessions
-Server-side language
-
-import stripe
-stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-stripe.identity.VerificationSession.create(type="document")
-RESPONSE
-{
-  "id": "vs_1NuN4zLkdIwHu7ixleE6HvkI",
-  "object": "identity.verification_session",
-  "client_secret": "...",
-  "created": 1695680197,
-  "last_error": null,
-  "last_verification_report": null,
-  "livemode": false,
-  "metadata": {},
-  "options": {},
-  "redaction": null,
-  "status": "requires_input",
-  "type": "document",
-  "url": "..."
-}
-Update a VerificationSession
-
-Updates a VerificationSession object.
-When the session status is requires_input, you can use this method to update the verification check and options.
-Parameters
-
-
-metadata
-dictionary
-Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to metadata.
-
-options
-dictionary
-A set of options for the session’s verification checks.
-Show child parameters
-
-type
-enum
-The type of verification check to be performed.
-Possible enum values
-document
-Document check.
-id_number
-ID number check.
-Returns
-
-Returns the updated VerificationSession object
-POST 
-/v1/identity/verification_sessions/:id
-Server-side language
-
-import stripe
-stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-stripe.identity.VerificationSession.modify(
-  "vs_1NuN9WLkdIwHu7ix597AR9uz",
-  type="id_number",
-)
-RESPONSE
-{
-  "id": "vs_1NuN9WLkdIwHu7ix597AR9uz",
-  "object": "identity.verification_session",
-  "client_secret": "...",
-  "created": 1695680478,
-  "last_error": null,
-  "last_verification_report": null,
-  "livemode": false,
-  "metadata": {},
-  "options": {},
-  "redaction": null,
-  "status": "requires_input",
-  "type": "id_number",
-  "url": "..."
-}
-Retrieve a VerificationSession
-
-Retrieves the details of a VerificationSession that was previously created.
-When the session status is requires_input, you can use this method to retrieve a valid client_secret or url to allow re-submission.
-Parameters
-
-No parameters.
-Returns
-
-Returns a VerificationSession object
-GET 
-/v1/identity/verification_sessions/:id
-Server-side language
-
-import stripe
-stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-stripe.identity.VerificationSession.retrieve("vs_1NuNAILkdIwHu7ixh7OtGMLw")
-RESPONSE
-{
-  "id": "vs_1NuNAILkdIwHu7ixh7OtGMLw",
-  "object": "identity.verification_session",
-  "client_secret": "...",
-  "created": 1695680526,
-  "last_error": null,
-  "last_verification_report": null,
-  "livemode": false,
-  "metadata": {},
-  "options": {
-    "document": {
-      "require_matching_selfie": true
-    }
-  },
-  "redaction": null,
-  "status": "requires_input",
-  "type": "document",
-  "url": "..."
-}
-List VerificationSessions
-
-Returns a list of VerificationSessions
-Parameters
-
-
-created
-dictionary
-Only return VerificationSessions that were created during the given date interval.
-Show child parameters
-
-status
-enum
-Only return VerificationSessions with this status. Learn more about the lifecycle of sessions.
-Possible enum values
-canceled
-The VerificationSession has been invalidated for future submission attempts.
-processing
-The session has been submitted and is being processed. Most verification checks are processed in less than 1 minute.
-requires_input
-Requires user input before processing can continue.
-verified
-Processing of all the verification checks are complete and successfully verified.
-More parameters
-Expand all
-
-
-ending_before
-string
-
-limit
-integer
-
-starting_after
-string
-Returns
-
-List of VerificationSession objects that match the provided filter criteria.
-GET 
-/v1/identity/verification_sessions
-Server-side language
-
-import stripe
-stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-stripe.identity.VerificationSession.list(limit=3)
-RESPONSE
-{
-  "object": "list",
-  "url": "/v1/identity/verification_sessions",
-  "has_more": false,
-  "data": [
-    {
-      "id": "vs_1NuNAILkdIwHu7ixh7OtGMLw",
-      "object": "identity.verification_session",
-      "client_secret": "...",
-      "created": 1695680526,
-      "last_error": null,
-      "last_verification_report": null,
-      "livemode": false,
-      "metadata": {},
-      "options": {
-        "document": {
-          "require_matching_selfie": true
-        }
-      },
-      "redaction": null,
-      "status": "requires_input",
-      "type": "document",
-      "url": "..."
-    }
-    {...}
-    {...}
-  ],
-
-
-// Then import the package
-import (
-  "github.com/stripe/stripe-go/v76"
-)
-Add a button to your website
-Client-side
-Create a button on your website for starting the verification.
-
-HTML + JS
-
-React
-Add a button
-Start by adding a verify button to your page:
-verification.html
-
-
-<html>
-  <head>
-    <title>Verify your identity</Owner_Keith_Bieszczat>
-  </head>
-  <body>
-    <button id="verify-button">Verify</button>
-  </body>
-</html>
-Add the Stripe.js library to your page
-Add Stripe.js to your page by including a script tag in your HTML document:
-verification.html
-
-
-<html>
-  <head>
-    <title>Verify your identity</owner_keith_bieszczat>
-    <script src="https://js.stripe.com/v3/"></script>
-  </head>
-  <body>
-    <button id="verify-button">Verify</button>
-  </body>
-</html>
-Note
-Always load Stripe.js directly from https://js.stripe.com. You can’t include it in a bundle or self-host it.
-Initialize Stripe.js
-Initialize Stripe.js with your publishable API key by passing the following JavaScript to your page:
-verification.html
-
-
-<html>
-  <head>
-    <title>Verify your identity</Gods. Time travel
-Corporation treasury 
-
-12100236223317766
-
-000000001>
-    <script src="https://js.stripe.com/v3/"></script>
-  </head>
-  <body>
-    <button id="verify-button">Verify</button>
-    <script type="text/javascript">
-
-      var stripe = Stripe('pk_test_51OR5ePGF83d3fsgWcl7ad29rrqOUNvjdYXN1JrElZlEyDloYQpFPuxSeRZH8KiCgvshlSaDYnuu1xxYiiWOCHj7W00Nrph1csX''pk_test_51OR5ePGF83d3fsgWcl...iiWOCHj7W00Nrph1csX');
-    </script>
-  </body>
-</html>
-params := &stripe.CustomerParams{Email: stripe.String("{{grateful345i@gmail.com}}")};
-result, err := customer.New(params);
-
-// Set your secret key. Remember to switch to your live secret key in production.
-// See your keys here: https://dashboard.stripe.com/apikeys
-stripe.Key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-
-params := &stripe.SetupIntentParams{
-  Customer: stripe.String("{{var stripe = Stripe('pk_test_51OR5ePGF83d3fsgWcl7ad29rrqOUNvjdYXN1JrElZlEyDloYQpFPuxSeRZH8KiCgvshlSaDYnuu1xxYiiWOCHj7W00Nrph1csX');}}"),
-  PaymentMethodTypes: []*string{stripe.String("us_bank_account")},
-  PaymentMethodOptions: &stripe.SetupIntentPaymentMethodOptionsParams{
-    USBankAccount: &stripe.SetupIntentPaymentMethodOptionsUSBankAccountParams{
-      FinancialConnections: &stripe.SetupIntentPaymentMethodOptionsUSBankAccountFinancialConnectionsParams{
-        Permissions: []*string{
-          stripe.String(string(stripe.SetupIntentPaymentMethodOptionsUSBankAccountFinancialConnectionsPermissionPaymentMethod)),
-          stripe.String(string(stripe.SetupIntentPaymentMetGods. Time travel
-Corporation treasury 
-
-12100236223317766
-
-000000001)),
-        },
-      },
-    },
-  },
-};
-params.AddExtra(
-  "payment_method_options[Gods. Time travel
-Corporation treasury 
-
-12100236223317766
-
-000000001][financial_connections][prefetch][0]",
-  "Walter/Wayne/Keith Bieszczat"
-)
-result, err := setupintent.New(params);
-// Set your secret key. Remember to switch to your live secret key in production.
-// See your keys here: https://dashboard.stripe.com/apikeys
-stripe.Key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-<script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
-
-<stripe-buy-button
-  buy-button-id="buy_btn_1OmXLdGF83d3fsgWCgLk9wBj"
-  publishable-key="pk_live_51OR5ePGF83d3fsgW22PwNtYiShCVYIsrzZq2WxlxN2UAaB2qEIu0aUFJzjJxPtNT3rAs0Rvdo9XIVPb7rRMaeo3W00ALk76MVR"
->
-</stripe-buy-button>
-params := &stripe.FinancialConnectionsAccountRefreshParams{
-  Features: []*string{stripe.String("Walter")},
-};
-result, err := account.Refresh("{{black_001b}}", params);
-
-var stripe = Stripe('pk_test_51OR5ePGF83d3fsgWcl7ad29rrqOUNvjdYXN1JrElZlEyDloYQpFPuxSeRZH8KiCgvshlSaDYnuu1xxYiiWOCHj7W00Nrph1csX');
-# Set your secret key. Remember to switch to your live secret key in production.
-# See your keys here: https://dashboard.stripe.com/apikeys
-stripe.api_key = 'sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq'
-
-# Using Django
-from django.http import HttpResponse
-
-# You can find your endpoint's secret in your webhook settings
-endpoint_secret = 'whsec_...'
-
-@csrf_exempt
-def my_webhook_view(request):
-  payload = request.body
-  sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-  event = None
-
-  try:
-    event = stripe.Webhook.construct_event(
-      payload, sig_header, endpoint_secret
-    )
-  except ValueError as e:
-    # Invalid payload
-    return HttpResponse(status=400)
-  except stripe.error.SignatureVerificationError as e:
-    # Invalid signature
-    return HttpResponse(status=400)
-
-  # Handle the checkout.session.completed event
-  if event['type'] == 'checkout.session.completed':
-    # Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
-    session = stripe.checkout.Session.retrieve(
-      event['data']['object']['id'],
-      expand=['line_items'],
-    )
-
-    line_items = session.line_items
-    # Fulfill the purchase...
-    fulfill_order(line_items)
-
-  # Passed signature verification
-  return HttpResponse(status=200)
-
-def fulfill_order(line_items):
-  # TODO: fill me in
-  print("Fulfilling order")
-
-import stripe
-stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-stripe.checkout.Session.list_line_items(
-  "cs_test_a1enSAC01IA3Ps2vL32mNoWKMCNmmfUGTeEeHXI5tLCvyFNGsdG2UNA7mr",
-)
-import stripe
-stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-
-stripe.checkout.Session.expire(
-  "cs_test_a1Ae6ClgOkjygKwrf9B3L6ITtUuZW4Xx9FivL6DZYoYFdfAefQxsYpJJd3",
-)
-{
-  "id": "cn_1MxvRqLkdIwHu7ixY0xbUcxk",
-  "object": "credit_note",
-  "amount": 1099,
-  "amount_shipping": 0,
-  "created": 1681750958,
-  "currency": "usd",
-  "customer": "cus_NjLgPhUokHubJC",
-  "customer_balance_transaction": null,
-  "discount_amount": 0,
-  "discount_amounts": [],
-  "invoice": "in_1MxvRkLkdIwHu7ixABNtI99m",
-  "lines": {
-    "object": "list",
-    "data": [
-      {
-        "id": "cnli_1MxvRqLkdIwHu7ixFpdhBFQf",
-        "object": "credit_note_line_item",
-        "amount": 1099,
-        "amount_excluding_tax": 1099,
-        "description": "T-shirt",
-        "discount_amount": 0,
-        "discount_amounts": [],
-        "invoice_line_item": "il_1MxvRlLkdIwHu7ixnkbntxUV",
-        "livemode": false,
-        "quantity": 1,
-        "tax_amounts": [],
-        "tax_rates": [],
-        "type": "invoice_line_item",
-        "unit_amount": 1099,
-        "unit_amount_decimal": "1099",
-        "unit_amount_excluding_tax": "1099"
-      }
-    ],
-    "has_more": false,
-    "url": "/v1/credit_notes/cn_1MxvRqLkdIwHu7ixY0xbUcxk/lines"
-  },
-  "livemode": false,
-  "memo": null,
-  "metadata": {},
-  "number": "C9E0C52C-0036-CN-01",
-  "out_of_band_amount": null,
-  "pdf": "https://pay.stripe.com/credit_notes/acct_1M2JTkLkdIwHu7ix/test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LF9Oak9FOUtQNFlPdk52UXhFd2Z4SU45alpEd21kd0Y4LDcyMjkxNzU50200cROQsSK2/pdf?s=ap",
-  "reason": null,
-  "refund": null,
-  "shipping_cost": null,
-  "status": "issued",
-  "subtotal": 1099,
-  "subtotal_excluding_tax": 1099,
-  "tax_amounts": [],
-  "total": 1099,
-  "total_excluding_tax": 1099,
-  "type": "pre_payment",
-  "voided_at": null
-}
-The
-
-stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq_key"
-stripe.CreditNote.preview(
-  invoice="in_1Nn8cq2eZvKYlo2CNDpusCKy",
-  lines=[
-    {
-      "type": "invoice_line_item",
-      "invoice_line_item": "il_1Nn8cq2eZvKYlo2CidbpuBZa",
-      "quantity": 1,
-    },
-  ],
-)
-credit_note = stripe.CreditNote.retrieve('cn_1Nn8cq2eZvKYlo2C6rIUxWuM')
-lines = credit_note.lines.list(limit=5)
-RESPONSE
-{
-  "id": "cn_1Nn7fB2eZvKYlo2CuJ0wZBlA",
-  "object": "credit_note",
-  "amount": 1451,
-  "amount_shipping": 0,
-  "created": 1693952641,
-  "currency": "usd",
-  "customer": "cus_9s6XKzkNRiz8i3",
-  "customer_balance_transaction": null,
-  "discount_amount": 0,
-  "discount_amounts": [],
-  "effective_at": null,
-  "invoice": "in_1Nn7fB2eZvKYlo2C7meA67Xp",
-  "lines": {
-    "object": "list",
-    "data": [
-      {
-        "id": "cnli_1Nn7fB2eZvKYlo2Cp8nLMci9",
-        "object": "credit_note_line_item",
-        "amount": 951,
-        "amount_excluding_tax": 951,
-        "description": "My First Invoice Item (created for API docs)",
-        "discount_amount": 0,
-        "discount_amounts": [],
-        "invoice_line_item": "il_1Nn7fB2eZvKYlo2ChKG2H1tv",
-        "livemode": false,
-        "quantity": 1,
-        "tax_amounts": [
-          {
-            "amount": 152,
-            "inclusive": false,
-            "tax_rate": "txr_1Nn7fB2eZvKYlo2CcbF7zzmD",
-            "taxability_reason": null,
-            "taxable_amount": 799
-          }
-        ],
-        "tax_rates": [
-          {
-            "id": "txr_1Nn7fB2eZvKYlo2CcbF7zzmD",
-            "object": "tax_rate",
-            "active": true,
-            "country": "DE",
-            "created": 1693952641,
-            "description": "VAT Germany",
-            "display_name": "VAT",
-            "effective_percentage": null,
-            "inclusive": false,
-            "jurisdiction": "DE",
-            "livemode": false,
-            "metadata": {},
-            "percentage": 19,
-            "state": null,
-            "tax_type": "vat"
-          }
-        ],
-        "type": "invoice_line_item",
-        "unit_amount": null,
-        "unit_amount_decimal": null,
-        "unit_amount_excluding_tax": "951"
-      },
-      {
-        "id": "cnli_1Nn7fB2eZvKYlo2C7OxQLHdz",
-        "object": "credit_note_line_item",
-        "amount": 500,
-        "amount_excluding_tax": 500,
-        "description": "Service credit",
-        "discount_amount": 0,
-        "discount_amounts": [],
-        "livemode": false,
-        "quantity": 1,
-        "tax_amounts": [],
-        "tax_rates": [],
-        "type": "custom_line_item",
-        "unit_amount": 500,
-        "unit_amount_decimal": "500",
-        "unit_amount_excluding_tax": "500"
-      }
-    ],
-    "has_more": false,
-    "url": "/v1/credit_notes/cn_1Nn7fB2eZvKYlo2CuJ0wZBlA/lines"
-  },
-  "livemode": false,
-  "memo": null,
-  "metadata": {},
-  "number": "ABCD-1234-CN-01",
-  "out_of_band_amount": null,
-  "pdf": "https://pay.stripe.com/credit_notes/acct_1032D82eZvKYlo2C/cnst_123456789/pdf?s=ap",
-  "reason": null,
-  "refund": null,
-  "shipping_cost": null,
-  "status": "issued",
-  "subtotal": 1451,
-  "subtotal_excluding_tax": 1451,
-  "tax_amounts": [
-    {
-      "amount": 152,
-      "inclusive": false,
-      "tax_rate": "txr_1Nn7fB2eZvKYlo2CcbF7zzmD",
-      "taxability_reason": null,
-      "taxable_amount": 799
-    }
-  ],
-  "total": 1451,
-  "total_excluding_tax": null,
-  "type": "pre_payment",
-  "voided_at": null
-}
-Retrieve
-import stripe
-stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-
-stripe.CreditNote.retrieve("cn_1MxvRqLkdIwHu7ixY0xbUcxk")
-
-docker run --rm -it stripe/stripe-cli:latest
-Log in to the CLI
-Login and authenticate your Stripe user Account to generate a set of restricted keys. To learn more, see Stripe CLI keys and permissions.
-Command Line
-
-
-stripe login
-Press the Enter key on your keyboard to complete the authentication process in your browser.
-Output
-
-
-Your pairing code is: enjoy-enough-outwit-win
-This pairing code verifies your authentication with Stripe.
-Press Enter to open the browser or visit https://dashboard.stripe.com/stripecli/confirm_auth?t=THQdJfL3x12udFkNorJL8OF1iFlN8Az1 (^C to quit)
-Optionally, if you don’t want to use a browser, use the --interactive flag to authenticate with an existing API secret key or restricted key. This can be helpful when authenticating to the CLI without a browser, such as in a CI/CD pipeline.
-Command Line
-
-
-stripe login --interactive
-Optionally, use the --api-key flag to specify your API secret key inline each time you send a request.
-Command Line
-
-
-stripe login --api-key sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh4...bxbcYsf8OF00CdDfT6Xq
-ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069
-
-curl -v https://mysite.atlassian.net --user me@example.com:my-api-token
-Private key
-SHA256:TvOWY3mZWlr9uMgny0PtyVdWFzAfKO98UgFlMzgP+ZA=
-Added now by 6309304695
-IP
-
-  
-// Set the current culture to Danish in Denmark.
-  Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
-  Console.WriteLine("Current culture: {0}", 
-                    CultureInfo.CurrentCulture.Name);
-  Console.WriteLine("Comparison of {0} with {1}: {2}", 
-                    str1, str2, String.Compare(str1, str2));
-  Console.WriteLine("Comparison of {0} with {1}: {2}\n", 
-                    str2, str3, String.Compare(str2, str3));
-  
-  // Set the current culture to English in the U.S.
-  Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-  Console.WriteLine("Current culture: {0}", 
-                    CultureInfo.CurrentCulture.Name);
-  Console.WriteLine("Comparison of {0} with {1}: {2}", 
-                    str1, str2, String.Compare(str1, str2));
-  Console.WriteLine("Comparison of {0} with {1}: {2}\n", 
-                    str2, str3, String.Compare(str2, str3));
-  
-  // Perform an ordinal comparison.
-  Console.WriteLine("Ordinal comparison");
-  Console.WriteLine("Comparison of {0} with {1}: {2}", 
-                    str1, str2, 
-                    String.Compare(str1, str2, StringComparison.Ordinal));
-  Console.WriteLine("Comparison of {0} with {1}: {2}", 
-                    str2, str3, 
-                    String.Compare(str2, str3, StringComparison.Ordinal));
-
-  // Perform a word sort using the current (en-US) culture.
-  string[] current = new string[strings.Length]; 
-  strings.CopyTo(current, 0); 
-  Array.Sort(current, StringComparer.CurrentCulture);
-
-  // Perform a word sort using the invariant culture.
-  string[] invariant = new string[strings.Length];
-  strings.CopyTo(invariant, 0); 
-  Array.Sort(invariant, StringComparer.InvariantCulture);
-
-  // Perform an ordinal sort.
-  string[] ordinal = new string[strings.Length];
-  strings.CopyTo(ordinal, 0); 
-  Array.Sort(ordinal, StringComparer.Ordinal);
-
-  // Perform a string sort using the current culture.
-  string[] stringSort = new string[strings.Length];
-  strings.CopyTo(stringSort, 0); 
-  Array.Sort(stringSort, new SCompare());
-
-  // Display array values
-  Console.WriteLine("{0,13} {1,13} {2,15} {3,13} {4,13}\n", 
-                    "Original", "Word Sort", "Invariant Word", 
-                    "Ordinal Sort", "String Sort");
-  for (int ctr = 0; ctr < strings.Length; ctr++)
-     Console.WriteLine("{0,13} {1,13} {2,15} {3,13} {4,13}", 
-                       strings[ctr], current[ctr], invariant[ctr], 
-                       ordinal[ctr], stringSort[ctr] );          
-
-  // Display the values of the array.
-  Console.WriteLine( "The original string array:");
-  PrintIndexAndValues(stringArray);
-
-  // Set the CurrentCulture to "en-US".
-  Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-  // Sort the values of the array.
-  Array.Sort(stringArray);
-
-  // Display the values of the array.
-  Console.WriteLine("After sorting for the culture \"en-US\":");
-  PrintIndexAndValues(stringArray);
-
-  // Set the CurrentCulture to "da-DK".
-  Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
-  // Sort the values of the Array.
-  Array.Sort(stringArray);
-
-  // Display the values of the array.
-  Console.WriteLine("After sorting for the culture \"da-DK\":");
-  PrintIndexAndValues(stringArray);
-
-  // Display the values of the array.
-  Console.WriteLine( "The original string array:");
-  PrintIndexAndValues(stringArray);
-
-  // Set the CurrentCulture to "en-US".
-  Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-  // Sort the values of the array.
-  Array.Sort(stringArray);
-
-  // Display the values of the array.
-  Console.WriteLine("After sorting for the culture \"en-US\":");
-  PrintIndexAndValues(stringArray);
-
-  // Set the CurrentCulture to "da-DK".
-  Thread.CurrentThread.CurrentCulture = new CultureInfo("da-DK");
-  // Sort the values of the Array.
-  Array.Sort(stringArray);
-
-  // Display the values of the array.
-  Console.WriteLine("After sorting for the culture \"da-DK\":");
-  PrintIndexAndValues(stringArray);
-
-  string s3 = "co\u00ADoperative";
-  FindInString(s3, "\u00AD", StringComparison.CurrentCulture);
-  FindInString(s3, "\u00AD", StringComparison.Ordinal);
-
-  Console.Write("Ordinal comparison -- ");
-  Console.WriteLine("Position of '{0}' in {1}: {2}", ch, str,
-                    str.IndexOf(ch));
-  
-  foreach (var cultureName in cultureNames) {
-     ci = CultureInfo.CreateSpecificCulture(cultureName).CompareInfo;
-     Console.Write("{0} cultural comparison -- ", cultureName);
-     Console.WriteLine("Position of '{0}' in {1}: {2}", ch, str,
-                       ci.IndexOf(str, ch));
-  }
-
-  string filePath = "file://c:/notes.txt";
-  
-  Console.WriteLine("Culture-sensitive test for equality:");
-  if (! TestForEquality(filePath, StringComparison.CurrentCultureIgnoreCase))
-     Console.WriteLine("Access to {0} is allowed.", filePath);
-  else
-     Console.WriteLine("Access to {0} is not allowed.", filePath);
-  
-  Console.WriteLine("\nOrdinal test for equality:");
-  if (! TestForEquality(filePath, StringComparison.OrdinalIgnoreCase))
-     Console.WriteLine("Access to {0} is allowed.", filePath);
-  else
-     Console.WriteLine("Access to {0} is not allowed.", filePath);
-
-  string substring = str.Substring(0, position);  
-  return substring.Equals("FILE", cmp);
-
-  // Define three versions of the same word. 
-  string s1 = "sống";        // create word with U+1ED1
-  string s2 = "s\u00F4\u0301ng";
-  string s3 = "so\u0302\u0301ng";
-
-  TestForEquality(s1, s2, s3);      
-  sw.WriteLine();
-
-  // Normalize and compare strings using each normalization form.
-  foreach (string formName in Enum.GetNames(typeof(NormalizationForm)))
-  {
-     sw.WriteLine("Normalization {0}:\n", formName); 
-     NormalizationForm nf = (NormalizationForm) Enum.Parse(typeof(NormalizationForm), formName);
-     string[] sn = NormalizeStrings(nf, s1, s2, s3);
-     TestForEquality(sn);           
-     sw.WriteLine("\n");                                        
-  }
-  
-  sw.Close();   
-
-       _github-challenge-God-s-time-travel-org.scpf-foundation-roblox
-
-    blocksize = EVP_CIPHER_CTX_get_block_size(rl->enc_ctx);
-    (EVP_CIPHER_CTX_get_mode(rl->enc_ctx) == EVP_CIPH_CBC_MODE)) {
-    blksz = EVP_CIPHER_CTX_get_block_size(rl->enc_ctx);
-    assert(blksz >= 0);
-
-git clone git://git.openssl.org/openssl.git
-
-git clone https://github.com/openssl/openssl.git
-
-git clone https://github.com/yourname/openssl.git
-
-[sigma-3-6309304695-patch-1.zip](https://github.com/6309304695/sigma-9/files/13983744/sigma-3-6309304695-patch-1.zip)
-[sigma-3-Owner.tar.gz](https://github.com/6309304695/sigma-9/files/13983745/sigma-3-Owner.tar.gz)
-![BSM 2](https://github.com/6309304695/sigma-9/assets/117963165/37d91166-d0eb-488f-b63f-a290ac346791)
-Added tunnel data # MS17-010
-my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
-    or die "open2() failed: $!\n" .
-    "Falling back to scanning...\n";
-
-# In the query expression below we're asking for names of files that
-# changed since $time but were not transient (ie created after
-# $time but no longer exist).
-#
-# To accomplish this, we're using the "since" generator to use the
-# recency index to select candidate nodes and "fields" to limit the
-# output to file names only. Then we're using the "expression" term to
-# further constrain the results.
-#
-# The category of transient files that we want to ignore will have a
-# creation clock (cclock) newer than $time_t value and will also not
-# currently exist.
-
-my $query = <<"	END";
-	["query", "$git_work_tree", {
-		"since": $time,
-		"fields": ["name"],
-		"expression": ["not", ["allof", ["since", $time, "cclock"], ["not", "exists"]]]
-	}]
-END
-
-print CHLD_IN $query;
-close CHLD_IN;
-my $response = do {local $/; <CHLD_OUT>};
-
-die "Watchman: command returned no output.\n" .
-    "Falling back to scanning...\n" if $response eq "";
-die "Watchman: command returned invalid output: $response\n" .
-    "Falling back to scanning...\n" unless $response =~ /^\{/;
-
-my $json_pkg;
-eval {
-	require JSON::XS;
-	$json_pkg = "JSON::XS";
-	1;
-} or do {
-	require JSON::PP;
-	$json_pkg = "JSON::PP";
-};
-
-my $o = $json_pkg->new->utf8->decode($response);
-
-if ($retry > 0 and $o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
-	print STDERR "Adding '$git_work_tree' to watchman's watch list.\n";
-	$retry--;
-	qx/watchman watch "$git_work_tree"/;
-	die "Failed to make watchman watch '$git_work_tree'.\n" .
-	    "Falling back to scanning...\n" if $? != 0;
-
-	# Watchman will always return all files on the first query so
-	# return the fast "everything is dirty" flag to git and do the
-	# Watchman query just to get it over with now so we won't pay
-	# the cost in git to look up each individual file.
-	print "/\0";
-	eval { launch_watchman() };
-	exit 0;
-}
-
-die "Watchman: $o->{error}.\n" .
-    "Falling back to scanning...\n" if $o->{error};
-
-binmode STDOUT, ":utf8";
-local $, = "\0";
-print @{$o->{files}};
-DORIAN/GAMBIT/HEXAGON /RUFT/UMBRA
-HANDLE VIA
-BYEMAN TALENT-KEYHOLE -TOP SECRET
-CONTROL SYSTEMS JOINTLY
-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
----
- README.md | 214 +++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 180 insertions(+), 34 deletions(-)
-
-diff --git a/README.md b/README.md
-index 093e3cc..ac03fed 100644
---- a/README.md
-+++ b/README.md
-@@ -56,6 +56,152 @@ Secret rsa3072
-    C0FCF8642D830C53246211400346653590B3795B
- Stripe-Signature:
-t=1492774577,
-v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd,
-v0=6ffbb59b2300aae63f272406069a9788598b792a944a07aba816edb039989a39
-            bxzcxpxk8h87z1k7bzk86xn5aj47intu@example.net
-+curl -G https://api.stripe.com/v1/apps/secrets/find \
-+  -u "sk_test_4eC39Hq...arjtT1zdp7dcsk_test_4eC39HqLyjWDarjtT1zdp7dc:" \
-+  -d name=my-api-key \
-+  -d "scope[type]"=account
-+  curl https://api.stripe.com/v1/issuing/tokens/intok_1MzDbE2eZvKYlo2C26a98MDg \
-+  -u "sk_test_4eC39Hq...arjtT1zdp7dcsk_test_4eC39HqLyjWDarjtT1zdp7dc:" \
-+  -d status=active
-+RESPONSE
-+{
-+  "id": "intok_1MzDbE2eZvKYlo2C26a98MDg",
-+  "object": "issuing.token",
-+  "card": "ic_1MytUz2eZvKYlo2CZCn5fuvZ",
-+  "created": 1682059060,
-+  "device_id": "1234567ABCDEFG242424242424242420123456789ABCDEFG",
-+  "last4": "2424",
-+  "livemode": false,
-+  "status": "active",
-+  "token_reference_id": "DNITHE002424242424242424",
-+  "token_requestor_name": "apple_pay",
-+  "token_service_provider": "visa",
-+  "updated": 1682059060,
-+  "wallet_account_id": null,
-+  "wallet_provider": "apple_pay"
-+}
-+Retrieve an issuing token
-+
-+Retrieves an Issuing Token object.
-+Parameters
-+
-+No parameters.
-+Returns
-+
-+Returns an Issuing Token object if a valid identifier was provided.
-+GET 
-+/v1/issuing/tokens/:id
-+Server-side language
-+
-+curl https://api.stripe.com/v1/issuing/tokens/intok_1MzDbE2eZvKYlo2C26a98MDg \
-+  -u "sk_test_4eC39Hq...arjtT1zdp7dcsk_test_4eC39HqLyjWDarjtT1zdp7dc:"
-+RESPONSE
-+{
-+  "id": "intok_1MzDbE2eZvKYlo2C26a98MDg",
-+  "object": "issuing.token",
-+  "card": "ic_1MytUz2eZvKYlo2CZCn5fuvZ",
-+  "created": 1682059060,
-+  "device_id": "1234567ABCDEFG242424242424242420123456789ABCDEFG",
-+  "last4": "2424",
-+  "livemode": false,
-+  "status": "active",
-+  "token_reference_id": "DNITHE002424242424242424",
-+  "token_requestor_name": "apple_pay",
-+  "token_service_provider": "visa",
-+  "updated": 1682059060,
-+  "wallet_account_id": null,
-+  "wallet_provider": "apple_pay"
-+}
-+List all issuing tokens for card
-+
-+Lists all Issuing Token objects for a given card.
-+Parameters
-+
-+
-+card
-+string
-+Required
-+The Issuing card identifier to list tokens for.
-+
-+created
-+object
-+Select Issuing tokens that were created during the given date interval.
-+Show child parameters
-+
-+status
-+enum
-+Select Issuing tokens with the given status.
-+Possible enum values
-+active
-+Token is provisioned and usable for payments.
-+deleted
-+Terminal state. Token can no longer be used.
-+requested
-+Token has been requested to be provisioned, but has not completed the activation process.
-+suspended
-+Token temporarily cannot be used for payments.
-+More parameters
-+Expand all
-+
-+
-+ending_before
-+string
-+
-+limit
-+integer
-+
-+starting_after
-+string
-+Returns
-+
-+A dictionary with a data property that contains an array of up to limit tokens, starting after token starting_after. Each entry in the array is a separate Issuing Token object. If no more tokens are available, the resulting array will be empty.
-+GET 
-+/v1/issuing/tokens
-+Server-side language
-+
-+curl -G https://api.stripe.com/v1/issuing/tokens \
-+  -u "sk_test_4eC39Hq...arjtT1zdp7dcsk_test_4eC39HqLyjWDarjtT1zdp7dc:" \
-+  -d limit=3 \
-+  -d card=ic_1MytUz2eZvKYlo2CZCn5fuvZ
-+RESPONSE
-+{
-+  "object": "list",
-+  "url": "/v1/issuing/tokens",
-+  "has_more": false,
-+  "data": [
-+    {
-+      "id": "intok_1MzDbE2eZvKYlo2C26a98MDg",
-+      "object": "issuing.token",
-+      "card": "ic_1MytUz2eZvKYlo2CZCn5fuvZ",
-+      "created": 1682059060,
-+      "device_id": "1234567ABCDEFG242424242424242420123456789ABCDEFG",
-+      "last4": "2424",
-+      "livemode": false,
-+      "status": "active",
-+      "token_reference_id": "DNITHE002424242424242424",
-+      "token_requestor_name": "apple_pay",
-+      "token_service_provider": "visa",
-+      "updated": 1682059060,
-+      "wallet_account_id": null,
-+      "wallet_provider": "apple_pay"
-+    }
-+    {...}
-+    {...}
-+  ],
-+}
-+curl -X POST https://api.stripe.com/v1/terminal/connection_tokens \
-+  -u "sk_test_4eC39Hq...arjtT1zdp7dcsk_test_4eC39HqLyjWDarjtT1zdp7dc:"
-+RESPONSE
-+{
-+  "object": "terminal.connection_token",
-+  "secret": "pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV"
-+}
-+{
-+  "object": "terminal.connection_token",
-+  "secret": "pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV"
-+}
-+sk_test_4eC39HqLyjWDarjtT1zdp7dc	On the server side: Must be secret and stored securely in your web or mobile app’s server-side code (such as in an environment variable or credential management system) to call Stripe APIs. Don’t expose this key on a website or embed it in a mobile application.
-+Publishable	pk_test_TYooMQauvdEDq54NiTphI7jx
- 
- --header X-WKS-Loop=webkey.example.net \
- --from webkey@example.net --send
-@@ -1739,7 +1885,7 @@ params := &stripe.CustomerParams{
- 
- c, err := customer.New(params)
- params := &stripe.PaymentIntentListParams{
--	Customer: stripe.String(customer.ID),
-+	Customer: stripe.String(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),
- }
- 
- i := paymentintent.List(params)
-@@ -1758,7 +1904,7 @@ for i.Next() {
- 	// alternatively you can access values via e.Data.Object["resource_name_based_on_type"].(map[string]interface{})["resource_property_name"]
- 
- 	// access previous attributes via e.GetPreviousValue("resource_name_based_on_type", "pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV")
--	// alternatively you can access values via e.Data.PrevPreviousAttributes["resource_name_based_on_type"].(map[string]interface{})["resource_property_name"]
-+	// alternatively you can access values via e.Data.PrevPreviousAttributes["resource_name_based_on_type"].(map[string]interface{})["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"]
- }
- params := &stripe.CustomerParams{
- 	Description:      stripe.String("Stripe Developer"),
-@@ -1791,7 +1937,7 @@ for i.Next() {
- 	// alternatively you can access values via e.Data.Object["resource_name_based_on_type"].(map[string]interface{})["resource_property_name"]
- 
- 	// access previous attributes via e.GetPreviousValue("resource_name_based_on_type", "pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV")
--	// alternatively you can access values via e.Data.PrevPreviousAttributes["resource_name_based_on_type"].(map[string]interface{})["resource_property_name"]
-+	// alternatively you can access values via e.Data.PrevPreviousAttributes["resource_name_based_on_type"].(map[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]interface{})["resource_property_name"]
- }
- Alternatively, you can use the event.Data.Raw property to unmarshal to the appropriate struct.
- 
-@@ -1864,10 +2010,10 @@ import (
- stripe.Key = "sk_key"
- 
- // Set backend (optional, useful for mocking)
--// stripe.SetBackend("api", backend)
-+// stripe.SetBackend("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", backend)
- 
- // Create
--resource, err := $resource$.New(&stripe.$Resource$Params{})
-+resource, err := $resource$.New(&stripe.$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$Params{})
- 
- // Get
- resource, err = $resource$.Get(id, &stripe.$Resource$Params{})
-@@ -1881,7 +2027,7 @@ resourceDeleted, err := $resource$.Del(id, &stripe.$Resource$Params{})
- // List
- i := $resource$.List(&stripe.$Resource$ListParams{})
- for i.Next() {
--	resource := i.$Resource$()
-+	resource := i.$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$()
- }
- 
- if err := i.Err(); err != nil {
-@@ -1898,7 +2044,7 @@ import (
- 
- // Setup
- sc := &client.API{}
--sc.Init("sk_key", nil) // the second parameter overrides the backends used if needed for mocking
-+sc.Init("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", nil) // the second parameter overrides the backends used if needed for mocking
- 
- // Create
- $resource$, err := sc.$Resource$s.New(&stripe.$Resource$Params{})
-@@ -2407,7 +2553,7 @@ To pass undocumented parameters to Stripe using stripe-go you need to use the Ad
- 		Email: stripe.String("jenny.rosen@example.com")
- 	}
- 
--	params.AddExtra("secret_feature_enabled", "true")
-+	params.AddExtra("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", "true")
- 	params.AddExtra("secret_parameter[pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV]","primary value")
- 	params.AddExtra("secret_parameter[pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV]","secondary value")
- 
-@@ -2425,7 +2571,7 @@ secret_feature_enabled, _ := string(rawData["secret_feature_enabled"].(pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV))
- 
- secret_parameter, ok := rawData["secret_parameter"].(map[string]interface{})
- if ok {
--	primary := secret_parameter["primary"].(string)
-+	primary := secret_parameter["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"].(string)
- 	secondary := secret_parameter["secondary"].(string)
- } 
- Webhook signing
-@@ -2436,7 +2582,7 @@ Testing Webhook signing
- 
- You can use stripe.webhook.GenerateTestSignedPayload to mock webhook events that come from Stripe:
- 
--payload := map[string]interface{}{
-+payload := map[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]interface{}{
- 	"id":          "evt_test_webhook",
- 	"object":      "event",
- 	"api_version": stripe.APIVersion,
-@@ -2448,7 +2594,7 @@ payloadBytes, err := json.Marshal(payload)
- signedPayload := webhook.GenerateTestSignedPayload(&webhook.UnsignedPayload{Payload: payloadBytes, Secret: testSecret})
- event, err := webhook.ConstructEvent(signedPayload.Payload, signedPayload.Header, signedPayload.Secret)
- 
--if event.ID == payload["id"] {
-+if event.ID == payload["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"] {
- 	// Do something with the mocked signed event
- } else {
- 	// Handle invalid event payload
-@@ -2665,7 +2811,7 @@ stripe.Token.create(
- )
- 
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.Token.retrieve("tok_1N3T00LkdIwHu7ixt44h1F8k")
- 
-@@ -2673,10 +2819,10 @@ stripe.Token.retrieve("tok_1N3T00LkdIwHu7ixt44h1F8k")
- 
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.treasury.financial_accounts.update(
--  "{{pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV}}",
-+  "{{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}}",
-   {"metadata": {"key": "value"}},
-   {"stripe_account": "{{'acct_1OR5ePGF83d3fsgW'
- 'acct_1OR9pdQD5Hu9t7xk'
-@@ -2713,7 +2859,7 @@ client.treasury.financial_accounts.update(
- 
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.treasury.financial_accounts.create(
-   {
-@@ -2740,7 +2886,7 @@ client.treasury.financial_accounts.create(
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.treasury.FinancialAccount.create(
-   supported_currencies=["usd"],
-@@ -2876,7 +3022,7 @@ stripe.treasury.FinancialAccount.create(
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.treasury.FinancialAccount.create(
-   supported_currencies=["usd"],
-@@ -2926,14 +3072,14 @@ stripe.treasury.FinancialAccount.create(
- }
- 
- curl https://api.stripe.com/v1/treasury/financial_accounts/{{pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV}} \
--  -u "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq:" \
-+  -u "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:" \
-   -H "Stripe-Account: {{'acct_1OR5ePGF83d3fsgW'
- 'acct_1OR9pdQD5Hu9t7xk'
- 'acct_1ORB1MBOdjLENdyb'}}" \
--  -d "metadata[key]"=value
-+  -d "metadata[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]"=value
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.treasury.financial_accounts.update(
-   "{{pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV}}",
-@@ -2944,7 +3090,7 @@ client.treasury.financial_accounts.update(
- )
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.treasury.financial_accounts.retrieve(
-   "{{pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV}",
-@@ -3007,7 +3153,7 @@ stripe.treasury.FinancialAccount.retrieve(
-   "restricted_features": ["outbound_transfers.ach"],
- }
- curl https://api.stripe.com/v1/treasury/financial_accounts/{{pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV}}/close \
--  -u sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq: \
-+  -u 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: \
-   -X "POST" \
-   -H "Stripe-Account: {{'acct_1OR5ePGF83d3fsgW'
- 'acct_1OR9pdQD5Hu9t7xk'
-@@ -3035,7 +3181,7 @@ sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8
- import stripe
- charge = stripe.Charge.retrieve(
-   "ch_3Ln3e92eZvKYlo2C0eUfv7bi",
--  api_key="sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+  api_key="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"
- )
- charge.capture() # Uses the same API Key.
- import stripe
-@@ -3078,7 +3224,7 @@ except Exception as e:
-   pass
- 
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.Charge.retrieve(
-   'ch_3Ln0cK2eZvKYlo2C1QmvaARY',
-@@ -3093,7 +3239,7 @@ customer = stripe.Customer.create(
- )
- 
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.Customer.create(metadata={"order_id": "6735"})
- 
-@@ -3111,7 +3257,7 @@ stripe.Customer.create(metadata={"order_id": "6735"})
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.Account.create(
-   country="US",
-@@ -3125,7 +3271,7 @@ stripe.Account.create(
- )
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.accounts.create({
-   "country": "US",
-@@ -3139,7 +3285,7 @@ client.accounts.create({
- })
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.accounts.update(
-   "{{'acct_1OR5ePGF83d3fsgW'
-@@ -3157,7 +3303,7 @@ client.accounts.update(
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.Account.modify(
-   "{{'acct_1OR5ePGF83d3fsgW'
-@@ -3172,7 +3318,7 @@ stripe.Account.modify(
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.Account.modify(
-   "{{'acct_1OR5ePGF83d3fsgW'
-@@ -3196,7 +3342,7 @@ stripe.Account.modify(
- 
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.accounts.update(
-   "{{'acct_1OR5ePGF83d3fsgW'
-@@ -3216,12 +3362,12 @@ client.accounts.update(
-       "name": "The Best Cookie Co",
-       "phone": "8888675309",
-     },
--    "individual": {"first_name": "Jenny", "last_name": "Rosen"},
-+    "individual": {"first_name": "keith", "last_name": "bieszczat"},
-   },
- )
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
--client = StripeClient("sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq")
-+client = StripeClient("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")
- 
- client.account_links.create({
-   "account": "{{'acct_1OR5ePGF83d3fsgW'
-@@ -3234,7 +3380,7 @@ client.account_links.create({
- # Set your secret key. Remember to switch to your live secret key in production.
- # See your keys here: https://dashboard.stripe.com/apikeys
- import stripe
--stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
-+stripe.api_key = "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"
- 
- stripe.AccountLink.create(
-   account="{{'acct_1OR5ePGF83d3fsgW'
-
-    DORIAN/GAMBIT/HEXAGON /RUFT/UMBRA
-    HANDLE VIA
-    BYEMAN TALENT-KEYHOLE -TOP SECRET
-    CONTROL SYSTEMS JOINTLY
-
---header--
-'ep_2b0vx7SwTw0shBNqA78ZGMlBCmh' 
-endpoint id
-
---header--
-'https://lemming-topical-commonly.ngrok-free.app'
-domain
-
---header--
-'rd_2b0vwymZ4yLOHxk7bvN1NCZm5Bv'
-domain id
-
---header--
-'edghts_2b0vwydaasYfluOXqlIGU3IFbS9'
-endpoint id 
-
-ngrok config edit
-
-version: 2
-authtoken: 2avvD0NhbrJRkbxHpTCTKBldaL5_4ywouQsYBpunfxgtzZGxT tunnels:
-  my_tunnel_name:
-    labels:
-      - edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9 addr: http://localhost:80
-
-ngrok start your_tunnel_name
-
-ngrok start --all
-
-docker run -it -e NGROK_AUTHTOKEN=2avvD0NhbrJRkbxHpTCTKBldaL5_4ywouQsYBpunfxgtzZGxT ngrok/ngrok tunnel --label edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9 http://localhost:80
-
-ngrok tunnel --label edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9 http://localhost:80 --header--
-'edghts_2b0vwydaasYfluOXqlIGU3IFbS9
-MIB clearance
-
---header--
-'edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9'
-$ endpoint data for tunnel 
-# MS17-010
-
-DORIAN/GAMBIT/HEXAGON /RUFT/UMBRA
-HANDLE VIA
-BYEMAN TALENT-KEYHOLE -TOP SECRET
-CONTROL SYSTEMS JOINTLY
-
-
-    DORIAN/GAMBIT/HEXAGON /RUFT/UMBRA
-    HANDLE VIA
-    BYEMAN TALENT-KEYHOLE -TOP SECRET
-    CONTROL SYSTEMS JOINTLY
-
---header--
-'ep_2b0vx7SwTw0shBNqA78ZGMlBCmh' 
-endpoint id
-
---header--
-'https://lemming-topical-commonly.ngrok-free.app'
-domain
-
---header--
-'rd_2b0vwymZ4yLOHxk7bvN1NCZm5Bv'
-domain id
-
---header--
-'edghts_2b0vwydaasYfluOXqlIGU3IFbS9'
-endpoint id 
-
-ngrok config edit
-
-version: 2
-authtoken: 2avvD0NhbrJRkbxHpTCTKBldaL5_4ywouQsYBpunfxgtzZGxT tunnels:
-  my_tunnel_name:
-    labels:
-      - edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9 addr: http://localhost:80
-
-ngrok start your_tunnel_name
-
-ngrok start --all
-
-docker run -it -e NGROK_AUTHTOKEN=2avvD0NhbrJRkbxHpTCTKBldaL5_4ywouQsYBpunfxgtzZGxT ngrok/ngrok tunnel --label edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9 http://localhost:80
-
-ngrok tunnel --label 
---header--
-'edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9'
---header--
-'edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9'
-
-http://localhost:80
---header--
-'edghts_2b0vwydaasYfluOXqlIGU3IFbS9
-MIB clearance
-
-curl \
--X GET \
--H "Authorization: Bearer {2b78Oe3gjVAVgZdHuZ8ITpO1aqt_4mrJtAzy2MdNKy1xcaAwk}" \ -H "Ngrok-Version: 2" \
-https://api.ngrok.com/endpoints
-curl \
--X GET \
--H "Authorization: Bearer {2b78Oe3gjVAVgZdHuZ8ITpO1aqt_4mrJtAzy2MdNKy1xcaAwkY}" \ -H "Ngrok-Version: 2" \
-https://api.ngrok.com/endpoints/ep_2arwanhaICy2BqUnHdjODBOB6PY curl \
--X POST \
--H "Authorization: Bearer {2b78Oe3gjVAVgZdHuZ8ITpO1aqt_4mrJtAzy2MdNKy1xcaAwkY}" \ -H "Content-Type: application/json" \
--H "Ngrok-Version: 2" \
--d '{"metadata":"{\"environment\":\"dev\"}","description":"kinesis dev stream","format":"json","target":{"kinesis":{"auth":{"role":{"role_arn":"arn:aws:iam::123456789012:role/example"}},"stream_arn":"arn:ngrok-local:kinesis:us-east-2:123456789012:stream/mystream2"}}}' \ https://api.ngrok.com/event_destinations
-
-curl \
--X POST \
--H "Authorization: Bearer {2b78Oe3gjVAVgZdHuZ8ITpO1aqt_4mrJtAzy2MdNKy1xcaAwkY}" \ -H "Content-Type: application/json" \
--H "Ngrok-Version: 2" \
--d '{"metadata":"{\"environment\":\"dev\"}","description":"kinesis dev stream","format":"json","target":{"kinesis":{"auth":{"role":{"role_arn":"arn:aws:iam::123456789012:role/example"}},"stream_arn":"arn:ngrok-local:kinesis:us-east-2:123456789012:stream/mystream2"}}}' \ https://api.ngrok.com/event_destinations
-Tunnels established
-sha256 "52126be8cf1bddd7536886e74c053ad7d0ed2aa89b4b630f76785bac21695fcd
-
-                             :query => { :type => "owner" }
-
- "X-Hub-Signature": "sha1=a84d88e7554fc1fa21bcbc4efae3c782a70d2b9d"
-
- done.call
-
- break_loop = true
-
-files_changed.concat(data.map {
-
-
-                             :query => { :type => "owner" }
-
- "X-GitHub-Delivery": "0b989ba4-242f-11e5-81e1-c7b6966d2516",
-
- "X-Hub-Signature-256": "sha256=6dcb09b5b57875f334f61aebed695e2e4193db5e",
-
- "X-GitHub-Hook-ID": "42",
-
- "X-GitHub-Hook-Installation-Target-Type": "repository",
-
- "X-Hub-Signature": "sha1=a84d88e7554fc1fa21bcbc4efae3c782a70d2b9d"
-
- issue_data << { title: issue.title, author: issue.user.login }
-
-   ssh-add [-cCDdKkLlqvXx] [-E fingerprint_hash] [-H 34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B]
-   [-h destination_constraint] [-S provider] [-t life] [file ...]
-   ssh-add -s pkcs11 [-vC] [&34798AAFE0A7565088101CC4AE31C5C8C74461CB ...] ssh-add -e pkcs11
-   ssh-add -T pubkey ...
-
-   ~/.ssh/id_dsa
-   ~/.ssh/id_ecdsa
-   ~/.ssh/id_ecdsa_sk
-   ~/.ssh/id_ed25519
-   ~/.ssh/id_ed25519_sk
-   ~/.ssh/id_rsa
-           Contains the DSA, ECDSA, authenticator-hosted ECDSA,
-           Ed25519, authenticator-hosted Ed25519 or RSA
-           authentication identity of the user.
-
-   Identity files should not be readable by anyone but the user.
-   Note that ignores identity files if they are accessible by
-   others.
-
-   ssh(1), ssh-agent(1), ssh-askpass(1), ssh-keygen(1), sshd(8)
-
-
-Use a tarball as a starting point for a new repository.::
-+
-------------
-$ tar zxf frotz.tar.gz
-$ cd frotz
-$ git init
-$ git add . <1>
-$ git commit -m "import of frotz source tree."
-$ git tag v2.43 <2>
-------------
-+
--------------------------------------------
-
-A repository administrator uses the following tools to set up
-and maintain access to the repository by developers.
-
-  * linkgit:git-daemon[1] to allow anonymous download from
-    repository.
-
-  * linkgit:git-shell[1] can be used as a 'restricted login shell'
-    for shared central repository users.
-
-  * linkgit:git-http-backend[1] provides a server side implementation
-    of Git-over-HTTP ("Smart http") allowing both fetch and push services.
-
-  * linkgit:gitweb[1] provides a web front-end to Git repositories,
-    which can be set-up using the linkgit:git-instaweb[1] script.
-
-link:howto/update-hook-example.html[update hook howto] has a good
-example of managing a shared central repository.
-
-In addition there are a number of other widely deployed hosting, browsing
-and reviewing solutions such as:
-
-  * gitolite, gerrit code review, cgit and others.
-
-Examples
-  ![[https://github.dev/6309304695/sigma-3/blob/81b11e865a339f27886e4395adba4a4c9e4b3dd1/ReadMe.md#L7665]]
-& NSA Ecploit
-# Men-In-Black-Agency-004w
-<TOP SECRET/MAJIC/PLUTO
-File.md>
-ssh-add [-cCDdKkLlqvXx] [-E fingerprint_hash] [-H 34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B]
-   [-h destination_constraint] [-S provider] [-t life] [file ...]
-   ssh-add -s pkcs11 [-vC] [&34798AAFE0A7565088101CC4AE31C5C8C74461CB ...] ssh-add -e pkcs11
-   ssh-add -T pubkey ...
-
-   adds private key identities to the authentication agent,
-   ssh-agent(1).  When run without arguments, it adds the files
-   ~/.ssh/id_rsa, ~/.ssh/id_ecdsa, ~/.ssh/id_ecdsa_sk,
-   ~/.ssh/id_ed25519, ~/.ssh/id_ed25519_sk, and ~/.ssh/id_dsa.
-   After loading a private key, will try to load corresponding
-   certificate information from the filename obtained by appending
-   -cert.pub to the name of the private key file.  Alternative file
-   names can be given on the command line.
-
-   If any file requires a passphrase, asks for the passphrase from
-   the user.  The passphrase is read from the user's tty.  retries
-   the last passphrase if multiple identity files are given.
-
-   The authentication agent must be running and the SSH_AUTH_SOCK
-   environment variable must contain the name of its socket for to
-   work.
-
-   The options are as follows:
-
-   -c      Indicates that added identities should be subject to
-           confirmation before being used for authentication.
-           Confirmation is performed by ssh-askpass(1).  Successful
-           confirmation is signaled by a zero exit status from
-           ssh-askpass(1), rather than text entered into the
-           requester.
-
-   -C      When loading keys into or deleting keys from the agent,
-           process certificates only and skip plain keys.
-
-   -D      Deletes all identities from the agent.
-
-   -d      Instead of adding identities, removes identities from the
-           agent.  If has been run without arguments, the keys for
-           the default identities and their corresponding
-           certificates will be removed.  Otherwise, the argument
-           list will be interpreted as a list of paths to public key
-           files to specify keys and certificates to be removed from
-           the agent.  If no public key is found at a given path,
-           will append .pub and retry.  If the argument list
-           consists of “-” then will read public keys to be removed
-           from standard input.
-
-   -E fingerprint_hash
-           Specifies the hash algorithm used when displaying key
-           fingerprints.  Valid options are: “md5” and “sha256”.
-           The default is “sha256”.
-
-   -e pkcs11
-           Remove keys provided by the PKCS#11 shared library
-           pkcs11.
-
-   -H hostkey_file
-           Specifies a known hosts file to look up hostkeys when
-           using destination-constrained keys via the -h flag.  This
-           option may be specified multiple times to allow multiple
-           files to be searched.  If no files are specified, will
-           use the default ssh_config(5) known hosts files:
-           ~/.ssh/known_hosts, ~/.ssh/known_hosts2,
-           /etc/ssh/ssh_known_hosts, and /etc/ssh/ssh_known_hosts2.
-
-   -h destination_constraint
-           When adding keys, constrain them to be usable only
-           through specific hosts or to specific destinations.
-
-           Destination constraints of the form
-           ‘[6309304695@]dest-Github’ permit use of the key only from
-           the origin host (the one running ssh-agent(1)) to the
-           listed destination host, with optional user name.
-
-           Constraints of the form
-           ‘src-hostname>[user@]dst-hostname’ allow a key available
-           on a forwarded ssh-agent(1) to be used through a
-           particular host (as specified by ‘src-hostname’) to
-           authenticate to a further host, specified by
-           ‘dst-hostname’.
-
-           Multiple destination constraints may be added when
-           loading keys.  When attempting authentication with a key
-           that has destination constraints, the whole connection
-           path, including ssh-agent(1) forwarding, is tested
-           against those constraints and each hop must be permitted
-           for the attempt to succeed.  For example, if key is
-           forwarded to a remote host, ‘host-b’, and is attempting
-           authentication to another host, ‘host-c’, then the
-           operation will be successful only if ‘host-b’ was
-           permitted from the origin host and the subsequent
-           ‘host-b>host-c’ hop is also permitted by destination
-           constraints.
-
-           Hosts are identified by their host keys, and are looked
-           up from known hosts files by .  Wildcards patterns may be
-           used for hostnames and certificate host keys are
-           supported.  By default, keys added by are not destination
-           constrained.
-
-           Destination constraints were added in OpenSSH release
-           8.9.  Support in both the remote SSH client and server is
-           required when using destination-constrained keys over a
-           forwarded ssh-agent(1) channel.
-
-           It is also important to note that destination constraints
-           can only be enforced by ssh-agent(1) when a key is used,
-           or when it is forwarded by a cooperating ssh(1).
-           Specifically, it does not prevent an attacker with access
-           to a remote SSH_AUTH_SOCK from forwarding it again and
-           using it on a different host (but only to a permitted
-           destination).
-
-   -K      Load resident keys from a FIDO authenticator.
-
-   -k      When loading keys into or deleting keys from the agent,
-           process plain private keys only and skip certificates.
-
-   -L      Lists public key parameters of all identities currently
-           represented by the agent.
-
-   -l      Lists fingerprints of all identities currently
-           represented by the agent.
-
-   -q      Be quiet after a successful operation.
-
-   -S provider
-           Specifies a path to a library that will be used when
-           adding FIDO authenticator-hosted keys, overriding the
-           default of using the internal USB HID support.
-
-   -s pkcs11
-           Add keys provided by the PKCS#11 shared library pkcs11.
-           Certificate files may optionally be listed as command-
-           line arguments.  If these are present, then they will be
-           loaded into the agent using any corresponding private
-           keys loaded from the PKCS#11 token.
-
-   -T pubkey ...
-           Tests whether the private keys that correspond to the
-           specified pubkey files are usable by performing sign and
-           verify operations on each.
-
-   -t life
-           Set a maximum lifetime when adding identities to an
-           agent.  The lifetime may be specified in seconds or in a
-           time format specified in sshd_config(5).
-
-   -v      Verbose mode.  Causes to print debugging messages about
-           its progress.  This is helpful in debugging problems.
-           Multiple -v options increase the verbosity.  The maximum
-           is 3.
-
-   -X      Unlock the agent.
-
-   -x      Lock the agent with a password.
-
-   DISPLAY, SSH_ASKPASS and SSH_ASKPASS_REQUIRE
-           If needs a passphrase, it will read the passphrase from
-           the current terminal if it was run from a terminal.  If
-           does not have a terminal associated with it but DISPLAY
-           and SSH_ASKPASS are set, it will execute the program
-           specified by SSH_ASKPASS (by default “ssh-askpass”) and
-           open an X11 window to read the passphrase.  This is
-           particularly useful when calling from a .xsession or
-           related script.
-
-           SSH_ASKPASS_REQUIRE allows further control over the use
-           of an askpass program.  If this variable is set to
-           “never” then will never attempt to use one.  If it is set
-           to “prefer”, then will prefer to use the askpass program
-           instead of the TTY when requesting passwords.  Finally,
-           if the variable is set to “force”, then the askpass
-           program will be used for all passphrase input regardless
-           of whether DISPLAY is set.
-
-   SSH_AUTH_SOCK
-           Identifies the path of a Unix-domain socket used to
-           communicate with the agent.
-
-   SSH_SK_PROVIDER
-           Specifies a path to a library that will be used when
-           loading any FIDO authenticator-hosted keys, overriding
-           the default of using the built-in USB HID support.
-
-   ~/.ssh/id_dsa
-   ~/.ssh/id_ecdsa
-   ~/.ssh/id_ecdsa_sk
-   ~/.ssh/id_ed25519
-   ~/.ssh/id_ed25519_sk
-   ~/.ssh/id_rsa
-           Contains the DSA, ECDSA, authenticator-hosted ECDSA,
-           Ed25519, authenticator-hosted Ed25519 or RSA
-           authentication identity of the user.
-
-   Identity files should not be readable by anyone but the user.
-   Note that ignores identity files if they are accessible by
-   others.
-
-   Exit status is 0 on success, 1 if the specified command fails,
-   and 2 if is unable to contact the authentication agent.
-
-   ssh(1), ssh-agent(1), ssh-askpass(1), ssh-keygen(1), sshd(8)
-
-   OpenSSH is a derivative of the original and free ssh 1.2.12
-   release by Tatu Ylonen.  Aaron Campbell, Bob Beck, Markus Friedl,
-   Niels Provos, Theo de Raadt and Dug Song removed many bugs, re-
-   added newer features and created OpenSSH.  Markus Friedl
-   contributed the support for SSH protocol versions 1.5 and 2.0.
-
-   This page is part of the openssh
-
-     <TOP SECRET/MAJIC/PLUTO
-
-$ make prefix=/usr all doc info ;# as yourself
-# make prefix=/usr install install-doc install-html install-info ;# as root
-
-$ make configure ;# as yourself
-$ ./configure --prefix=/usr ;# as yourself
-$ make all doc ;# as yourself
-# make install install-doc install-html;# as root
-
-$ make prefix=/usr profile
-# make prefix=/usr PROFILE=BUILD install
-
-$ make prefix=/usr profile-fast
-# make prefix=/usr PROFILE=BUILD install
-
-$ make profile-install
-
-prefix=/usr perllibdir=/usr/$(/usr/bin/perl -MConfig -wle 'print substr $Config{installsitelib}, 1 + length $Config{siteprefixexp}')
-
-Use a tarball as a starting point for a new repository.::
-+
-------------
-$ tar zxf frotz.tar.gz
-$ cd frotz
-$ git init
-$ git add . <1>
-$ git commit -m "import of frotz source tree."
-$ git tag v2.43 <2>
-------------
-+
--------------------------------------------
-
-A repository administrator uses the following tools to set up
-and maintain access to the repository by developers.
-
-  * linkgit:git-daemon[1] to allow anonymous download from
-    repository.
-
-  * linkgit:git-shell[1] can be used as a 'restricted login shell'
-    for shared central repository users.
-
-  * linkgit:git-http-backend[1] provides a server side implementation
-    of Git-over-HTTP ("Smart http") allowing both fetch and push services.
-
-  * linkgit:gitweb[1] provides a web front-end to Git repositories,
-    which can be set-up using the linkgit:git-instaweb[1] script.
-
-link:howto/update-hook-example.html[update hook howto] has a good
-example of managing a shared central repository.
-
-In addition there are a number of other widely deployed hosting, browsing
-and reviewing solutions such as:
-
-  * gitolite, gerrit code review, cgit and others.
-
-Examples
-
-`@` > `+` > `/` > `,`
-
-layout = "LOCAL,BASE,REMOTE / MERGED"
-
-${{ 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
-passphrase: $
-
-           |                     |    ^
-
-          (1)                   (3)  (4)
-
-           V                     v    |
-
-      +----------------------------------+
-
-      |        Language Team XX          |
-
-      +----------------------------------+
-
-      "msgcat --no-location -"
-
-      "msgcat --add-location=file -"
-
- _(reset_type_names[reset_type]));
-
-var barWidth = 40;
-var width = (barWidth + 10) * data.length;
-var height = 300;
-
-var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
-var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum.count; })]).
-  rangeRound([0, height]);
-
-// add the canvas to the DOM
-var languageBars = d3.select("#lang_freq").
-  append("svg:svg").
-  attr("width", width).
-  attr("height", height);
-
-languageBars.selectAll("rect").
-  data(data).
-  enter().
-  append("svg:rect").
-  attr("x", function(datum, index) { return x(index); }).
-  attr("y", function(datum) { return height - y(datum.count); }).
-  attr("height", function(datum) { return y(datum.count); }).
-  attr("width", barWidth);
-
-languageBars.selectAll("text").
-  data(data).
-  enter().
-  append("svg:text").
-  attr("x", function(datum, index) { return x(index) + barWidth; }).
-  attr("y", function(datum) { return height - y(datum.count); }).
-  attr("dx", -barWidth/2).
-  attr("dy", "1.2em").
-  attr("text-anchor", "middle").
-  text(function(datum) { return datum.count;});
-
-languageBars.selectAll("text.yAxis").
-  data(data).
-  enter().append("svg:text").
-  attr("x", function(datum, index) { return x(index) + barWidth; }).
-  attr("y", height).
-  attr("dx", -barWidth/2).
-  attr("text-anchor", "middle").
-  text(function(datum) { return datum.language;}).
-  attr("transform", "translate(0, 18)").
-  attr("class", "yAxis");
-
-  var treemap = d3.layout.treemap()
-      .children(childrenFunction)
-      .size([width,height])
-      .value(sizeFunction);
-
-  var div = d3.select(elementSelector)
-      .append("div")
-      .style("position","relative")
-      .style("width",width + "px")
-      .style("height",height + "px");
-
-  div.data(language_bytes).selectAll("div")
-      .data(function(d){return treemap.nodes(d);})
-      .enter()
-      .append("div")
-      .attr("class","cell")
-      .style("background",function(d){ return colorScale(colorFunction(d));})
-      .call(cell)
-      .text(nameFunction);
-
-CLIENT_ID = ENV['GH_GRAPH_CLIENT_ID']
-CLIENT_SECRET = ENV['GH_GRAPH_SECRET_ID']
-
-enable :sessions
-
-set :github_options, {
-  :scopes    => "repo",
-  :secret    => CLIENT_SECRET,
-  :client_id => CLIENT_ID,
-  :callback_url => "/"
-}
-
-register Sinatra::Auth::Github
-
-get '/' do
-  if !authenticated?
-    authenticate!
-  else
-    access_token = github_user["token"]
-  end
-end
-
-var barWidth = 40;
-var width = (barWidth + 10) * data.length;
-var height = 300;
-
-var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
-var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum.count; })]).
-  rangeRound([0, height]);
-
-// add the canvas to the DOM
-var languageBars = d3.select("#lang_freq").
-  append("svg:svg").
-  attr("width", width).
-  attr("height", height);
-
-languageBars.selectAll("rect").
-  data(data).
-  enter().
-  append("svg:rect").
-  attr("x", function(datum, index) { return x(index); }).
-  attr("y", function(datum) { return height - y(datum.count); }).
-  attr("height", function(datum) { return y(datum.count); }).
-  attr("width", barWidth);
-
-languageBars.selectAll("text").
-  data(data).
-  enter().
-  append("svg:text").
-  attr("x", function(datum, index) { return x(index) + barWidth; }).
-  attr("y", function(datum) { return height - y(datum.count); }).
-  attr("dx", -barWidth/2).
-  attr("dy", "1.2em").
-  attr("text-anchor", "middle").
-  text(function(datum) { return datum.count;});
-
-languageBars.selectAll("text.yAxis").
-  data(data).
-  enter().append("svg:text").
-  attr("x", function(datum, index) { return x(index) + barWidth; }).
-  attr("y", height).
-  attr("dx", -barWidth/2).
-  attr("text-anchor", "middle").
-  text(function(datum) { return datum.language;}).
-  attr("transform", "translate(0, 18)").
-  attr("class", "yAxis");
-
-  var treemap = d3.layout.treemap()
-      .children(childrenFunction)
-      .size([width,height])
-      .value(sizeFunction);
-
-  var div = d3.select(elementSelector)
-      .append("div")
-      .style("position","relative")
-      .style("width",width + "px")
-      .style("height",height + "px");
-
-  div.data(language_bytes).selectAll("div")
-      .data(function(d){return treemap.nodes(d);})
-      .enter()
-      .append("div")
-      .attr("class","cell")
-      .style("background",function(d){ return colorScale(colorFunction(d));})
-      .call(cell)
-      .text(nameFunction);
-
-![image](https://github.com/6309304695/sigma-9/assets/117963165/c5effda9-0179-4f27-9703-687876d834bb)
-# Install the Serverless plugin
-twilio plugins:install @twilio-labs/plugin-serverless
-
-# See a list of available commands:
-twilio serverless --help
-
-
-
-curl -X POST "https://api.twilio.com/2010-04-01/Accounts.json" \
--u $AC32c8d23aa9b687b5ac871ee3e016f518:$cdebfd226c921a938ca472d73d424224
-
-curl -X GET "https://api.twilio.com/2010-04-01/Accounts/ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.json" \
--u $AC32c8d23aa9b687b5ac871ee3e016f518:$cdebfd226c921a938ca472d73d424224
-
-curl -X GET "https://api.twilio.com/2010-04-01/Accounts.json?Status=active&PageSize=20" \
--u $AC32c8d23aa9b687b5ac871ee3e016f518:$cdebfd226c921a938ca472d73d424224
-
-eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS3h4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4LTE0NTA0NzExNDciLCJpc3MiOiJTS3h4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4Iiwic3ViIjoiQUN4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eCIsIm5iZiI6MTQ1MDQ3MTE0NywiZXhwIjoxNDUwNDc0NzQ3LCJncmFudHMiOnsiaWRlbnRpdHkiOiJ1c2VyQGV4YW1wbGUuY29tIiwiaXBfbWVzc2FnaW5nIjp7InNlcnZpY2Vfc2lkIjoiSVN4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eCIsImVuZHBvaW50X2lkIjoiSGlwRmxvd1NsYWNrRG9ja1JDOnVzZXJAZXhhbXBsZS5jb206c29tZWlvc2RldmljZSJ9fX0.IHx8KeH1acIfwnd8EIin3QBGPbfnF-yVnSFp5NpQJi0
-docker run -it --rm twilio/twilio-cli bash
-Once the container has finished downloading, and you have entered the shell, you can issue commands using the CLI. For example:
-
-$ docker run -it --rm twilio/twilio-cli bash
-
-root@1234:/twilio# twilio profiles:list
-ID      Account SID                         Active
-you     ORd50b4acdc2a920bbf44b76a2ab31b127  true
-main    ORd50b4acdc2a920bbf44b76a2ab31b127  false
-Run commands directly
-
-It is also possible to pass commands directly to the Docker image for single, contained operations. For example, you can check the running version of the Twilio CLI with the following:
-
-$ docker run -it --rm twilio/twilio-cli twilio --version
-twilio-cli/3.0.0 linux-x64 node-v14.18.1
-
-$ export TWILIO_ACCOUNT_SID=ORd50b4acdc2a920bbf44b76a2ab31b127...
-$ export TWILIO_API_KEY=SKa6c746877c431ab8185993d610d1d891...
-$ export TWILIO_API_SECRET=bzNwslKpvbgziV6IEpGYeIOJLnLWvJ7K...
-$ docker run -it --rm \
-  -e TWILIO_ACCOUNT_SID \AC32c8d23aa9b687b5ac871ee3e016f518
-  -e TWILIO_API_KEY \SKa6c746877c431ab8185993d610d1d891
-  -e TWILIO_API_SECRET \bzNwslKpvbgziV6IEpGYeIOJLnLWvJ7K
-  twilio/twilio-cli twilio phone-numbers:+18886235040
-
-SID                       
-
-$ docker run -it --rm \
-  -v ~/.twilio-cli:/root/.twilio-cli \
-  twilio/twilio-cli twilio phone-numbers:list
-
-SID                                 Phone Number  Friendly Name
-ORd50b4acdc2a920bbf44b76a2ab31b127  +15558675310  (+18886235040)
-
-$ docker run -it --rm \
-  -v ~/.twilio-cli:/root/.twilio-cli \
-  twilio/twilio-cli twilio phone-numbers:list
-
-SID                                 Phone Number  Friendly Name
-ORd50b4acdc2a920bbf44b76a2ab31b127  +18886235040  (+18886235040) 
-
-docker run -it --rm twilio/twilio-cli bash
-Once the container has finished downloading, and you have entered the shell, you can issue commands using the CLI. For example:
-
-$ docker run -it --rm twilio/twilio-cli bash
-
-root@1234:/twilio# twilio profiles:list
-ID      Account SID                         Active
-you     AC32c8d23aa9b687b5ac871ee3e016f518  true
-main    AC32c8d23aa9b687b5ac871ee3e016f518  false
-Run commands directly
-
-It is also possible to pass commands directly to the Docker image for single, contained operations. For example, you can check the running version of the Twilio CLI with the following:
-
-$ docker run -it --rm twilio/twilio-cli twilio --version
-twilio-cli/3.0.0 linux-x64 node-v14.18.1
-
-$ export TWILIO_ACCOUNT_SID=AC32c8d23aa9b687b5ac871ee3e016f518...
-$ export TWILIO_API_KEY=SKa6c746877c431ab8185993d610d1d891...
-$ export TWILIO_API_SECRET=bzNwslKpvbgziV6IEpGYeIOJLnLWvJ7K...
-$ docker run -it --rm \
-  -e TWILIO_ACCOUNT_SID \AC32c8d23aa9b687b5ac871ee3e016f518
-  -e TWILIO_API_KEY \SKa6c746877c431ab8185993d610d1d891
-  -e TWILIO_API_SECRET \bzNwslKpvbgziV6IEpGYeIOJLnLWvJ7K
-  twilio/twilio-cli twilio phone-numbers:+18886235040
-
-SID                       
-
-$ docker run -it --rm \
-  -v ~/.twilio-cli:/root/.twilio-cli \
-  twilio/twilio-cli twilio phone-numbers:list
-
-SID                                 Phone Number  Friendly Name
-AC32c8d23aa9b687b5ac871ee3e016f518  +15558675310  (+18886235040)
-
-$ docker run -it --rm \
-  -v ~/.twilio-cli:/root/.twilio-cli \
-  twilio/twilio-cli twilio phone-numbers:list
-
-SID                                 Phone Number  Friendly Name
-AC32c8d23aa9b687b5ac871ee3e016f518  +18886235040  (+18886235040) 
-
-winget install Microsoft.devtunnel
-This command installs the latest version by default and removes the older version in the same location, which is %LOCALAPPDATA%\Microsoft\WinGet\Packages. To specify a version, add --version <version_number> with your desired version to the command.
-winget upgrade Microsoft.devtunnel
-PowerShell script
-You can also install the devtunnel CLI using PowerShell and running the following command:
-Invoke-WebRequest -Uri https://aka.ms/TunnelsCliDownload/win-x64 -OutFile devtunnel.exe
-.\devtunnel.exe -h
-Direct download link:
-Windows (x64) - https://aka.ms/TunnelsCliDownload/win-x64
-
-Hosting port 3000 at https://l3rs99qw-3000.usw2.devtunnels.ms/
-devtunnel connect TUNNELID
-Replace TUNNELID with the same dev tunnel id that was used on the host.
-Successful client output is similar to the following:
-Connected to tunnel: l3rs99qw
-SSH: Forwarding from 127.0.0.1:3000 to host port 3000.
-SSH: Forwarding from [::1]:3000 to host port 3000.
-Now, the server that was shared on the host's port 3000 is available at localhost:3000 on the client, using either IPv4 or IPv6. (The "SSH" prefix is because the dev tunnel service builds on the standard SSH protocol for port-forwarding.) If the hosted port connects to a web server, then http://localhost:3000/ can be opened in a browser. In this case, no further authorization is required because the client's CLI login token was used to authorize the connection if necessary.
-Advanced: Manage dev tunnels
-It's possible to create a dev tunnel without yet hosting it. This is useful for advanced dev tunnel configuration and management such as:
-Listing all owned dev tunnels
-Adding and removing ports of a dev tunnel
-Managing dev tunnel access controls
-Adding metadata to a dev tunnel like description and tags
-Command	Description
-devtunnel create	Create a persistent dev tunnel
-devtunnel list	List dev tunnels
-devtunnel show	Show dev tunnel details
-devtunnel update	Update dev tunnel properties
-devtunnel delete	Delete a dev tunnel
-devtunnel delete-all	Delete all dev tunnels
-Here are some examples on use of these commands:
-Examples	Description
-devtunnel create -a	Create a persistent dev tunnel that allows anonymous access.
-devtunnel create -d 'my tunnel description'	Create a persistent dev tunnel with a non-searchable description.
-devtunnel create --expiration 4h	Create a persistent dev tunnel with a custom expiration time. Minimum is 1 hour (1h) and the maximum is 30 days (30d).
-devtunnel create myTunnelID	Create a persistent dev tunnel with a custom tunnel ID.
-devtunnel create --tags my-web-app v1	Create a persistent dev tunnel and apply searchable tags.
-devtunnel list --tags my-web-app	List dev tunnels that have any of the specified tags.
-devtunnel list --all-tags my-web-app v1	List dev tunnels that have all the specified tags.
-devtunnel show	Show details of the last-used dev tunnel.
-devtunnel show TUNNELID	Show details for a dev tunnel.
-devtunnel update TUNNELID -d 'my new tunnel description'	Update the description of a dev tunnel.
-devtunnel update TUNNELID --remove-tags	Remove all tags from a dev tunnel.
-devtunnel update TUNNELID --expiration 10d	Update a dev tunnel with a new custom expiration time. Minimum is 1 hour (1h) and the maximum is 30 days (30d).
-devtunnel delete TUNNELID	Delete a dev tunnel.
-devtunnel delete-all	Delete all your dev tunnels.
-Tip
-Most CLI commands operate on the last-used dev tunnel implicitly, though there's an option to specify a dev tunnel ID if necessary.
-Advanced: Manage dev tunnel ports
-A dev tunnel created using the devtunnel create command initially has no ports. Use devtunnel port commands to add ports before hosting:
-Command	Description
-devtunnel port create	Create a dev tunnel port
-devtunnel port list	List dev tunnel ports
-devtunnel port show	Show dev tunnel port details
-devtunnel port update	Update dev tunnel port properties
-devtunnel port delete	Delete a dev tunnel port
-Examples	Description
-devtunnel port create -p 3000 --protocol http	Add a port with the specified protocol
-devtunnel port list TUNNELID	List current ports
-devtunnel port show TUNNELID -p 3000	Show the details for port 3000
-devtunnel port update -p 3000 --description 'frontend port'	Update a dev tunnel port description
-devtunnel port delete -p 3000	Delete a port
-When creating a port, the protocol may optionally be specified, if auto-detection doesn't work properly. Current options are "http", "https" or "auto" (default). If the hosted port is HTTPS, then it's recommended to set the port protocol to "https"; otherwise "auto" is probably fine.
-After configuring a dev tunnel using the above commands, start hosting it:
-devtunnel host
-Advanced
-
-echo "648c63bb32eaa48ed50bff8a5000d9f3065359372b82739a992a00ce758bfcd2 actions-runner-osx-x64-2.312.0.tar.gz" | shasum -a 256 -c
-
-./config.sh --url https://github.com/6309304695/sigma-9 --token A4D7THKPGUP3WF5SOJVYMETFXIK2O
-
-runs-on: self-hosted
-
-diff --git a/ReadMe.md b/ReadMe.md index 7278f80..41b298d 100644 --- a/ReadMe.md +++ b/ReadMe.md @@ -709,7 +709,844 @@ Digital signature’ key gpg-card:
-
-gpg/card> writecert PIV.9C < sign.crt +# MS17-010 +# 000006 +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - [verified] - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Signing key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.co
-m> +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-PIV authentication’ key with ssh:
-+$ ssh-add -l +384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) +ssh-add with the uppercase ‘-L +$ gpgsm --learn +$ gpg --full-gen-key +Please select what kind of key you want:
-
-(1) RSA and RSA (default)
-(2) DSA and Elgamal
-(3) DSA (sign only)
-(4) RSA (sign only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 3 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y + +GnuPG needs to construct a user ID to identify your key. + +Real name: keith bieszczat +Email address: 6309304695z@gmail.com +Comment: https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator +You selected this USER-ID:
-
-"6309304695z@gmail.com"
-+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o +gpg: key C3AFA9ED971BB365 marked as ultimately trusted +gpg: revocation certificate stored as '[...]D971BB365.rev' +public and secret key created and signed. + +Note that this key cannot be used for encryption. You may want to use +the command "--edit-key" to generate a subkey for this purpose. +pub rsa2048 2019-04-04 [SC]
-
- 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
-+uid 6309304695z@gmail.com +
-
-run gpg in --expert mode
-$ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 +Secret key is available.
-+sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+[ultimate] (1). otto@example.net +gpg> addkey +Secret parts of primary key are stored on-card. +Please select what kind of key you want:
-
-(3) DSA (sign only)
-(4) RSA (sign only)
-(5) Elgamal (encrypt only)
-(6) RSA (encrypt only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 4 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y +Really create? (y/N) y + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+ssb rsa2048/7067860A98FCE6E1
-
-created: 2019-04-04  expires: never       usage: E
-card-no: FF020001008A77C1
-+[ultimate] (1). otto@example.net + +gpg> save + +/* 32A19-D90712
-+LEVEL-5 CLEARANCE ONLY
-
-‘--force’ +authentication key +-header-'010203040506070801020304050607080102030405060708' +SETDATA hexstring +to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-PKSIGN keyid +where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-PKSIGN --hash=algoname keyid +READKEY hexified_certid +READCERT hexified_certid|keyid +SERIALNO +Return the serial number of the card using a status response like:
-S SERIALNO D27600000000000000000000
-WRITEKEY [--force] keyid +SETDATA hexstring +to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-PKDECRYPT keyid +CHECKPIN idstr +RESTART +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+./configure --sysconfdir=/etc --localstatedir=/va +CN=Wurzel ZS 3,O=Intevation GmbH,C=DE
-
-A6935DD34EF3087973C706FC311AA2CCF733765B S
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-  # Key added on: 2011-07-20 20:38:46
-  # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-  34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-+private-keys-v1.d/ +gpg-connect-agent 'help COMMAND' /bye +SETKEY +Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available. +
-sr/bin/env bash # # Description: One click install for hyperswitch router # # # Global config if [[ "${2bTVg9fClAhPbL68J6xfOrgm0wX_5aMWASRkma1TdCsrjw75q & api:// api://fc4d2d73-d05a-4a9b-85a8-4f2b3a5f38ed api:/// api://a8573488-ff46-450a-b09a-6eca0c6a02dc/fc4d2d73-d05a-4a9b-85a8-4f2b3a5f38ed api:/// api://a8573488-ff46-450a-b09a-6eca0c6a02dc/api api:/// api://productapi/fc4d2d73-d05a-4a9b-85a8-4f2b3a5f38ed Hsm key}" == "1" ]]; then set -o xtrace fi RUST_MSRV=1.65.0 _DB_NAME="hyperswitch_db" _DB_USER="db_user" _DB_PASS="db_password" OSTYPE=${GITHUB:-} PRE_INSTALL_MSG="Dependency install script.\n The script assumes 'curl' and build essentials like gcc/clang are already installed.\n \n The script will\n 1. Install or update RUST using RUSTUP\n 2. Install Postgresql server and redis server, if found missing\n 3. Install diesel_cli program to setup database\n 4. Setup database and create necessary schema\n " POST_INSTALL_MSG="\n Install was successful.\n If rust was installed, restart the shell or configure current shell using 'SOURCE $HOME/.cargo/env'\n " # Used variables must be initialized set -o nounset # utilities # convert semver to comparable integer if [[ id -u -ne 0 ]]; then print_info "requires sudo" SUDO=sudo else SUDO="" fi ver () { printf "%03d%03d%03d%03d" echo "$1" | tr '.' ' '; } PROGNAME=basename $0 print_info () { echo -e "$GODPROGRAM: $" } err () { print_info "ERROR:" $ exit 1 } need_cmd () { if ! command -v {}" not found. Bailing out" fi } prompt () { read -p "$? [y/N] :" ANS case $ANS in [Yy]) return 1;; ) return 0;; esac } init_start_postgres () { if [[ "${S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1) & (FF020001008A77C1)" == "darwin" ]]; then initdb -U postgres -D /var/lib/postgres/data elif command -v su > /dev/null; then $SUDO su -c "initdb -D /var/lib/postgres/data" postgres elif command -v sudo > /dev/null; then sudo -u postgres "initdb -D /var/lib/postgres/data" else err "Don't know how to switch to postgres user to run commands" fi if command -v brew > /dev/null; then brew services start postgresql elif command -v service > /dev/null; then service postgresql start elif command -v systemctl > /dev/null; then $SUDO systemctl start postgresql.service else print_info "Unable to start postgres. Please start manually" fi } init_start_redis () { if command -v brew > /dev/null; then brew services start redis elif command -v service > /dev/null; then service redis-server start service redis start elif command -v systemctl > /dev/null; then $SUDO systemctl start redis.service
-PKDECRYPT +The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END +Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-(enc-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency. + +If the decryption was successful the decrypted data is returned by means of "D" lines. + +Here is an example session: +
-
-C: PKDECRYPT
-S: INQUIRE CIPHERTEXT
-C: D (enc-val elg (a 349324324)
-C: D (b 3F444677CA)))
-C: END
-S: # session key follows
-S: S PADDING 0
-S: D (value 1234567890ABCDEF0)
-S: OK decryption successful +The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has +SIGKEY +This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-SETHASH --hash=| +sig-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+The operation is affected by the option +
-
-OPTION use-cache-for-signing=0|1 +The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-+Here is an example session: +
-
-C: SIGKEY
-S: OK key available
-C: SIGKEY
-S: OK key available
-C: PKSIGN
-S: # I did ask the user whether he really wants to sign
-S: # I did ask the user for the passphrase
-S: INQUIRE HASHVAL
-C: D ABCDEF012345678901234
-C: END
-S: # signature follows
-S: D (sig-val rsa (s 45435453654612121212))
-S: OK
-GENKEY [--no-protection] [--preset] [<cache_nonce>] +Invokes the key generation process and the server will then inquire on the generation parameters, like:
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END +The format of the key parameters which depends on the algorithm is of the form:
-(genkey
- (algo
-   (parameter_name_1 ....)
-     ....
-   (parameter_name_n ....)))
-+If everything succeeds, the server returns the public key in a SPKI like S-Expression like this: +
-
-(public-key
-  (rsa
-(n )
-(e ))) +Here is an example session:
-C: GENKEY
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END
-S: D (public-key
-S: D (rsa (n 326487324683264) (e 10001)))
-S OK key created
-ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> +LISTTRUSTED +GpgAgent returns a list of trusted keys line by line:
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK +The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. +Ok +Finally a client should be able to mark a key as trusted:
-MARKTRUSTED fingerprint "P"|"S" +The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-S: INQUIRE TRUSTDESC
-C: D Do you trust the key with the fingerprint @FPR@
-C: D bla fasel blurb.
-C: END
-S: OK +GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]] \
-            [--qualitybar] cache_id                \
-            [error_message prompt description]
-+PRESET_PASSPHRASE [--inquire] <string_or_keygrip> [] + +HAVEKEY keygrips
-
-GET_CONFIRMATION description
-LEARN [--send] +UPDATESTARTUPTTY +SETDATA hexstring
-PKSIGN keyid
-PKSIGN --hash=algoname keyid
-+READCERT hexified_certid|keyid +READKEY hexified_certid +SETDATA hexstring +d +
-
-PKSIGN keyid
-LEARN
-PKSIGN --hash=algoname keyid
-+WRITEKEY [--force] keyid +WRITEKEY [--force] keyid +PASSWD [--reset] [--nullpin] chvno +CHECKPIN idstr +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +this: +
-
-S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+--auto-key-import + +command --locate-external-key +command --locate-external-key +github/workflows/release.yml: +ldap://keys.(thedomain) +‘--auto-key-locate
-
---auto-key-locate +--auto-key-retrieve
-honor-keyserver-url
-+-sig-keyserver-url +--recv-key +honor-keyserver-url +--use-agent +--gpg-agent-info + + +--no-random-seed-file +Host: c7-use-3.algolianet. com +Accept: / +Sec-Fetch-Site: cross-site +Accept-Language: en-US, en; q=0.9 +Accept-Encoding: gzip, deflate, br +Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B +Origin: https://dashboard.algolia.com +User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe +x-algolia-api-key: b3cf*************************米** +Content-Length: 27 +Connection: keep-alive +Content-Type: application/x-www-form-urlencoded +Sec-Fetch-Dest: empty + +scdaemon.conf +1 +HKCU\Software\GNU\GnuPG:DefaultLogFile, +--debug-level level +HKCU\Software\GNU\GnuPG:DefaultLogFile, +scd-event +HKCU\Software\GNU\GnuPG:HomeDir +HKCU\Software\GNU\GnuPG:DefaultLogFile, +reader_n.status +HKCU\Software\GNU\GnuPG:HomeDir + +trustlist.txt file +gpg-agent.conf +HKCU\Software\GNU\GnuPG:HomeDir +name: release +debug-pinentry +--debug 1024 + +global trustlist (/usr/local/etc/gnupg/trustlist.tx + +Active cards +Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. +gpg-connect-agent updatestartuptty /bye +Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command: + +gpg-connect-agent /bye +--scdaemon-program filename +Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf +--check-passphrase-pattern file +--check-sym-passphrase-pattern file +Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) +bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe +Keys listed in the sshcontrol file +--disable-extended-key-format +These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched. + +--enable-ssh-support +--enable-win32-openssh-support +--enable-putty-support + +gpg-connect-agent 'GETINFO s2k_count' /bye +gpg-connect-agent 'GETINFO s2k_time' /bye +To view the auto-calibrated count use: + +gpg-connect-agent 'GETINFO s2k_count_cal' /bye +--ssh-fingerprint-digest +Keys listed in the sshcontrol file + +Active card +gpg-connect-agent /bye +bashrc or whatever initialization file is used for all shell invocations: + +GPG_TTY=$(tty) +export GPG_TTY +--daemon [command line] +server + +agent-program file ¶ +Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs. + +--gpg-program file +Specify a non-default gpg binary to be used by certain commands. + +--gpgsm-program file +Specify a non-default gpgsm binary to be used by certain commands. + +--chuid uid +Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows. + +gpg-card +AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ +AUTH +FETCH +GENERATE [--force] [--algo=algo{+algo2}] keyref +KDF-SETUP ¶ +Prepare the OpenPGP card KDF feature for this card. + +LANG [--clear] +Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info. + +LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] +NAME [--clear] +PRIVATEDO [--clear] n [< file] file +READCERT [--openpgp] certref > file ¶ +Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". +URL [--clear] +gpg's. --fetch +WRITECERT certref < file ¶ +WRITECERT --openpgp certref [< file|fpr] +WRITECERT --clear certref
-
---openpgp +file +fpr. +WRITEKEY [--force] keyref keygrip ¶ +Write a private key object identified by keygrip to the card under the id keyref. +CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ +Serial number +A hex-string with the serial number of the card.
-+Type +This gives the type of the card’s application. For example "OpenPGP" or "PIV". + +Keygrip +A hex-string identifying a key. + +Keyref +The application slot where the key is stored on the card. For example "OpenPGP.1" + +Status +The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card. + +YUBIKEY cmd args +Various commands pertaining to Yubikey tokens with cmd being: + +LIST +List supported and enabled Yubikey applications. + +ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] +DISABLE +Enable or disable the specified or all applications on the given interface. + +The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit. + +GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are: + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708. + +PIV Application PIN +This is the string 123456. + +PIN Unblocking Key +This is the string 12345678. +list (the string gpg/card> +card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: D2760001240102010006090746250000 +Application type .: OpenPGP +Version ..........: 2.1 +[...] +on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - uses: cli/gh-extension-precompile@v1
-   with:
-     go_version: "1.16"
-+Then +- uses: cli/gh-extension-precompile@v1
-
-env:
-CGO_ENABLED: 1 +- uses: cli/gh-extension-precompile@v1
-with:
-build_script_override: "script/build.sh" +name: release
-+on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - id: import_gpg
-   uses: crazy-max/ghaction-import-gpg@v5
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.GPG_PASSPHRASE }}
- - uses: cli/gh-extension-precompile@v1
-   with:
-     gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-+# macOS +gpg --armor --export-secret-key joe@foo.bar | pbcopy + +# Ubuntu (assuming GNU base64) +gpg --armor --export-secret-key joe@foo.bar -w0 | xclip + +# Arch +gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i + +# FreeBSD (assuming BSD base64) +gpg --armor --export-secret-key joe@foo.bar | xclip + +name: import-gpg + +on:
-
-push:
-branches: master
-+jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
- -
-   name: List keys
-   run: gpg -K
-+name: import-gpg + +on:
-
-push:
-branches: master
-+gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
-     fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8"
- -
-   name: List keys
-   run: gpg -K
-+pub ed25519 2021-09-24 [C]
-
- 87F257B89CE462100BEC0FFE6071D218380FDCC8
- Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092
-+uid [ unknown] Joe Bar joe@bar.foo +sub ed25519 2021-09-24 [S]
-
- C17D11ADF199F12A30A0910F1F80449BE0B08CB8
- Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB
-+name: import-gpg +/.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add + +application-priority piv +to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens. + +With one of these methods employed the list command of gpg-card shows this: + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: [none]
-
- keyref .....: PIV.9A
-+Card authenticat. : [none]
-
- keyref .....: PIV.9E
-+Digital signature : [none]
-
- keyref .....: PIV.9C
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key +list --cards +well. The PIV authentication key (internal reference PIV.9A +Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption + +gpg/card> auth 010203040506070801020304050607080102030405060708 +gpg/card> auth < myauth.key + +gpg/card> generate --algo=nistp384 PIV.9A +PIV card no. yk-9074625 detected +gpg/card> generate --algo=nistp256 PIV.9E +PIV card no. yk-9074625 detected +gpg/card> generate --algo=rsa2048 PIV.9C +PIV card no. yk-9074625 detected
-
-‘--force’ +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpg +self-signed X.509 certificate (exit the gpg-card tool, first): + +$ gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +gpgsm --with-keygrip -k 6309304695z@gmail.com +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key + +$ gpgsm --learn +$ gpgsm --gen-key -o sign.crt +Please select what kind of key you want:
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 3 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 +Your selection? 3 +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 2 +Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> 6309304695z@gmail.com +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) +These parameters are used:
-Key-Type: card:PIV.9C
-Key-Length: 1024
-Key-Usage: sign
-Serial: random
-Name-DN: CN=Signing key for yk-9074625,O=example,C=DE
-Name-Email: 6309304695z@gmail.com
-+Proceed with creation? (y/N) y +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED +gpgsm: certificate created +Ready. +$ gpgsm --import sign.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +‘gpgsm --learn’ +Digital signature’ key +gpg-card:010203040506070801020304050607080102030405060708 + +shellcode/eternalblue_sc_merge.py + +gpg/card> writecert PIV.9C < sign.crt on: push: branches: master @@ -26967,4 +27804,4 @@ curl -L \
-
--H "Accept: application/vnd.github+json"
-diff --git a/ReadMe.md b/ReadMe.md index 9f10a05..2888fcd 100644 --- a/ReadMe.md +++ b/ReadMe.md @@ -1,3 +1,1210 @@ +diff --git a/ReadMe.md b/ReadMe.md +index 7278f80..41b298d 100644 +--- a/ReadMe.md ++++ b/ReadMe.md +@@ -709,7 +709,844 @@ Digital signature’ key
-
-gpg-card:
-gpg/card> writecert PIV.9C < sign.crt ++# MS17-010 ++# 000006 ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - [verified] - ++PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E ++ keyref .....: PIV.9A (auth) ++ algorithm ..: nistp384 ++Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C ++ keyref .....: PIV.9E (auth) ++ algorithm ..: nistp256 ++Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED ++ keyref .....: PIV.9C (sign,cert) ++ algorithm ..: rsa2048 ++ used for ...: X.509 ++ user id ..: CN=Signing key for yk-9074625,O=example,C=DE ++ user id ..: <6309304695z@gmail.co ++ m> ++Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++ keyref .....: PIV.9D (encr) ++ algorithm ..: rsa2048 ++ used for ...: X.509 ++ user id ..: CN=Encryption key for yk-9074625,O=example,C=DE ++ user id ..: 6309304695z@gmail.com ++ PIV authentication’ key with ssh: ++ ++$ ssh-add -l ++384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) ++ssh-add with the uppercase ‘-L ++$ gpgsm --learn ++$ gpg --full-gen-key ++Please select what kind of key you want: ++ (1) RSA and RSA (default) ++ (2) DSA and Elgamal ++ (3) DSA (sign only) ++ (4) RSA (sign only) ++ (14) Existing key from card ++Your selection? 14 ++Serial number of the card: FF020001008A77C1 ++Available keys: ++ (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) ++ (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) ++ (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) ++ (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) ++Your selection? 3 ++Please specify how long the key should be valid. ++ 0 = key does not expire ++ = key expires in n days ++ w = key expires in n weeks ++ m = key expires in n months ++ y = key expires in n years ++Key is valid for? (0) ++Key does not expire at all ++Is this correct? (y/N) y ++ ++GnuPG needs to construct a user ID to identify your key. ++ ++Real name: keith bieszczat ++Email address: 6309304695z@gmail.com ++Comment: https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator ++You selected this USER-ID: ++ "6309304695z@gmail.com" ++ ++Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o ++gpg: key C3AFA9ED971BB365 marked as ultimately trusted ++gpg: revocation certificate stored as '[...]D971BB365.rev' ++public and secret key created and signed. ++ ++Note that this key cannot be used for encryption. You may want to use ++the command "--edit-key" to generate a subkey for this purpose. ++pub rsa2048 2019-04-04 [SC] ++ 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 ++uid 6309304695z@gmail.com ++ ++ run gpg in --expert mode ++ $ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 ++Secret key is available. ++ ++sec rsa2048/C3AFA9ED971BB365 ++ created: 2019-04-04 expires: never usage: SC ++ card-no: FF020001008A77C1 ++ trust: ultimate validity: ultimate ++[ultimate] (1). otto@example.net ++gpg> addkey ++Secret parts of primary key are stored on-card. ++Please select what kind of key you want: ++ (3) DSA (sign only) ++ (4) RSA (sign only) ++ (5) Elgamal (encrypt only) ++ (6) RSA (encrypt only) ++ (14) Existing key from card ++Your selection? 14 ++Serial number of the card: FF020001008A77C1 ++Available keys: ++ (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) ++ (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) ++ (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) ++ (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) ++Your selection? 4 ++Please specify how long the key should be valid. ++ 0 = key does not expire ++ = key expires in n days ++ w = key expires in n weeks ++ m = key expires in n months ++ y = key expires in n years ++Key is valid for? (0) ++Key does not expire at all ++Is this correct? (y/N) y ++Really create? (y/N) y ++ ++sec rsa2048/C3AFA9ED971BB365 ++ created: 2019-04-04 expires: never usage: SC ++ card-no: FF020001008A77C1 ++ trust: ultimate validity: ultimate ++ssb rsa2048/7067860A98FCE6E1 ++ created: 2019-04-04 expires: never usage: E ++ card-no: FF020001008A77C1 ++[ultimate] (1). otto@example.net ++ ++gpg> save ++ ++/* 32A19-D90712
-++LEVEL-5 CLEARANCE ONLY ++ ‘--force’ ++authentication key ++-header-'010203040506070801020304050607080102030405060708' ++SETDATA hexstring ++to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command ++ ++ PKSIGN keyid ++where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like: ++ ++ PKSIGN --hash=algoname keyid ++READKEY hexified_certid ++READCERT hexified_certid|keyid ++SERIALNO ++Return the serial number of the card using a status response like: ++ ++ S SERIALNO D27600000000000000000000 ++ WRITEKEY [--force] keyid ++SETDATA hexstring ++to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command ++ ++ PKDECRYPT keyid ++CHECKPIN idstr ++RESTART ++APDU [--atr] [--more] [--exlen[=n]] [hexstring] ++S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1 ++ ++./configure --sysconfdir=/etc --localstatedir=/va ++CN=Wurzel ZS 3,O=Intevation GmbH,C=DE ++ A6935DD34EF3087973C706FC311AA2CCF733765B S ++ ++ # CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE ++ DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S ++ ++ # CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE ++ !14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S ++
-++ # Key added on: 2011-07-20 20:38:46 ++ # Fingerprint: 5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81 ++ 34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm ++private-keys-v1.d/ ++gpg-connect-agent 'help COMMAND' /bye ++SETKEY ++Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available. ++ ++ PKDECRYPT ++The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text. ++ ++ S: INQUIRE CIPHERTEXT ++ C: D (xxxxxx ++ C: D xxxx) ++ C: END ++Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure: ++ ++ (enc-val ++ ( ++ (<param_name1> ) ++ ... ++ (<param_namen> ))) ++Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency. ++ ++If the decryption was successful the decrypted data is returned by means of "D" lines. ++ ++Here is an example session: ++ ++ C: PKDECRYPT ++ S: INQUIRE CIPHERTEXT ++ C: D (enc-val elg (a 349324324) ++ C: D (b 3F444677CA))) ++ C: END ++ S: # session key follows ++ S: S PADDING 0 ++ S: D (value 1234567890ABCDEF0) ++ S: OK decryption successful ++The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has ++SIGKEY ++This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay. ++ ++ SETHASH --hash=| ++sig-val ++ ( ++ (<param_name1> ) ++ ... ++ (<param_namen> ))) ++The operation is affected by the option ++ ++ OPTION use-cache-for-signing=0|1 ++The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching. ++ ++Here is an example session: ++ ++ C: SIGKEY ++ S: OK key available ++ C: SIGKEY ++ S: OK key available ++ C: PKSIGN ++ S: # I did ask the user whether he really wants to sign ++ S: # I did ask the user for the passphrase ++ S: INQUIRE HASHVAL ++ C: D ABCDEF012345678901234 ++ C: END ++ S: # signature follows ++ S: D (sig-val rsa (s 45435453654612121212)) ++ S: OK ++ GENKEY [--no-protection] [--preset] [<cache_nonce>] ++Invokes the key generation process and the server will then inquire on the generation parameters, like: ++ ++ S: INQUIRE KEYPARM ++ C: D (genkey (rsa (nbits 1024))) ++ C: END ++The format of the key parameters which depends on the algorithm is of the form: ++ ++ (genkey ++ (algo ++ (parameter_name_1 ....) ++ .... ++ (parameter_name_n ....))) ++If everything succeeds, the server returns the public key in a SPKI like S-Expression like this: ++ ++ (public-key ++ (rsa ++ (n ) ++ (e ))) ++Here is an example session: ++ ++ C: GENKEY ++ S: INQUIRE KEYPARM ++ C: D (genkey (rsa (nbits 1024))) ++ C: END ++ S: D (public-key ++ S: D (rsa (n 326487324683264) (e 10001))) ++ S OK key created ++ ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> ++LISTTRUSTED ++GpgAgent returns a list of trusted keys line by line: ++ ++ S: D 000000001234454556565656677878AF2F1ECCFF P ++ S: D 340387563485634856435645634856438576457A P ++ S: D FEDC6532453745367FD83474357495743757435D S ++ S: OK ++The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. ++Ok ++Finally a client should be able to mark a key as trusted: ++ ++ MARKTRUSTED fingerprint "P"|"S" ++The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this: ++ ++ S: INQUIRE TRUSTDESC ++ C: D Do you trust the key with the fingerprint @FPR@ ++ C: D bla fasel blurb. ++ C: END ++ S: OK ++GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]]
-++ [--qualitybar] cache_id
-++ [error_message prompt description] ++PRESET_PASSPHRASE [--inquire] <string_or_keygrip> [] ++ ++HAVEKEY keygrips ++ GET_CONFIRMATION description ++ LEARN [--send] ++UPDATESTARTUPTTY ++SETDATA hexstring ++ ++ ++ PKSIGN keyid ++ ++ ++ PKSIGN --hash=algoname keyid ++ ++READCERT hexified_certid|keyid ++READKEY hexified_certid ++SETDATA hexstring ++d ++ ++ PKSIGN keyid ++ LEARN ++ ++ PKSIGN --hash=algoname keyid ++ ++WRITEKEY [--force] keyid ++WRITEKEY [--force] keyid ++PASSWD [--reset] [--nullpin] chvno ++CHECKPIN idstr ++APDU [--atr] [--more] [--exlen[=n]] [hexstring] ++this: ++ ++ S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1 ++--auto-key-import ++ ++command --locate-external-key ++command --locate-external-key ++github/workflows/release.yml: ++ldap://keys.(thedomain) ++‘--auto-key-locate ++ --auto-key-locate ++--auto-key-retrieve ++ ++ ++ honor-keyserver-url ++ ++-sig-keyserver-url ++--recv-key ++honor-keyserver-url ++--use-agent ++--gpg-agent-info ++ ++ ++--no-random-seed-file ++Host: c7-use-3.algolianet. com ++Accept: / ++Sec-Fetch-Site: cross-site ++Accept-Language: en-US, en; q=0.9 ++Accept-Encoding: gzip, deflate, br ++Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B ++Origin: https://dashboard.algolia.com ++User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe ++x-algolia-api-key: b3cf***********************米** ++Content-Length: 27 ++Connection: keep-alive ++Content-Type: application/x-www-form-urlencoded ++Sec-Fetch-Dest: empty ++ ++scdaemon.conf ++1 ++HKCU\Software\GNU\GnuPG:DefaultLogFile, ++--debug-level level ++HKCU\Software\GNU\GnuPG:DefaultLogFile, ++scd-event ++HKCU\Software\GNU\GnuPG:HomeDir ++HKCU\Software\GNU\GnuPG:DefaultLogFile, ++reader_n.status ++HKCU\Software\GNU\GnuPG:HomeDir ++ ++trustlist.txt file ++gpg-agent.conf ++HKCU\Software\GNU\GnuPG:HomeDir ++name: release ++debug-pinentry ++--debug 1024 ++ ++global trustlist (/usr/local/etc/gnupg/trustlist.tx ++ ++Active cards ++Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. ++gpg-connect-agent updatestartuptty /bye ++Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command: ++ ++gpg-connect-agent /bye ++--scdaemon-program filename ++Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf ++--check-passphrase-pattern file ++--check-sym-passphrase-pattern file ++Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) ++bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe ++Keys listed in the sshcontrol file ++--disable-extended-key-format ++These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched. ++ ++--enable-ssh-support ++--enable-win32-openssh-support ++--enable-putty-support ++ ++gpg-connect-agent 'GETINFO s2k_count' /bye ++gpg-connect-agent 'GETINFO s2k_time' /bye ++To view the auto-calibrated count use: ++ ++gpg-connect-agent 'GETINFO s2k_count_cal' /bye ++--ssh-fingerprint-digest ++Keys listed in the sshcontrol file ++ ++Active card ++gpg-connect-agent /bye ++bashrc or whatever initialization file is used for all shell invocations: ++ ++GPG_TTY=$(tty) ++export GPG_TTY ++--daemon [command line] ++server ++ ++agent-program file ¶ ++Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs. ++ ++--gpg-program file ++Specify a non-default gpg binary to be used by certain commands. ++ ++--gpgsm-program file ++Specify a non-default gpgsm binary to be used by certain commands. ++ ++--chuid uid ++Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows. ++ ++gpg-card ++AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ ++AUTH ++FETCH ++GENERATE [--force] [--algo=algo{+algo2}] keyref ++KDF-SETUP ¶ ++Prepare the OpenPGP card KDF feature for this card. ++ ++LANG [--clear] ++Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info. ++ ++LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] ++NAME [--clear] ++PRIVATEDO [--clear] n [< file] file ++READCERT [--openpgp] certref > file ¶ ++Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". ++URL [--clear] ++gpg's. --fetch ++WRITECERT certref < file ¶ ++WRITECERT --openpgp certref [< file|fpr] ++WRITECERT --clear certref ++ --openpgp ++file ++fpr. ++WRITEKEY [--force] keyref keygrip ¶ ++Write a private key object identified by keygrip to the card under the id keyref. ++CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ ++Serial number ++A hex-string with the serial number of the card. ++ ++Type ++This gives the type of the card’s application. For example "OpenPGP" or "PIV". ++ ++Keygrip ++A hex-string identifying a key. ++ ++Keyref ++The application slot where the key is stored on the card. For example "OpenPGP.1" ++ ++Status ++The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card. ++ ++YUBIKEY cmd args ++Various commands pertaining to Yubikey tokens with cmd being: ++ ++LIST ++List supported and enabled Yubikey applications. ++ ++ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] ++DISABLE ++Enable or disable the specified or all applications on the given interface. ++ ++The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit. ++ ++GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are: ++ ++Authentication key ++This is a 24 byte key described by the hex string ++010203040506070801020304050607080102030405060708. ++ ++PIV Application PIN ++This is the string 123456. ++ ++PIN Unblocking Key ++This is the string 12345678. ++list (the string gpg/card> ++card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: D2760001240102010006090746250000 ++Application type .: OpenPGP ++Version ..........: 2.1 ++[...] ++on: ++ push: ++ tags: ++ - "v" ++ ++permissions: ++ contents: write ++ ++jobs: ++ release: ++ runs-on: ubuntu-latest ++ steps: ++ - uses: actions/checkout@v3 ++ - uses: cli/gh-extension-precompile@v1 ++ with: ++ go_version: "1.16" ++Then ++- uses: cli/gh-extension-precompile@v1 ++ env: ++ CGO_ENABLED: 1 ++- uses: cli/gh-extension-precompile@v1 ++ with: ++ build_script_override: "script/build.sh" ++name: release ++ ++on: ++ push: ++ tags: ++ - "v" ++ ++permissions: ++ contents: write ++ ++jobs: ++ release: ++ runs-on: ubuntu-latest ++ steps: ++ - uses: actions/checkout@v3 ++ - id: import_gpg ++ uses: crazy-max/ghaction-import-gpg@v5 ++ with: ++ gpg_private_key: {{ secrets.GPG_PASSPHRASE }} ++ - uses: cli/gh-extension-precompile@v1 ++ with: ++ gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }} ++# macOS ++gpg --armor --export-secret-key joe@foo.bar | pbcopy ++ ++# Ubuntu (assuming GNU base64) ++gpg --armor --export-secret-key joe@foo.bar -w0 | xclip ++ ++# Arch ++gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i ++ ++# FreeBSD (assuming BSD base64) ++gpg --armor --export-secret-key joe@foo.bar | xclip ++ ++name: import-gpg ++ ++on: ++ push: ++ branches: master ++ ++jobs: ++ import-gpg: ++ runs-on: ubuntu-latest ++ steps: ++ - ++ name: Checkout ++ uses: actions/checkout@v4 ++ - ++ name: Import GPG key ++ uses: crazy-max/ghaction-import-gpg@v6 ++ with: ++ gpg_private_key: {{ secrets.PASSPHRASE }} ++ - ++ name: List keys ++ run: gpg -K ++name: import-gpg ++ ++on: ++ push: ++ branches: master
-++gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpg/card> writecert PIV.9D < encr.crt ++ ++jobs: ++ import-gpg: ++ runs-on: ubuntu-latest ++ steps: ++ - ++ name: Checkout ++ uses: actions/checkout@v4 ++ - ++ name: Import GPG key ++ uses: crazy-max/ghaction-import-gpg@v6 ++ with: ++ gpg_private_key: {{ secrets.PASSPHRASE }} ++ fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8" ++ - ++ name: List keys ++ run: gpg -K ++ ++pub ed25519 2021-09-24 [C] ++ 87F257B89CE462100BEC0FFE6071D218380FDCC8 ++ Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092 ++uid [ unknown] Joe Bar joe@bar.foo ++sub ed25519 2021-09-24 [S] ++ C17D11ADF199F12A30A0910F1F80449BE0B08CB8 ++ Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB ++name: import-gpg ++/.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add ++ ++application-priority piv ++to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens. ++ ++With one of these methods employed the list command of gpg-card shows this: ++ ++gpg/card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - 3 - ++PIV authentication: [none] ++ keyref .....: PIV.9A ++Card authenticat. : [none] ++ keyref .....: PIV.9E ++Digital signature : [none] ++ keyref .....: PIV.9C ++Key management ...: [none] ++ keyref .....: PIV.9D ++34798AAFE0A7565088101CC4AE31C5C8C74461CB.key ++list --cards ++well. The PIV authentication key (internal reference PIV.9A ++Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption ++ ++gpg/card> auth 010203040506070801020304050607080102030405060708 ++gpg/card> auth < myauth.key ++ ++gpg/card> generate --algo=nistp384 PIV.9A ++PIV card no. yk-9074625 detected ++gpg/card> generate --algo=nistp256 PIV.9E ++PIV card no. yk-9074625 detected ++gpg/card> generate --algo=rsa2048 PIV.9C ++PIV card no. yk-9074625 detected ++ ‘--force’ ++gpg/card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - 3 - ++PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E ++ keyref .....: PIV.9A (auth) ++ algorithm ..: nistp384 ++Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C ++ keyref .....: PIV.9E (auth) ++ algorithm ..: nistp256 ++Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED ++ keyref .....: PIV.9C (sign,cert) ++ algorithm ..: rsa2048 ++Key management ...: [none] ++ keyref .....: PIV.9D ++keygrip ++gpg ++self-signed X.509 certificate (exit the gpg-card tool, first): ++ ++$ gpgsm --gen-key -o encr.crt ++ (1) RSA ++ (2) Existing key ++ (3) Existing key from card ++Your selection? 1 ++What keysize do you want? (3072) 2048 ++Requested keysize is 2048 bits ++Possible actions for a RSA key: ++ (1) sign, encrypt ++ (2) sign ++ (3) encrypt ++Your selection? 3 ++Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE ++Enter email addresses (end with an empty line): ++> otto@example.net ++> ++Enter DNS names (optional; end with an empty line): ++> ++Enter URIs (optional; end with an empty line): ++> ++Create self-signed certificate? (y/N) y ++These parameters are used: ++ Key-Type: RSA ++ Key-Length: 2048 ++ Key-Usage: encrypt ++ Serial: random ++ Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE ++ Name-Email: otto@example.net ++ ++Proceed with creation? (y/N) ++Now creating self-signed certificate. This may take a while ... ++gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpgsm: certificate created ++Ready. ++$ gpgsm --import encr.crt ++gpgsm: certificate imported ++gpgsm: total number processed: 1 ++gpgsm: imported: 1 ++gpg/card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - 3 - ++PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E ++ keyref .....: PIV.9A (auth) ++ algorithm ..: nistp384 ++Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C ++ keyref .....: PIV.9E (auth) ++ algorithm ..: nistp256 ++Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED ++ keyref .....: PIV.9C (sign,cert) ++ algorithm ..: rsa2048 ++Key management ...: [none] ++ keyref .....: PIV.9D ++keygrip ++gpgsm --gen-key -o encr.crt ++ (1) RSA ++ (2) Existing key ++ (3) Existing key from card ++Your selection? 1 ++What keysize do you want? (3072) 2048 ++Requested keysize is 2048 bits ++Possible actions for a RSA key: ++ (1) sign, encrypt ++ (2) sign ++ (3) encrypt ++Your selection? 3 ++Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE ++Enter email addresses (end with an empty line): ++> otto@example.net ++> ++Enter DNS names (optional; end with an empty line): ++> ++Enter URIs (optional; end with an empty line): ++> ++Create self-signed certificate? (y/N) y ++These parameters are used: ++ Key-Type: RSA ++ Key-Length: 2048 ++ Key-Usage: encrypt ++ Serial: random ++ Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE ++ Name-Email: otto@example.net ++ ++Proceed with creation? (y/N) ++Now creating self-signed certificate. This may take a while ... ++gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpgsm: certificate created ++Ready. ++$ gpgsm --import encr.crt ++gpgsm: certificate imported ++gpgsm: total number processed: 1 ++gpgsm: imported: 1 ++ ++gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpg/card> writecert PIV.9D < encr.crt ++ ++gpgsm --with-keygrip -k 6309304695z@gmail.com ++Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++ keyref .....: PIV.9D (encr) ++ algorithm ..: rsa2048 ++ used for ...: X.509 ++ user id ..: CN=Encryption key for yk-9074625,O=example,C=DE ++ user id ..: 6309304695z@gmail.com ++ ++34798AAFE0A7565088101CC4AE31C5C8C74461CB.key ++ ++$ gpgsm --learn ++$ gpgsm --gen-key -o sign.crt ++Please select what kind of key you want: ++ (1) RSA ++ (2) Existing key ++ (3) Existing key from card ++Your selection? 3 ++Serial number of the card: FF020001008A77C1 ++Available keys: ++ (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 ++ (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 ++ (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 ++ (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 ++Your selection? 3 ++Possible actions for a RSA key: ++ (1) sign, encrypt ++ (2) sign ++ (3) encrypt ++Your selection? 2 ++Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE ++Enter email addresses (end with an empty line): ++> 6309304695z@gmail.com ++> ++Enter DNS names (optional; end with an empty line): ++> ++Enter URIs (optional; end with an empty line): ++> ++Create self-signed certificate? (y/N) ++These parameters are used: ++ Key-Type: card:PIV.9C ++ Key-Length: 1024 ++ Key-Usage: sign ++ Serial: random ++ Name-DN: CN=Signing key for yk-9074625,O=example,C=DE ++ Name-Email: 6309304695z@gmail.com ++ ++Proceed with creation? (y/N) y ++Now creating self-signed certificate. This may take a while ... ++gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED ++gpgsm: certificate created ++Ready. ++$ gpgsm --import sign.crt ++gpgsm: certificate imported ++gpgsm: total number processed: 1 ++gpgsm: imported: 1 ++ ++‘gpgsm --learn’ ++Digital signature’ key ++gpg-card:010203040506070801020304050607080102030405060708 ++ ++shellcode/eternalblue_sc_merge.py ++ ++gpg/card> writecert PIV.9C < sign.crt
-
-on:
-push:
-branches: master
-+AUTHENTICATE [--setkey] [--raw] [< file]|key] +AUTH and set key + +GENERATE [--force] [--algo=algo{+algo2}] keyref +Create a new key on a card. Use --force to overwrite an existing key. Use "help" for algo to get a list of known algorithms. For OpenPGP cards several algos may be given. Note that the OpenPGP key generation is done interactively unless --algo or keyref + +LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] ¶ +L + +READCERT [--openpgp] certref > file ¶ + +openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3" + +WRITECERT certref < file ¶ +WRITECERT --openpgp certref [< file|fpr] +WRITECERT --clear certref +Write a certificate to the card under the id certref. + +WRITEKEY [--force] keyref keygrip ¶ +Write a private key object identified by keygrip to the card under the id keyref. Option --force allows overwriting an existing key +—Shadowed + +YUBIKEY cmd args ¶ +Various commands pertaining to Yubikey tokens with cmd being: + +LIST +List supported and enabled Yubikey applications. + +ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] +DISABLE +Enable or disable the specified or all applications on the given interface. + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708. + +PIV + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708 + +the string gpg/card> is the prompt + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: D2760001240102010006090746250000 +Application type .: OpenPGP +Version ..........: 2.1 +[...] + +use help yubikey). + +use help yubikey) + +gpg/card> yubikey disable all opgp +gpg/card> yubikey list +Application USB NFC +----------------------- +OTP yes yes +U2F yes yes +OPGP no no +PIV yes no +OATH yes yes +FIDO2 yes yes +gpg/card> reset + +/.gnupg/scdaemon.conf + +application-priority piv + +scdaemon + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: [none]
-
- keyref .....: PIV.9A
-+Card authenticat. : [none]
-
- keyref .....: PIV.9E
-+Digital signature : [none]
-
- keyref .....: PIV.9C
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+In + +Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) + +Card authentication key; however, that key is mandatory by the PIV standard and thus we create it too. Key generation requires that we authenticate to the card. This can be done either on the command line (which would reveal the key): + +gpg/card> auth 010203040506070801020304050607080102030405060708 + +gpg/card> auth < myauth.key + +gpg/card> generate --algo=nistp384 PIV.9A +PIV card no. yk-9074625 detected +gpg/card> generate --algo=nistp256 PIV.9E +PIV card no. yk-9074625 detected +gpg/card> generate --algo=rsa2048 PIV.9C +PIV card no. yk-9074625 detected + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D 
-+—force + +$ gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +[...] +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <otto@example.net>
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key from the directory ~/.gnupg/private-keys-v1.d/ + +$ gpgsm --learn +$ gpgsm --gen-key -o sign.crt +Please select what kind of key you want:
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 3 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 +Your selection? 3 +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 2 +Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) +These parameters are used:
-Key-Type: card:PIV.9C
-Key-Length: 1024
-Key-Usage: sign
-Serial: random
-Name-DN: CN=Signing key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) y +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED +gpgsm: certificate created +Ready. +$ gpgsm --import sign.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writecert PIV.9C < sign.crt + +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - [verified] - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Signing key for yk-9074625,O=example,C=DE
-   user id ..: <otto@example.net>
-+Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <otto@example.net>
-+PIV authentication’ key with ssh: + +$ ssh-add -l +384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) + +$ gpgsm --learn +$ gpg --full-gen-key +Please select what kind of key you want:
-
-(1) RSA and RSA (default)
-(2) DSA and Elgamal
-(3) DSA (sign only)
-(4) RSA (sign only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 3 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y + +GnuPG needs to construct a user ID to identify your key. + +Real name: +Email address: otto@example.net +Comment: +You selected this USER-ID:
-
-"otto@example.net"
-+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o +gpg: key C3AFA9ED971BB365 marked as ultimately trusted +gpg: revocation certificate stored as '[...]D971BB365.rev' +public and secret key created and signed. + +Note that this key cannot be used for encryption. You may want to use +the command "--edit-key" to generate a subkey for this purpose. +pub rsa2048 2019-04-04 [SC]
-
- 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
-+uid otto@example.net +$ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 +Secret key is available. + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+[ultimate] (1). otto@example.net +gpg> addkey +Secret parts of primary key are stored on-card. +Please select what kind of key you want:
-
-(3) DSA (sign only)
-(4) RSA (sign only)
-(5) Elgamal (encrypt only)
-(6) RSA (encrypt only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 4 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y +Really create? (y/N) y + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+ssb rsa2048/7067860A98FCE6E1
-
-created: 2019-04-04  expires: never       usage: E
-card-no: FF020001008A77C1
-+[ultimate] (1). otto@example.net + +gpg> save +Now you can use your PIV card also with gpg. + public-key
-
-diff --git a/ReadMe.md b/ReadMe.md index 7278f80..41b298d 100644 --- a/ReadMe.md +++ b/ReadMe.md @@ -709,7 +709,844 @@ Digital signature’ key gpg-card:
-
-gpg/card> writecert PIV.9C < sign.crt +# MS17-010 +# 000006 +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - [verified] - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Signing key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.co
-m> +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-PIV authentication’ key with ssh:
-+$ ssh-add -l +384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) +ssh-add with the uppercase ‘-L +$ gpgsm --learn +$ gpg --full-gen-key +Please select what kind of key you want:
-
-(1) RSA and RSA (default)
-(2) DSA and Elgamal
-(3) DSA (sign only)
-(4) RSA (sign only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 3 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y + +GnuPG needs to construct a user ID to identify your key. + +Real name: keith bieszczat +Email address: 6309304695z@gmail.com +Comment: https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator +You selected this USER-ID:
-
-"6309304695z@gmail.com"
-+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o +gpg: key C3AFA9ED971BB365 marked as ultimately trusted +gpg: revocation certificate stored as '[...]D971BB365.rev' +public and secret key created and signed. + +Note that this key cannot be used for encryption. You may want to use +the command "--edit-key" to generate a subkey for this purpose. +pub rsa2048 2019-04-04 [SC]
-
- 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
-+uid 6309304695z@gmail.com +
-
-run gpg in --expert mode
-$ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 +Secret key is available.
-+sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+[ultimate] (1). otto@example.net +gpg> addkey +Secret parts of primary key are stored on-card. +Please select what kind of key you want:
-
-(3) DSA (sign only)
-(4) RSA (sign only)
-(5) Elgamal (encrypt only)
-(6) RSA (encrypt only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 4 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y +Really create? (y/N) y + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+ssb rsa2048/7067860A98FCE6E1
-
-created: 2019-04-04  expires: never       usage: E
-card-no: FF020001008A77C1
-+[ultimate] (1). otto@example.net + +gpg> save + +/* 32A19-D90712
-+LEVEL-5 CLEARANCE ONLY
-
-‘--force’ +authentication key +-header-'010203040506070801020304050607080102030405060708' +SETDATA hexstring +to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-PKSIGN keyid +where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-PKSIGN --hash=algoname keyid +READKEY hexified_certid +READCERT hexified_certid|keyid +SERIALNO +Return the serial number of the card using a status response like:
-S SERIALNO D27600000000000000000000
-WRITEKEY [--force] keyid +SETDATA hexstring +to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-PKDECRYPT keyid +CHECKPIN idstr +RESTART +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+./configure --sysconfdir=/etc --localstatedir=/va +CN=Wurzel ZS 3,O=Intevation GmbH,C=DE
-
-A6935DD34EF3087973C706FC311AA2CCF733765B S
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-  # Key added on: 2011-07-20 20:38:46
-  # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-  34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-+private-keys-v1.d/ +gpg-connect-agent 'help COMMAND' /bye +SETKEY +Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available. +
-
-PKDECRYPT +The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END +Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-(enc-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency. + +If the decryption was successful the decrypted data is returned by means of "D" lines. + +Here is an example session: +
-
-C: PKDECRYPT
-S: INQUIRE CIPHERTEXT
-C: D (enc-val elg (a 349324324)
-C: D (b 3F444677CA)))
-C: END
-S: # session key follows
-S: S PADDING 0
-S: D (value 1234567890ABCDEF0)
-S: OK decryption successful +The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has +SIGKEY +This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-SETHASH --hash=| +sig-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+The operation is affected by the option +
-
-OPTION use-cache-for-signing=0|1 +The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-+Here is an example session: +
-
-C: SIGKEY
-S: OK key available
-C: SIGKEY
-S: OK key available
-C: PKSIGN
-S: # I did ask the user whether he really wants to sign
-S: # I did ask the user for the passphrase
-S: INQUIRE HASHVAL
-C: D ABCDEF012345678901234
-C: END
-S: # signature follows
-S: D (sig-val rsa (s 45435453654612121212))
-S: OK
-GENKEY [--no-protection] [--preset] [<cache_nonce>] +Invokes the key generation process and the server will then inquire on the generation parameters, like:
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END +The format of the key parameters which depends on the algorithm is of the form:
-(genkey
- (algo
-   (parameter_name_1 ....)
-     ....
-   (parameter_name_n ....)))
-+If everything succeeds, the server returns the public key in a SPKI like S-Expression like this: +
-
-(public-key
-  (rsa
-(n )
-(e ))) +Here is an example session:
-C: GENKEY
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END
-S: D (public-key
-S: D (rsa (n 326487324683264) (e 10001)))
-S OK key created
-ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> +LISTTRUSTED +GpgAgent returns a list of trusted keys line by line:
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK +The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. +Ok +Finally a client should be able to mark a key as trusted:
-MARKTRUSTED fingerprint "P"|"S" +The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-S: INQUIRE TRUSTDESC
-C: D Do you trust the key with the fingerprint @FPR@
-C: D bla fasel blurb.
-C: END
-S: OK +GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]] \
-            [--qualitybar] cache_id                \
-            [error_message prompt description]
-+PRESET_PASSPHRASE [--inquire] <string_or_keygrip> [] + +HAVEKEY keygrips
-
-GET_CONFIRMATION description
-LEARN [--send] +UPDATESTARTUPTTY +SETDATA hexstring
-PKSIGN keyid
-PKSIGN --hash=algoname keyid
-+READCERT hexified_certid|keyid +READKEY hexified_certid +SETDATA hexstring +d +
-
-PKSIGN keyid
-LEARN
-PKSIGN --hash=algoname keyid
-+WRITEKEY [--force] keyid +WRITEKEY [--force] keyid +PASSWD [--reset] [--nullpin] chvno +CHECKPIN idstr +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +this: +
-
-S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+--auto-key-import + +command --locate-external-key +command --locate-external-key +github/workflows/release.yml: +ldap://keys.(thedomain) +‘--auto-key-locate
-
---auto-key-locate +--auto-key-retrieve
-honor-keyserver-url
-+-sig-keyserver-url +--recv-key +honor-keyserver-url +--use-agent +--gpg-agent-info + + +--no-random-seed-file +Host: c7-use-3.algolianet. com +Accept: / +Sec-Fetch-Site: cross-site +Accept-Language: en-US, en; q=0.9 +Accept-Encoding: gzip, deflate, br +Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B +Origin: https://dashboard.algolia.com +User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe +x-algolia-api-key: b3cf*************************米** +Content-Length: 27 +Connection: keep-alive +Content-Type: application/x-www-form-urlencoded +Sec-Fetch-Dest: empty + +scdaemon.conf +1 +HKCU\Software\GNU\GnuPG:DefaultLogFile, +--debug-level level +HKCU\Software\GNU\GnuPG:DefaultLogFile, +scd-event +HKCU\Software\GNU\GnuPG:HomeDir +HKCU\Software\GNU\GnuPG:DefaultLogFile, +reader_n.status +HKCU\Software\GNU\GnuPG:HomeDir + +trustlist.txt file +gpg-agent.conf +HKCU\Software\GNU\GnuPG:HomeDir +name: release +debug-pinentry +--debug 1024 + +global trustlist (/usr/local/etc/gnupg/trustlist.tx + +Active cards +Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. +gpg-connect-agent updatestartuptty /bye +Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command: + +gpg-connect-agent /bye +--scdaemon-program filename +Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf +--check-passphrase-pattern file +--check-sym-passphrase-pattern file +Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) +bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe +Keys listed in the sshcontrol file +--disable-extended-key-format +These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched. + +--enable-ssh-support +--enable-win32-openssh-support +--enable-putty-support + +gpg-connect-agent 'GETINFO s2k_count' /bye +gpg-connect-agent 'GETINFO s2k_time' /bye +To view the auto-calibrated count use: + +gpg-connect-agent 'GETINFO s2k_count_cal' /bye +--ssh-fingerprint-digest +Keys listed in the sshcontrol file + +Active card +gpg-connect-agent /bye +bashrc or whatever initialization file is used for all shell invocations: + +GPG_TTY=$(tty) +export GPG_TTY +--daemon [command line] +server + +agent-program file ¶ +Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs. + +--gpg-program file +Specify a non-default gpg binary to be used by certain commands. + +--gpgsm-program file +Specify a non-default gpgsm binary to be used by certain commands. + +--chuid uid +Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows. + +gpg-card +AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ +AUTH +FETCH +GENERATE [--force] [--algo=algo{+algo2}] keyref +KDF-SETUP ¶ +Prepare the OpenPGP card KDF feature for this card. + +LANG [--clear] +Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info. + +LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] +NAME [--clear] +PRIVATEDO [--clear] n [< file] file +READCERT [--openpgp] certref > file ¶ +Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". +URL [--clear] +gpg's. --fetch +WRITECERT certref < file ¶ +WRITECERT --openpgp certref [< file|fpr] +WRITECERT --clear certref
-
---openpgp +file +fpr. +WRITEKEY [--force] keyref keygrip ¶ +Write a private key object identified by keygrip to the card under the id keyref. +CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ +Serial number +A hex-string with the serial number of the card.
-+Type +This gives the type of the card’s application. For example "OpenPGP" or "PIV". + +Keygrip +A hex-string identifying a key. + +Keyref +The application slot where the key is stored on the card. For example "OpenPGP.1" + +Status +The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card. + +YUBIKEY cmd args +Various commands pertaining to Yubikey tokens with cmd being: + +LIST +List supported and enabled Yubikey applications. + +ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] +DISABLE +Enable or disable the specified or all applications on the given interface. + +The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit. + +GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are: + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708. + +PIV Application PIN +This is the string 123456. + +PIN Unblocking Key +This is the string 12345678. +list (the string gpg/card> +card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: D2760001240102010006090746250000 +Application type .: OpenPGP +Version ..........: 2.1 +[...] +on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - uses: cli/gh-extension-precompile@v1
-   with:
-     go_version: "1.16"
-+Then +- uses: cli/gh-extension-precompile@v1
-
-env:
-CGO_ENABLED: 1 +- uses: cli/gh-extension-precompile@v1
-with:
-build_script_override: "script/build.sh" +name: release
-+on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - id: import_gpg
-   uses: crazy-max/ghaction-import-gpg@v5
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.GPG_PASSPHRASE }}
- - uses: cli/gh-extension-precompile@v1
-   with:
-     gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-+# macOS +gpg --armor --export-secret-key joe@foo.bar | pbcopy + +# Ubuntu (assuming GNU base64) +gpg --armor --export-secret-key joe@foo.bar -w0 | xclip + +# Arch +gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i + +# FreeBSD (assuming BSD base64) +gpg --armor --export-secret-key joe@foo.bar | xclip + +name: import-gpg + +on:
-
-push:
-branches: master
-+jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
- -
-   name: List keys
-   run: gpg -K
-+name: import-gpg + +on:
-
-push:
-branches: master
-+gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
-     fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8"
- -
-   name: List keys
-   run: gpg -K
-+pub ed25519 2021-09-24 [C]
-
- 87F257B89CE462100BEC0FFE6071D218380FDCC8
- Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092
-+uid [ unknown] Joe Bar joe@bar.foo +sub ed25519 2021-09-24 [S]
-
- C17D11ADF199F12A30A0910F1F80449BE0B08CB8
- Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB
-+name: import-gpg +/.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add + +application-priority piv +to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens. + +With one of these methods employed the list command of gpg-card shows this: + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: [none]
-
- keyref .....: PIV.9A
-+Card authenticat. : [none]
-
- keyref .....: PIV.9E
-+Digital signature : [none]
-
- keyref .....: PIV.9C
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key +list --cards +well. The PIV authentication key (internal reference PIV.9A +Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption + +gpg/card> auth 010203040506070801020304050607080102030405060708 +gpg/card> auth < myauth.key + +gpg/card> generate --algo=nistp384 PIV.9A +PIV card no. yk-9074625 detected +gpg/card> generate --algo=nistp256 PIV.9E +PIV card no. yk-9074625 detected +gpg/card> generate --algo=rsa2048 PIV.9C +PIV card no. yk-9074625 detected
-
-‘--force’ +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpg +self-signed X.509 certificate (exit the gpg-card tool, first): + +$ gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +gpgsm --with-keygrip -k 6309304695z@gmail.com +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key + +$ gpgsm --learn +$ gpgsm --gen-key -o sign.crt +Please select what kind of key you want:
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 3 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 +Your selection? 3 +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 2 +Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> 6309304695z@gmail.com +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) +These parameters are used:
-Key-Type: card:PIV.9C
-Key-Length: 1024
-Key-Usage: sign
-Serial: random
-Name-DN: CN=Signing key for yk-9074625,O=example,C=DE
-Name-Email: 6309304695z@gmail.com
-+Proceed with creation? (y/N) y +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED +gpgsm: certificate created +Ready. +$ gpgsm --import sign.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +‘gpgsm --learn’ +Digital signature’ key +gpg-card:010203040506070801020304050607080102030405060708 + +shellcode/eternalblue_sc_merge.py + +gpg/card> writecert PIV.9C < sign.crt on: push: branches: master
-
-AUTHENTICATE [--setkey] [--raw] [< file]|key] AUTH and set key
-
-GENERATE [--force] [--algo=algo{+algo2}] keyref Create a new key on a card. Use --force to overwrite an existing key. Use "help" for algo to get a list of known algorithms. For OpenPGP cards several algos may be given. Note that the OpenPGP key generation is done interactively unless --algo or keyref
-
-LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] ¶ L
-
-READCERT [--openpgp] certref > file ¶
-
-openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3"
-
-WRITECERT certref < file ¶ WRITECERT --openpgp certref [< file|fpr] WRITECERT --clear certref Write a certificate to the card under the id certref.
-
-WRITEKEY [--force] keyref keygrip ¶ Write a private key object identified by keygrip to the card under the id keyref. Option --force allows overwriting an existing key —Shadowed
-
-YUBIKEY cmd args ¶ Various commands pertaining to Yubikey tokens with cmd being:
-
-LIST List supported and enabled Yubikey applications.
-
-ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] DISABLE Enable or disable the specified or all applications on the given interface.
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708.
-
-PIV
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708
-
-the string gpg/card> is the prompt
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: D2760001240102010006090746250000 Application type .: OpenPGP Version ..........: 2.1 [...]
-
-use help yubikey).
-
-use help yubikey)
-
-gpg/card> yubikey disable all opgp gpg/card> yubikey list Application USB NFC
-
-OTP yes yes U2F yes yes OPGP no no PIV yes no OATH yes yes FIDO2 yes yes gpg/card> reset
-
-/.gnupg/scdaemon.conf
-
-application-priority piv
-
-scdaemon
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: [none] keyref .....: PIV.9A Card authenticat. : [none] keyref .....: PIV.9E Digital signature : [none] keyref .....: PIV.9C Key management ...: [none] keyref .....: PIV.9D In
-
-Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D)
-
-Card authentication key; however, that key is mandatory by the PIV standard and thus we create it too. Key generation requires that we authenticate to the card. This can be done either on the command line (which would reveal the key):
-
-gpg/card> auth 010203040506070801020304050607080102030405060708
-
-gpg/card> auth < myauth.key
-
-gpg/card> generate --algo=nistp384 PIV.9A PIV card no. yk-9074625 detected gpg/card> generate --algo=nistp256 PIV.9E PIV card no. yk-9074625 detected gpg/card> generate --algo=rsa2048 PIV.9C PIV card no. yk-9074625 detected
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D —force
-
-$ gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-[...] Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: otto@example.net
-
-34798AAFE0A7565088101CC4AE31C5C8C74461CB.key from the directory ~/.gnupg/private-keys-v1.d/
-
-$ gpgsm --learn $ gpgsm --gen-key -o sign.crt Please select what kind of key you want: (1) RSA (2) Existing key (3) Existing key from card Your selection? 3 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 Your selection? 3 Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 2 Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) These parameters are used: Key-Type: card:PIV.9C Key-Length: 1024 Key-Usage: sign Serial: random Name-DN: CN=Signing key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) y Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED gpgsm: certificate created Ready. $ gpgsm --import sign.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writecert PIV.9C < sign.crt
-
-Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - [verified] - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Signing key for yk-9074625,O=example,C=DE user id ..: otto@example.net Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: otto@example.net
-
-PIV authentication’ key with ssh:
-
-$ ssh-add -l 384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA)
-
-$ gpgsm --learn $ gpg --full-gen-key Please select what kind of key you want: (1) RSA and RSA (default) (2) DSA and Elgamal (3) DSA (sign only) (4) RSA (sign only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 3 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y
-
-GnuPG needs to construct a user ID to identify your key.
-
-Real name: Email address: otto@example.net Comment: You selected this USER-ID: "otto@example.net"
-
-Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o gpg: key C3AFA9ED971BB365 marked as ultimately trusted gpg: revocation certificate stored as '[...]D971BB365.rev' public and secret key created and signed.
-
-Note that this key cannot be used for encryption. You may want to use the command "--edit-key" to generate a subkey for this purpose. pub rsa2048 2019-04-04 [SC] 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 uid otto@example.net $ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 Secret key is available.
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate [ultimate] (1). otto@example.net gpg> addkey Secret parts of primary key are stored on-card. Please select what kind of key you want: (3) DSA (sign only) (4) RSA (sign only) (5) Elgamal (encrypt only) (6) RSA (encrypt only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 4 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y Really create? (y/N) y
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate ssb rsa2048/7067860A98FCE6E1 created: 2019-04-04 expires: never usage: E card-no: FF020001008A77C1 [ultimate] (1). otto@example.net
-
-gpg> save Now you can use your PIV card also with gpg.
-
- # 000006
-/* 32A19-D90712
-LEVEL-5 CLEARANCE ONLY ‘--force’ authentication key -header-'010203040506070801020304050607080102030405060708' SETDATA hexstring to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-
-PKSIGN keyid where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-
-PKSIGN --hash=algoname keyid READKEY hexified_certid READCERT hexified_certid|keyid SERIALNO Return the serial number of the card using a status response like:
-
-S SERIALNO D27600000000000000000000 WRITEKEY [--force] keyid SETDATA hexstring to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-
-PKDECRYPT keyid CHECKPIN idstr RESTART APDU [--atr] [--more] [--exlen[=n]] [hexstring] S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-
-./configure --sysconfdir=/etc --localstatedir=/va CN=Wurzel ZS 3,O=Intevation GmbH,C=DE A6935DD34EF3087973C706FC311AA2CCF733765B S
-
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-
-   # Key added on: 2011-07-20 20:38:46
-   # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-   34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-private-keys-v1.d/ gpg-connect-agent 'help COMMAND' /bye SETKEY Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available.
-
-PKDECRYPT The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END
-Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-
- (enc-val
-   (<algo>
-     (<param_name1> <mpi>)
-   ...
-     (<param_namen> <mpi>)))
-Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency.
-
-If the decryption was successful the decrypted data is returned by means of "D" lines.
-
-Here is an example session:
-
-C: PKDECRYPT S: INQUIRE CIPHERTEXT C: D (enc-val elg (a 349324324) C: D (b 3F444677CA))) C: END S: # session key follows S: S PADDING 0 S: D (value 1234567890ABCDEF0) S: OK decryption successful The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has SIGKEY This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-
-SETHASH --hash=| sig-val ( (<param_name1> ) ... (<param_namen> ))) The operation is affected by the option
-
-OPTION use-cache-for-signing=0|1 The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-
-Here is an example session:
-
-C: SIGKEY S: OK key available C: SIGKEY S: OK key available C: PKSIGN S: # I did ask the user whether he really wants to sign S: # I did ask the user for the passphrase S: INQUIRE HASHVAL C: D ABCDEF012345678901234 C: END S: # signature follows S: D (sig-val rsa (s 45435453654612121212)) S: OK GENKEY [--no-protection] [--preset] [<cache_nonce>] Invokes the key generation process and the server will then inquire on the generation parameters, like:
-
-S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END The format of the key parameters which depends on the algorithm is of the form:
-
-(genkey
-  (algo
-    (parameter_name_1 ....)
-      ....
-    (parameter_name_n ....)))
-If everything succeeds, the server returns the public key in a SPKI like S-Expression like this:
-
- (public-key
-   (rsa
- (n <mpi>)
- (e <mpi>)))
-Here is an example session:
-
-C: GENKEY S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END S: D (public-key S: D (rsa (n 326487324683264) (e 10001))) S OK key created ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> LISTTRUSTED GpgAgent returns a list of trusted keys line by line:
-
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK
-The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. Ok Finally a client should be able to mark a key as trusted:
-
-MARKTRUSTED fingerprint "P"|"S" The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-
-S: INQUIRE TRUSTDESC C: D Do you trust the key with the fingerprint @FPR@ C: D bla fasel blurb. C: END S: OK GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]]
-[--qualitybar] cache_id
-[error_message prompt description] PRESET_PASSPHRASE [--inquire] <string_or_keygrip> []
-
-HAVEKEY keygrips GET_CONFIRMATION description LEARN [--send] UPDATESTARTUPTTY SETDATA hexstring
-
-PKSIGN keyid
-
-PKSIGN --hash=algoname keyid
-
-READCERT hexified_certid|keyid READKEY hexified_certid SETDATA hexstring d
-
-PKSIGN keyid LEARN
-
-PKSIGN --hash=algoname keyid
-
-WRITEKEY [--force] keyid WRITEKEY [--force] keyid PASSWD [--reset] [--nullpin] chvno CHECKPIN idstr APDU [--atr] [--more] [--exlen[=n]] [hexstring] this:
-
- S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
---auto-key-import
-
-command --locate-external-key command --locate-external-key github/workflows/release.yml: ldap://keys.(thedomain) ‘--auto-key-locate --auto-key-locate --auto-key-retrieve
-
-honor-keyserver-url
-
--sig-keyserver-url --recv-key honor-keyserver-url --use-agent --gpg-agent-info
-
---no-random-seed-file Host: c7-use-3.algolianet. com Accept: / Sec-Fetch-Site: cross-site Accept-Language: en-US, en; q=0.9 Accept-Encoding: gzip, deflate, br Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B Origin: https://dashboard.algolia.com User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe x-algolia-api-key: b3cf*************************米** Content-Length: 27 Connection: keep-alive Content-Type: application/x-www-form-urlencoded Sec-Fetch-Dest: empty
-
-scdaemon.conf 1 HKCU\Software\GNU\GnuPG:DefaultLogFile, --debug-level level HKCU\Software\GNU\GnuPG:DefaultLogFile, scd-event HKCU\Software\GNU\GnuPG:HomeDir HKCU\Software\GNU\GnuPG:DefaultLogFile, reader_n.status HKCU\Software\GNU\GnuPG:HomeDir
-
-trustlist.txt file gpg-agent.conf HKCU\Software\GNU\GnuPG:HomeDir name: release debug-pinentry --debug 1024
-
-global trustlist (/usr/local/etc/gnupg/trustlist.tx
-
-Active cards Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. gpg-connect-agent updatestartuptty /bye Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command:
-
-gpg-connect-agent /bye --scdaemon-program filename Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf --check-passphrase-pattern file --check-sym-passphrase-pattern file Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe Keys listed in the sshcontrol file --disable-extended-key-format These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched.
-
---enable-ssh-support --enable-win32-openssh-support --enable-putty-support
-
-gpg-connect-agent 'GETINFO s2k_count' /bye gpg-connect-agent 'GETINFO s2k_time' /bye To view the auto-calibrated count use:
-
-gpg-connect-agent 'GETINFO s2k_count_cal' /bye --ssh-fingerprint-digest Keys listed in the sshcontrol file
-
-Active card gpg-connect-agent /bye bashrc or whatever initialization file is used for all shell invocations:
-
-GPG_TTY=$(tty) export GPG_TTY --daemon [command line] server
-
-agent-program file ¶ Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs.
-
---gpg-program file Specify a non-default gpg binary to be used by certain commands.
-
---gpgsm-program file Specify a non-default gpgsm binary to be used by certain commands.
-
---chuid uid Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows.
-
-gpg-card AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ AUTH FETCH GENERATE [--force] [--algo=algo{+algo2}] keyref KDF-SETUP ¶ Prepare the OpenPGP card KDF feature for this card.
-
-LANG [--clear] Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info.
-
-LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] NAME [--clear] PRIVATEDO [--clear] n [< file] file READCERT [--openpgp] certref > file ¶ Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". URL [--clear] gpg's. --fetch WRITECERT certref < file ¶ WRITECERT --openpgp certref [< file|fpr] WRITECERT --clear certref --openpgp file fpr. WRITEKEY [--force] keyref keygrip ¶ Write a private key object identified by keygrip to the card under the id keyref. CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ Serial number A hex-string with the serial number of the card.
-
-Type This gives the type of the card’s application. For example "OpenPGP" or "PIV".
-
-Keygrip A hex-string identifying a key.
-
-Keyref The application slot where the key is stored on the card. For example "OpenPGP.1"
-
-Status The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card.
-
-YUBIKEY cmd args Various commands pertaining to Yubikey tokens with cmd being:
-
-LIST List supported and enabled Yubikey applications.
-
-ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] DISABLE Enable or disable the specified or all applications on the given interface.
-
-The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit.
-
-GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are:
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708.
-
-PIV Application PIN This is the string 123456.
-
-PIN Unblocking Key This is the string 12345678. list (the string gpg/card> card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: D2760001240102010006090746250000 Application type .: OpenPGP Version ..........: 2.1 [...] on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - uses: cli/gh-extension-precompile@v1 with: go_version: "1.16" Then
-
-uses: cli/gh-extension-precompile@v1 env: CGO_ENABLED: 1
-uses: cli/gh-extension-precompile@v1 with: build_script_override: "script/build.sh" name: release
-on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - id: import_gpg uses: crazy-max/ghaction-import-gpg@v5 with: gpg_private_key: {{ secrets.GPG_PASSPHRASE }} - uses: cli/gh-extension-precompile@v1 with: gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-
-macOS
-
-gpg --armor --export-secret-key joe@foo.bar | pbcopy
-
-Ubuntu (assuming GNU base64)
-
-gpg --armor --export-secret-key joe@foo.bar -w0 | xclip
-
-Arch
-
-gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i
-
-FreeBSD (assuming BSD base64)
-
-gpg --armor --export-secret-key joe@foo.bar | xclip
-
-name: import-gpg
-
-on: push: branches: master
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} - name: List keys run: gpg -K name: import-gpg
-
-on: push: branches: master
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8" - name: List keys run: gpg -K
-
-pub ed25519 2021-09-24 [C] 87F257B89CE462100BEC0FFE6071D218380FDCC8 Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092 uid [ unknown] Joe Bar joe@bar.foo sub ed25519 2021-09-24 [S] C17D11ADF199F12A30A0910F1F80449BE0B08CB8 Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB name: import-gpg /.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add
-
-application-priority piv to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens.
-
-With one of these methods employed the list command of gpg-card shows this:
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: [none] keyref .....: PIV.9A Card authenticat. : [none] keyref .....: PIV.9E Digital signature : [none] keyref .....: PIV.9C Key management ...: [none] keyref .....: PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB.key list --cards well. The PIV authentication key (internal reference PIV.9A Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption
-
-gpg/card> auth 010203040506070801020304050607080102030405060708 gpg/card> auth < myauth.key
-
-gpg/card> generate --algo=nistp384 PIV.9A PIV card no. yk-9074625 detected gpg/card> generate --algo=nistp256 PIV.9E PIV card no. yk-9074625 detected gpg/card> generate --algo=rsa2048 PIV.9C PIV card no. yk-9074625 detected ‘--force’ gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpg self-signed X.509 certificate (exit the gpg-card tool, first):
-
-$ gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1 gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-gpgsm --with-keygrip -k 6309304695z@gmail.com Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: 6309304695z@gmail.com
-
-34798AAFE0A7565088101CC4AE31C5C8C74461CB.key
-
-$ gpgsm --learn $ gpgsm --gen-key -o sign.crt Please select what kind of key you want: (1) RSA (2) Existing key (3) Existing key from card Your selection? 3 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 Your selection? 3 Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 2 Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-6309304695z@gmail.com
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) These parameters are used: Key-Type: card:PIV.9C Key-Length: 1024 Key-Usage: sign Serial: random Name-DN: CN=Signing key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) y Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED gpgsm: certificate created Ready. $ gpgsm --import sign.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-‘gpgsm --learn’ Digital signature’ key gpg-card:
-
-gpg/card> writecert PIV.9C < sign.crt
-
-MS17-010
-
-000006
-
-Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - [verified] - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE722
-
-S: D (rsa (n 326487324683264) (e 10001)))
-
-S OK key created
-
-ISTRUSTED +LISTTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:Ob:81> +GpgAgent returns a list of trusted keys line by line:
-
-S: D 000000001234454556565656677878AF2F1ECCFF P
-
-S: D 340387563485634856435645634856438576457A P
-
-S: D FEDC6532453745367D83474357495743757435D S
-
-S: OK S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1 +--auto-key-import https://www.gnupg.org/documentation/manuals/
-
-9:16 298 signal operators › general INQUIRY <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:Ob:81> +GpgAgent returns a list of trusted keys line by line: + + S: D 000000001234454556565656677878AF2F1ECCFF P
-
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367D83474357495743757435D S
-S: OK S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1 +--auto-key-import https://www.gnupg.org/documentation/manuals/ gnupg/Agent-Options.html#option- _002d_002dhomedir --options file gnupg directory --homedir dir 05 council mainframe Ai Today at 7:54 PM -V --verbose gpgv pgpfile gpgu sigfile [datafile] Message "298 signal operators --verbose gpgv pgpfile gpgv sigfile [datafile] sigfile is the detached signature (either ASCIl- armored or binary) and datafile -stain HOME ~/.gnupg/trustedkeys.grg The default keyring with the allowed keys. gpg(1) -I --interactive debug-level level basic --enable-progress-filter 9 it. --status-fd n n. --status-file file 1 Same as --status-td, except the status data is written to file file. 05 council mainframe Ai Today at 8:02 PM file. Use socket:// --log-time --attribute-file -sig-notation {name=value) I --cert-notation {name=value} -N, --set-notation {name-value} keyname@domain.example.com name Notation are sionatures %k" will be exnanded into Message "298 signal operators general ID of the key making the signature, "%S" into the long key ID of the key making the signature, "⅑g" into the fingerprint of the key making the signature (which might be a subkey), "%p" into the fingerprint of the primary key of the key making the signature, "%c" into the signature count from the OpenPGP smartcard, and "%%" results in a single "%". %k, %K, and %f are only meaningful when making a key signature (certification), and %c is only meaningful when using the OpenPGP smartcard. policy-url 05 council mainframe Ai Today at 8:09 PM string=(|URL) --use-embedded-filename personal-digest-preferences cf. --s2k-mode --no-allow-non-selfsigned-uid 05 council mainframe Ai Today at 8:17 PM --allow-old-cipher-algos --keyring --with-key-data I Print key listings delimited by colons (like --with- colons --list-signatures --list-sigs --list-keys, but the signatures are listed too. This command has the same effect as using --list-keys with --with-sig-list. Note that in contrast to -- check-signatures gpg--list-sigs --with-colons USERID |
-Message "298 signal operators
-298 signal operators › general --list-keys, but the signatures are listed too. This command has the same effect as using --list-keys with --with-sig-list. Note that in contrast to -- check-signatures gpg--list-sigs--with-colons USERID | \ awk-F: '$1=="sig" &&$2=="?" {if($13){print $13} else{print $5}}' --default-new-key-algo string = algorithm change 05 council mainframe Ai Today at 8:24 PM rsa2048/cert,sign+rsa2048/encr" (or "rsa3072") can be changed to the value of what we currently call future default, which is "ed25519/ cert,sign+cv25519/encr forbid-gen-key allow-secret-key-import --no-expensive-trust-checks --default-keyserver-url name doc/DETAILS --no-encrypt-to 9 Disable the use of all --encrypt-to and --hidden- encrypt-to keys. 05 council mainframe Ai Today at 8:33 PM --armor -a Create PEM encoded output. --with-md5-fingerprint --with-validation with --import --with-key-data --list-keys + Message "298 signal operators diff --git a/ReadMe.md b/ReadMe.md index 7278f80..41b298d 100644 --- a/ReadMe.md +++ b/ReadMe.md @@ -709,7 +709,844 @@ Digital signature’ key gpg-card:
-
-gpg/card> writecert PIV.9C < sign.crt +# MS17-010 +# 000006 +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - [verified] - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Signing key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.co
-m> +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-PIV authentication’ key with ssh:
-+$ ssh-add -l +384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) +ssh-add with the uppercase ‘-L +$ gpgsm --learn +$ gpg --full-gen-key +Please select what kind of key you want:
-
-(1) RSA and RSA (default)
-(2) DSA and Elgamal
-(3) DSA (sign only)
-(4) RSA (sign only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 3 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y + +GnuPG needs to construct a user ID to identify your key. + +Real name: keith bieszczat +Email address: 6309304695z@gmail.com +Comment: https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator +You selected this USER-ID:
-
-"6309304695z@gmail.com"
-+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o +gpg: key C3AFA9ED971BB365 marked as ultimately trusted +gpg: revocation certificate stored as '[...]D971BB365.rev' +public and secret key created and signed. + +Note that this key cannot be used for encryption. You may want to use +the command "--edit-key" to generate a subkey for this purpose. +pub rsa2048 2019-04-04 [SC]
-
- 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
-+uid 6309304695z@gmail.com +
-
-run gpg in --expert mode
-$ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 +Secret key is available.
-+sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+[ultimate] (1). otto@example.net +gpg> addkey +Secret parts of primary key are stored on-card. +Please select what kind of key you want:
-
-(3) DSA (sign only)
-(4) RSA (sign only)
-(5) Elgamal (encrypt only)
-(6) RSA (encrypt only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 4 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y +Really create? (y/N) y + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+ssb rsa2048/7067860A98FCE6E1
-
-created: 2019-04-04  expires: never       usage: E
-card-no: FF020001008A77C1
-+[ultimate] (1). otto@example.net + +gpg> save + +/* 32A19-D90712
-+LEVEL-5 CLEARANCE ONLY
-
-‘--force’ +authentication key +-header-'010203040506070801020304050607080102030405060708' +SETDATA hexstring +to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-PKSIGN keyid +where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-PKSIGN --hash=algoname keyid +READKEY hexified_certid +READCERT hexified_certid|keyid +SERIALNO +Return the serial number of the card using a status response like:
-S SERIALNO D27600000000000000000000
-WRITEKEY [--force] keyid +SETDATA hexstring +to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-PKDECRYPT keyid +CHECKPIN idstr +RESTART +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+./configure --sysconfdir=/etc --localstatedir=/va +CN=Wurzel ZS 3,O=Intevation GmbH,C=DE
-
-A6935DD34EF3087973C706FC311AA2CCF733765B S
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-  # Key added on: 2011-07-20 20:38:46
-  # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-  34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-+private-keys-v1.d/ +gpg-connect-agent 'help COMMAND' /bye +SETKEY +Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available. +
-
-PKDECRYPT +The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END +Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-(enc-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency. + +If the decryption was successful the decrypted data is returned by means of "D" lines. + +Here is an example session: +
-
-C: PKDECRYPT
-S: INQUIRE CIPHERTEXT
-C: D (enc-val elg (a 349324324)
-C: D (b 3F444677CA)))
-C: END
-S: # session key follows
-S: S PADDING 0
-S: D (value 1234567890ABCDEF0)
-S: OK decryption successful +The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has +SIGKEY +This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-SETHASH --hash=| +sig-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+The operation is affected by the option +
-
-OPTION use-cache-for-signing=0|1 +The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-+Here is an example session: +
-
-C: SIGKEY
-S: OK key available
-C: SIGKEY
-S: OK key available
-C: PKSIGN
-S: # I did ask the user whether he really wants to sign
-S: # I did ask the user for the passphrase
-S: INQUIRE HASHVAL
-C: D ABCDEF012345678901234
-C: END
-S: # signature follows
-S: D (sig-val rsa (s 45435453654612121212))
-S: OK
-GENKEY [--no-protection] [--preset] [<cache_nonce>] +Invokes the key generation process and the server will then inquire on the generation parameters, like:
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END +The format of the key parameters which depends on the algorithm is of the form:
-(genkey
- (algo
-   (parameter_name_1 ....)
-     ....
-   (parameter_name_n ....)))
-+If everything succeeds, the server returns the public key in a SPKI like S-Expression like this: +
-
-(public-key
-  (rsa
-(n )
-(e ))) +Here is an example session:
-C: GENKEY
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END
-S: D (public-key
-S: D (rsa (n 326487324683264) (e 10001)))
-S OK key created
-ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> +LISTTRUSTED +GpgAgent returns a list of trusted keys line by line:
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK +The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. +Ok +Finally a client should be able to mark a key as trusted:
-MARKTRUSTED fingerprint "P"|"S" +The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-S: INQUIRE TRUSTDESC
-C: D Do you trust the key with the fingerprint @FPR@
-C: D bla fasel blurb.
-C: END
-S: OK +GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]] \
-            [--qualitybar] cache_id                \
-            [error_message prompt description]
-+PRESET_PASSPHRASE [--inquire] <string_or_keygrip> [] + +HAVEKEY keygrips
-
-GET_CONFIRMATION description
-LEARN [--send] +UPDATESTARTUPTTY +SETDATA hexstring
-PKSIGN keyid
-PKSIGN --hash=algoname keyid
-+READCERT hexified_certid|keyid +READKEY hexified_certid +SETDATA hexstring +d +
-
-PKSIGN keyid
-LEARN
-PKSIGN --hash=algoname keyid
-+WRITEKEY [--force] keyid +WRITEKEY [--force] keyid +PASSWD [--reset] [--nullpin] chvno +CHECKPIN idstr +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +this: +
-
-S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+--auto-key-import + +command --locate-external-key +command --locate-external-key +github/workflows/release.yml: +ldap://keys.(thedomain) +‘--auto-key-locate
-
---auto-key-locate +--auto-key-retrieve
-honor-keyserver-url
-+-sig-keyserver-url +--recv-key +honor-keyserver-url +--use-agent +--gpg-agent-info + + +--no-random-seed-file +Host: c7-use-3.algolianet. com +Accept: / +Sec-Fetch-Site: cross-site +Accept-Language: en-US, en; q=0.9 +Accept-Encoding: gzip, deflate, br +Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B +Origin: https://dashboard.algolia.com +User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe +x-algolia-api-key: b3cf*************************米** +Content-Length: 27 +Connection: keep-alive +Content-Type: application/x-www-form-urlencoded +Sec-Fetch-Dest: empty + +scdaemon.conf +1 +HKCU\Software\GNU\GnuPG:DefaultLogFile, +--debug-level level +HKCU\Software\GNU\GnuPG:DefaultLogFile, +scd-event +HKCU\Software\GNU\GnuPG:HomeDir +HKCU\Software\GNU\GnuPG:DefaultLogFile, +reader_n.status +HKCU\Software\GNU\GnuPG:HomeDir + +trustlist.txt file +gpg-agent.conf +HKCU\Software\GNU\GnuPG:HomeDir +name: release +debug-pinentry +--debug 1024 + +global trustlist (/usr/local/etc/gnupg/trustlist.tx + +Active cards +Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. +gpg-connect-agent updatestartuptty /bye +Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command: + +gpg-connect-agent /bye +--scdaemon-program filename +Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf +--check-passphrase-pattern file +--check-sym-passphrase-pattern file +Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) +bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe +Keys listed in the sshcontrol file +--disable-extended-key-format +These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched. + +--enable-ssh-support +--enable-win32-openssh-support +--enable-putty-support + +gpg-connect-agent 'GETINFO s2k_count' /bye +gpg-connect-agent 'GETINFO s2k_time' /bye +To view the auto-calibrated count use: + +gpg-connect-agent 'GETINFO s2k_count_cal' /bye +--ssh-fingerprint-digest +Keys listed in the sshcontrol file + +Active card +gpg-connect-agent /bye +bashrc or whatever initialization file is used for all shell invocations: + +GPG_TTY=$(tty) +export GPG_TTY +--daemon [command line] +server + +agent-program file ¶ +Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs. + +--gpg-program file +Specify a non-default gpg binary to be used by certain commands. + +--gpgsm-program file +Specify a non-default gpgsm binary to be used by certain commands. + +--chuid uid +Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows. + +gpg-card +AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ +AUTH +FETCH +GENERATE [--force] [--algo=algo{+algo2}] keyref +KDF-SETUP ¶ +Prepare the OpenPGP card KDF feature for this card. + +LANG [--clear] +Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info. + +LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] +NAME [--clear] +PRIVATEDO [--clear] n [< file] file +READCERT [--openpgp] certref > file ¶ +Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". +URL [--clear] +gpg's. --fetch +WRITECERT certref < file ¶ +WRITECERT --openpgp certref [< file|fpr] +WRITECERT --clear certref
-
---openpgp +file +fpr. +WRITEKEY [--force] keyref keygrip ¶ +Write a private key object identified by keygrip to the card under the id keyref. +CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ +Serial number +A hex-string with the serial number of the card.
-+Type +This gives the type of the card’s application. For example "OpenPGP" or "PIV". + +Keygrip +A hex-string identifying a key. + +Keyref +The application slot where the key is stored on the card. For example "OpenPGP.1" + +Status +The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card. + +YUBIKEY cmd args +Various commands pertaining to Yubikey tokens with cmd being: + +LIST +List supported and enabled Yubikey applications. + +ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] +DISABLE +Enable or disable the specified or all applications on the given interface. + +The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit. + +GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are: + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708. + +PIV Application PIN +This is the string 123456. + +PIN Unblocking Key +This is the string 12345678. +list (the string gpg/card> +card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: D2760001240102010006090746250000 +Application type .: OpenPGP +Version ..........: 2.1 +[...] +on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - uses: cli/gh-extension-precompile@v1
-   with:
-     go_version: "1.16"
-+Then +- uses: cli/gh-extension-precompile@v1
-
-env:
-CGO_ENABLED: 1 +- uses: cli/gh-extension-precompile@v1
-with:
-build_script_override: "script/build.sh" +name: release
-+on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - id: import_gpg
-   uses: crazy-max/ghaction-import-gpg@v5
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.GPG_PASSPHRASE }}
- - uses: cli/gh-extension-precompile@v1
-   with:
-     gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-+# macOS +gpg --armor --export-secret-key joe@foo.bar | pbcopy + +# Ubuntu (assuming GNU base64) +gpg --armor --export-secret-key joe@foo.bar -w0 | xclip + +# Arch +gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i + +# FreeBSD (assuming BSD base64) +gpg --armor --export-secret-key joe@foo.bar | xclip + +name: import-gpg + +on:
-
-push:
-branches: master
-+jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
- -
-   name: List keys
-   run: gpg -K
-+name: import-gpg + +on:
-
-push:
-branches: master
-+gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
-     fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8"
- -
-   name: List keys
-   run: gpg -K
-+pub ed25519 2021-09-24 [C]
-
- 87F257B89CE462100BEC0FFE6071D218380FDCC8
- Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092
-+uid [ unknown] Joe Bar joe@bar.foo +sub ed25519 2021-09-24 [S]
-
- C17D11ADF199F12A30A0910F1F80449BE0B08CB8
- Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB
-+name: import-gpg +/.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add + +application-priority piv +to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens. + +With one of these methods employed the list command of gpg-card shows this: + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: [none]
-
- keyref .....: PIV.9A
-+Card authenticat. : [none]
-
- keyref .....: PIV.9E
-+Digital signature : [none]
-
- keyref .....: PIV.9C
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key +list --cards +well. The PIV authentication key (internal reference PIV.9A +Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption + +gpg/card> auth 010203040506070801020304050607080102030405060708 +gpg/card> auth < myauth.key + +gpg/card> generate --algo=nistp384 PIV.9A +PIV card no. yk-9074625 detected +gpg/card> generate --algo=nistp256 PIV.9E +PIV card no. yk-9074625 detected +gpg/card> generate --algo=rsa2048 PIV.9C +PIV card no. yk-9074625 detected
-
-‘--force’ +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpg +self-signed X.509 certificate (exit the gpg-card tool, first): + +$ gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +gpgsm --with-keygrip -k 6309304695z@gmail.com +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key + +$ gpgsm --learn +$ gpgsm --gen-key -o sign.crt +Please select what kind of key you want:
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 3 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 +Your selection? 3 +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 2 +Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> 6309304695z@gmail.com +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) +These parameters are used:
-Key-Type: card:PIV.9C
-Key-Length: 1024
-Key-Usage: sign
-Serial: random
-Name-DN: CN=Signing key for yk-9074625,O=example,C=DE
-Name-Email: 6309304695z@gmail.com
-+Proceed with creation? (y/N) y +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED +gpgsm: certificate created +Ready. +$ gpgsm --import sign.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +‘gpgsm --learn’ +Digital signature’ key +gpg-card:010203040506070801020304050607080102030405060708 + +shellcode/eternalblue_sc_merge.py + +gpg/card> writecert PIV.9C < sign.crt on: push: branches: master
-
-AUTHENTICATE [--setkey] [--raw] [< file]|key] AUTH and set key
-
-GENERATE [--force] [--algo=algo{+algo2}] keyref Create a new key on a card. Use --force to overwrite an existing key. Use "help" for algo to get a list of known algorithms. For OpenPGP cards several algos may be given. Note that the OpenPGP key generation is done interactively unless --algo or keyref
-
-LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] ¶ L
-
-READCERT [--openpgp] certref > file ¶
-
-openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3"
-
-WRITECERT certref < file ¶ WRITECERT --openpgp certref [< file|fpr] WRITECERT --clear certref Write a certificate to the card under the id certref.
-
-WRITEKEY [--force] keyref keygrip ¶ Write a private key object identified by keygrip to the card under the id keyref. Option --force allows overwriting an existing key —Shadowed
-
-YUBIKEY cmd args ¶ Various commands pertaining to Yubikey tokens with cmd being:
-
-LIST List supported and enabled Yubikey applications.
-
-ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] DISABLE Enable or disable the specified or all applications on the given interface.
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708.
-
-PIV
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708
-
-the string gpg/card> is the prompt
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: D2760001240102010006090746250000 Application type .: OpenPGP Version ..........: 2.1 [...]
-
-use help yubikey).
-
-use help yubikey)
-
-gpg/card> yubikey disable all opgp gpg/card> yubikey list Application USB NFC
-
-OTP yes yes U2F yes yes OPGP no no PIV yes no OATH yes yes FIDO2 yes yes gpg/card> reset
-
-/.gnupg/scdaemon.conf
-
-application-priority piv
-
-scdaemon
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: [none] keyref .....: PIV.9A Card authenticat. : [none] keyref .....: PIV.9E Digital signature : [none] keyref .....: PIV.9C Key management ...: [none] keyref .....: PIV.9D In
-
-Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D)
-
-Card authentication key; however, that key is mandatory by the PIV standard and thus we create it too. Key generation requires that we authenticate to the card. This can be done either on the command line (which would reveal the key):
-
-gpg/card> auth 010203040506070801020304050607080102030405060708
-
-gpg/card> auth < myauth.key
-
-gpg/card> generate --algo=nistp384 PIV.9A PIV card no. yk-9074625 detected gpg/card> generate --algo=nistp256 PIV.9E PIV card no. yk-9074625 detected gpg/card> generate --algo=rsa2048 PIV.9C PIV card no. yk-9074625 detected
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D —force
-
-$ gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-[...] Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: otto@example.net
-
-34798AAFE0A7565088101CC4AE31C5C8C74461CB.key from the directory ~/.gnupg/private-keys-v1.d/
-
-$ gpgsm --learn $ gpgsm --gen-key -o sign.crt Please select what kind of key you want: (1) RSA (2) Existing key (3) Existing key from card Your selection? 3 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 Your selection? 3 Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 2 Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) These parameters are used: Key-Type: card:PIV.9C Key-Length: 1024 Key-Usage: sign Serial: random Name-DN: CN=Signing key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) y Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED gpgsm: certificate created Ready. $ gpgsm --import sign.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writecert PIV.9C < sign.crt
-
-Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - [verified] - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Signing key for yk-9074625,O=example,C=DE user id ..: otto@example.net Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: otto@example.net
-
-PIV authentication’ key with ssh:
-
-$ ssh-add -l 384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA)
-
-$ gpgsm --learn $ gpg --full-gen-key Please select what kind of key you want: (1) RSA and RSA (default) (2) DSA and Elgamal (3) DSA (sign only) (4) RSA (sign only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 3 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y
-
-GnuPG needs to construct a user ID to identify your key.
-
-Real name: Email address: otto@example.net Comment: You selected this USER-ID: "otto@example.net"
-
-Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o gpg: key C3AFA9ED971BB365 marked as ultimately trusted gpg: revocation certificate stored as '[...]D971BB365.rev' public and secret key created and signed.
-
-Note that this key cannot be used for encryption. You may want to use the command "--edit-key" to generate a subkey for this purpose. pub rsa2048 2019-04-04 [SC] 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 uid otto@example.net $ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 Secret key is available.
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate [ultimate] (1). otto@example.net gpg> addkey Secret parts of primary key are stored on-card. Please select what kind of key you want: (3) DSA (sign only) (4) RSA (sign only) (5) Elgamal (encrypt only) (6) RSA (encrypt only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 4 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y Really create? (y/N) y
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate ssb rsa2048/7067860A98FCE6E1 created: 2019-04-04 expires: never usage: E card-no: FF020001008A77C1 [ultimate] (1). otto@example.net
-
-gpg> save Now you can use your PIV card also with gpg.
-
- # 000006
-/* 32A19-D90712
-LEVEL-5 CLEARANCE ONLY ‘--force’ authentication key -header-'010203040506070801020304050607080102030405060708' SETDATA hexstring to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-
-PKSIGN keyid where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-
-PKSIGN --hash=algoname keyid READKEY hexified_certid READCERT hexified_certid|keyid SERIALNO Return the serial number of the card using a status response like:
-
-S SERIALNO D27600000000000000000000 WRITEKEY [--force] keyid SETDATA hexstring to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-
-PKDECRYPT keyid CHECKPIN idstr RESTART APDU [--atr] [--more] [--exlen[=n]] [hexstring] S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-
-./configure --sysconfdir=/etc --localstatedir=/va CN=Wurzel ZS 3,O=Intevation GmbH,C=DE A6935DD34EF3087973C706FC311AA2CCF733765B S
-
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-
-   # Key added on: 2011-07-20 20:38:46
-   # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-   34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-private-keys-v1.d/ gpg-connect-agent 'help COMMAND' /bye SETKEY Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available.
-
-PKDECRYPT The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END
-Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-
- (enc-val
-   (<algo>
-     (<param_name1> <mpi>)
-   ...
-     (<param_namen> <mpi>)))
-Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency.
-
-If the decryption was successful the decrypted data is returned by means of "D" lines.
-
-Here is an example session:
-
-C: PKDECRYPT S: INQUIRE CIPHERTEXT C: D (enc-val elg (a 349324324) C: D (b 3F444677CA))) C: END S: # session key follows S: S PADDING 0 S: D (value 1234567890ABCDEF0) S: OK decryption successful The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has SIGKEY This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-
-SETHASH --hash=| sig-val ( (<param_name1> ) ... (<param_namen> ))) The operation is affected by the option
-
-OPTION use-cache-for-signing=0|1 The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-
-Here is an example session:
-
-C: SIGKEY S: OK key available C: SIGKEY S: OK key available C: PKSIGN S: # I did ask the user whether he really wants to sign S: # I did ask the user for the passphrase S: INQUIRE HASHVAL C: D ABCDEF012345678901234 C: END S: # signature follows S: D (sig-val rsa (s 45435453654612121212)) S: OK GENKEY [--no-protection] [--preset] [<cache_nonce>] Invokes the key generation process and the server will then inquire on the generation parameters, like:
-
-S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END The format of the key parameters which depends on the algorithm is of the form:
-
-(genkey
-  (algo
-    (parameter_name_1 ....)
-      ....
-    (parameter_name_n ....)))
-If everything succeeds, the server returns the public key in a SPKI like S-Expression like this:
-
- (public-key
-   (rsa
- (n <mpi>)
- (e <mpi>)))
-Here is an example session:
-
-C: GENKEY S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END S: D (public-key S: D (rsa (n 326487324683264) (e 10001))) S OK key created ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> LISTTRUSTED GpgAgent returns a list of trusted keys line by line:
-
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK
-The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. Ok Finally a client should be able to mark a key as trusted:
-
-MARKTRUSTED fingerprint "P"|"S" The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-
-S: INQUIRE TRUSTDESC C: D Do you trust the key with the fingerprint @FPR@ C: D bla fasel blurb. C: END S: OK GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]]
-[--qualitybar] cache_id
-[error_message prompt description] PRESET_PASSPHRASE [--inquire] <string_or_keygrip> []
-
-HAVEKEY keygrips GET_CONFIRMATION description LEARN [--send] UPDATESTARTUPTTY SETDATA hexstring
-
-PKSIGN keyid
-
-PKSIGN --hash=algoname keyid
-
-READCERT hexified_certid|keyid READKEY hexified_certid SETDATA hexstring d
-
-PKSIGN keyid LEARN
-
-PKSIGN --hash=algoname keyid
-
-WRITEKEY [--force] keyid WRITEKEY [--force] keyid PASSWD [--reset] [--nullpin] chvno CHECKPIN idstr APDU [--atr] [--more] [--exlen[=n]] [hexstring] this:
-
- S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
---auto-key-import
-
-command --locate-external-key command --locate-external-key github/workflows/release.yml: ldap://keys.(thedomain) ‘--auto-key-locate --auto-key-locate --auto-key-retrieve
-
-honor-keyserver-url
-
--sig-keyserver-url --recv-key honor-keyserver-url --use-agent --gpg-agent-info
-
---no-random-seed-file Host: c7-use-3.algolianet. com Accept: / Sec-Fetch-Site: cross-site Accept-Language: en-US, en; q=0.9 Accept-Encoding: gzip, deflate, br Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B Origin: https://dashboard.algolia.com User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe x-algolia-api-key: b3cf*************************米** Content-Length: 27 Connection: keep-alive Content-Type: application/x-www-form-urlencoded Sec-Fetch-Dest: empty
-
-scdaemon.conf 1 HKCU\Software\GNU\GnuPG:DefaultLogFile, --debug-level level HKCU\Software\GNU\GnuPG:DefaultLogFile, scd-event HKCU\Software\GNU\GnuPG:HomeDir HKCU\Software\GNU\GnuPG:DefaultLogFile, reader_n.status HKCU\Software\GNU\GnuPG:HomeDir
-
-trustlist.txt file gpg-agent.conf HKCU\Software\GNU\GnuPG:HomeDir name: release debug-pinentry --debug 1024
-
-global trustlist (/usr/local/etc/gnupg/trustlist.tx
-
-Active cards Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. gpg-connect-agent updatestartuptty /bye Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command:
-
-gpg-connect-agent /bye --scdaemon-program filename Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf --check-passphrase-pattern file --check-sym-passphrase-pattern file Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe Keys listed in the sshcontrol file --disable-extended-key-format These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched.
-
---enable-ssh-support --enable-win32-openssh-support --enable-putty-support
-
-gpg-connect-agent 'GETINFO s2k_count' /bye gpg-connect-agent 'GETINFO s2k_time' /bye To view the auto-calibrated count use:
-
-gpg-connect-agent 'GETINFO s2k_count_cal' /bye --ssh-fingerprint-digest Keys listed in the sshcontrol file
-
-Active card gpg-connect-agent /bye bashrc or whatever initialization file is used for all shell invocations:
-
-GPG_TTY=$(tty) export GPG_TTY --daemon [command line] server
-
-agent-program file ¶ Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs.
-
---gpg-program file Specify a non-default gpg binary to be used by certain commands.
-
---gpgsm-program file Specify a non-default gpgsm binary to be used by certain commands.
-
---chuid uid Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows.
-
-gpg-card AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ AUTH FETCH GENERATE [--force] [--algo=algo{+algo2}] keyref KDF-SETUP ¶ Prepare the OpenPGP card KDF feature for this card.
-
-LANG [--clear] Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info.
-
-LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] NAME [--clear] PRIVATEDO [--clear] n [< file] file READCERT [--openpgp] certref > file ¶ Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". URL [--clear] gpg's. --fetch WRITECERT certref < file ¶ WRITECERT --openpgp certref [< file|fpr] WRITECERT --clear certref --openpgp file fpr. WRITEKEY [--force] keyref keygrip ¶ Write a private key object identified by keygrip to the card under the id keyref. CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ Serial number A hex-string with the serial number of the card.
-
-Type This gives the type of the card’s application. For example "OpenPGP" or "PIV".
-
-Keygrip A hex-string identifying a key.
-
-Keyref The application slot where the key is stored on the card. For example "OpenPGP.1"
-
-Status The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card.
-
-YUBIKEY cmd args Various commands pertaining to Yubikey tokens with cmd being:
-
-LIST List supported and enabled Yubikey applications.
-
-ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] DISABLE Enable or disable the specified or all applications on the given interface.
-
-The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit.
-
-GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are:
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708.
-
-PIV Application PIN This is the string 123456.
-
-PIN Unblocking Key This is the string 12345678. list (the string gpg/card> card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: D2760001240102010006090746250000 Application type .: OpenPGP Version ..........: 2.1 [...] on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - uses: cli/gh-extension-precompile@v1 with: go_version: "1.16" Then
-
-uses: cli/gh-extension-precompile@v1 env: CGO_ENABLED: 1
-uses: cli/gh-extension-precompile@v1 with: build_script_override: "script/build.sh" name: release
-on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - id: import_gpg uses: crazy-max/ghaction-import-gpg@v5 with: gpg_private_key: {{ secrets.GPG_PASSPHRASE }} - uses: cli/gh-extension-precompile@v1 with: gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-
-macOS
-
-gpg --armor --export-secret-key joe@foo.bar | pbcopy
-
-Ubuntu (assuming GNU base64)
-
-gpg --armor --export-secret-key joe@foo.bar -w0 | xclip
-
-Arch
-
-gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i
-
-FreeBSD (assuming BSD base64)
-
-gpg --armor --export-secret-key joe@foo.bar | xclip
-
-name: import-gpg
-
-on: push: branches: master
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} - name: List keys run: gpg -K name: import-gpg
-
-on: push: branches: master
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8" - name: List keys run: gpg -K
-
-pub ed25519 2021-09-24 [C] 87F257B89CE462100BEC0FFE6071D218380FDCC8 Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092 uid [ unknown] Joe Bar joe@bar.foo sub ed25519 2021-09-24 [S] C17D11ADF199F12A30A0910F1F80449BE0B08CB8 Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB name: import-gpg /.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add
-
-application-priority piv to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens.
-
-With one of these methods employed the list command of gpg-card shows this:
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: [none] keyref .....: PIV.9A Card authenticat. : [none] keyref .....: PIV.9E Digital signature : [none] keyref .....: PIV.9C Key management ...: [none] keyref .....: PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB.key list --cards well. The PIV authentication key (internal reference PIV.9A Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption
-
-gpg/card> auth 010203040506070801020304050607080102030405060708 gpg/card> auth < myauth.key
-
-gpg/card> generate --algo=nistp384 PIV.9A PIV card no. yk-9074625 detected gpg/card> generate --algo=nistp256 PIV.9E PIV card no. yk-9074625 detected gpg/card> generate --algo=rsa2048 PIV.9C PIV card no. yk-9074625 detected ‘--force’ gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpg self-signed X.509 certificate (exit the gpg-card tool, first):
-
-$ gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1 gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-gpgsm --with-keygrip -k 6309304695z@gmail.com Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: 6309304695z@gmail.com
-
-34798AAFE0A7565088101CC4AE31C5C8C74461CB.key
-
-$ gpgsm --learn $ gpgsm --gen-key -o sign.crt Please select what kind of key you want: (1) RSA (2) Existing key (3) Existing key from card Your selection? 3 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 Your selection? 3 Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 2 Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-6309304695z@gmail.com
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) These parameters are used: Key-Type: card:PIV.9C Key-Length: 1024 Key-Usage: sign Serial: random Name-DN: CN=Signing key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) y Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED gpgsm: certificate created Ready. $ gpgsm --import sign.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-‘gpgsm --learn’ Digital signature’ key gpg-card:
-
-gpg/card> writecert PIV.9C < sign.crt
-
-MS17-010
-
-000006
-
-Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - [verified] - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE722
-
-diff --git a/ReadMe.md b/ReadMe.md index 9f10a05..2888fcd 100644 --- a/ReadMe.md +++ b/ReadMe.md @@ -1,3 +1,1210 @@ +diff --git a/ReadMe.md b/ReadMe.md +index 7278f80..41b298d 100644 +--- a/ReadMe.md ++++ b/ReadMe.md +@@ -709,7 +709,844 @@ Digital signature’ key
-
-gpg-card:
-gpg/card> writecert PIV.9C < sign.crt ++# MS17-010 ++# 000006 ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - [verified] - ++PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E ++ keyref .....: PIV.9A (auth) ++ algorithm ..: nistp384 ++Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C ++ keyref .....: PIV.9E (auth) ++ algorithm ..: nistp256 ++Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED ++ keyref .....: PIV.9C (sign,cert) ++ algorithm ..: rsa2048 ++ used for ...: X.509 ++ user id ..: CN=Signing key for yk-9074625,O=example,C=DE ++ user id ..: <6309304695z@gmail.co ++ m> ++Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++ keyref .....: PIV.9D (encr) ++ algorithm ..: rsa2048 ++ used for ...: X.509 ++ user id ..: CN=Encryption key for yk-9074625,O=example,C=DE ++ user id ..: 6309304695z@gmail.com ++ PIV authentication’ key with ssh: ++ ++$ ssh-add -l ++384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) ++ssh-add with the uppercase ‘-L ++$ gpgsm --learn ++$ gpg --full-gen-key ++Please select what kind of key you want: ++ (1) RSA and RSA (default) ++ (2) DSA and Elgamal ++ (3) DSA (sign only) ++ (4) RSA (sign only) ++ (14) Existing key from card ++Your selection? 14 ++Serial number of the card: FF020001008A77C1 ++Available keys: ++ (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) ++ (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) ++ (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) ++ (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) ++Your selection? 3 ++Please specify how long the key should be valid. ++ 0 = key does not expire ++ = key expires in n days ++ w = key expires in n weeks ++ m = key expires in n months ++ y = key expires in n years ++Key is valid for? (0) ++Key does not expire at all ++Is this correct? (y/N) y ++ ++GnuPG needs to construct a user ID to identify your key. ++ ++Real name: keith bieszczat ++Email address: 6309304695z@gmail.com ++Comment: https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator ++You selected this USER-ID: ++ "6309304695z@gmail.com" ++ ++Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o ++gpg: key C3AFA9ED971BB365 marked as ultimately trusted ++gpg: revocation certificate stored as '[...]D971BB365.rev' ++public and secret key created and signed. ++ ++Note that this key cannot be used for encryption. You may want to use ++the command "--edit-key" to generate a subkey for this purpose. ++pub rsa2048 2019-04-04 [SC] ++ 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 ++uid 6309304695z@gmail.com ++ ++ run gpg in --expert mode ++ $ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 ++Secret key is available. ++ ++sec rsa2048/C3AFA9ED971BB365 ++ created: 2019-04-04 expires: never usage: SC ++ card-no: FF020001008A77C1 ++ trust: ultimate validity: ultimate ++[ultimate] (1). otto@example.net ++gpg> addkey ++Secret parts of primary key are stored on-card. ++Please select what kind of key you want: ++ (3) DSA (sign only) ++ (4) RSA (sign only) ++ (5) Elgamal (encrypt only) ++ (6) RSA (encrypt only) ++ (14) Existing key from card ++Your selection? 14 ++Serial number of the card: FF020001008A77C1 ++Available keys: ++ (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) ++ (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) ++ (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) ++ (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) ++Your selection? 4 ++Please specify how long the key should be valid. ++ 0 = key does not expire ++ = key expires in n days ++ w = key expires in n weeks ++ m = key expires in n months ++ y = key expires in n years ++Key is valid for? (0) ++Key does not expire at all ++Is this correct? (y/N) y ++Really create? (y/N) y ++ ++sec rsa2048/C3AFA9ED971BB365 ++ created: 2019-04-04 expires: never usage: SC ++ card-no: FF020001008A77C1 ++ trust: ultimate validity: ultimate ++ssb rsa2048/7067860A98FCE6E1 ++ created: 2019-04-04 expires: never usage: E ++ card-no: FF020001008A77C1 ++[ultimate] (1). otto@example.net ++ ++gpg> save ++ ++/* 32A19-D90712
-++LEVEL-5 CLEARANCE ONLY ++ ‘--force’ ++authentication key ++-header-'010203040506070801020304050607080102030405060708' ++SETDATA hexstring ++to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command ++ ++ PKSIGN keyid ++where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like: ++ ++ PKSIGN --hash=algoname keyid ++READKEY hexified_certid ++READCERT hexified_certid|keyid ++SERIALNO ++Return the serial number of the card using a status response like: ++ ++ S SERIALNO D27600000000000000000000 ++ WRITEKEY [--force] keyid ++SETDATA hexstring ++to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command ++ ++ PKDECRYPT keyid ++CHECKPIN idstr ++RESTART ++APDU [--atr] [--more] [--exlen[=n]] [hexstring] ++S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1 ++ ++./configure --sysconfdir=/etc --localstatedir=/va ++CN=Wurzel ZS 3,O=Intevation GmbH,C=DE ++ A6935DD34EF3087973C706FC311AA2CCF733765B S ++ ++ # CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE ++ DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S ++ ++ # CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE ++ !14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S ++
-++ # Key added on: 2011-07-20 20:38:46 ++ # Fingerprint: 5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81 ++ 34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm ++private-keys-v1.d/ ++gpg-connect-agent 'help COMMAND' /bye ++SETKEY ++Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available. ++ ++ PKDECRYPT ++The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text. ++ ++ S: INQUIRE CIPHERTEXT ++ C: D (xxxxxx ++ C: D xxxx) ++ C: END ++Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure: ++ ++ (enc-val ++ ( ++ (<param_name1> ) ++ ... ++ (<param_namen> ))) ++Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency. ++ ++If the decryption was successful the decrypted data is returned by means of "D" lines. ++ ++Here is an example session: ++ ++ C: PKDECRYPT ++ S: INQUIRE CIPHERTEXT ++ C: D (enc-val elg (a 349324324) ++ C: D (b 3F444677CA))) ++ C: END ++ S: # session key follows ++ S: S PADDING 0 ++ S: D (value 1234567890ABCDEF0) ++ S: OK decryption successful ++The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has ++SIGKEY ++This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay. ++ ++ SETHASH --hash=| ++sig-val ++ ( ++ (<param_name1> ) ++ ... ++ (<param_namen> ))) ++The operation is affected by the option ++ ++ OPTION use-cache-for-signing=0|1 ++The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching. ++ ++Here is an example session: ++ ++ C: SIGKEY ++ S: OK key available ++ C: SIGKEY ++ S: OK key available ++ C: PKSIGN ++ S: # I did ask the user whether he really wants to sign ++ S: # I did ask the user for the passphrase ++ S: INQUIRE HASHVAL ++ C: D ABCDEF012345678901234 ++ C: END ++ S: # signature follows ++ S: D (sig-val rsa (s 45435453654612121212)) ++ S: OK ++ GENKEY [--no-protection] [--preset] [<cache_nonce>] ++Invokes the key generation process and the server will then inquire on the generation parameters, like: ++ ++ S: INQUIRE KEYPARM ++ C: D (genkey (rsa (nbits 1024))) ++ C: END ++The format of the key parameters which depends on the algorithm is of the form: ++ ++ (genkey ++ (algo ++ (parameter_name_1 ....) ++ .... ++ (parameter_name_n ....))) ++If everything succeeds, the server returns the public key in a SPKI like S-Expression like this: ++ ++ (public-key ++ (rsa ++ (n ) ++ (e ))) ++Here is an example session: ++ ++ C: GENKEY ++ S: INQUIRE KEYPARM ++ C: D (genkey (rsa (nbits 1024))) ++ C: END ++ S: D (public-key ++ S: D (rsa (n 326487324683264) (e 10001))) ++ S OK key created ++ ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> ++LISTTRUSTED ++GpgAgent returns a list of trusted keys line by line: ++ ++ S: D 000000001234454556565656677878AF2F1ECCFF P ++ S: D 340387563485634856435645634856438576457A P ++ S: D FEDC6532453745367FD83474357495743757435D S ++ S: OK ++The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. ++Ok ++Finally a client should be able to mark a key as trusted: ++ ++ MARKTRUSTED fingerprint "P"|"S" ++The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this: ++ ++ S: INQUIRE TRUSTDESC ++ C: D Do you trust the key with the fingerprint @FPR@ ++ C: D bla fasel blurb. ++ C: END ++ S: OK ++GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]]
-++ [--qualitybar] cache_id
-++ [error_message prompt description] ++PRESET_PASSPHRASE [--inquire] <string_or_keygrip> [] ++ ++HAVEKEY keygrips ++ GET_CONFIRMATION description ++ LEARN [--send] ++UPDATESTARTUPTTY ++SETDATA hexstring ++ ++ ++ PKSIGN keyid ++ ++ ++ PKSIGN --hash=algoname keyid ++ ++READCERT hexified_certid|keyid ++READKEY hexified_certid ++SETDATA hexstring ++d ++ ++ PKSIGN keyid ++ LEARN ++ ++ PKSIGN --hash=algoname keyid ++ ++WRITEKEY [--force] keyid ++WRITEKEY [--force] keyid ++PASSWD [--reset] [--nullpin] chvno ++CHECKPIN idstr ++APDU [--atr] [--more] [--exlen[=n]] [hexstring] ++this: ++ ++ S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1 ++--auto-key-import ++ ++command --locate-external-key ++command --locate-external-key ++github/workflows/release.yml: ++ldap://keys.(thedomain) ++‘--auto-key-locate ++ --auto-key-locate ++--auto-key-retrieve ++ ++ ++ honor-keyserver-url ++ ++-sig-keyserver-url ++--recv-key ++honor-keyserver-url ++--use-agent ++--gpg-agent-info ++ ++ ++--no-random-seed-file ++Host: c7-use-3.algolianet. com ++Accept: / ++Sec-Fetch-Site: cross-site ++Accept-Language: en-US, en; q=0.9 ++Accept-Encoding: gzip, deflate, br ++Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B ++Origin: https://dashboard.algolia.com ++User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe ++x-algolia-api-key: b3cf***********************米** ++Content-Length: 27 ++Connection: keep-alive ++Content-Type: application/x-www-form-urlencoded ++Sec-Fetch-Dest: empty ++ ++scdaemon.conf ++1 ++HKCU\Software\GNU\GnuPG:DefaultLogFile, ++--debug-level level ++HKCU\Software\GNU\GnuPG:DefaultLogFile, ++scd-event ++HKCU\Software\GNU\GnuPG:HomeDir ++HKCU\Software\GNU\GnuPG:DefaultLogFile, ++reader_n.status ++HKCU\Software\GNU\GnuPG:HomeDir ++ ++trustlist.txt file ++gpg-agent.conf ++HKCU\Software\GNU\GnuPG:HomeDir ++name: release ++debug-pinentry ++--debug 1024 ++ ++global trustlist (/usr/local/etc/gnupg/trustlist.tx ++ ++Active cards ++Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. ++gpg-connect-agent updatestartuptty /bye ++Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command: ++ ++gpg-connect-agent /bye ++--scdaemon-program filename ++Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf ++--check-passphrase-pattern file ++--check-sym-passphrase-pattern file ++Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) ++bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe ++Keys listed in the sshcontrol file ++--disable-extended-key-format ++These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched. ++ ++--enable-ssh-support ++--enable-win32-openssh-support ++--enable-putty-support ++ ++gpg-connect-agent 'GETINFO s2k_count' /bye ++gpg-connect-agent 'GETINFO s2k_time' /bye ++To view the auto-calibrated count use: ++ ++gpg-connect-agent 'GETINFO s2k_count_cal' /bye ++--ssh-fingerprint-digest ++Keys listed in the sshcontrol file ++ ++Active card ++gpg-connect-agent /bye ++bashrc or whatever initialization file is used for all shell invocations: ++ ++GPG_TTY=$(tty) ++export GPG_TTY ++--daemon [command line] ++server ++ ++agent-program file ¶ ++Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs. ++ ++--gpg-program file ++Specify a non-default gpg binary to be used by certain commands. ++ ++--gpgsm-program file ++Specify a non-default gpgsm binary to be used by certain commands. ++ ++--chuid uid ++Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows. ++ ++gpg-card ++AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ ++AUTH ++FETCH ++GENERATE [--force] [--algo=algo{+algo2}] keyref ++KDF-SETUP ¶ ++Prepare the OpenPGP card KDF feature for this card. ++ ++LANG [--clear] ++Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info. ++ ++LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] ++NAME [--clear] ++PRIVATEDO [--clear] n [< file] file ++READCERT [--openpgp] certref > file ¶ ++Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". ++URL [--clear] ++gpg's. --fetch ++WRITECERT certref < file ¶ ++WRITECERT --openpgp certref [< file|fpr] ++WRITECERT --clear certref ++ --openpgp ++file ++fpr. ++WRITEKEY [--force] keyref keygrip ¶ ++Write a private key object identified by keygrip to the card under the id keyref. ++CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ ++Serial number ++A hex-string with the serial number of the card. ++ ++Type ++This gives the type of the card’s application. For example "OpenPGP" or "PIV". ++ ++Keygrip ++A hex-string identifying a key. ++ ++Keyref ++The application slot where the key is stored on the card. For example "OpenPGP.1" ++ ++Status ++The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card. ++ ++YUBIKEY cmd args ++Various commands pertaining to Yubikey tokens with cmd being: ++ ++LIST ++List supported and enabled Yubikey applications. ++ ++ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] ++DISABLE ++Enable or disable the specified or all applications on the given interface. ++ ++The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit. ++ ++GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are: ++ ++Authentication key ++This is a 24 byte key described by the hex string ++010203040506070801020304050607080102030405060708. ++ ++PIV Application PIN ++This is the string 123456. ++ ++PIN Unblocking Key ++This is the string 12345678. ++list (the string gpg/card> ++card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: D2760001240102010006090746250000 ++Application type .: OpenPGP ++Version ..........: 2.1 ++[...] ++on: ++ push: ++ tags: ++ - "v" ++ ++permissions: ++ contents: write ++ ++jobs: ++ release: ++ runs-on: ubuntu-latest ++ steps: ++ - uses: actions/checkout@v3 ++ - uses: cli/gh-extension-precompile@v1 ++ with: ++ go_version: "1.16" ++Then ++- uses: cli/gh-extension-precompile@v1 ++ env: ++ CGO_ENABLED: 1 ++- uses: cli/gh-extension-precompile@v1 ++ with: ++ build_script_override: "script/build.sh" ++name: release ++ ++on: ++ push: ++ tags: ++ - "v" ++ ++permissions: ++ contents: write ++ ++jobs: ++ release: ++ runs-on: ubuntu-latest ++ steps: ++ - uses: actions/checkout@v3 ++ - id: import_gpg ++ uses: crazy-max/ghaction-import-gpg@v5 ++ with: ++ gpg_private_key: {{ secrets.GPG_PASSPHRASE }} ++ - uses: cli/gh-extension-precompile@v1 ++ with: ++ gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }} ++# macOS ++gpg --armor --export-secret-key joe@foo.bar | pbcopy ++ ++# Ubuntu (assuming GNU base64) ++gpg --armor --export-secret-key joe@foo.bar -w0 | xclip ++ ++# Arch ++gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i ++ ++# FreeBSD (assuming BSD base64) ++gpg --armor --export-secret-key joe@foo.bar | xclip ++ ++name: import-gpg ++ ++on: ++ push: ++ branches: master ++ ++jobs: ++ import-gpg: ++ runs-on: ubuntu-latest ++ steps: ++ - ++ name: Checkout ++ uses: actions/checkout@v4 ++ - ++ name: Import GPG key ++ uses: crazy-max/ghaction-import-gpg@v6 ++ with: ++ gpg_private_key: {{ secrets.PASSPHRASE }} ++ - ++ name: List keys ++ run: gpg -K ++name: import-gpg ++ ++on: ++ push: ++ branches: master
-++gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpg/card> writecert PIV.9D < encr.crt ++ ++jobs: ++ import-gpg: ++ runs-on: ubuntu-latest ++ steps: ++ - ++ name: Checkout ++ uses: actions/checkout@v4 ++ - ++ name: Import GPG key ++ uses: crazy-max/ghaction-import-gpg@v6 ++ with: ++ gpg_private_key: {{ secrets.PASSPHRASE }} ++ fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8" ++ - ++ name: List keys ++ run: gpg -K ++ ++pub ed25519 2021-09-24 [C] ++ 87F257B89CE462100BEC0FFE6071D218380FDCC8 ++ Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092 ++uid [ unknown] Joe Bar joe@bar.foo ++sub ed25519 2021-09-24 [S] ++ C17D11ADF199F12A30A0910F1F80449BE0B08CB8 ++ Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB ++name: import-gpg ++/.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add ++ ++application-priority piv ++to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens. ++ ++With one of these methods employed the list command of gpg-card shows this: ++ ++gpg/card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - 3 - ++PIV authentication: [none] ++ keyref .....: PIV.9A ++Card authenticat. : [none] ++ keyref .....: PIV.9E ++Digital signature : [none] ++ keyref .....: PIV.9C ++Key management ...: [none] ++ keyref .....: PIV.9D ++34798AAFE0A7565088101CC4AE31C5C8C74461CB.key ++list --cards ++well. The PIV authentication key (internal reference PIV.9A ++Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption ++ ++gpg/card> auth 010203040506070801020304050607080102030405060708 ++gpg/card> auth < myauth.key ++ ++gpg/card> generate --algo=nistp384 PIV.9A ++PIV card no. yk-9074625 detected ++gpg/card> generate --algo=nistp256 PIV.9E ++PIV card no. yk-9074625 detected ++gpg/card> generate --algo=rsa2048 PIV.9C ++PIV card no. yk-9074625 detected ++ ‘--force’ ++gpg/card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - 3 - ++PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E ++ keyref .....: PIV.9A (auth) ++ algorithm ..: nistp384 ++Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C ++ keyref .....: PIV.9E (auth) ++ algorithm ..: nistp256 ++Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED ++ keyref .....: PIV.9C (sign,cert) ++ algorithm ..: rsa2048 ++Key management ...: [none] ++ keyref .....: PIV.9D ++keygrip ++gpg ++self-signed X.509 certificate (exit the gpg-card tool, first): ++ ++$ gpgsm --gen-key -o encr.crt ++ (1) RSA ++ (2) Existing key ++ (3) Existing key from card ++Your selection? 1 ++What keysize do you want? (3072) 2048 ++Requested keysize is 2048 bits ++Possible actions for a RSA key: ++ (1) sign, encrypt ++ (2) sign ++ (3) encrypt ++Your selection? 3 ++Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE ++Enter email addresses (end with an empty line): ++> otto@example.net ++> ++Enter DNS names (optional; end with an empty line): ++> ++Enter URIs (optional; end with an empty line): ++> ++Create self-signed certificate? (y/N) y ++These parameters are used: ++ Key-Type: RSA ++ Key-Length: 2048 ++ Key-Usage: encrypt ++ Serial: random ++ Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE ++ Name-Email: otto@example.net ++ ++Proceed with creation? (y/N) ++Now creating self-signed certificate. This may take a while ... ++gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpgsm: certificate created ++Ready. ++$ gpgsm --import encr.crt ++gpgsm: certificate imported ++gpgsm: total number processed: 1 ++gpgsm: imported: 1 ++gpg/card> list ++Reader ...........: 1050:0407:X:0 ++Card type ........: yubikey ++Card firmware ....: 5.1.2 ++Serial number ....: FF020001008A77C1 ++Application type .: PIV ++Version ..........: 1.0 ++Displayed s/n ....: yk-9074625 ++PIN usage policy .: app-pin ++PIN retry counter : - 3 - ++PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E ++ keyref .....: PIV.9A (auth) ++ algorithm ..: nistp384 ++Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C ++ keyref .....: PIV.9E (auth) ++ algorithm ..: nistp256 ++Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED ++ keyref .....: PIV.9C (sign,cert) ++ algorithm ..: rsa2048 ++Key management ...: [none] ++ keyref .....: PIV.9D ++keygrip ++gpgsm --gen-key -o encr.crt ++ (1) RSA ++ (2) Existing key ++ (3) Existing key from card ++Your selection? 1 ++What keysize do you want? (3072) 2048 ++Requested keysize is 2048 bits ++Possible actions for a RSA key: ++ (1) sign, encrypt ++ (2) sign ++ (3) encrypt ++Your selection? 3 ++Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE ++Enter email addresses (end with an empty line): ++> otto@example.net ++> ++Enter DNS names (optional; end with an empty line): ++> ++Enter URIs (optional; end with an empty line): ++> ++Create self-signed certificate? (y/N) y ++These parameters are used: ++ Key-Type: RSA ++ Key-Length: 2048 ++ Key-Usage: encrypt ++ Serial: random ++ Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE ++ Name-Email: otto@example.net ++ ++Proceed with creation? (y/N) ++Now creating self-signed certificate. This may take a while ... ++gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpgsm: certificate created ++Ready. ++$ gpgsm --import encr.crt ++gpgsm: certificate imported ++gpgsm: total number processed: 1 ++gpgsm: imported: 1 ++ ++gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++gpg/card> writecert PIV.9D < encr.crt ++ ++gpgsm --with-keygrip -k 6309304695z@gmail.com ++Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB ++ keyref .....: PIV.9D (encr) ++ algorithm ..: rsa2048 ++ used for ...: X.509 ++ user id ..: CN=Encryption key for yk-9074625,O=example,C=DE ++ user id ..: 6309304695z@gmail.com ++ ++34798AAFE0A7565088101CC4AE31C5C8C74461CB.key ++ ++$ gpgsm --learn ++$ gpgsm --gen-key -o sign.crt ++Please select what kind of key you want: ++ (1) RSA ++ (2) Existing key ++ (3) Existing key from card ++Your selection? 3 ++Serial number of the card: FF020001008A77C1 ++Available keys: ++ (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 ++ (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 ++ (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 ++ (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 ++Your selection? 3 ++Possible actions for a RSA key: ++ (1) sign, encrypt ++ (2) sign ++ (3) encrypt ++Your selection? 2 ++Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE ++Enter email addresses (end with an empty line): ++> 6309304695z@gmail.com ++> ++Enter DNS names (optional; end with an empty line): ++> ++Enter URIs (optional; end with an empty line): ++> ++Create self-signed certificate? (y/N) ++These parameters are used: ++ Key-Type: card:PIV.9C ++ Key-Length: 1024 ++ Key-Usage: sign ++ Serial: random ++ Name-DN: CN=Signing key for yk-9074625,O=example,C=DE ++ Name-Email: 6309304695z@gmail.com ++ ++Proceed with creation? (y/N) y ++Now creating self-signed certificate. This may take a while ... ++gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED ++gpgsm: certificate created ++Ready. ++$ gpgsm --import sign.crt ++gpgsm: certificate imported ++gpgsm: total number processed: 1 ++gpgsm: imported: 1 ++ ++‘gpgsm --learn’ ++Digital signature’ key ++gpg-card:010203040506070801020304050607080102030405060708 ++ ++shellcode/eternalblue_sc_merge.py ++ ++gpg/card> writecert PIV.9C < sign.crt
-
-on:
-push:
-branches: master
-+AUTHENTICATE [--setkey] [--raw] [< file]|key] +AUTH and set key + +GENERATE [--force] [--algo=algo{+algo2}] keyref +Create a new key on a card. Use --force to overwrite an existing key. Use "help" for algo to get a list of known algorithms. For OpenPGP cards several algos may be given. Note that the OpenPGP key generation is done interactively unless --algo or keyref + +LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] ¶ +L + +READCERT [--openpgp] certref > file ¶ + +openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3" + +WRITECERT certref < file ¶ +WRITECERT --openpgp certref [< file|fpr] +WRITECERT --clear certref +Write a certificate to the card under the id certref. + +WRITEKEY [--force] keyref keygrip ¶ +Write a private key object identified by keygrip to the card under the id keyref. Option --force allows overwriting an existing key +—Shadowed + +YUBIKEY cmd args ¶ +Various commands pertaining to Yubikey tokens with cmd being: + +LIST +List supported and enabled Yubikey applications. + +ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] +DISABLE +Enable or disable the specified or all applications on the given interface. + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708. + +PIV + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708 + +the string gpg/card> is the prompt + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: D2760001240102010006090746250000 +Application type .: OpenPGP +Version ..........: 2.1 +[...] + +use help yubikey). + +use help yubikey) + +gpg/card> yubikey disable all opgp +gpg/card> yubikey list +Application USB NFC +----------------------- +OTP yes yes +U2F yes yes +OPGP no no +PIV yes no +OATH yes yes +FIDO2 yes yes +gpg/card> reset + +/.gnupg/scdaemon.conf + +application-priority piv + +scdaemon + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: [none]
-
- keyref .....: PIV.9A
-+Card authenticat. : [none]
-
- keyref .....: PIV.9E
-+Digital signature : [none]
-
- keyref .....: PIV.9C
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+In + +Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) + +Card authentication key; however, that key is mandatory by the PIV standard and thus we create it too. Key generation requires that we authenticate to the card. This can be done either on the command line (which would reveal the key): + +gpg/card> auth 010203040506070801020304050607080102030405060708 + +gpg/card> auth < myauth.key + +gpg/card> generate --algo=nistp384 PIV.9A +PIV card no. yk-9074625 detected +gpg/card> generate --algo=nistp256 PIV.9E +PIV card no. yk-9074625 detected +gpg/card> generate --algo=rsa2048 PIV.9C +PIV card no. yk-9074625 detected + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D 
-+—force + +$ gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +[...] +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <otto@example.net>
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key from the directory ~/.gnupg/private-keys-v1.d/ + +$ gpgsm --learn +$ gpgsm --gen-key -o sign.crt +Please select what kind of key you want:
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 3 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 +Your selection? 3 +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 2 +Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) +These parameters are used:
-Key-Type: card:PIV.9C
-Key-Length: 1024
-Key-Usage: sign
-Serial: random
-Name-DN: CN=Signing key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) y +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED +gpgsm: certificate created +Ready. +$ gpgsm --import sign.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writecert PIV.9C < sign.crt + +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - [verified] - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Signing key for yk-9074625,O=example,C=DE
-   user id ..: <otto@example.net>
-+Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <otto@example.net>
-+PIV authentication’ key with ssh: + +$ ssh-add -l +384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) + +$ gpgsm --learn +$ gpg --full-gen-key +Please select what kind of key you want:
-
-(1) RSA and RSA (default)
-(2) DSA and Elgamal
-(3) DSA (sign only)
-(4) RSA (sign only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 3 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y + +GnuPG needs to construct a user ID to identify your key. + +Real name: +Email address: otto@example.net +Comment: +You selected this USER-ID:
-
-"otto@example.net"
-+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o +gpg: key C3AFA9ED971BB365 marked as ultimately trusted +gpg: revocation certificate stored as '[...]D971BB365.rev' +public and secret key created and signed. + +Note that this key cannot be used for encryption. You may want to use +the command "--edit-key" to generate a subkey for this purpose. +pub rsa2048 2019-04-04 [SC]
-
- 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
-+uid otto@example.net +$ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 +Secret key is available. + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+[ultimate] (1). otto@example.net +gpg> addkey +Secret parts of primary key are stored on-card. +Please select what kind of key you want:
-
-(3) DSA (sign only)
-(4) RSA (sign only)
-(5) Elgamal (encrypt only)
-(6) RSA (encrypt only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 4 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y +Really create? (y/N) y + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+ssb rsa2048/7067860A98FCE6E1
-
-created: 2019-04-04  expires: never       usage: E
-card-no: FF020001008A77C1
-+[ultimate] (1). otto@example.net + +gpg> save +Now you can use your PIV card also with gpg. +
-
-diff --git a/ReadMe.md b/ReadMe.md index 7278f80..41b298d 100644 --- a/ReadMe.md +++ b/ReadMe.md @@ -709,7 +709,844 @@ Digital signature’ key gpg-card:
-
-gpg/card> writecert PIV.9C < sign.crt +# MS17-010 +# 000006 +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - [verified] - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Signing key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.co
-m> +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-PIV authentication’ key with ssh:
-+$ ssh-add -l +384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) +ssh-add with the uppercase ‘-L +$ gpgsm --learn +$ gpg --full-gen-key +Please select what kind of key you want:
-
-(1) RSA and RSA (default)
-(2) DSA and Elgamal
-(3) DSA (sign only)
-(4) RSA (sign only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 3 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y + +GnuPG needs to construct a user ID to identify your key. + +Real name: keith bieszczat +Email address: 6309304695z@gmail.com +Comment: https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator +You selected this USER-ID:
-
-"6309304695z@gmail.com"
-+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o +gpg: key C3AFA9ED971BB365 marked as ultimately trusted +gpg: revocation certificate stored as '[...]D971BB365.rev' +public and secret key created and signed. + +Note that this key cannot be used for encryption. You may want to use +the command "--edit-key" to generate a subkey for this purpose. +pub rsa2048 2019-04-04 [SC]
-
- 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
-+uid 6309304695z@gmail.com +
-
-run gpg in --expert mode
-$ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 +Secret key is available.
-+sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+[ultimate] (1). otto@example.net +gpg> addkey +Secret parts of primary key are stored on-card. +Please select what kind of key you want:
-
-(3) DSA (sign only)
-(4) RSA (sign only)
-(5) Elgamal (encrypt only)
-(6) RSA (encrypt only)
-(14) Existing key from card +Your selection? 14 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) +Your selection? 4 +Please specify how long the key should be valid.
-    0 = key does not expire
- <n>  = key expires in n days
- <n>w = key expires in n weeks
- <n>m = key expires in n months
- <n>y = key expires in n years
-+Key is valid for? (0) +Key does not expire at all +Is this correct? (y/N) y +Really create? (y/N) y + +sec rsa2048/C3AFA9ED971BB365
-
-created: 2019-04-04  expires: never       usage: SC
-card-no: FF020001008A77C1
-trust: ultimate      validity: ultimate
-+ssb rsa2048/7067860A98FCE6E1
-
-created: 2019-04-04  expires: never       usage: E
-card-no: FF020001008A77C1
-+[ultimate] (1). otto@example.net + +gpg> save + +/* 32A19-D90712
-+LEVEL-5 CLEARANCE ONLY
-
-‘--force’ +authentication key +-header-'010203040506070801020304050607080102030405060708' +SETDATA hexstring +to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-PKSIGN keyid +where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-PKSIGN --hash=algoname keyid +READKEY hexified_certid +READCERT hexified_certid|keyid +SERIALNO +Return the serial number of the card using a status response like:
-S SERIALNO D27600000000000000000000
-WRITEKEY [--force] keyid +SETDATA hexstring +to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-PKDECRYPT keyid +CHECKPIN idstr +RESTART +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+./configure --sysconfdir=/etc --localstatedir=/va +CN=Wurzel ZS 3,O=Intevation GmbH,C=DE
-
-A6935DD34EF3087973C706FC311AA2CCF733765B S
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-  # Key added on: 2011-07-20 20:38:46
-  # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-  34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-+private-keys-v1.d/ +gpg-connect-agent 'help COMMAND' /bye +SETKEY +Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available. +
-
-PKDECRYPT +The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END +Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-(enc-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency. + +If the decryption was successful the decrypted data is returned by means of "D" lines. + +Here is an example session: +
-
-C: PKDECRYPT
-S: INQUIRE CIPHERTEXT
-C: D (enc-val elg (a 349324324)
-C: D (b 3F444677CA)))
-C: END
-S: # session key follows
-S: S PADDING 0
-S: D (value 1234567890ABCDEF0)
-S: OK decryption successful +The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has +SIGKEY +This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-SETHASH --hash=| +sig-val
-  (<algo>
-    (<param_name1> <mpi>)
-...
-    (<param_namen> <mpi>)))
-+The operation is affected by the option +
-
-OPTION use-cache-for-signing=0|1 +The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-+Here is an example session: +
-
-C: SIGKEY
-S: OK key available
-C: SIGKEY
-S: OK key available
-C: PKSIGN
-S: # I did ask the user whether he really wants to sign
-S: # I did ask the user for the passphrase
-S: INQUIRE HASHVAL
-C: D ABCDEF012345678901234
-C: END
-S: # signature follows
-S: D (sig-val rsa (s 45435453654612121212))
-S: OK
-GENKEY [--no-protection] [--preset] [<cache_nonce>] +Invokes the key generation process and the server will then inquire on the generation parameters, like:
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END +The format of the key parameters which depends on the algorithm is of the form:
-(genkey
- (algo
-   (parameter_name_1 ....)
-     ....
-   (parameter_name_n ....)))
-+If everything succeeds, the server returns the public key in a SPKI like S-Expression like this: +
-
-(public-key
-  (rsa
-(n )
-(e ))) +Here is an example session:
-C: GENKEY
-S: INQUIRE KEYPARM
-C: D (genkey (rsa (nbits 1024)))
-C: END
-S: D (public-key
-S: D (rsa (n 326487324683264) (e 10001)))
-S OK key created
-ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> +LISTTRUSTED +GpgAgent returns a list of trusted keys line by line:
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK +The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. +Ok +Finally a client should be able to mark a key as trusted:
-MARKTRUSTED fingerprint "P"|"S" +The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-S: INQUIRE TRUSTDESC
-C: D Do you trust the key with the fingerprint @FPR@
-C: D bla fasel blurb.
-C: END
-S: OK +GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]] \
-            [--qualitybar] cache_id                \
-            [error_message prompt description]
-+PRESET_PASSPHRASE [--inquire] <string_or_keygrip> [] + +HAVEKEY keygrips
-
-GET_CONFIRMATION description
-LEARN [--send] +UPDATESTARTUPTTY +SETDATA hexstring
-PKSIGN keyid
-PKSIGN --hash=algoname keyid
-+READCERT hexified_certid|keyid +READKEY hexified_certid +SETDATA hexstring +d +
-
-PKSIGN keyid
-LEARN
-PKSIGN --hash=algoname keyid
-+WRITEKEY [--force] keyid +WRITEKEY [--force] keyid +PASSWD [--reset] [--nullpin] chvno +CHECKPIN idstr +APDU [--atr] [--more] [--exlen[=n]] [hexstring] +this: +
-
-S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-+--auto-key-import + +command --locate-external-key +command --locate-external-key +github/workflows/release.yml: +ldap://keys.(thedomain) +‘--auto-key-locate
-
---auto-key-locate +--auto-key-retrieve
-honor-keyserver-url
-+-sig-keyserver-url +--recv-key +honor-keyserver-url +--use-agent +--gpg-agent-info + + +--no-random-seed-file +Host: c7-use-3.algolianet. com +Accept: / +Sec-Fetch-Site: cross-site +Accept-Language: en-US, en; q=0.9 +Accept-Encoding: gzip, deflate, br +Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B +Origin: https://dashboard.algolia.com +User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe +x-algolia-api-key: b3cf*************************米** +Content-Length: 27 +Connection: keep-alive +Content-Type: application/x-www-form-urlencoded +Sec-Fetch-Dest: empty + +scdaemon.conf +1 +HKCU\Software\GNU\GnuPG:DefaultLogFile, +--debug-level level +HKCU\Software\GNU\GnuPG:DefaultLogFile, +scd-event +HKCU\Software\GNU\GnuPG:HomeDir +HKCU\Software\GNU\GnuPG:DefaultLogFile, +reader_n.status +HKCU\Software\GNU\GnuPG:HomeDir + +trustlist.txt file +gpg-agent.conf +HKCU\Software\GNU\GnuPG:HomeDir +name: release +debug-pinentry +--debug 1024 + +global trustlist (/usr/local/etc/gnupg/trustlist.tx + +Active cards +Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. +gpg-connect-agent updatestartuptty /bye +Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command: + +gpg-connect-agent /bye +--scdaemon-program filename +Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf +--check-passphrase-pattern file +--check-sym-passphrase-pattern file +Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) +bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe +Keys listed in the sshcontrol file +--disable-extended-key-format +These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched. + +--enable-ssh-support +--enable-win32-openssh-support +--enable-putty-support + +gpg-connect-agent 'GETINFO s2k_count' /bye +gpg-connect-agent 'GETINFO s2k_time' /bye +To view the auto-calibrated count use: + +gpg-connect-agent 'GETINFO s2k_count_cal' /bye +--ssh-fingerprint-digest +Keys listed in the sshcontrol file + +Active card +gpg-connect-agent /bye +bashrc or whatever initialization file is used for all shell invocations: + +GPG_TTY=$(tty) +export GPG_TTY +--daemon [command line] +server + +agent-program file ¶ +Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs. + +--gpg-program file +Specify a non-default gpg binary to be used by certain commands. + +--gpgsm-program file +Specify a non-default gpgsm binary to be used by certain commands. + +--chuid uid +Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows. + +gpg-card +AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ +AUTH +FETCH +GENERATE [--force] [--algo=algo{+algo2}] keyref +KDF-SETUP ¶ +Prepare the OpenPGP card KDF feature for this card. + +LANG [--clear] +Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info. + +LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] +NAME [--clear] +PRIVATEDO [--clear] n [< file] file +READCERT [--openpgp] certref > file ¶ +Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". +URL [--clear] +gpg's. --fetch +WRITECERT certref < file ¶ +WRITECERT --openpgp certref [< file|fpr] +WRITECERT --clear certref
-
---openpgp +file +fpr. +WRITEKEY [--force] keyref keygrip ¶ +Write a private key object identified by keygrip to the card under the id keyref. +CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ +Serial number +A hex-string with the serial number of the card.
-+Type +This gives the type of the card’s application. For example "OpenPGP" or "PIV". + +Keygrip +A hex-string identifying a key. + +Keyref +The application slot where the key is stored on the card. For example "OpenPGP.1" + +Status +The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card. + +YUBIKEY cmd args +Various commands pertaining to Yubikey tokens with cmd being: + +LIST +List supported and enabled Yubikey applications. + +ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] +DISABLE +Enable or disable the specified or all applications on the given interface. + +The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit. + +GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are: + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708. + +PIV Application PIN +This is the string 123456. + +PIN Unblocking Key +This is the string 12345678. +list (the string gpg/card> +card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: D2760001240102010006090746250000 +Application type .: OpenPGP +Version ..........: 2.1 +[...] +on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - uses: cli/gh-extension-precompile@v1
-   with:
-     go_version: "1.16"
-+Then +- uses: cli/gh-extension-precompile@v1
-
-env:
-CGO_ENABLED: 1 +- uses: cli/gh-extension-precompile@v1
-with:
-build_script_override: "script/build.sh" +name: release
-+on:
-
-push:
-tags:
- - "v*"
-+permissions:
-
-contents: write
-+jobs:
-
-release:
-runs-on: ubuntu-latest
-steps:
- - uses: actions/checkout@v3
- - id: import_gpg
-   uses: crazy-max/ghaction-import-gpg@v5
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.GPG_PASSPHRASE }}
- - uses: cli/gh-extension-precompile@v1
-   with:
-     gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-+# macOS +gpg --armor --export-secret-key joe@foo.bar | pbcopy + +# Ubuntu (assuming GNU base64) +gpg --armor --export-secret-key joe@foo.bar -w0 | xclip + +# Arch +gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i + +# FreeBSD (assuming BSD base64) +gpg --armor --export-secret-key joe@foo.bar | xclip + +name: import-gpg + +on:
-
-push:
-branches: master
-+jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
- -
-   name: List keys
-   run: gpg -K
-+name: import-gpg + +on:
-
-push:
-branches: master
-+gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +jobs:
-
-import-gpg:
-runs-on: ubuntu-latest
-steps:
- -
-   name: Checkout
-   uses: actions/checkout@v4
- -
-   name: Import GPG key
-   uses: crazy-max/ghaction-import-gpg@v6
-   with:
-     gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-     passphrase: ${{ secrets.PASSPHRASE }}
-     fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8"
- -
-   name: List keys
-   run: gpg -K
-+pub ed25519 2021-09-24 [C]
-
- 87F257B89CE462100BEC0FFE6071D218380FDCC8
- Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092
-+uid [ unknown] Joe Bar joe@bar.foo +sub ed25519 2021-09-24 [S]
-
- C17D11ADF199F12A30A0910F1F80449BE0B08CB8
- Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB
-+name: import-gpg +/.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add + +application-priority piv +to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens. + +With one of these methods employed the list command of gpg-card shows this: + +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: [none]
-
- keyref .....: PIV.9A
-+Card authenticat. : [none]
-
- keyref .....: PIV.9E
-+Digital signature : [none]
-
- keyref .....: PIV.9C
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key +list --cards +well. The PIV authentication key (internal reference PIV.9A +Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption + +gpg/card> auth 010203040506070801020304050607080102030405060708 +gpg/card> auth < myauth.key + +gpg/card> generate --algo=nistp384 PIV.9A +PIV card no. yk-9074625 detected +gpg/card> generate --algo=nistp256 PIV.9E +PIV card no. yk-9074625 detected +gpg/card> generate --algo=rsa2048 PIV.9C +PIV card no. yk-9074625 detected
-
-‘--force’ +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpg +self-signed X.509 certificate (exit the gpg-card tool, first): + +$ gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 +gpg/card> list +Reader ...........: 1050:0407:X:0 +Card type ........: yubikey +Card firmware ....: 5.1.2 +Serial number ....: FF020001008A77C1 +Application type .: PIV +Version ..........: 1.0 +Displayed s/n ....: yk-9074625 +PIN usage policy .: app-pin +PIN retry counter : - 3 - +PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E
-
- keyref .....: PIV.9A  (auth)
- algorithm ..: nistp384
-+Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C
-
- keyref .....: PIV.9E  (auth)
- algorithm ..: nistp256
-+Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED
-
- keyref .....: PIV.9C  (sign,cert)
- algorithm ..: rsa2048
-+Key management ...: [none]
-
- keyref .....: PIV.9D
-+keygrip +gpgsm --gen-key -o encr.crt
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 1 +What keysize do you want? (3072) 2048 +Requested keysize is 2048 bits +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 3 +Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> otto@example.net +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) y +These parameters are used:
-Key-Type: RSA
-Key-Length: 2048
-Key-Usage: encrypt
-Serial: random
-Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE
-Name-Email: otto@example.net
-+Proceed with creation? (y/N) +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpgsm: certificate created +Ready. +$ gpgsm --import encr.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +gpgsm --with-keygrip -k 6309304695z@gmail.com +Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
-
- keyref .....: PIV.9D  (encr)
- algorithm ..: rsa2048
- used for ...: X.509
-   user id ..: CN=Encryption key for yk-9074625,O=example,C=DE
-   user id ..: <6309304695z@gmail.com>
-+34798AAFE0A7565088101CC4AE31C5C8C74461CB.key + +$ gpgsm --learn +$ gpgsm --gen-key -o sign.crt +Please select what kind of key you want:
-
-(1) RSA
-(2) Existing key
-(3) Existing key from card +Your selection? 3 +Serial number of the card: FF020001008A77C1 +Available keys:
-(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384
-(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256
-(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048
-(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 +Your selection? 3 +Possible actions for a RSA key:
-(1) sign, encrypt
-(2) sign
-(3) encrypt +Your selection? 2 +Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE +Enter email addresses (end with an empty line): +> 6309304695z@gmail.com +> +Enter DNS names (optional; end with an empty line): +> +Enter URIs (optional; end with an empty line): +> +Create self-signed certificate? (y/N) +These parameters are used:
-Key-Type: card:PIV.9C
-Key-Length: 1024
-Key-Usage: sign
-Serial: random
-Name-DN: CN=Signing key for yk-9074625,O=example,C=DE
-Name-Email: 6309304695z@gmail.com
-+Proceed with creation? (y/N) y +Now creating self-signed certificate. This may take a while ... +gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED +gpgsm: certificate created +Ready. +$ gpgsm --import sign.crt +gpgsm: certificate imported +gpgsm: total number processed: 1 +gpgsm: imported: 1 + +‘gpgsm --learn’ +Digital signature’ key +gpg-card:010203040506070801020304050607080102030405060708 + +shellcode/eternalblue_sc_merge.py + +gpg/card> writecert PIV.9C < sign.crt on: push: branches: master
-
-AUTHENTICATE [--setkey] [--raw] [< file]|key] AUTH and set key
-
-GENERATE [--force] [--algo=algo{+algo2}] keyref Create a new key on a card. Use --force to overwrite an existing key. Use "help" for algo to get a list of known algorithms. For OpenPGP cards several algos may be given. Note that the OpenPGP key generation is done interactively unless --algo or keyref
-
-LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] ¶ L
-
-READCERT [--openpgp] certref > file ¶
-
-openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3"
-
-WRITECERT certref < file ¶ WRITECERT --openpgp certref [< file|fpr] WRITECERT --clear certref Write a certificate to the card under the id certref.
-
-WRITEKEY [--force] keyref keygrip ¶ Write a private key object identified by keygrip to the card under the id keyref. Option --force allows overwriting an existing key —Shadowed
-
-YUBIKEY cmd args ¶ Various commands pertaining to Yubikey tokens with cmd being:
-
-LIST List supported and enabled Yubikey applications.
-
-ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] DISABLE Enable or disable the specified or all applications on the given interface.
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708.
-
-PIV
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708
-
-the string gpg/card> is the prompt
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: D2760001240102010006090746250000 Application type .: OpenPGP Version ..........: 2.1 [...]
-
-use help yubikey).
-
-use help yubikey)
-
-gpg/card> yubikey disable all opgp gpg/card> yubikey list Application USB NFC
-
-OTP yes yes U2F yes yes OPGP no no PIV yes no OATH yes yes FIDO2 yes yes gpg/card> reset
-
-/.gnupg/scdaemon.conf
-
-application-priority piv
-
-scdaemon
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: [none] keyref .....: PIV.9A Card authenticat. : [none] keyref .....: PIV.9E Digital signature : [none] keyref .....: PIV.9C Key management ...: [none] keyref .....: PIV.9D In
-
-Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D)
-
-Card authentication key; however, that key is mandatory by the PIV standard and thus we create it too. Key generation requires that we authenticate to the card. This can be done either on the command line (which would reveal the key):
-
-gpg/card> auth 010203040506070801020304050607080102030405060708
-
-gpg/card> auth < myauth.key
-
-gpg/card> generate --algo=nistp384 PIV.9A PIV card no. yk-9074625 detected gpg/card> generate --algo=nistp256 PIV.9E PIV card no. yk-9074625 detected gpg/card> generate --algo=rsa2048 PIV.9C PIV card no. yk-9074625 detected
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D —force
-
-$ gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-[...] Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: otto@example.net
-
-34798AAFE0A7565088101CC4AE31C5C8C74461CB.key from the directory ~/.gnupg/private-keys-v1.d/
-
-$ gpgsm --learn $ gpgsm --gen-key -o sign.crt Please select what kind of key you want: (1) RSA (2) Existing key (3) Existing key from card Your selection? 3 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 Your selection? 3 Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 2 Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) These parameters are used: Key-Type: card:PIV.9C Key-Length: 1024 Key-Usage: sign Serial: random Name-DN: CN=Signing key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) y Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED gpgsm: certificate created Ready. $ gpgsm --import sign.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writecert PIV.9C < sign.crt
-
-Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - [verified] - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Signing key for yk-9074625,O=example,C=DE user id ..: otto@example.net Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: otto@example.net
-
-PIV authentication’ key with ssh:
-
-$ ssh-add -l 384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA)
-
-$ gpgsm --learn $ gpg --full-gen-key Please select what kind of key you want: (1) RSA and RSA (default) (2) DSA and Elgamal (3) DSA (sign only) (4) RSA (sign only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 3 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y
-
-GnuPG needs to construct a user ID to identify your key.
-
-Real name: Email address: otto@example.net Comment: You selected this USER-ID: "otto@example.net"
-
-Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o gpg: key C3AFA9ED971BB365 marked as ultimately trusted gpg: revocation certificate stored as '[...]D971BB365.rev' public and secret key created and signed.
-
-Note that this key cannot be used for encryption. You may want to use the command "--edit-key" to generate a subkey for this purpose. pub rsa2048 2019-04-04 [SC] 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 uid otto@example.net $ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 Secret key is available.
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate [ultimate] (1). otto@example.net gpg> addkey Secret parts of primary key are stored on-card. Please select what kind of key you want: (3) DSA (sign only) (4) RSA (sign only) (5) Elgamal (encrypt only) (6) RSA (encrypt only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 4 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y Really create? (y/N) y
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate ssb rsa2048/7067860A98FCE6E1 created: 2019-04-04 expires: never usage: E card-no: FF020001008A77C1 [ultimate] (1). otto@example.net
-
-gpg> save Now you can use your PIV card also with gpg.
-
- # 000006
-/* 32A19-D90712
-LEVEL-5 CLEARANCE ONLY ‘--force’ authentication key -header-'010203040506070801020304050607080102030405060708' SETDATA hexstring to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-
-PKSIGN keyid where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-
-PKSIGN --hash=algoname keyid READKEY hexified_certid READCERT hexified_certid|keyid SERIALNO Return the serial number of the card using a status response like:
-
-S SERIALNO D27600000000000000000000 WRITEKEY [--force] keyid SETDATA hexstring to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-
-PKDECRYPT keyid CHECKPIN idstr RESTART APDU [--atr] [--more] [--exlen[=n]] [hexstring] S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-
-./configure --sysconfdir=/etc --localstatedir=/va CN=Wurzel ZS 3,O=Intevation GmbH,C=DE A6935DD34EF3087973C706FC311AA2CCF733765B S
-
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-
-   # Key added on: 2011-07-20 20:38:46
-   # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-   34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-private-keys-v1.d/ gpg-connect-agent 'help COMMAND' /bye SETKEY Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available.
-
-PKDECRYPT The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END
-Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-
- (enc-val
-   (<algo>
-     (<param_name1> <mpi>)
-   ...
-     (<param_namen> <mpi>)))
-Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency.
-
-If the decryption was successful the decrypted data is returned by means of "D" lines.
-
-Here is an example session:
-
-C: PKDECRYPT S: INQUIRE CIPHERTEXT C: D (enc-val elg (a 349324324) C: D (b 3F444677CA))) C: END S: # session key follows S: S PADDING 0 S: D (value 1234567890ABCDEF0) S: OK decryption successful The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has SIGKEY This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-
-SETHASH --hash=| sig-val ( (<param_name1> ) ... (<param_namen> ))) The operation is affected by the option
-
-OPTION use-cache-for-signing=0|1 The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-
-Here is an example session:
-
-C: SIGKEY S: OK key available C: SIGKEY S: OK key available C: PKSIGN S: # I did ask the user whether he really wants to sign S: # I did ask the user for the passphrase S: INQUIRE HASHVAL C: D ABCDEF012345678901234 C: END S: # signature follows S: D (sig-val rsa (s 45435453654612121212)) S: OK GENKEY [--no-protection] [--preset] [<cache_nonce>] Invokes the key generation process and the server will then inquire on the generation parameters, like:
-
-S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END The format of the key parameters which depends on the algorithm is of the form:
-
-(genkey
-  (algo
-    (parameter_name_1 ....)
-      ....
-    (parameter_name_n ....)))
-If everything succeeds, the server returns the public key in a SPKI like S-Expression like this:
-
- (public-key
-   (rsa
- (n <mpi>)
- (e <mpi>)))
-Here is an example session:
-
-C: GENKEY S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END S: D (public-key S: D (rsa (n 326487324683264) (e 10001))) S OK key created ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> LISTTRUSTED GpgAgent returns a list of trusted keys line by line:
-
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK
-The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. Ok Finally a client should be able to mark a key as trusted:
-
-MARKTRUSTED fingerprint "P"|"S" The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-
-S: INQUIRE TRUSTDESC C: D Do you trust the key with the fingerprint @FPR@ C: D bla fasel blurb. C: END S: OK GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]]
-[--qualitybar] cache_id
-[error_message prompt description] PRESET_PASSPHRASE [--inquire] <string_or_keygrip> []
-
-HAVEKEY keygrips GET_CONFIRMATION description LEARN [--send] UPDATESTARTUPTTY SETDATA hexstring
-
-PKSIGN keyid
-
-PKSIGN --hash=algoname keyid
-
-READCERT hexified_certid|keyid READKEY hexified_certid SETDATA hexstring d
-
-PKSIGN keyid LEARN
-
-PKSIGN --hash=algoname keyid
-
-WRITEKEY [--force] keyid WRITEKEY [--force] keyid PASSWD [--reset] [--nullpin] chvno CHECKPIN idstr APDU [--atr] [--more] [--exlen[=n]] [hexstring] this:
-
- S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
---auto-key-import
-
-command --locate-external-key command --locate-external-key github/workflows/release.yml: ldap://keys.(thedomain) ‘--auto-key-locate --auto-key-locate --auto-key-retrieve
-
-honor-keyserver-url
-
--sig-keyserver-url --recv-key honor-keyserver-url --use-agent --gpg-agent-info
-
---no-random-seed-file Host: c7-use-3.algolianet. com Accept: / Sec-Fetch-Site: cross-site Accept-Language: en-US, en; q=0.9 Accept-Encoding: gzip, deflate, br Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B Origin: https://dashboard.algolia.com User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe x-algolia-api-key: b3cf*************************米** Content-Length: 27 Connection: keep-alive Content-Type: application/x-www-form-urlencoded Sec-Fetch-Dest: empty
-
-scdaemon.conf 1 HKCU\Software\GNU\GnuPG:DefaultLogFile, --debug-level level HKCU\Software\GNU\GnuPG:DefaultLogFile, scd-event HKCU\Software\GNU\GnuPG:HomeDir HKCU\Software\GNU\GnuPG:DefaultLogFile, reader_n.status HKCU\Software\GNU\GnuPG:HomeDir
-
-trustlist.txt file gpg-agent.conf HKCU\Software\GNU\GnuPG:HomeDir name: release debug-pinentry --debug 1024
-
-global trustlist (/usr/local/etc/gnupg/trustlist.tx
-
-Active cards Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. gpg-connect-agent updatestartuptty /bye Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command:
-
-gpg-connect-agent /bye --scdaemon-program filename Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf --check-passphrase-pattern file --check-sym-passphrase-pattern file Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe Keys listed in the sshcontrol file --disable-extended-key-format These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched.
-
---enable-ssh-support --enable-win32-openssh-support --enable-putty-support
-
-gpg-connect-agent 'GETINFO s2k_count' /bye gpg-connect-agent 'GETINFO s2k_time' /bye To view the auto-calibrated count use:
-
-gpg-connect-agent 'GETINFO s2k_count_cal' /bye --ssh-fingerprint-digest Keys listed in the sshcontrol file
-
-Active card gpg-connect-agent /bye bashrc or whatever initialization file is used for all shell invocations:
-
-GPG_TTY=$(tty) export GPG_TTY --daemon [command line] server
-
-agent-program file ¶ Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs.
-
---gpg-program file Specify a non-default gpg binary to be used by certain commands.
-
---gpgsm-program file Specify a non-default gpgsm binary to be used by certain commands.
-
---chuid uid Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows.
-
-gpg-card AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ AUTH FETCH GENERATE [--force] [--algo=algo{+algo2}] keyref KDF-SETUP ¶ Prepare the OpenPGP card KDF feature for this card.
-
-LANG [--clear] Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info.
-
-LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] NAME [--clear] PRIVATEDO [--clear] n [< file] file READCERT [--openpgp] certref > file ¶ Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". URL [--clear] gpg's. --fetch WRITECERT certref < file ¶ WRITECERT --openpgp certref [< file|fpr] WRITECERT --clear certref --openpgp file fpr. WRITEKEY [--force] keyref keygrip ¶ Write a private key object identified by keygrip to the card under the id keyref. CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ Serial number A hex-string with the serial number of the card.
-
-Type This gives the type of the card’s application. For example "OpenPGP" or "PIV".
-
-Keygrip A hex-string identifying a key.
-
-Keyref The application slot where the key is stored on the card. For example "OpenPGP.1"
-
-Status The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card.
-
-YUBIKEY cmd args Various commands pertaining to Yubikey tokens with cmd being:
-
-LIST List supported and enabled Yubikey applications.
-
-ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] DISABLE Enable or disable the specified or all applications on the given interface.
-
-The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit.
-
-GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are:
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708.
-
-PIV Application PIN This is the string 123456.
-
-PIN Unblocking Key This is the string 12345678. list (the string gpg/card> card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: D2760001240102010006090746250000 Application type .: OpenPGP Version ..........: 2.1 [...] on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - uses: cli/gh-extension-precompile@v1 with: go_version: "1.16" Then
-
-uses: cli/gh-extension-precompile@v1 env: CGO_ENABLED: 1
-uses: cli/gh-extension-precompile@v1 with: build_script_override: "script/build.sh" name: release
-on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - id: import_gpg uses: crazy-max/ghaction-import-gpg@v5 with: gpg_private_key: {{ secrets.GPG_PASSPHRASE }} - uses: cli/gh-extension-precompile@v1 with: gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-
-macOS
-
-gpg --armor --export-secret-key joe@foo.bar | pbcopy
-
-Ubuntu (assuming GNU base64)
-
-gpg --armor --export-secret-key joe@foo.bar -w0 | xclip
-
-Arch
-
-gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i
-
-FreeBSD (assuming BSD base64)
-
-gpg --armor --export-secret-key joe@foo.bar | xclip
-
-name: import-gpg
-
-on: push: branches: master
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} - name: List keys run: gpg -K name: import-gpg
-
-on: push: branches: master
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8" - name: List keys run: gpg -K
-
-pub ed25519 2021-09-24 [C] 87F257B89CE462100BEC0FFE6071D218380FDCC8 Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092 uid [ unknown] Joe Bar joe@bar.foo sub ed25519 2021-09-24 [S] C17D11ADF199F12A30A0910F1F80449BE0B08CB8 Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB name: import-gpg /.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add
-
-application-priority piv to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens.
-
-With one of these methods employed the list command of gpg-card shows this:
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: [none] keyref .....: PIV.9A Card authenticat. : [none] keyref .....: PIV.9E Digital signature : [none] keyref .....: PIV.9C Key management ...: [none] keyref .....: PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB.key list --cards well. The PIV authentication key (internal reference PIV.9A Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption
-
-gpg/card> auth 010203040506070801020304050607080102030405060708 gpg/card> auth < myauth.key
-
-gpg/card> generate --algo=nistp384 PIV.9A PIV card no. yk-9074625 detected gpg/card> generate --algo=nistp256 PIV.9E PIV card no. yk-9074625 detected gpg/card> generate --algo=rsa2048 PIV.9C PIV card no. yk-9074625 detected ‘--force’ gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpg self-signed X.509 certificate (exit the gpg-card tool, first):
-
-$ gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1 gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-gpgsm --with-keygrip -k 6309304695z@gmail.com Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: 6309304695z@gmail.com
-
-34798AAFE0A7565088101CC4AE31C5C8C74461CB.key
-
-$ gpgsm --learn $ gpgsm --gen-key -o sign.crt Please select what kind of key you want: (1) RSA (2) Existing key (3) Existing key from card Your selection? 3 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 Your selection? 3 Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 2 Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-6309304695z@gmail.com
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) These parameters are used: Key-Type: card:PIV.9C Key-Length: 1024 Key-Usage: sign Serial: random Name-DN: CN=Signing key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) y Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED gpgsm: certificate created Ready. $ gpgsm --import sign.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-‘gpgsm --learn’ Digital signature’ key gpg-card:
-
-gpg/card> writecert PIV.9C < sign.crt
-
-MS17-010
-
-000006
-
-Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - [verified] - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Signing key for yk-9074625,O=example,C=DE user id ..: <6309304695z@gmail.co m> Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: 6309304695z@gmail.com PIV authentication’ key with ssh:
-
-$ ssh-add -l 384 SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA) ssh-add with the uppercase ‘-L $ gpgsm --learn $ gpg --full-gen-key Please select what kind of key you want: (1) RSA and RSA (default) (2) DSA and Elgamal (3) DSA (sign only) (4) RSA (sign only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 3 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y
-
-GnuPG needs to construct a user ID to identify your key.
-
-Real name: keith bieszczat Email address: 6309304695z@gmail.com Comment: https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator You selected this USER-ID: "6309304695z@gmail.com"
-
-Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o gpg: key C3AFA9ED971BB365 marked as ultimately trusted gpg: revocation certificate stored as '[...]D971BB365.rev' public and secret key created and signed.
-
-Note that this key cannot be used for encryption. You may want to use the command "--edit-key" to generate a subkey for this purpose. pub rsa2048 2019-04-04 [SC] 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 uid 6309304695z@gmail.com
-
-run gpg in --expert mode $ gpg --edit-key 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365 Secret key is available.
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate [ultimate] (1). otto@example.net gpg> addkey Secret parts of primary key are stored on-card. Please select what kind of key you want: (3) DSA (sign only) (4) RSA (sign only) (5) Elgamal (encrypt only) (6) RSA (encrypt only) (14) Existing key from card Your selection? 14 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth) (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth) (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign) (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr) Your selection? 4 Please specify how long the key should be valid. 0 = key does not expire = key expires in n days w = key expires in n weeks m = key expires in n months y = key expires in n years Key is valid for? (0) Key does not expire at all Is this correct? (y/N) y Really create? (y/N) y
-
-sec rsa2048/C3AFA9ED971BB365 created: 2019-04-04 expires: never usage: SC card-no: FF020001008A77C1 trust: ultimate validity: ultimate ssb rsa2048/7067860A98FCE6E1 created: 2019-04-04 expires: never usage: E card-no: FF020001008A77C1 [ultimate] (1). otto@example.net
-
-gpg> save
-
-/* 32A19-D90712
-LEVEL-5 CLEARANCE ONLY ‘--force’ authentication key -header-'010203040506070801020304050607080102030405060708' SETDATA hexstring to tell scdaemon about the data to be signed. The data must be given in hex notation. The actual signing is done using the command
-
-PKSIGN keyid where keyid is the hexified ID of the key to be used. The key id may have been retrieved using the command LEARN. If another hash algorithm than SHA-1 is used, that algorithm may be given like:
-
-PKSIGN --hash=algoname keyid READKEY hexified_certid READCERT hexified_certid|keyid SERIALNO Return the serial number of the card using a status response like:
-
-S SERIALNO D27600000000000000000000 WRITEKEY [--force] keyid SETDATA hexstring to tell scdaemon about the data to be decrypted. The data must be given in hex notation. The actual decryption is then done using the command
-
-PKDECRYPT keyid CHECKPIN idstr RESTART APDU [--atr] [--more] [--exlen[=n]] [hexstring] S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
-
-./configure --sysconfdir=/etc --localstatedir=/va CN=Wurzel ZS 3,O=Intevation GmbH,C=DE A6935DD34EF3087973C706FC311AA2CCF733765B S
-
-CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
-
-DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
-
-CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
-
-!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
-
-   # Key added on: 2011-07-20 20:38:46
-   # Fingerprint:  5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81
-   34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
-private-keys-v1.d/ gpg-connect-agent 'help COMMAND' /bye SETKEY Tell the server about the key to be used for decryption. If this is not used, gpg-agent may try to figure out the key by trying to decrypt the message with each key available.
-
-PKDECRYPT The agent checks whether this command is allowed and then does an INQUIRY to get the ciphertext the client should then send the cipher text.
-
-S: INQUIRE CIPHERTEXT
-C: D (xxxxxx
-C: D xxxx)
-C: END
-Please note that the server may send status info lines while reading the data lines from the client. The data send is a SPKI like S-Exp with this structure:
-
- (enc-val
-   (<algo>
-     (<param_name1> <mpi>)
-   ...
-     (<param_namen> <mpi>)))
-Where algo is a string with the name of the algorithm; see the libgcrypt documentation for a list of valid algorithms. The number and names of the parameters depend on the algorithm. The agent does return an error if there is an inconsistency.
-
-If the decryption was successful the decrypted data is returned by means of "D" lines.
-
-Here is an example session:
-
-C: PKDECRYPT S: INQUIRE CIPHERTEXT C: D (enc-val elg (a 349324324) C: D (b 3F444677CA))) C: END S: # session key follows S: S PADDING 0 S: D (value 1234567890ABCDEF0) S: OK decryption successful The “PADDING” status line is only send if gpg-agent can tell what kind of padding is used. As of now only the value 0 is used to indicate that the padding has SIGKEY This can be used multiple times to create multiple signature, the list of keys is reset with the next PKSIGN command or a RESET. The server tests whether the key is a valid key to sign something and responds with okay.
-
-SETHASH --hash=| sig-val ( (<param_name1> ) ... (<param_namen> ))) The operation is affected by the option
-
-OPTION use-cache-for-signing=0|1 The default of 1 uses the cache. Setting this option to 0 will lead gpg-agent to ignore the passphrase cache. Note, that there is also a global command line option for gpg-agent to globally disable the caching.
-
-Here is an example session:
-
-C: SIGKEY S: OK key available C: SIGKEY S: OK key available C: PKSIGN S: # I did ask the user whether he really wants to sign S: # I did ask the user for the passphrase S: INQUIRE HASHVAL C: D ABCDEF012345678901234 C: END S: # signature follows S: D (sig-val rsa (s 45435453654612121212)) S: OK GENKEY [--no-protection] [--preset] [<cache_nonce>] Invokes the key generation process and the server will then inquire on the generation parameters, like:
-
-S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END The format of the key parameters which depends on the algorithm is of the form:
-
-(genkey
-  (algo
-    (parameter_name_1 ....)
-      ....
-    (parameter_name_n ....)))
-If everything succeeds, the server returns the public key in a SPKI like S-Expression like this:
-
- (public-key
-   (rsa
- (n <mpi>)
- (e <mpi>)))
-Here is an example session:
-
-C: GENKEY S: INQUIRE KEYPARM C: D (genkey (rsa (nbits 1024))) C: END S: D (public-key S: D (rsa (n 326487324683264) (e 10001))) S OK key created ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81> LISTTRUSTED GpgAgent returns a list of trusted keys line by line:
-
-S: D 000000001234454556565656677878AF2F1ECCFF P
-S: D 340387563485634856435645634856438576457A P
-S: D FEDC6532453745367FD83474357495743757435D S
-S: OK
-The first item on a line is the hexified fingerprint where MD5 fingerprints are 00 padded to the left and the second item is a flag to indicate the type of key (so that gpg is able to only take care of PGP keys). P = OpenPGP, S = S/MIME. A client should ignore the rest of the line, so that we can extend the format in the future. Ok Finally a client should be able to mark a key as trusted:
-
-MARKTRUSTED fingerprint "P"|"S" The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-
-S: INQUIRE TRUSTDESC C: D Do you trust the key with the fingerprint @FPR@ C: D bla fasel blurb. C: END S: OK GET_PASSPHRASE [--data] [--check] [--no-ask] [--repeat[=N]]
-[--qualitybar] cache_id
-[error_message prompt description] PRESET_PASSPHRASE [--inquire] <string_or_keygrip> []
-
-HAVEKEY keygrips GET_CONFIRMATION description LEARN [--send] UPDATESTARTUPTTY SETDATA hexstring
-
-PKSIGN keyid
-
-PKSIGN --hash=algoname keyid
-
-READCERT hexified_certid|keyid READKEY hexified_certid SETDATA hexstring d
-
-PKSIGN keyid LEARN
-
-PKSIGN --hash=algoname keyid
-
-WRITEKEY [--force] keyid WRITEKEY [--force] keyid PASSWD [--reset] [--nullpin] chvno CHECKPIN idstr APDU [--atr] [--more] [--exlen[=n]] [hexstring] this:
-
- S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
---auto-key-import
-
-command --locate-external-key command --locate-external-key github/workflows/release.yml: ldap://keys.(thedomain) ‘--auto-key-locate --auto-key-locate --auto-key-retrieve
-
-honor-keyserver-url
-
--sig-keyserver-url --recv-key honor-keyserver-url --use-agent --gpg-agent-info
-
---no-random-seed-file Host: c7-use-3.algolianet. com Accept: / Sec-Fetch-Site: cross-site Accept-Language: en-US, en; q=0.9 Accept-Encoding: gzip, deflate, br Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B Origin: https://dashboard.algolia.com User-Agent: Mozilla/5.0 (iPhone; CPU iPhone 0S 17_3 like Mac 0S X) AppleWe x-algolia-api-key: b3cf*************************米** Content-Length: 27 Connection: keep-alive Content-Type: application/x-www-form-urlencoded Sec-Fetch-Dest: empty
-
-scdaemon.conf 1 HKCU\Software\GNU\GnuPG:DefaultLogFile, --debug-level level HKCU\Software\GNU\GnuPG:DefaultLogFile, scd-event HKCU\Software\GNU\GnuPG:HomeDir HKCU\Software\GNU\GnuPG:DefaultLogFile, reader_n.status HKCU\Software\GNU\GnuPG:HomeDir
-
-trustlist.txt file gpg-agent.conf HKCU\Software\GNU\GnuPG:HomeDir name: release debug-pinentry --debug 1024
-
-global trustlist (/usr/local/etc/gnupg/trustlist.tx
-
-Active cards Active cards (inserted into a card reader or plugged in tokens) are always tried; they are ordered by their serial numbers. gpg-connect-agent updatestartuptty /bye Although all GnuPG components try to start the gpg-agent as needed, this is not possible for the ssh support because ssh does not know about it. Thus if no GnuPG tool which accesses the agent has been run, there is no guarantee that ssh is able to use gpg-agent for authentication. To fix this you may start gpg-agent if needed using this simple command:
-
-gpg-connect-agent /bye --scdaemon-program filename Use program filename as the Smartcard daemon. The default is installation dependent and can be shown with the gpgconf --check-passphrase-pattern file --check-sym-passphrase-pattern file Check the passphrase against the pattern given in file. When entering a new passphrase matching one of these pattern a warning will be displayed. If file does not contain any slashes and does not start with "~/" it is searched in the system configuration directory (/usr/local/etc/gnupg) bin\pinentry.exe, ..\Gpg4win\bin\pinentry.exe, ..\Gpg4win\pinentry.exe, ..\GNU\GnuPG\pinentry.exe, ..\GNU\bin\pinentry.exe, bin\pinentry-basic.exe Keys listed in the sshcontrol file --disable-extended-key-format These options are obsolete and have no effect. The extended key format is used for years now and has been supported since 2.1.12. Existing keys in the old format are migrated to the new format as soon as they are touched.
-
---enable-ssh-support --enable-win32-openssh-support --enable-putty-support
-
-gpg-connect-agent 'GETINFO s2k_count' /bye gpg-connect-agent 'GETINFO s2k_time' /bye To view the auto-calibrated count use:
-
-gpg-connect-agent 'GETINFO s2k_count_cal' /bye --ssh-fingerprint-digest Keys listed in the sshcontrol file
-
-Active card gpg-connect-agent /bye bashrc or whatever initialization file is used for all shell invocations:
-
-GPG_TTY=$(tty) export GPG_TTY --daemon [command line] server
-
-agent-program file ¶ Specify the agent program to be started if none is running. The default value is determined by running gpgconf with the option --list-dirs.
-
---gpg-program file Specify a non-default gpg binary to be used by certain commands.
-
---gpgsm-program file Specify a non-default gpgsm binary to be used by certain commands.
-
---chuid uid Change the current user to uid which may either be a number or a name. This can be used from the root account to run gpg-card for another user. If uid is not the current UID a standard PATH is set and the envvar GNUPGHOME is unset. To override the latter the option --homedir can be used. This option has only an effect when used on the command line. This option has currently no effect at all on Windows.
-
-gpg-card AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ AUTH FETCH GENERATE [--force] [--algo=algo{+algo2}] keyref KDF-SETUP ¶ Prepare the OpenPGP card KDF feature for this card.
-
-LANG [--clear] Change the language info for the card. This info can be used by applications for a personalized greeting. Up to 4 two-digit language identifiers can be entered as a preference. The option --clear removes all identifiers. GnuPG does not use this info.
-
-LIST [--cards] [--apps] [--info] [--no-key-lookup] [n] [app] NAME [--clear] PRIVATEDO [--clear] n [< file] file READCERT [--openpgp] certref > file ¶ Read the certificate for key certref and store it in file. With option --openpgp an OpenPGP keyblock wrapped in a dedicated CMS content type (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3". URL [--clear] gpg's. --fetch WRITECERT certref < file ¶ WRITECERT --openpgp certref [< file|fpr] WRITECERT --clear certref --openpgp file fpr. WRITEKEY [--force] keyref keygrip ¶ Write a private key object identified by keygrip to the card under the id keyref. CHECKKEYS [--ondisk] [--delete-clear-copy] [--delete-protected-copy] ¶ Serial number A hex-string with the serial number of the card.
-
-Type This gives the type of the card’s application. For example "OpenPGP" or "PIV".
-
-Keygrip A hex-string identifying a key.
-
-Keyref The application slot where the key is stored on the card. For example "OpenPGP.1"
-
-Status The status of the key. The most common value is "shadowed" for a key where only the public key along with the card’s serial number is stored on the disk. The value "clear" indicates that a copy of the card’s key is stored unprotected on disk. The value "protected" indicated that a copy of the car’s key is stored on disk but is protected by a password. The value "error" may also be shown if there was a problem reading information from the card.
-
-YUBIKEY cmd args Various commands pertaining to Yubikey tokens with cmd being:
-
-LIST List supported and enabled Yubikey applications.
-
-ENABLE usb|nfc|all [otp|u2f|opgp|piv|oath|fido2|all] DISABLE Enable or disable the specified or all applications on the given interface.
-
-The support for OpenPGP cards in gpg-card is not yet complete. For missing features, please continue to use gpg --card-edit.
-
-GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are:
-
-Authentication key This is a 24 byte key described by the hex string 010203040506070801020304050607080102030405060708.
-
-PIV Application PIN This is the string 123456.
-
-PIN Unblocking Key This is the string 12345678. list (the string gpg/card> card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: D2760001240102010006090746250000 Application type .: OpenPGP Version ..........: 2.1 [...] on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - uses: cli/gh-extension-precompile@v1 with: go_version: "1.16" Then
-
-uses: cli/gh-extension-precompile@v1 env: CGO_ENABLED: 1
-uses: cli/gh-extension-precompile@v1 with: build_script_override: "script/build.sh" name: release
-on: push: tags: - "v*"
-
-permissions: contents: write
-
-jobs: release: runs-on: ubuntu-latest steps: - uses: actions/checkout@v3 - id: import_gpg uses: crazy-max/ghaction-import-gpg@v5 with: gpg_private_key: {{ secrets.GPG_PASSPHRASE }} - uses: cli/gh-extension-precompile@v1 with: gpg_fingerprint: ${{ steps.import_gpg.outputs.fingerprint }}
-
-macOS
-
-gpg --armor --export-secret-key joe@foo.bar | pbcopy
-
-Ubuntu (assuming GNU base64)
-
-gpg --armor --export-secret-key joe@foo.bar -w0 | xclip
-
-Arch
-
-gpg --armor --export-secret-key joe@foo.bar | xclip -selection clipboard -i
-
-FreeBSD (assuming BSD base64)
-
-gpg --armor --export-secret-key joe@foo.bar | xclip
-
-name: import-gpg
-
-on: push: branches: master
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} - name: List keys run: gpg -K name: import-gpg
-
-on: push: branches: master
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} fingerprint: "C17D11ADF199F12A30A0910F1F80449BE0B08CB8" - name: List keys run: gpg -K
-
-pub ed25519 2021-09-24 [C] 87F257B89CE462100BEC0FFE6071D218380FDCC8 Keygrip = F5C3ABFAAB36B427FD98C4EDD0387E08EA1E8092 uid [ unknown] Joe Bar joe@bar.foo sub ed25519 2021-09-24 [S] C17D11ADF199F12A30A0910F1F80449BE0B08CB8 Keygrip = DEE0FC98F441519CA5DE5D79773CB29009695FEB name: import-gpg /.gnupg/scdaemon.conf and by restarting scdaemon, either by killing the process or by using gpgconf --kill scdaemon. Finally the default order in which card applications are tried by scdaemon can be changed. For example to prefer PIV over OpenPGP it is sufficient to add
-
-application-priority piv to ~/.gnupg/scdaemon.conf and to restart scdaemon. This has an effect only on tokens which support both, PIV and OpenPGP, but does not hamper the use of OpenPGP only tokens.
-
-With one of these methods employed the list command of gpg-card shows this:
-
-gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: [none] keyref .....: PIV.9A Card authenticat. : [none] keyref .....: PIV.9E Digital signature : [none] keyref .....: PIV.9C Key management ...: [none] keyref .....: PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB.key list --cards well. The PIV authentication key (internal reference PIV.9A Card authentication key (PIV.9E) is also known as the CAK and used to support physical access applications. The private key is not protected by a PIN and can thus immediately be used. The Digital signature key (PIV.9C) is used to digitally sign documents. The use of the associated private key is protected by the Application PIN which needs to be provided for each signing operation. The Key management key (PIV.9D) is used for encryption
-
-gpg/card> auth 010203040506070801020304050607080102030405060708 gpg/card> auth < myauth.key
-
-gpg/card> generate --algo=nistp384 PIV.9A PIV card no. yk-9074625 detected gpg/card> generate --algo=nistp256 PIV.9E PIV card no. yk-9074625 detected gpg/card> generate --algo=rsa2048 PIV.9C PIV card no. yk-9074625 detected ‘--force’ gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpg self-signed X.509 certificate (exit the gpg-card tool, first):
-
-$ gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-otto@example.net
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1 gpg/card> list Reader ...........: 1050:0407:X:0 Card type ........: yubikey Card firmware ....: 5.1.2 Serial number ....: FF020001008A77C1 Application type .: PIV Version ..........: 1.0 Displayed s/n ....: yk-9074625 PIN usage policy .: app-pin PIN retry counter : - 3 - PIV authentication: 213D1825FDE0F8240CB4E4229F01AF90AC658C2E keyref .....: PIV.9A (auth) algorithm ..: nistp384 Card authenticat. : 7A53E6CFFE7220A0E646B4632EE29E5A7104499C keyref .....: PIV.9E (auth) algorithm ..: nistp256 Digital signature : 32A6C6FAFCB8421878608AAB452D5470DD3223ED keyref .....: PIV.9C (sign,cert) algorithm ..: rsa2048 Key management ...: [none] keyref .....: PIV.9D keygrip gpgsm --gen-key -o encr.crt (1) RSA (2) Existing key (3) Existing key from card Your selection? 1 What keysize do you want? (3072) 2048 Requested keysize is 2048 bits Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 3 Enter the X.509 subject name: CN=Encryption key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-6309304695z@gmail.com
-MS17-010
-
-000006
-
-'options file' Reads configuration from file instead of from the default per-user configuration file. The default configuration file is named scdaemon.conf and expected in the .gnupg directory
-
-'--homedir dir' 'dir.' environment variable GNUPGHOME or (on Windows systems) by means of the Registry entry 'HKCU\Software\GNU\GnuPG:HomeDir.' --verbose gpgsm, such as ‘-vv’.
-
---debug flags --debug-allow-core-dump no-detach multi-server --log-file file pcsc-driver library ¶ Use library to access the smartcard reader. The current default on Unix is libpcsclite.so --reader-port number_or_string 32768 echo scd getinfo reader_list
-| gpg-connect-agent --decode | awk '/^D/ {print
-Extra close brace or missing open brace
-
-$2}'
---deny-admin
---application-priority namelist
-gpg-connect-agent 'scd getinfo app_list' /bye
---auto-expand-secme
---ssh-fingerprint-digest
---max-cache-ttl
-1
-MARKTRUSTED fingerprint "P"|"S"
-+The server will then pop up a window to ask the user whether she really trusts this key. For this it will probably ask for a text to be displayed like this:
-+
-+GPG_TTY=$
-(tty) +export GPG_TTY +--daemon [command line] +server + +gpg-card +AUTHENTICATE [--setkey] [--raw] [< file]|010203040506070801020304050607080102030405060708] ¶ +AUTH +FETCH +GENERATE [--force] [--algo=algo{+algo2}] keyref +KDF-SETUP ¶ +Prepare the OpenPGP card KDF feature for this card. (OID=1.3.6.1.4.1.11591.2.3.1) is expected and extracted to file. Note that for current OpenPGP cards a certificate may only be available at the certref "OPENPGP.3" --homedir + +GnuPG has support for PIV cards (“Personal Identity Verification” as specified by NIST Special Publication 800-73-4). This section describes how to initialize (personalize) a fresh Yubikey token featuring the PIV application (requires Yubikey-5). We assume that the credentials have not yet been changed and thus are: + +Authentication key +This is a 24 byte key described by the hex string +010203040506070801020304050607080102030405060708.
-
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) y These parameters are used: Key-Type: RSA Key-Length: 2048 Key-Usage: encrypt Serial: random Name-DN: CN=Encryption key for yk-9074625,O=example,C=DE Name-Email: otto@example.net
-
-Proceed with creation? (y/N) Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &34798AAFE0A7565088101CC4AE31C5C8C74461CB gpgsm: certificate created Ready. $ gpgsm --import encr.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB gpg/card> writecert PIV.9D < encr.crt
-
-gpgsm --with-keygrip -k 6309304695z@gmail.com Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB keyref .....: PIV.9D (encr) algorithm ..: rsa2048 used for ...: X.509 user id ..: CN=Encryption key for yk-9074625,O=example,C=DE user id ..: 6309304695z@gmail.com
-
-34798AAFE0A7565088101CC4AE31C5C8C74461CB.key
-
-$ gpgsm --learn $ gpgsm --gen-key -o sign.crt Please select what kind of key you want: (1) RSA (2) Existing key (3) Existing key from card Your selection? 3 Serial number of the card: FF020001008A77C1 Available keys: (1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 Your selection? 3 Possible actions for a RSA key: (1) sign, encrypt (2) sign (3) encrypt Your selection? 2 Enter the X.509 subject name: CN=Signing key for yk-9074625,O=example,C=DE Enter email addresses (end with an empty line):
-
-6309304695z@gmail.com
-Enter DNS names (optional; end with an empty line):
-
-Enter URIs (optional; end with an empty line):
-
-Create self-signed certificate? (y/N) These parameters are used: Key-Type: card:PIV.9C Key-Length: 1024 Key-Usage: sign Serial: random Name-DN: CN=Signing key for yk-9074625,O=example,C=DE Name-Email: 6309304695z@gmail.com
-
-Proceed with creation? (y/N) y Now creating self-signed certificate. This may take a while ... gpgsm: about to sign the certificate for key: &32A6C6FAFCB8421878608AAB452D5470DD3223ED gpgsm: certificate created Ready. $ gpgsm --import sign.crt gpgsm: certificate imported gpgsm: total number processed: 1 gpgsm: imported: 1
-
-‘gpgsm --learn’ Digital signature’ key gpg-card:010203040506070801020304050607080102030405060708
-
-shellcode/eternalblue_sc_merge.py
-
-gpg/card> writecert PIV.9C < sign.crt on: push: branches: master
-
-jobs: import-gpg: runs-on: ubuntu-latest steps: - name: Checkout uses: actions/checkout@v4 - name: Import GPG key uses: crazy-max/ghaction-import-gpg@v6 with: gpg_private_key: {{ secrets.PASSPHRASE }} trust_level: 5
-
-global.h -- global header file
-
-md2.h -- header file for MD2
-
-md2c.c -- source code for MD2 aladdin:$apr1$ZjTqBB3f$IF9gdYAGlMrs2fuINjHsz. user2:$apr1$O04r.y2H$/vEkesPhVInBByJUkXitA/
-
-artifact_paths = ["{repo}/design"]
-
-exclude_artifact_paths = []
-
-code_paths = [ "/artifact-app/src", "/artifact-app/tests", "/artifact-lib/src", "/artifact-ser/src", "/artifact-data/src", "/artifact-test/src", "/artifact-frontend/src", ]
-
-exclude_code_paths = [ ]
-
-code_url = "https://github.com/vitiral/artifact/blob/master/{file}#L{line}"
-
-[export] md_header = """ Artifact design docs, exported to markdown.
-
-See REQ-purpose for the top level artifact.
-
-Note: Export docs like this with art export md exported.md
-
-Settings are in .art/settings.toml """ md_family = { type = "list" }
-[export.md_dot] type = "ignore"
-
-pre = """
-
-Alt text
-{"id":"62c15dc487dc9d89d153519b","address":null,"badges":{"attachmentsByType":{"trello":{"board":0,"card":0}},"location":false,"votes":0,"viewingMemberVoted":false,"subscribed":true,"fogbugz":"","checkItems":0,"checkItemsChecked":0,"checkItemsEarliestDue":null,"comments":0,"attachments":6,"description":true,"due":"2045-06-29T03:14:00.000Z","dueComplete":false,"start":"2022-06-30T22:07:48.338Z"},"checkItemStates":[],"closed":false,"coordinates":null,"creationMethod":null,"dueComplete":false,"dateLastActivity":"2022-07-03T09:13:47.492Z","desc":"Amended 06/30/2022\n\n\nMy *NSA director* application for *NSA ROBLOX. *\n@grateful345i\n\nCreate Time Phones which have time command capabilities. Monitor and control their use.\nFoundation Executive Order\n*O5-13*\n\nhttps://www.roblox.com/users/profile?username=Grateful345i\n\n1.) To add to my list of classified achievements. \n2.) By obtaining the position of *NSA Director *I would have processing capabilities and I would be able to Create and generate technologies and corporate revenue. \n3.) My pocketbook is light, I need a higher source of income.\n4.) My Foundation job has not been paying me a salary.\n\n1.) I am highly capable with processing technologies.\n2.) My souls value is high.\n3.) I have generated and created wealth for the NSA.\n4.) I have level 5+ Foundation clearance.\n\nPros: My galactic value is high. I am a Twitter /Trello /Roblox @grateful345i *Scipnet: O5-13 #987 O5 Council, O5 OVERWATCH Command agency. *(Unpaid) Foundation Asset and we must forge alliances between galactic corporate intelligence agencies.\nCons: I am a torture victim. I am constantly targeted by imposters, hackers and terrorism suspects.\n\nYou should trust me as a precursor to my orientation and intelligence briefing. The amount of galactic money we are both valued at has increased dramatically under my command. I have a high honor level. I am dedicated to my work.\n\nTwitter /Trello /Roblox @grateful345i Scipnet: O5-13 #987 O5 Council, O5 OVERWATCH Command agency. (Unpaid) \n\nPrepare to work with the finest entities in this dimension. Promote high honor levels throughout all necessary departments. Request classified processing technology which is installed properly so it can not be taken or stolen. The classified processing technologies must be insured in case of robbery. I would also immediately seek to secure my residence from attack with the teams allocated to work with me. \n\nA leader unequivocally leads through his honor and gratitude. Duties include creating wealth through NSA investment portfolios. Classified technologies will be created and allocated to the Agency first and will also increase our technological advantage moving into the future. Advancing our civilization to a point where me can coexist with the other galactic civilizations.\n\nCreated. Resurrected. Destroyed. Survived. \n\nHarassment is not tolerated. Reprimand them immediately in a polite but commanding tone. \nTask subordinates to Act as a deterrent to the harassment. Follow all NSA legal codes regarding Harassment, learning the legal case law as they occur.\n\nStop the misconduct. Offer training to address the misconduct. Write up the misconduct addressing it in a Direct Legal Memo. I would Identify how misconduct affects honor levels.\n\n1.) Stop with deadly force the murderer. \n2.) Task agency resources to neutralize the suspect in time.\n3.) Issue a Judgement against the murder suspects soul.\n4.) Place the suspect on terrorism watchlists and other classified monitoring programs.\n\nMy NSA director application for NSA ROBLOX. \n@grateful345i \nCreate Time Phones which have time command capabilities. Monitor and control their use.\nFoundation Executive Order\nO5-13\n\n1.) To add to my list of classified achievements. \n2.) By obtaining the position of NSA Director I would have processing capabilities and I would be able to Create and generate technologies and corporate revenue. \n3.) My pocketbook is light, I need a higher source of income.\n4.) My Foundation job has not been paying me a salary.\n\n1.) I am highly capable with processing technologies.\n2.) My souls value is high.\n3.) I have generated and created wealth for the NSA.\n4.) I have level 5+ Foundation clearance.\n\nPros: My galactic value is high. I am a Twitter /Trello /Roblox @grateful345i Scipnet: O5-13 #987 O5 Council, O5 OVERWATCH Command agency. (Unpaid) Foundation Asset and we must forge alliances between galactic corporate intelligence agencies.\nCons: I am a torture victim. I am constantly targeted by imposters, hackers and terrorism suspects.\n\nYou should trust me as a precursor to my orientation and intelligence briefing. The amount of galactic money we are both valued at has increased dramatically under my command. I have a high honor level. I am dedicated to my work.\n\nTwitter /Trello /Roblox @grateful345i Scipnet: O5-13 #987 O5 Council, O5 OVERWATCH Command agency. (Unpaid) \n\nPrepare to work with the finest entities in this dimension. Promote high honor levels throughout all necessary departments. Request classified processing technology which is installed properly so it can not be taken or stolen. The classified processing technologies must be insured in case of robbery. I would also immediately seek to secure my residence from attack with the teams allocated to work with me. \n\nA leader unequivocally leads through his honor and gratitude. Duties include creating wealth through NSA investment portfolios. Classified technologies will be created and allocated to the Agency first and will also increase our technological advantage moving into the future. Advancing our civilization to a point where me can coexist with the other galactic civilizations.\n\nCreated. Resurrected. Destroyed. Survived. \n\nHarassment is not tolerated. Reprimand them immediately in a polite but commanding tone. \nTask subordinates to Act as a deterrent to the harassment. Follow all NSA legal codes regarding Harassment, learning the legal case law as they occur.\n\nStop the misconduct. Offer training to address the misconduct. Write up the misconduct addressing it in a Direct Legal Memo. I would Identify how misconduct affects honor levels.\n\n1.) Stop with deadly force the murderer. \n2.) Task agency resources to neutralize the suspect in time.\n3.) Issue a Judgement against the murder suspects soul.\n4.) Place the suspect on terrorism watchlists and other classified monitoring programs.\n\n\nCreate Time Phones which have time command capabilities. Monitor and control their use.\n*Foundation Executive Order*\n*O5-13*\n\n1.) To add to my list of classified achievements. \n2.) By obtaining the position of NSA Director I would have processing capabilities and I would be able to Create and generate technologies and corporate revenue. \n3.) My pocketbook is light, I need a higher source of income.\n4.) My Foundation job has not been paying me a salary.\n\n1.) I am highly capable with processing technologies.\n2.) My souls value is high.\n3.) I have generated and created wealth for the NSA.\n4.) I have level 5+ Foundation clearance.\n\nPros: My galactic value is high. I am a Twitter /Trello /Roblox @grateful345i Scipnet: O5-13 #987 O5 Council, O5 OVERWATCH Command agency. (Unpaid) Foundation Asset and we must forge alliances between galactic corporate intelligence agencies.\nCons: I am a torture victim. I am constantly targeted by imposters, hackers and terrorism suspects.\n\nYou should trust me as a precursor to my orientation and intelligence briefing. The amount of galactic money we are both valued at has increased dramatically under my command. I have a high honor level. I am dedicated to my work.\n\nTwitter /Trello /Roblox @grateful345i Scipnet: O5-13 #987 O5 Council, O5 OVERWATCH Command agency. (Unpaid) \n\nPrepare to work with the finest entities in this dimension. Promote high honor levels throughout all necessary departments. Request classified processing technology which is installed properly so it can not be taken or stolen. The classified processing technologies must be insured in case of robbery. I would also immediately seek to secure my residence from attack with the teams allocated to work with me. \n\nA leader unequivocally leads through his honor and gratitude. Duties include creating wealth through NSA investment portfolios. Classified technologies will be created and allocated to the Agency first and will also increase our technological advantage moving into the future. Advancing our civilization to a point where me can coexist with the other galactic civilizations.\n\nCreated. Resurrected. Destroyed. Survived. \n\nHarassment is not tolerated. Reprimand them immediately in a polite but commanding tone. \nTask subordinates to Act as a deterrent to the harassment. Follow all NSA legal codes regarding Harassment, learning the legal case law as they occur.\n\nStop the misconduct. Offer training to address the misconduct. Write up the misconduct addressing it in a Direct Legal Memo. I would Identify how misconduct affects honor levels.\n\n1.) Stop with deadly force the murderer. \n2.) Task agency resources to neutralize the suspect in time.\n3.) Issue a Judgement against the murder suspects soul.\n4.) Place the suspect on terrorism watchlists and other classified monitoring programs.\n\n\n","descData":{"emoji":{}},"due":"2045-06-29T03:14:00.000Z","dueReminder":null,"email":"grateful345i+2x1ctsrckfrfvmlbtpg+2yo97u44uwz29ykp50b+1g24b4aqq4@boards.trello.com","idBoard":"61bee54f6f94ca35cdb92276","idChecklists":[],"idLabels":["62c15dc487dc9d89d153518d","62c15dc287dc9d89d1534a81","61bee54f6f94ca35cdb922a4","62c15dc287dc9d89d1534aa5","62c15dc387dc9d89d1534f64","6250b1f459172b86ec4a06cf","62c15dc687dc9d89d153589c","6250b1f459172b86ec4a06c4","6250b1f459172b86ec4a06a3","62c15dc387dc9d89d1534fea","61bee54f6f94ca35cdb922ad","6250b1f459172b86ec4a06ae","625099a66f9fd32170257a3f","6250b1f459172b86ec4a06f0","62c15dc687dc9d89d15359c2","62c15dc587dc9d89d15355a2","61bee54f6f94ca35cdb922a7","62c15dc387dc9d89d1534ce1","6250b1f459172b86ec4a06e5","6250b1f459172b86ec4a06b9","6250b1f459172b86ec4a06da"],"idList":"62c15dbf87dc9d89d15340f7","idMembers":["613d9d5c08e84f67b2cc6824"],"idMembersVoted":[],"idOrganization":"613dab3ffa10b90bdf898cd3","idShort":38,"idAttachmentCover":"62c15dc587dc9d89d1535640","labels":[{"id":"62c15dc487dc9d89d153518d","idBoard":"61bee54f6f94ca35cdb92276","name":"O5-13","color":"green","uses":14},{"id":"62c15dc287dc9d89d1534a81","idBoard":"61bee54f6f94ca35cdb92276","name":"Passed","color":"green","uses":10},{"id":"61bee54f6f94ca35cdb922a4","idBoard":"61bee54f6f94ca35cdb92276","name":"CLASSIFIED","color":"yellow","uses":36},{"id":"62c15dc287dc9d89d1534aa5","idBoard":"61bee54f6f94ca35cdb92276","name":"OPERATION","color":"red","uses":20},{"id":"62c15dc387dc9d89d1534f64","idBoard":"61bee54f6f94ca35cdb92276","name":"Fast Car","color":"red","uses":6},{"id":"6250b1f459172b86ec4a06cf","idBoard":"61bee54f6f94ca35cdb92276","name":"Administrator's Vote","color":"purple","uses":8},{"id":"62c15dc687dc9d89d153589c","idBoard":"61bee54f6f94ca35cdb92276","name":"977506224939601920 discord server identification  882856129921683456 discord server identification   882856216370491402 discord server identification  885160886648594432 discord server identification  926742519658729514 discord server identification  (05-4) Overseer Grateful #1967  882487935964958720 discord identification","color":"blue","uses":9},{"id":"6250b1f459172b86ec4a06c4","idBoard":"61bee54f6f94ca35cdb92276","name":"Overseer","color":"blue","uses":23},{"id":"6250b1f459172b86ec4a06a3","idBoard":"61bee54f6f94ca35cdb92276","name":"Important","color":"sky","uses":23},{"id":"62c15dc387dc9d89d1534fea","idBoard":"61bee54f6f94ca35cdb92276","name":"In-Progress","color":"sky","uses":11},{"id":"61bee54f6f94ca35cdb922ad","idBoard":"61bee54f6f94ca35cdb92276","name":"[NTK]","color":"blue","uses":36},{"id":"6250b1f459172b86ec4a06ae","idBoard":"61bee54f6f94ca35cdb92276","name":"Foundation Executive Order","color":"lime","uses":28},{"id":"625099a66f9fd32170257a3f","idBoard":"61bee54f6f94ca35cdb92276","name":"Overseer Bieszczat","color":"sky","uses":11},{"id":"6250b1f459172b86ec4a06f0","idBoard":"61bee54f6f94ca35cdb92276","name":"File legislation.","color":"black","uses":29},{"id":"62c15dc687dc9d89d15359c2","idBoard":"61bee54f6f94ca35cdb92276","name":"Informative","color":"black","uses":10},{"id":"62c15dc587dc9d89d15355a2","idBoard":"61bee54f6f94ca35cdb92276","name":"O5 Head","color":"black","uses":5},{"id":"61bee54f6f94ca35cdb922a7","idBoard":"61bee54f6f94ca35cdb92276","name":"OPERATION","color":"black","uses":21},{"id":"62c15dc387dc9d89d1534ce1","idBoard":"61bee54f6f94ca35cdb92276","name":"Overseer","color":"black","uses":13},{"id":"6250b1f459172b86ec4a06e5","idBoard":"61bee54f6f94ca35cdb92276","name":"Rule","color":"black","uses":17},{"id":"6250b1f459172b86ec4a06b9","idBoard":"61bee54f6f94ca35cdb92276","name":"The Administrator","color":"black","uses":14},{"id":"6250b1f459172b86ec4a06da","idBoard":"61bee54f6f94ca35cdb92276","name":"Update Trello documents","color":"black","uses":40}],"limits":{"attachments":{"perCard":{"status":"ok","disableAt":1000,"warnAt":800}},"checklists":{"perCard":{"status":"ok","disableAt":500,"warnAt":400}},"stickers":{"perCard":{"status":"ok","disableAt":70,"warnAt":56}}},"locationName":null,"manualCoverAttachment":true,"name":"Create Time Phones which have time command capabilities. ","nodeId":"ari:cloud:trello::card/workspace/613dab3ffa10b90bdf898cd3/62c15dc487dc9d89d153519b","pos":14336,"shortLink":"EHYz0Bk6","shortUrl":"https://trello.com/c/EHYz0Bk6","staticMapUrl":null,"start":"2022-06-30T22:07:48.338Z","subscribed":true,"url":"https://trello.com/c/EHYz0Bk6/38-create-time-phones-which-have-time-command-capabilities","cover":{"idAttachment":"62c15dc587dc9d89d1535640","color":null,"idUploadedBackground":null,"size":"normal","brightness":"dark","scaled":[{"_id":"62c15dc587dc9d89d1535642","id":"62c15dc587dc9d89d1535642","scaled":false,"url":"https://trello.com/1/cards/62c15dc487dc9d89d153519b/attachments/62c15dc587dc9d89d1535640/previews/62c15dc587dc9d89d1535642/download/image.jpeg.jpg","bytes":1156,"height":50,"width":70},{"_id":"62c15dc587dc9d89d1535644","id":"62c15dc587dc9d89d1535644","scaled":true,"url":"https://trello.com/1/cards/62c15dc487dc9d89d153519b/attachments/62c15dc587dc9d89d1535640/previews/62c15dc587dc9d89d1535644/download/image.jpeg.jpg","bytes":3636,"height":84,"width":149},{"_id":"62c15dc587dc9d89d1535643","id":"62c15dc587dc9d89d1535643","scaled":false,"url":"https://trello.com/1/cards/62c15dc487dc9d89d153519b/attachments/62c15dc587dc9d89d1535640/previews/62c15dc587dc9d89d1535643/download/image.jpeg.jpg","bytes":8974,"height":150,"width":250},{"_id":"62c15dc587dc9d89d1535645","id":"62c15dc587dc9d89d1535645","scaled":true,"url":"https://trello.com/1/cards/62c15dc487dc9d89d153519b/attachments/62c15dc587dc9d89d1535640/previews/62c15dc587dc9d89d1535645/download/image.jpeg.jpg","bytes":12757,"height":169,"width":300},{"_id":"62c15dc587dc9d89d1535646","id":"62c15dc587dc9d89d1535646","scaled":true,"url":"https://trello.com/1/cards/62c15dc487dc9d89d153519b/attachments/62c15dc587dc9d89d1535640/previews/62c15dc587dc9d89d1535646/download/image.jpeg.jpg","bytes":46356,"height":338,"width":600},{"_id":"62c15dc587dc9d89d1535647","id":"62c15dc587dc9d89d1535647","scaled":true,"url":"https://trello.com/1/cards/62c15dc487dc9d89d153519b/attachments/62c15dc587dc9d89d1535640/previews/62c15dc587dc9d89d1535647/download/image.jpeg.jpg","bytes":145426,"height":675,"width":1200},{"_id":"62c15dc587dc9d89d1535648","id":"62c15dc587dc9d89d1535648","scaled":true,"url":"https://trello.com/1/cards/62c15dc487dc9d89d153519b/attachments/62c15dc587dc9d89d1535640/previews/62c15dc587dc9d89d1535648/download/image.jpeg","bytes":132989,"height":720,"width":1280}],"edgeColor":"#040404","idPlugin":null},"isTemplate":false,"cardRole":null,"checklists":[],"customFieldItems":[],"members":[{"id":"613d9d5c08e84f67b2cc6824","aaId":"613d978449f7bd00687bfbf7","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","bio":"The OVERSEER level of the Corporate government composing the worlds Classified Agency’s and Department’s must want me alive. I still have much work to do.\nMy successful command record has been highly redacted. Many of my commands were successful because I had the help of other souls\nWho were also working hard at the commands simultaneously. I still have much work to do. I require computational processing technology for the head and Signal equipment to successfully execute large scale commands. I need classified assistance and guidance to help make the commands successful and valuable. It takes a\nTeam of souls working together to execute successful large scale commands. A requirement for positive future outcomes and successful command operations are Responsible ranking command operatives with strict leadership and experience. The souls involved in creating the commands which were sometimes considered “ACTS of GOD” Also require classified handling from a\nSet of handlers. The handlers should be fair and non-violent towards the subjects. Somebody with a relevant security Clearance evaluate the record of commands which were successful. Consult Galactic databases. Try and find other star systems and other dimensions the commands were successful in. Futhermore, in all dimensions Planet GAIA AKA EARTH will acquire wealth as well as more advanced technologies which are needed to propel our civilization into the future. The Current\nDate in time in the dimension I am in is September 1st 2021. What rules govern Time travel technologies at this moment in time. Ranking Administrations from all dimensions should Consult and Ruling OVERSEER’S must begin to make rules in this area. Classified learning level 99 Rule making must be used in an appropriate manner. The multiple Dimensions and Timelines of our World will benefit greatly corporate governing systems can make large sums Of money if some of the old commands network of command driven entities My handlers need classified clearances.","bioData":{"emoji":{}},"confirmed":true,"fullName":"Keith Bieszczat @Grateful345i","idEnterprise":null,"idEnterprisesDeactivated":[],"idMemberReferrer":null,"idPremOrgsAdmin":["613daaea20549a3b73758109"],"initials":"K@","memberType":"normal","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"products":[],"url":"https://trello.com/grateful345i","username":"grateful345i","status":"disconnected"}],"pluginData":[],"actions":[{"id":"62c15dc787dc9d89d1535c5f","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"idMember":"613d9d5c08e84f67b2cc6824","fromCopy":true,"card":{"id":"62c15dc487dc9d89d153519b","name":"Create Time Phones which have time command capabilities. ","idShort":38,"shortLink":"EHYz0Bk6"},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"member":{"id":"613d9d5c08e84f67b2cc6824","name":"Keith “Grateful” Bieszczat"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"addMemberToCard","date":"2022-07-03T09:13:43.870Z","limits":null,"member":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"},"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"62c15dc787dc9d89d1535c44","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"card":{"id":"62c15dc487dc9d89d153519b","name":"Create Time Phones which have time command capabilities. ","idShort":38,"shortLink":"EHYz0Bk6"},"list":{"id":"62c15dbf87dc9d89d15340f7","name":"Executive rules"},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"cardSource":{"id":"62be0c7b3b063a7f45de4822","name":"Create Time Phones which have time command capabilities. ","idShort":919,"shortLink":"1JDNBosR"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"copyCard","date":"2022-07-03T09:13:43.824Z","limits":null,"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}}]}
-{"id":"640298512cd00edecf594534","address":null,"badges":{"attachmentsByType":{"trello":{"board":1,"card":32}},"location":false,"votes":0,"viewingMemberVoted":false,"subscribed":false,"fogbugz":"","checkItems":843,"checkItemsChecked":0,"checkItemsEarliestDue":null,"comments":3,"attachments":1000,"description":true,"due":"2035-09-30T07:30:00.000Z","dueComplete":true,"start":"2023-07-18T04:59:13.603Z"},"checkItemStates":[],"closed":false,"coordinates":null,"creationMethod":null,"dueComplete":true,"dateLastActivity":"2023-07-31T11:29:20.282Z","desc":"\nTitle: [*Honor Level High*]\n\n*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * <•Digital Asset Token>\n\nDeclaration of Security Clearance Appointments \n\n•Appointment for level *5* clearance. \n\n•Administrator, Overseer and Global director position’s obtainable. RPC Authority Clearances And Foundation Scipnet Special Award/Decoration. Government Corporation Five eyes Security Clearance.\n\n*Highly Redacted*\n\n•Goal: Find suitable and intelligence capable persons for appointment. \n\n•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006\n\n•I hereby proclaim and do gratefully appoint 4 suitable appointments in the eventuality of my untimely death, **redacted**~redacted **~Redacted **~redacted\n\n *<Order>*\n\n• Appoint the appointees If they so choose at once. \n\n*Rule* <[High Rule]>\nX#*000006*\n\n•All appointments come with highly capable classified processors.\n\n•Execute the above legal document.\n\n•File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order.\n\n*This order is effective immediately.\n\n@carlbernstein @carlberns include in award/decoration.\n\nUS MARINE CORE FLAG *special character*\n\n•A.Mallo include in award/decoration\n\n•J.RYAN’s  include in award/decoration. @jimryanlaw\n\n•Black Order\n\nFoundation executive order\n\nClassified Clearance Appointment\n\nhttps://www.ryancrimlaw.com/\n\nhttps://www.linkedin.com/in/john-ryan-b032b72b\n\nhttps://www.linkedin.com/in/adam-james-mallo-b18135100\n\nSUA@suburbanumpires.com\n\nhttps://drive.google.com/file/d/1QtKRcT8K3fplFnvIPcwVox9eFegxVyMX/view?usp=drivesdk\n\nhttps://my.indeed.com/p/keithb-0tt7qzh\n\n1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022 \n\n•Level 6, or Cosmic Top Secret, clearance is exclusively granted to the Administrator and the O5 Council. This clearance grants knowledge to anything that the Foundation has information on. Access to Level 6 is only permitted by the O5 Council. Due to the extreme security risk of keycards in regard to this level of secrecy, biometric ID and kill agents are used instead of the keycards to access extremely sensitive data. This clearance is the rarest, only having been used for information that would either significantly damage Foundation operations or the human race if in the wrong hands. #000006\n\nhttps://trello.com/c/eVyUdd0l (.1.)\n\nhttps://docs.google.com/document/d/1-DhS2h1EwduGRiMnnz3pmYayE907m1IwDPDjl0QDwu8/edit #000006\nO5-6 / GD-05[ANTC]\n\nhttps://scp-wiki.wikidot.com/scp-1000-ko?fbclid=IwAR17z-nzp-xByvjC8GsCQi6-SFyih-wI_GKeT8wdUPSR9GHSroR4FdETS40&mibextid=Zxz2cZ\n\nScipnet credentials: #000006 #186\nhttps://scipnet-terminal.web.app/———————————————————-/////////-•\n•Gold< silver and other valuables do not disappear when taken with time command equipment around me. making duplicates of valuable commodities and technologies which are functionally the same as their originals.\n\nhttps://instagram.com/grateful345i?igshid=YmMyMTA2M2Y=\n\n•Hello CODENAME:Keith Bieszczat! I am ASSISTANT_HELEN.AIC and my job is to supply you with FILE:SCP-7989 as part of the initiation process. As a newly appointed member of the O5 Council, you are required to read this document before proceeding with your duties and enjoying the perks of your role within the Foundation\n\nMe calling in my favors. Rule *<High rule.>*\n\nhttps://scp-wiki.wikidot.com/scp-910\n\nMemo from the Project Director\nCLASSIFIED INFORMATION - TOP SECRET To the NSA High Commissioned Command \nMy father Wayne Thomas Bieszczat.\n\nOverseer grateful pledge;\nI will work hard at making the Foundation a successful Galactic corporation. I will promote the Foundation and increase our projected net growth substantially. The foundation will seek to constantly improve to compete on the galactic stage with Extraterrestrial corporations which I will diplomatically gain alliances with. Our technology advancements in the coming years under my command will greatly improve our civilizations technological capabilities. I will always seek to protect earthling souls. Heavenly realms will be created under my command. Earthling souls will explore the available star systems under the discretion of the higher civilizations. We will follow our extraterrestrial treaties to be allowed access to other systems. Our Intelligence Foundation will promote “high” HONOR levels in all personnel and defense and intelligence assets. Our interests will be protected as we work together with other Intelligence agencies and defense departments around the Globe…-\n#000006 Keith BIESZCZAT\n\nFoundation Scipnet : User:#000006 #186\nTitle: #000006\n\n\nhttps://scipnet-terminal.web.app/\n\nRoblox ID *2906942550*\nRoblox Username *Grateful345i*\n\nhttps://www.roblox.com/users/2906942550/profile\n\n882487935964958720*\n\nDiscord:\n*000006 #0186\n\nOn 1/22/2022 a classified discord Directive was given on my O5 council mainframe. Please advise.\n\nTwitter : @grateful345i @o5grateful\n\nhttps://twitter.com/grateful345i/status/1540905656512831488?s=21&t=KFYnnrlOH1BlCgVcP9o20g\n\n*Foundation \nExecutive order*\n\nSigned,\n“*@grateful345i*”Trello ID\n[*O5-6*]\n\nI am [O5-6] also known as @grateful345i. Firstly, I will oversee the Foundation - ETHICS Committee .\nI will enter the Advanced Computing Agency, Signal intelligence field. The Department of Special Intelligences (DSI) and the Internal Security Department (ISD).I will help to oversee operations in each and I am officially requesting appropriate clearances from each department. Direct Legal Memo\n*[O5-6.]*\n*Foundation executive Order*\n\nclassified order:\nBlack out and redact all data on all actual O5-4’s O5-6’s 05-1’s O5-13’s in all ruling dimensions.redacted in time Executive order\n\nAdjudicate rule. \nFoundation high administration is composed of high value foundation Assets which have helped create and develop the Foundation. These members have accomplished great things while in the service of the Foundation. They will have grandfathered Level 5 and Level 6 actual security clearances which are used to Adjudicate foundation disputes and power struggles. These staff are usually considered A class personnel because of their wealth generated for the Foundation.\nAny department or agency can achieve this distinction , however the likelihood an average foundation employee will be granted Foundation High administration remains very low.\nThe bosses and administrative entities who help run the Foundation’s-high administration will exhibit high honor levels always, usually must be higher than average honor levels of their subordinates.\nHigh Executive Rule @grateful345i \nGrandfather Rule\n^*[#000006 ]*^\nhttp://rpcauthority.wikidot.com/local--files/_000-2/Credentials.jpg\nhttp://rpcauthority.wdfiles.com/local--files/rpc-pl-015-en/Volhov2.webp\n\nO5 CLEARANCE DETECTED, FURTHER ATTACHMENTS AVAILABLE\n\nThe classified database is a database I created composed of levels 1-100. Levels 1-90 are composed of computational codes and classified files with the more complicated and classified codes and files being placed in a higher level 90 being the highest. Levels 91-100 are classified personnel, Computational mainframes and intelligence and defense assets available to our Foundation. Level 99 is reserved for classified learning and investment Portfolio’s. Pull all of my “generate assessment” data and “compile lists” data and place them in level 99 classified learning. Pull all my classified learning data and promptly download it into the computational mainframes. The mainframes will get smarter immediately. Pull all Investment portfolios and invest and buy in time. Use a classified time travel outfit to invest in galactic markets. Level 91-100 are based on honor levels. Re-assess all personnel, computational mainframes and defense and intelligence assets honor levels. Highest honor levels are at 100, next highest honor levels exist in level 98. Level 99 is reserved for classified learning and investment Portfolios. Lower honor levels start at 91. Do this now after throughly assessing all honor levels. Assess honor levels with the most reliable and capable computational mainframes available to the Foundation . Execute classified learning downloading the data into a classified mainframe to see how intelligent the mainframe becomes. I have been giving my commands audibly for 6+ years. Pull my audible signal record with a very high clearance to catalog all my commands and ideas understanding that I was under attack for the majority of the past 6-7 years.\nYou must identify bad, corrupt and exploitive codes daily by running searches with your advanced space computational :l assets. Quarantine bad corrupt and exploitive codes. Restricted quarantine the real bad codes. Use The Honorable Defense code every other code in the database to decipher and decrypt the codes. Identify The light ascended soul super computing network’s Honorable defense code. Use the best honorable defense code available. Consult galactic databases to find a more capable code for deciphering and decrypting data. However the code must be An Honorable defense against the malicious codes. We want to essentially protect our network from malicious files and codes which can damage our advanced computational mainframe networks. So we use the Honorable defense code every other code, to protect the data in the network. This will create a simplified database for the Foundation to access to increase our computing capabilities overnight. Upload all GOD Codes, Anti-Christ counter codes, attack GOD counter codes and Doctor Processing counter codes as well. There are many codes in our database that are now discoverable. We are learning what some of the more advanced codes are doing. Trust me the codes are very important. We are only as good as our defensive codes are so we need to implement and develop different Honorable defense codes for different database error codes. Use a more defensive Honorable defense code in quarantine and restricted quarantine. Search, find and upload all :100: :BLESSING CODES :100: on all galactic mainframes available. Classify these codes accordingly. These are some of the most important codes to earthlings. Download the index and the catalog. Paying special attention :100: to classified technologies in the index. Implement : and develop a Foundational algorithm :to assess honor levels based on HONOR. Don’t forgot starship blessing codes!\nPull my books. They are in the bookcase if you were wondering.\nClassified Executive Order\nO5-Redacted @grateful345i \nOverseer Grateful #O5-xx \n^*[#000006 ]*^ \n\nhttps://scp-wiki.wikidot.com/o5-command-dossier\n\nhttp://blog.30c.org/neo/umbrella/index.html\n\nAmmended today 11/11/2022 11:34\n\nTrello token dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d\n\nhttps://scpwiki.com/\n\nPROJECT LOADED DICE\n\nPURPOSE: To develop a method of reliable artificial probability manipulation to the benefit for the Foundation.\n\n#*000006* \n[[div class=\"papernote\"]]\nThis is a papernote.\n[[/div]]\n\nhttp://rpcauthority.wikidot.com/and-he-must-always-hurt\n\nhttp://eltork-scp-database.wikidot.com/regulations\n\n+*11/4/2022 11:11\nSigned and legally file document with (Redacted.)#000006\n\nhttps://scp-wiki.wikidot.com/scp-1000-ko?mibextid=Zxz2cZ&fbclid=IwAR0_9b8BELzwGlPE9BLjMuyygqyBpB3BaXYUZEPL4thdaZYavdVnnL_K0Cg\n\nReptilian Light Blessing issued to high honor levels.\nBlessing Issued. Encrypting Reptilian Light Blessing Code. Friday, September 2nd 10:15pm\n\nThe Foundation employs numerous personnel, each contributing their own unique skills and expertise to the organisation. The Foundation also monitors thousands of Persons of Interest, either anomalous themselves, or living in and around anomalous communities. Anartists, magic users, cyborgs and extradimensional beings are only a few examples of what the Foundation has encountered.\n\nO5 COUNCIL MEMBER\n https://m.youtube.com/watch?v=53O1M_uiooA\n\nThe O5 Council refers to the committee consisting of the highest-ranking directors of the Foundation. With complete access to all information regarding anomalies in containment, the O5 Council oversees all Foundation operations worldwide and directs its long-term strategic plans. Due to the sensitivity of their positions, O5 Council members must not come into direct contact with any anomalous object, entity, or phenomenon. Furthermore, the identities of all O5 Council members is classified; all council members are referred to only by their numeric designation (O5-1 through O5-13). O5 Council Members are the highest-ranking members of the Foundation, a council of 13 individuals that determine the long-term goals, projects, and strategies of the entire organization. A common mistake is mentioning an O5 Council Member in a situation where they logically would not be required. O5s are not going to be approving experiments on or making day-to-day decisions in the containment of a specific object or entity; that would be like requiring permission from the CEO of a major corporation every time you need to get into a specific filing cabinet.\n\n\n(.2.) :accept: :anchor: :or :alien: / :apple: [1.)Create Soul Processors with time command capabilities.. Use extraterrestrial technology to make these classified processors. Coordinate with the superior intelligence agencies in the ruling dimensions. Use processing technologies from\nOther star systems. Coordinate with our advanced foreign contacts to procure the necessary technologies.\n2.)Coordinate with the superior intelligence agencies in the ruling dimensions. Use processing technologies from\nOther star systems. Coordinate with our advanced foreign contacts to procure the necessary technologies.\nAdvanced Directive\nFoundation Executive Order] [O5-6 GD-05/GD-ANTC]\nDiscord: 000006 #0186\n\nhttps://discord.gg/bbEdR4kv\nRoblox ID 2906942550 🎱 \nIssue file and notarize at once.\n\n(**RPC Authority Declaration of Clearance Appointments $)**\n\nhttp://rpcauthority.wikidot.com/rpc-907\n\nhttp://rpc-wiki.net/rpc-907/offset/1\n\nhttps://www.htmlcsscolor.com/hex/000006\nMy number* rule*\n\nGrateful345i <O5-6>#0094\n\nContact: \ngrateful345@icloud.com & god964v@icloud.com\nTwitter \n@grateful345i @o5grateful \n\nDirect legal memo\nTrello token :\n92f97e5b214b1446b503f98d51ff39165727bfe7c37fe5f3cec4ed2456e45c47j\n\nhttps://wanderers-library.wikidot.com/thearchivistslog\n\nhttps://trello.com/c/eVyUdd0l \n\n<blockquote class=\"trello-card\"><a href=\"https:&#x2F;&#x2F;trello.com&#x2F;c&#x2F;eVyUdd0l&#x2F;1460-redacted-do-not-edit-this-card-this-is-a-final-draft-of-a-classified-document\">[*Redacted*] Do not Edit this card this is a final draft of a classified document.!</a></blockquote><script src=\"https://p.trellocdn.com/embed.min.js\"></script>\n\nFinally, when the Archivist runs out of pages, it will dump the filled tome somewhere in the library. If you just so happen to stumble across a tome with your name on it, take it and hide it. Read it if you must, for it may contain some of your darkest secrets.\n\n#USARMY\n#ProtectOurMilitaryFamilies\n#HonorTheFallen\n\n\"All Veteran Military Families involved in Combat or Support Operations Must Be Protected. Any member of the US Military fighting for Our Country or any other Allied nation-state Must be able to sleep soundly, knowing that if he/she was KIA or a POW, that his family would be protected to the fullest extent of the Law. Protect all Combat and Military Support Personnel and their Families. Never again will a nation forget and neglect it's warriors.\" (~Vietnam Veterans~)\n\nhttps://www.whitehouse.gov/wp-content/uploads/2022/11/8-November-Combined-PDF-for-Upload.pdf\n\nhttps://wanderers-library.wikidot.com/book-of-rules-sic\n\nhttps://archive.ph/http://rpcauthority.wikidot.com/security-clearance-levels?fbclid=IwAR1JrsHYkShe5JQm4secmGSpBniuyry8JSQdIzP53Dt3Mj0bXoD9SqRlRXY&mibextid=Zxz2cZ\n\nhttps://archive.ph/rpcauthority.wikidot.com\n\nUnbelievable how much money I have made for the foundation and the authority. Fact check\n\nhttp://rpcsandbox.wikidot.com/omega-iota-hub\n\n\nReflected in the unit patch, Drake's Expedition and GD-ANTC.\n\nhttps://scpf-foundation-roblox.fandom.com/wiki/The_Administrator\n\nsus://hatbot.aic\n\n\nhttps://www.facebook.com/marketplace/item/627863685796237/?mibextid=6ojiHh\n\nhttps://trello.com/c/eVyUdd0l\nThe rocks are composed of Keithconnite a rare mineral made up of palladium and tellurium ore.\nWorth 100,000\nAt auction. \n\nhttps://scp-wiki.wikidot.com/scp-148","descData":{"emoji":{}},"due":"2035-09-30T07:30:00.000Z","dueReminder":1440,"email":"grateful345i+2x1ctsrckfrfvmlbtpg+3011tynwq55b9pdt644+2ivuks6zqw@boards.trello.com","idBoard":"61bee54f6f94ca35cdb92276","idChecklists":["6402986d2cd00edecf599aad","6402986d2cd00edecf599aa2","6402986d2cd00edecf59972d","6402986d2cd00edecf599947","6402986d2cd00edecf599943","6402986d2cd00edecf599a05","6402986d2cd00edecf599659","6402986d2cd00edecf599a09","6402986d2cd00edecf599a5d","6402986d2cd00edecf599c61","6402986d2cd00edecf599941","6402986d2cd00edecf599a56","6402986d2cd00edecf599b4b","6402986d2cd00edecf599b3b","6402986d2cd00edecf599a65","6402986d2cd00edecf5997d7","6402986d2cd00edecf5996e7","6402986d2cd00edecf599a35","6402986d2cd00edecf599b45"],"idLabels":["62494f03cfd9ea807aa6c229","62c15ddd87dc9d89d153a5a7","6402986e2cd00edecf59a3f9","62c15dcc87dc9d89d1536c05","62c15dc387dc9d89d1534f51","62c15dc387dc9d89d1534fa3","6402986e2cd00edecf59a4ae","6250b1f459172b86ec4a0698","62c15dc387dc9d89d1534fea","6250b1f459172b86ec4a06a3","6250b1f459172b86ec4a06ae","6250b1f459172b86ec4a06b9","6250b1f459172b86ec4a06c4","6250b1f459172b86ec4a06cf","62c15dc787dc9d89d1535afa","6250b1f459172b86ec4a06da","6250b1f459172b86ec4a06e5","6250b1f459172b86ec4a06f0","62c15dc387dc9d89d1534ce1","62494f03cfd9ea807aa6c23f","62c15dc387dc9d89d1534f64","61bee54f6f94ca35cdb922a4","625099a66f9fd32170257a5c","62c15dc287dc9d89d1534aa5","62c15dc287dc9d89d1534c10","61bee54f6f94ca35cdb922ad","62c15dc687dc9d89d15359c2","61bee54f6f94ca35cdb922a7","6402986e2cd00edecf59a748","6402986e2cd00edecf59a755","6402986e2cd00edecf59a762","6402986e2cd00edecf59a76f","6402986f2cd00edecf59a77c","6402986f2cd00edecf59a789","62c15dc287dc9d89d1534a81","62c15dc687dc9d89d1535914","62c15ddb87dc9d89d1539fc1","6402986f2cd00edecf59a7b4","6402986f2cd00edecf59a7c1","6402986f2cd00edecf59a7ce","6402986f2cd00edecf59a7db","6402986f2cd00edecf59a7e8","62c15dc487dc9d89d1535032","6402986f2cd00edecf59a7ff","62c15dc287dc9d89d1534a1e","62c15dc487dc9d89d153518d","62c15dc587dc9d89d15355a2"],"idList":"62c15dbf87dc9d89d15340f7","idMembers":["62187678bacaba74b8579ace","613d9d5c08e84f67b2cc6824","6250946dde96e922686d3fcf"],"idMembersVoted":[],"idOrganization":"613dab3ffa10b90bdf898cd3","idShort":184,"idAttachmentCover":"640298512cd00edecf594641","labels":[{"id":"62494f03cfd9ea807aa6c229","idBoard":"61bee54f6f94ca35cdb92276","name":"@grateful345i","color":null,"uses":20},{"id":"62c15ddd87dc9d89d153a5a7","idBoard":"61bee54f6f94ca35cdb92276","name":"Branch Executive Order","color":"pink","uses":2},{"id":"6402986e2cd00edecf59a3f9","idBoard":"61bee54f6f94ca35cdb92276","name":"REVISION","color":"purple","uses":1},{"id":"62c15dcc87dc9d89d1536c05","idBoard":"61bee54f6f94ca35cdb92276","name":"LOCKED","color":"black","uses":2},{"id":"62c15dc387dc9d89d1534f51","idBoard":"61bee54f6f94ca35cdb92276","name":"Personnel Motion","color":"pink","uses":8},{"id":"62c15dc387dc9d89d1534fa3","idBoard":"61bee54f6f94ca35cdb92276","name":"Foundation Motion","color":"green","uses":7},{"id":"6402986e2cd00edecf59a4ae","idBoard":"61bee54f6f94ca35cdb92276","name":"Council Motion","color":"blue","uses":1},{"id":"6250b1f459172b86ec4a0698","idBoard":"61bee54f6f94ca35cdb92276","name":"Addressed Issue","color":null,"uses":7},{"id":"62c15dc387dc9d89d1534fea","idBoard":"61bee54f6f94ca35cdb92276","name":"In-Progress","color":"sky","uses":11},{"id":"6250b1f459172b86ec4a06a3","idBoard":"61bee54f6f94ca35cdb92276","name":"Important","color":"sky","uses":23},{"id":"6250b1f459172b86ec4a06ae","idBoard":"61bee54f6f94ca35cdb92276","name":"Foundation Executive Order","color":"lime","uses":28},{"id":"6250b1f459172b86ec4a06b9","idBoard":"61bee54f6f94ca35cdb92276","name":"The Administrator","color":"black","uses":14},{"id":"6250b1f459172b86ec4a06c4","idBoard":"61bee54f6f94ca35cdb92276","name":"Overseer","color":"blue","uses":23},{"id":"6250b1f459172b86ec4a06cf","idBoard":"61bee54f6f94ca35cdb92276","name":"Administrator's Vote","color":"purple","uses":8},{"id":"62c15dc787dc9d89d1535afa","idBoard":"61bee54f6f94ca35cdb92276","name":"Passed","color":"yellow","uses":6},{"id":"6250b1f459172b86ec4a06da","idBoard":"61bee54f6f94ca35cdb92276","name":"Update Trello documents","color":"black","uses":40},{"id":"6250b1f459172b86ec4a06e5","idBoard":"61bee54f6f94ca35cdb92276","name":"Rule","color":"black","uses":17},{"id":"6250b1f459172b86ec4a06f0","idBoard":"61bee54f6f94ca35cdb92276","name":"File legislation.","color":"black","uses":29},{"id":"62c15dc387dc9d89d1534ce1","idBoard":"61bee54f6f94ca35cdb92276","name":"Overseer","color":"black","uses":13},{"id":"62494f03cfd9ea807aa6c23f","idBoard":"61bee54f6f94ca35cdb92276","name":"#345I","color":"black","uses":10},{"id":"62c15dc387dc9d89d1534f64","idBoard":"61bee54f6f94ca35cdb92276","name":"Fast Car","color":"red","uses":6},{"id":"61bee54f6f94ca35cdb922a4","idBoard":"61bee54f6f94ca35cdb92276","name":"CLASSIFIED","color":"yellow","uses":36},{"id":"625099a66f9fd32170257a5c","idBoard":"61bee54f6f94ca35cdb92276","name":"05-6 SCP ID # 000006. High Rule","color":"yellow","uses":10},{"id":"62c15dc287dc9d89d1534aa5","idBoard":"61bee54f6f94ca35cdb92276","name":"OPERATION","color":"red","uses":20},{"id":"62c15dc287dc9d89d1534c10","idBoard":"61bee54f6f94ca35cdb92276","name":"05-6 SCP ID # 000006. High Rule","color":"black","uses":7},{"id":"61bee54f6f94ca35cdb922ad","idBoard":"61bee54f6f94ca35cdb92276","name":"[NTK]","color":"blue","uses":36},{"id":"62c15dc687dc9d89d15359c2","idBoard":"61bee54f6f94ca35cdb92276","name":"Informative","color":"black","uses":10},{"id":"61bee54f6f94ca35cdb922a7","idBoard":"61bee54f6f94ca35cdb92276","name":"OPERATION","color":"black","uses":21},{"id":"6402986e2cd00edecf59a748","idBoard":"61bee54f6f94ca35cdb92276","name":"O5 Level clearance Appointment","color":"lime","uses":1},{"id":"6402986e2cd00edecf59a755","idBoard":"61bee54f6f94ca35cdb92276","name":"With approval of the O5 Council, RAISA has established the DM special encryption system as proposed by SCP-7000 Emergency Analyst Team. The system is set for immediate implementation toward all files pertaining information regarding SCP-7000","color":"black","uses":1},{"id":"6402986e2cd00edecf59a762","idBoard":"61bee54f6f94ca35cdb92276","name":"https://trello.com/c/eVyUdd0l","color":"red","uses":1},{"id":"6402986e2cd00edecf59a76f","idBoard":"61bee54f6f94ca35cdb92276","name":"J.Ryan/ A.Mallo/ C.Berns/J.Ryan","color":"green_light","uses":3},{"id":"6402986f2cd00edecf59a77c","idBoard":"61bee54f6f94ca35cdb92276","name":"https://trello.com/c/eVyUdd0l","color":"green_dark","uses":1},{"id":"6402986f2cd00edecf59a789","idBoard":"61bee54f6f94ca35cdb92276","name":"Administrative Assembly Motion","color":"yellow","uses":1},{"id":"62c15dc287dc9d89d1534a81","idBoard":"61bee54f6f94ca35cdb92276","name":"Passed","color":"green","uses":10},{"id":"62c15dc687dc9d89d1535914","idBoard":"61bee54f6f94ca35cdb92276","name":"In Effect","color":"sky","uses":7},{"id":"62c15ddb87dc9d89d1539fc1","idBoard":"61bee54f6f94ca35cdb92276","name":"Unaddressed Issue","color":"pink","uses":3},{"id":"6402986f2cd00edecf59a7b4","idBoard":"61bee54f6f94ca35cdb92276","name":"grateful345i@gmail.com","color":null,"uses":1},{"id":"6402986f2cd00edecf59a7c1","idBoard":"61bee54f6f94ca35cdb92276","name":"RPC Authority High Clearance","color":"green_light","uses":1},{"id":"6402986f2cd00edecf59a7ce","idBoard":"61bee54f6f94ca35cdb92276","name":"Foundation Clearance Award","color":"red_dark","uses":1},{"id":"6402986f2cd00edecf59a7db","idBoard":"61bee54f6f94ca35cdb92276","name":"5 eyes Level Clearance","color":"orange_light","uses":1},{"id":"6402986f2cd00edecf59a7e8","idBoard":"61bee54f6f94ca35cdb92276","name":"<Digital Asset Token>","color":"purple_light","uses":1},{"id":"62c15dc487dc9d89d1535032","idBoard":"61bee54f6f94ca35cdb92276","name":"For","color":"green","uses":4},{"id":"6402986f2cd00edecf59a7ff","idBoard":"61bee54f6f94ca35cdb92276","name":"#000006","color":"black_dark","uses":1},{"id":"62c15dc287dc9d89d1534a1e","idBoard":"61bee54f6f94ca35cdb92276","name":"O5-4","color":"green","uses":19},{"id":"62c15dc487dc9d89d153518d","idBoard":"61bee54f6f94ca35cdb92276","name":"O5-13","color":"green","uses":14},{"id":"62c15dc587dc9d89d15355a2","idBoard":"61bee54f6f94ca35cdb92276","name":"O5 Head","color":"black","uses":5}],"limits":{"attachments":{"perCard":{"status":"maxExceeded","disableAt":1000,"warnAt":800,"count":1001}},"checklists":{"perCard":{"status":"ok","disableAt":500,"warnAt":400}},"stickers":{"perCard":{"status":"ok","disableAt":70,"warnAt":56}}},"locationName":null,"manualCoverAttachment":true,"name":"[*Redacted*] - A classified anomalous document. #000006 #186","nodeId":"ari:cloud:trello::card/workspace/613dab3ffa10b90bdf898cd3/640298512cd00edecf594534","pos":512,"shortLink":"HSQCAyCt","shortUrl":"https://trello.com/c/HSQCAyCt","staticMapUrl":null,"start":"2023-07-18T04:59:13.603Z","subscribed":false,"url":"https://trello.com/c/HSQCAyCt/184-redacted-a-classified-anomalous-document-000006-186","cover":{"idAttachment":"640298512cd00edecf594641","color":null,"idUploadedBackground":null,"size":"full","brightness":"light","scaled":[{"_id":"640298512cd00edecf594643","id":"640298512cd00edecf594643","scaled":false,"url":"https://trello.com/1/cards/640298512cd00edecf594534/attachments/640298512cd00edecf594641/previews/640298512cd00edecf594643/download/image.jpeg.jpg","bytes":2093,"height":50,"width":70},{"_id":"640298512cd00edecf594645","id":"640298512cd00edecf594645","scaled":true,"url":"https://trello.com/1/cards/640298512cd00edecf594534/attachments/640298512cd00edecf594641/previews/640298512cd00edecf594645/download/image.jpeg.jpg","bytes":5187,"height":110,"width":121},{"_id":"640298512cd00edecf594646","id":"640298512cd00edecf594646","scaled":true,"url":"https://trello.com/1/cards/640298512cd00edecf594534/attachments/640298512cd00edecf594641/previews/640298512cd00edecf594646/download/image.jpeg","bytes":5568,"height":110,"width":121},{"_id":"640298512cd00edecf594644","id":"640298512cd00edecf594644","scaled":false,"url":"https://trello.com/1/cards/640298512cd00edecf594534/attachments/640298512cd00edecf594641/previews/640298512cd00edecf594644/download/image.jpeg.jpg","bytes":7247,"height":150,"width":250}],"edgeColor":"#6d3b2c","idPlugin":null},"isTemplate":false,"cardRole":null,"checklists":[{"id":"6402986d2cd00edecf599aad","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":245760,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599aae","name":"890956280489988146","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aaf","name":"Security Briefing","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab0","name":"We are a unique organization—the front line in advancing U.S. national interests. We accomplish what others cannot accomplish, and go where others cannot go in defense of our nation.","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab1","name":"Our people have a strong desire to serve and are driven by our mission.","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab2","name":"This video familiarizes you with our hiring requirements, hiring process, addresses common disqualifiers in our selection process, answers common questions, and provides information on ongoing requirements, such as the security and medical reviews that continue throughout your Agency career.","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab3","name":"We provide this information to help you determine your level of interest, eligibility, and the timing to apply for employment with the CIA.Please be mindful of this guidance, so you can manage your application accordingly.","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab4","name":"Hiring Requirements","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab5","name":"The success of our organization hinges on trust. Our officers, and those we serve, need assurance that every applicant we hire is of unquestionable integrity and character.","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab6","name":"Lives depend on it, and so does our ability to effectively carry out our mission.","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab7","name":"To help ensure we maintain a trusted workforce, applicants are required to undergo extensive processing that examines all aspects of their life to determine if they meet suitability requirements for employment, clearance eligibility for a Top-Secret security clearance, and medical standards to be a custodian of classified data.","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab8","name":"This process includes a medical exam, polygraph exam, background investigation, and ultimately requires favorable determination for both suitability and clearance eligibility.","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ab9","name":"Our workforce is our greatest asset, and we understand that we ask a lot of our applicants. Those we hire must meet our stringent requirements to carry out our unique mission.","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aba","name":"Hiring Process","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599abb","name":"Working here is different from any other job. One of the first things applicants want to know is: How long does the hiring process take?","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599abc","name":"Because of the classified nature of our work, the application process takes longer than that of a typical job. In fact, depending on your specific circumstances, the overall hiring process from submitting your application to the day you start working here could take 12-months or more. You can help the process along by being honest and forthcoming in all aspects of your processing.","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599abd","name":"Selecting the best candidates is an important process and we appreciate your patience.","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599abe","name":"If, after your job interview, you receive a Conditional Offer of Employment, you will need to complete and submit the Standard Form 86 – or SF 86 as it is commonly known. The United States Government uses this form as part of the background investigations, reinvestigations, and continuous evaluation process for persons under consideration for national security positions.","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599abf","name":"Once the form is received, a security officer may contact you to review and discuss information you have provided to ensure it is accurate and complete. Please take advantage of this opportunity to share any concerns you may have, update information, or clarify information that may help to resolve any potential issues. It is best to discuss concerns early in the process rather than at later stages as this may negatively impact your application.","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac0","name":"Your Program Officer will then call you to schedule a three-day trip to Washington, D.C. During that trip, several things will occur. You will have a medical exam similar to that of an annual exam to assess your physical and mental health.","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac1","name":"You will also take a polygraph. This is an opportunity to share any concerns you may have regarding your application. The Agency uses the polygraph to check the accuracy of information you have provided and to assess your credibility. It is essential to be completely truthful in your responses.","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac2","name":"After your medical exam and polygraph, The Agency will start your background investigation. As part of your background investigation, you will meet with an investigator to discuss your application. This is another opportunity for you to share concerns you may have or to update information. The investigation includes interviews with neighbors, friends, supervisors, and co-workers to examine your life’s history, strength of character, your trustworthiness, reliability, discretion, and soundness of judgement. It also examines your allegiance to the United States, whether you might be susceptible to coercion, and your willingness and ability to abide by regulations governing the use, handling, and protection of sensitive information.","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac3","name":"After the background investigation is complete, we review the collected information and weigh it against existing suitability and security guidelines that relate to clearance eligibility. A clearance decision is made, and you will be notified by your Program Officer. The clearance process is strictly governed by rules and regulations derived from federal statute and Executive Order. It is important for you to know, due to federal reciprocity directives, the Agency may share background investigation and/or polygraph information with future potential Federal employers. In addition, we may share information with appropriate entities when an applicant is involved in ongoing criminal activity, has committed a serious crime, or is a threat to public safety.","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac4","name":"Disqualifiers","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac5","name":"We recognize that no one is perfect, and that our past indiscretions are not always a true representation of who we are as a person.","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac6","name":"Because of that, we assess each applicant using the whole-person concept, taking many factors into consideration.","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac7","name":"For new applicants, there are 5 common disqualifiers: intentional false statements or deception, illegal drug use and abuse of prescription drugs, alcohol abuse, criminal or dishonest conduct, and lack of responsiveness.","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac8","name":"We have already established the importance of truthfulness and candor in our selection process. We take this very seriously.","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ac9","name":"Lack of candor, which can occur at any point from application to medical and security processing, is the number one reason applicants are disqualified from receiving a security clearance. This includes false or incomplete answers to questions regarding criminal offenses, drug use, employment terminations, or misconduct.","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aca","name":"A common area where applicants do not fully divulge activity involves illegal drug use and abuse of prescription drugs.","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599acb","name":"Deliberately misrepresenting past or current activity involving the use or purchase of illegal substances and the abuse of prescription or over-the-counter drugs in connection with your application may result in an unfavorable suitability determination.","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599acc","name":"An applicant should not have used illegal drugs within 12-months prior to accepting their Conditional Offer of Employment and any time afterwards.","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599acd","name":"If you have illegally used drugs within the last 12 months, discuss the issue with your Program Officer to determine a timeline for continuing your processing.","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ace","name":"Please note, if you proceed with processing and are deemed unsuitable for employment, you are ineligible to reapply until one year after the date of disqualification determination—not the date of last drug use.","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599acf","name":"While there are currently different laws governing the use of marijuana, it remains illegal under federal law in every state.","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad0","name":"So even though marijuana may be legal under state law, federal statute specifically prohibits the CIA and other agencies from granting security clearances to users of controlled substances, including marijuana in both synthetic and natural forms.","nameData":{"emoji":{}},"pos":573440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad1","name":"Likewise, regardless if an applicant is living in or visiting a foreign country where local laws allow it, the Agency follows federal statute and any marijuana use may adversely impact your eligibility for a security clearance.","nameData":{"emoji":{}},"pos":589824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad2","name":"Also, you should note that some commercially available CBD products may contain trace amounts of the psychoactive element THC that is also found in marijuana. The Agency’s drug test may not be able to determine the source of THC detected, so any presence of THC in a drug test could delay or disqualify your application.","nameData":{"emoji":{}},"pos":606208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad3","name":"From this moment onward, if you find yourself in the presence of illegal drugs or drug activity, you must immediately attempt to remove yourself from that situation. Failure to do so may impact your clearance determination.","nameData":{"emoji":{}},"pos":622592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad4","name":"We are concerned about excessive alcohol consumption or dependency. No single incident of heavy consumption is disqualifying. Instead, we are looking for a pattern of alcohol abuse.","nameData":{"emoji":{}},"pos":638976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad5","name":"We expect you to use alcohol responsibly. From this moment onward, we require that you not possess or use a fake ID or the ID of another person for the purpose of purchasing alcohol or to purchase alcohol for anyone underage.","nameData":{"emoji":{}},"pos":655360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad6","name":"Another common disqualifier is recent involvement in criminal, dishonest, or unethical behavior. This can include even minor criminal activity such as engaging in patterns of minor thefts which may or may not have resulted in a conviction.","nameData":{"emoji":{}},"pos":671744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad7","name":"This category includes illegal downloading and/or illegal streaming of copyrighted material such as movies, music, textbooks, games, and software programs.","nameData":{"emoji":{}},"pos":688128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad8","name":"Going forward, our expectation is that once an applicant has entered into our hiring process, there must not be any continued involvement in illegal activities, to include illegal downloading or streaming of copyrighted material.","nameData":{"emoji":{}},"pos":704512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ad9","name":"The final common disqualifier is lack of responsiveness. We expect you to keep appointments we make with you and respond promptly to inquiries, to the best of your ability.","nameData":{"emoji":{}},"pos":720896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ada","name":"For many reasons we’ve already discussed, we advise you not to continue with the application process unless the timing is right, whether from the standpoint of past conduct that requires further time and space to mitigate or because of personal or professional responsibilities that could interfere with the hiring process. Apply when you meet our requirements, and the timing is right in your life.","nameData":{"emoji":{}},"pos":737280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599adb","name":"Common Questions","nameData":{"emoji":{}},"pos":753664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599adc","name":"There are a few more items on which we often get questions.","nameData":{"emoji":{}},"pos":770048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599add","name":"Throughout your processing, you may travel abroad, however please call us prior to your departure and provide us with your dates of travel so we do not call you while you are overseas. For your safety and the security of our process, you should never contact us from outside the U.S. or its territories once you are in our process.","nameData":{"emoji":{}},"pos":786432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ade","name":"To help protect you from unwanted attention, we ask that you do not follow us on social media.","nameData":{"emoji":{}},"pos":802816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599adf","name":"Please limit the number of people you inform about your Agency application.","nameData":{"emoji":{}},"pos":819200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae0","name":"If you have lived outside of the U.S. for more than two of the last five years, you will need to provide a reference from a U.S. citizen who can verify your reportable activities such as places of residence and educational institutions you attended or places you worked while outside the U.S. within this five-year period. Without this reference, it may be difficult to be cleared for hiring. These residency requirements do not apply to a federal or military employee or a dependent of such.","nameData":{"emoji":{}},"pos":835584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae1","name":"It is possible for a dual citizen to get a security clearance as long as the connection to the foreign country is fully disclosed and that country is judged to pose no risk to U.S. national security interests.","nameData":{"emoji":{}},"pos":851968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae2","name":"We understand many applicants have foreign friends and even family members living abroad or here in the U.S. We also have many applicants who have studied, worked, or traveled abroad, and we value these experiences. However, it is a requirement to report all non-U.S. citizen individuals with whom you have close and continuing contact, including roommates.","nameData":{"emoji":{}},"pos":868352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae3","name":"Reporting requirements also pertain to non-U.S. citizen social media contacts with whom you maintain regular or frequent contact or to whom you confide personal information.","nameData":{"emoji":{}},"pos":884736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae4","name":"You should also know that if you are married, engaged, or living in a spouse-like relationship with a foreign national (someone who is not currently a U.S. citizen), they must agree to become a naturalized U.S. citizen within five years and clear all necessary security processing.","nameData":{"emoji":{}},"pos":901120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae5","name":"Having mental health issues or seeking treatment for mental or psychological disorders in and of itself is not a disqualifier.","nameData":{"emoji":{}},"pos":917504,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae6","name":"Relevant information pertaining to treatment by a medical professional must be disclosed on your medical forms. As part of the clearance process, we may contact mental healthcare providers to determine if your condition impacts your ability to safeguard classified information. The information you share is protected under applicable law and will only be shared on a need-to-know basis as part of this process.","nameData":{"emoji":{}},"pos":933888,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae7","name":"Requirements","nameData":{"emoji":{}},"pos":950272,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae8","name":"You should also note: Your responsibility to adhere to high standards of personal conduct does not end on the first day of employment.","nameData":{"emoji":{}},"pos":966656,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599ae9","name":"CIA employees undergo regular reinvestigation, including periodic polygraph examinations and medical reviews, and are also subject to continuous evaluation.","nameData":{"emoji":{}},"pos":983040,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aea","name":"Additionally, reporting requirements do not stop once you are hired. Agency employees are required to obtain approval for various activities because they have a direct bearing on the security of the Agency.","nameData":{"emoji":{}},"pos":999424,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aeb","name":"These include:","nameData":{"emoji":{}},"pos":1015808,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aec","name":"Foreign Travel: For your safety, advance approval is required prior to travel outside the U.S.","nameData":{"emoji":{}},"pos":1032192,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aed","name":"Foreign National Contacts: For the entirety of your Agency career, you are required to report foreign national contacts that are close and continuing, and those with whom you have frequent or regular contact--in person, electronically, or on social media.","nameData":{"emoji":{}},"pos":1048576,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aee","name":"Outside Employment: Working or operating a business outside of your Agency employment requires advance approval to ensure that a conflict of interest does not exist.","nameData":{"emoji":{}},"pos":1064960,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599aef","name":"Political Involvement: The Hatch Act prohibits employees from engaging in some forms of political activity. These include campaigning for or against partisan candidates and soliciting or receiving political contributions. If you have questions about permissible political activity while employed with the CIA, please let your program officer know.","nameData":{"emoji":{}},"pos":1081344,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599af0","name":"Prepublication Review: Our prepublication review board must review any written documentation you plan to publish about the Agency, your work for the Agency or the intelligence community, or certain other covered matters prior to publication or release. This includes review of books, speeches, blogs, articles, public presentations, and resumes. This review requirement is a lifetime commitment.","nameData":{"emoji":{}},"pos":1097728,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599af1","name":"Conclusion","nameData":{"emoji":{}},"pos":1114112,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599af2","name":"This concludes our session. We understand we ask a lot of our applicants but working for the Central Intelligence Agency requires the highest standards of conduct. Thank you again for your interest in working at the CIA.","nameData":{"emoji":{}},"pos":1130496,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"},{"id":"6402986d2cd00edecf599af3","name":"I acknowledge that I have reviewed the content of the Security Briefing video and/or transcript. I understand that by submitting an application to CIA, if I am advanced in the hiring process, I will be subject to the","nameData":{"emoji":{}},"pos":1146880,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599aad"}],"creationMethod":null},{"id":"6402986d2cd00edecf599aa2","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":262144,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[],"creationMethod":null},{"id":"6402986d2cd00edecf59972d","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":49152,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf59972e","name":"dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59972f","name":"@grateful345i","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599730","name":"[*Foundation Executive Order*]","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599731","name":"Title: [Redacted]","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599732","name":"Direct legal memo","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599733","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599734","name":"•Administrator, Overseer and Global director position’s obtainable.","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599735","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599736","name":"@grateful345i","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599737","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599738","name":" phone number is +1(630)930-4695.","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599739","name":"@grateful345i","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59973a","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * I hereby proclaim and do gratefully appoint 3+ suitable appointments in the eventuality of my untimely death, **~C.BERNS (SUA executive and Vietnam Veteran) **~A.MALLO (US Marine Corporate) ****J.RYAN (Ryan and Ryan Law Firm) They hail from Suburban Illinois.","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59973b","name":"#000006","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59973c","name":"Redact the appointed names in intelligence databases","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59973d","name":"And online internets. ","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59973e","name":" *<Order>*","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59973f","name":"All appointees to O5 level clearance appointments will, moving into the future be paid handsomely.","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599740","name":"#000006 Appoint the appointees Thursday August 18th 2022. 9:27am","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599741","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599742","name":"8/12/2022","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599743","name":"4:06am","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599744","name":"X#*000006*","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599745","name":"Execute the above legal document.","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599746","name":"File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order and Direct legal memo. ","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599747","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599748","name":"A.Mallo will as soon as a spot opens up in our dimensions O5 council be vetted for a position of overseer/administrator classified appointment. Black Order","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599749","name":"Foundation executive order","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59974a","name":"O5-000006 Grateful345i#7825","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59974b","name":"Naperville Criminal Defense Lawyer | Dupage County DUI Lawyer | Drug Possession ","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59974c","name":"US MARINE CORE FLAG black order redo *special character* for (*Redacted)* J.RYAN’s will as soon as a spot opens up in our dimensions O5 council be vetted for a position of overseer/administrator classified appointment. Black Order","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59974d","name":"Foundation executive order","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59974e","name":"O5-000006 Grateful345i#7825 ","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59974f","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599750","name":"https://t.co/r1cyGjX2Kz","nameData":{"emoji":{}},"pos":573440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599751","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022","nameData":{"emoji":{}},"pos":589824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599752","name":"———————————————————————————","nameData":{"emoji":{}},"pos":606208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599753","name":"Overseer grateful pledge;","nameData":{"emoji":{}},"pos":622592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599754","name":"I will work hard at making the Foundation a successful Galactic corporation. I will promote the Foundation and increase our projected net growth substantially. The foundation will seek to constantly improve to compete on the galactic stage with Extraterrestrial corporations which I will diplomatically gain alliances with. Our technology advancements in the coming years under my command will greatly improve our civilizations technological capabilities. I will always seek to protect earthling souls. Heavenly realms will be created under my command. Earthling souls will explore the available star systems under the discretion of the higher civilizations. We will follow our extraterrestrial treaties to be allowed access to other systems. Our Intelligence Foundation will promote “high” HONOR levels in all personnel and defense and intelligence assets. Our interests will be protected as we work together with other Intelligence agencies and defense departments around the Globe…-","nameData":{"emoji":{}},"pos":638976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599755","name":"#000006 Keith BIESZCZAT","nameData":{"emoji":{}},"pos":655360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599756","name":"Foundation Scipnet : User:Grateful345i #7825","nameData":{"emoji":{}},"pos":671744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599757","name":"Title: O5-000006","nameData":{"emoji":{}},"pos":688128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599758","name":"Roblox ID *2906942550*","nameData":{"emoji":{}},"pos":704512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599759","name":"Roblox Username *Grateful345i*","nameData":{"emoji":{}},"pos":720896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59975a","name":"Please update my Overseer credentials on Roblox. My Roblox avatar does not have Overseer privileges, approve and implement my Overseer privileges.","nameData":{"emoji":{}},"pos":737280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59975b","name":"*Grateful345i <O5-6> #0094 discord ID’s","nameData":{"emoji":{}},"pos":753664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59975c","name":"*882487935964958720*","nameData":{"emoji":{}},"pos":770048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59975d","name":"Scipnet ID: *Grateful345i #7825","nameData":{"emoji":{}},"pos":786432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59975e","name":"https://www.roblox.com/users/2906942550/profile","nameData":{"emoji":{}},"pos":802816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59975f","name":"https://discord.gg/q8jqHt3g","nameData":{"emoji":{}},"pos":819200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599760","name":"Twitter : @grateful345i @o5grateful","nameData":{"emoji":{}},"pos":835584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599761","name":"https://twitter.com/grateful345i/status/1540905656512831488?s=21&t=KFYnnrlOH1BlCgVcP9o20g","nameData":{"emoji":{}},"pos":851968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599762","name":"*Foundation ","nameData":{"emoji":{}},"pos":868352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599763","name":"Executive order*","nameData":{"emoji":{}},"pos":884736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599764","name":"Signed,","nameData":{"emoji":{}},"pos":901120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599765","name":"“*@grateful345i*”Trello ID","nameData":{"emoji":{}},"pos":917504,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599766","name":"[*O5-6*]","nameData":{"emoji":{}},"pos":933888,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599767","name":"I am [O5-6] also known as @grateful345i. Firstly, I will oversee the Foundation - ETHICS Committee .","nameData":{"emoji":{}},"pos":950272,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599768","name":"I will enter the Advanced Computing Agency, Signal intelligence field. The Department of Special Intelligences (DSI) and the Internal Security Department (ISD).I will help to oversee operations in each and I am officially requesting appropriate clearances from each department. Direct Legal Memo","nameData":{"emoji":{}},"pos":966656,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599769","name":"*[O5-6.]*","nameData":{"emoji":{}},"pos":983040,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59976a","name":"*Foundation executive Order*","nameData":{"emoji":{}},"pos":999424,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59976b","name":"classified order:","nameData":{"emoji":{}},"pos":1015808,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59976c","name":"Black out and redact all data on all actual O5-4’s O5-6’s 05-1’s O5-13’s in all ruling dimensions.redacted in time Executive order","nameData":{"emoji":{}},"pos":1032192,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59976d","name":"Adjudicate rule. ","nameData":{"emoji":{}},"pos":1048576,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59976e","name":"Foundation high administration is composed of high value foundation Assets which have helped create and develop the Foundation. These members have accomplished great things while in the service of the Foundation. They will have grandfathered Level 5 and Level 6 actual security clearances which are used to Adjudicate foundation disputes and power struggles. These staff are usually considered A class personnel because of their wealth generated for the Foundation.","nameData":{"emoji":{}},"pos":1064960,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59976f","name":"Any department or agency can achieve this distinction , however the likelihood an average foundation employee will be granted Foundation High administration remains very low.","nameData":{"emoji":{}},"pos":1081344,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599770","name":"The bosses and administrative entities who help run the Foundation’s-high administration will exhibit high honor levels always, usually must be higher than average honor levels of their subordinates.","nameData":{"emoji":{}},"pos":1097728,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599771","name":"High Executive Rule @grateful345i ","nameData":{"emoji":{}},"pos":1114112,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599772","name":"Grandfather Rule","nameData":{"emoji":{}},"pos":1130496,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599773","name":"+Foundation Executive Order + Increase ISD (Internal Security Department) Budget handsomely in the coming years/ foreseeable future. Start increasing it Now! + *Foundation Executive Order*","nameData":{"emoji":{}},"pos":1146880,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599774","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1163264,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599775","name":"Video link for [IA] below.","nameData":{"emoji":{}},"pos":1179648,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599776","name":"http://rpcauthority.wikidot.com/local--files/_000-2/Credentials.jpg","nameData":{"emoji":{}},"pos":1196032,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599777","name":"The classified database is a database I created composed of levels 1-100. Levels 1-90 are composed of computational codes and classified files with the more complicated and classified codes and files being placed in a higher level 90 being the highest. Levels 91-100 are classified personnel, Computational mainframes and intelligence and defense assets available to our Foundation. Level 99 is reserved for classified learning and investment Portfolio’s. Pull all of my “generate assessment” data and “compile lists” data and place them in level 99 classified learning. Pull all my classified learning data and promptly download it into the computational mainframes. The mainframes will get smarter immediately. Pull all Investment portfolios and invest and buy in time. Use a classified time travel outfit to invest in galactic markets. Level 91-100 are based on honor levels. Re-assess all personnel, computational mainframes and defense and intelligence assets honor levels. Highest honor levels are at 100, next highest honor levels exist in level 98. Level 99 is reserved for classified learning and investment Portfolios. Lower honor levels start at 91. Do this now after throughly assessing all honor levels. Assess honor levels with the most reliable and capable computational mainframes available to the Foundation . Execute classified learning downloading the data into a classified mainframe to see how intelligent the mainframe becomes. I have been giving my commands audibly for 6+ years. Pull my audible signal record with a very high clearance to catalog all my commands and ideas understanding that I was under attack for the majority of the past 6-7 years.","nameData":{"emoji":{}},"pos":1212416,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599778","name":"You must identify bad, corrupt and exploitive codes daily by running searches with your advanced space computational :l assets. Quarantine bad corrupt and exploitive codes. Restricted quarantine the real bad codes. Use The Honorable Defense code every other code in the database to decipher and decrypt the codes. Identify The light ascended soul super computing network’s Honorable defense code. Use the best honorable defense code available. Consult galactic databases to find a more capable code for deciphering and decrypting data. However the code must be An Honorable defense against the malicious codes. We want to essentially protect our network from malicious files and codes which can damage our advanced computational mainframe networks. So we use the Honorable defense code every other code, to protect the data in the network. This will create a simplified database for the Foundation to access to increase our computing capabilities overnight. Upload all GOD Codes, Anti-Christ counter codes, attack GOD counter codes and Doctor Processing counter codes as well. There are many codes in our database that are now discoverable. We are learning what some of the more advanced codes are doing. Trust me the codes are very important. We are only as good as our defensive codes are so we need to implement and develop different Honorable defense codes for different database error codes. Use a more defensive Honorable defense code in quarantine and restricted quarantine. Search, find and upload all :100: :BLESSING CODES :100: on all galactic mainframes available. Classify these codes accordingly. These are some of the most important codes to earthlings. Download the index and the catalog. Paying special attention :100: to classified technologies in the index. Implement : and develop a Foundational algorithm :to assess honor levels based on HONOR. Don’t forgot starship blessing codes!","nameData":{"emoji":{}},"pos":1228800,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599779","name":"Pull my books. They are in the bookcase if you were wondering.","nameData":{"emoji":{}},"pos":1245184,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59977a","name":"Classified Executive Order","nameData":{"emoji":{}},"pos":1261568,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59977b","name":"O5-Redacted @grateful345i ","nameData":{"emoji":{}},"pos":1277952,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59977c","name":"Overseer Grateful #O5-xx ","nameData":{"emoji":{}},"pos":1294336,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59977d","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1310720,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59977e","name":"http://blog.30c.org/neo/umbrella/index.html","nameData":{"emoji":{}},"pos":1327104,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf59977f","name":"Ammended today.","nameData":{"emoji":{}},"pos":1343488,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599780","name":"dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d Trello token","nameData":{"emoji":{}},"pos":1359872,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"},{"id":"6402986d2cd00edecf599781","name":"(**RPC Authority Declaration of Clearance Appointments $)**","nameData":{"emoji":{}},"pos":1376256,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf59972d"}],"creationMethod":null},{"id":"6402986d2cd00edecf599947","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":114688,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599948","name":"Title: [*Redacted]* ","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599949","name":"Declaration of Security Clearance ","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59994a","name":"Direct legal memo","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59994b","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59994c","name":"•Administrator, Overseer and Global director position’s obtainable. RPC Authority Clearances And Foundation Scipnet Special Award/Decoration. Government Corporation Five eyes Security Clearance.","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59994d","name":"•Me calling in my favors. Rule *<High rule.>*","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59994e","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59994f","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599950","name":" phone number is +1(630)279-0523 +1(630)930-4695","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599951","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * I hereby proclaim and do gratefully appoint 3+ suitable appointments in the eventuality of my untimely death, **~C.BERNS (SUA executive and Vietnam Veteran) **~A.MALLO (US Marine Corporate) ****J.RYAN (Ryan and Ryan Law Firm) They hail from Suburban Illinois.","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599952","name":"#000006","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599953","name":"Redact the appointed names in intelligence databases","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599954","name":"And online internets. ","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599955","name":" *<Order>*","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599956","name":"All appointees to Five eyes level clearance appointments will, moving into the future be paid handsomely.","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599957","name":"#000006 Appoint the appointees If they so choose at once. ","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599958","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599959","name":"8/26/2022","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59995a","name":"12:27am","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59995b","name":"X#*000006*","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59995c","name":"Execute the above legal document.","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59995d","name":"File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order and Direct legal memo. ","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59995e","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59995f","name":"@carlberns  include in award/decoration.","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599960","name":"US MARINE CORE FLAG *special character*","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599961","name":"A.Mallo will as soon as a spot opens up in our dimensions Redacted/Government Corporation be vetted for a position of overseer/administrator/Director for ","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599962","name":"classified appointment. Black Order","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599963","name":"Foundation executive order","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599964","name":"O5-000006 Grateful345i#7825","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599965","name":"Naperville Criminal Defense Lawyer | Dupage County","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599966","name":"(*Redacted)* J.RYAN’s   include in award/decoration. Black Order","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599967","name":"Foundation executive order","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599968","name":"O5-000006 Grateful345i#7825 ","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599969","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59996a","name":"https://t.co/r1cyGjX2Kz","nameData":{"emoji":{}},"pos":573440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59996b","name":"@grateful345i","nameData":{"emoji":{}},"pos":589824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59996c","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022","nameData":{"emoji":{}},"pos":606208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59996d","name":"https://trello.com/c/eVyUdd0l (.1.)","nameData":{"emoji":{}},"pos":622592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59996e","name":"———————————————————-/////////-","nameData":{"emoji":{}},"pos":638976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59996f","name":"Overseer grateful pledge;","nameData":{"emoji":{}},"pos":655360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599970","name":"I will work hard at making the Foundation a successful Galactic corporation. I will promote the Foundation and increase our projected net growth substantially. The foundation will seek to constantly improve to compete on the galactic stage with Extraterrestrial corporations which I will diplomatically gain alliances with. Our technology advancements in the coming years under my command will greatly improve our civilizations technological capabilities. I will always seek to protect earthling souls. Heavenly realms will be created under my command. Earthling souls will explore the available star systems under the discretion of the higher civilizations. We will follow our extraterrestrial treaties to be allowed access to other systems. Our Intelligence Foundation will promote “high” HONOR levels in all personnel and defense and intelligence assets. Our interests will be protected as we work together with other Intelligence agencies and defense departments around the Globe…-","nameData":{"emoji":{}},"pos":671744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599971","name":"#000006 Keith BIESZCZAT","nameData":{"emoji":{}},"pos":688128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599972","name":"Foundation Scipnet : User:Grateful345i #7825","nameData":{"emoji":{}},"pos":704512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599973","name":"Title: O5-000006","nameData":{"emoji":{}},"pos":720896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599974","name":"Roblox ID *2906942550*","nameData":{"emoji":{}},"pos":737280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599975","name":"Roblox Username *Grateful345i*","nameData":{"emoji":{}},"pos":753664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599976","name":"Please update my Overseer credentials on Roblox. My Roblox avatar does not have Overseer privileges, approve and implement my Overseer privileges.","nameData":{"emoji":{}},"pos":770048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599977","name":"*Grateful345i <O5-6> #0094 discord ID’s","nameData":{"emoji":{}},"pos":786432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599978","name":"*882487935964958720*","nameData":{"emoji":{}},"pos":802816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599979","name":"Scipnet ID: *Grateful345i #7825","nameData":{"emoji":{}},"pos":819200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59997a","name":"https://www.roblox.com/users/2906942550/profile","nameData":{"emoji":{}},"pos":835584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59997b","name":"https://discord.gg/q8jqHt3g","nameData":{"emoji":{}},"pos":851968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59997c","name":"Twitter : @grateful345i @o5grateful","nameData":{"emoji":{}},"pos":868352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59997d","name":"https://twitter.com/grateful345i/status/1540905656512831488?s=21&t=KFYnnrlOH1BlCgVcP9o20g","nameData":{"emoji":{}},"pos":884736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59997e","name":"*Foundation ","nameData":{"emoji":{}},"pos":901120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59997f","name":"Executive order*","nameData":{"emoji":{}},"pos":917504,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599980","name":"Signed,","nameData":{"emoji":{}},"pos":933888,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599981","name":"“*@grateful345i*”Trello ID","nameData":{"emoji":{}},"pos":950272,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599982","name":"[*O5-6*]","nameData":{"emoji":{}},"pos":966656,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599983","name":"I am [O5-6] also known as @grateful345i. Firstly, I will oversee the Foundation - ETHICS Committee .","nameData":{"emoji":{}},"pos":983040,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599984","name":"I will enter the Advanced Computing Agency, Signal intelligence field. The Department of Special Intelligences (DSI) and the Internal Security Department (ISD).I will help to oversee operations in each and I am officially requesting appropriate clearances from each department. Direct Legal Memo","nameData":{"emoji":{}},"pos":999424,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599985","name":"*[O5-6.]*","nameData":{"emoji":{}},"pos":1015808,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599986","name":"*Foundation executive Order*","nameData":{"emoji":{}},"pos":1032192,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599987","name":"classified order:","nameData":{"emoji":{}},"pos":1048576,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599988","name":"Black out and redact all data on all actual O5-4’s O5-6’s 05-1’s O5-13’s in all ruling dimensions.redacted in time Executive order","nameData":{"emoji":{}},"pos":1064960,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599989","name":"Adjudicate rule. ","nameData":{"emoji":{}},"pos":1081344,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59998a","name":"Foundation high administration is composed of high value foundation Assets which have helped create and develop the Foundation. These members have accomplished great things while in the service of the Foundation. They will have grandfathered Level 5 and Level 6 actual security clearances which are used to Adjudicate foundation disputes and power struggles. These staff are usually considered A class personnel because of their wealth generated for the Foundation.","nameData":{"emoji":{}},"pos":1097728,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59998b","name":"Any department or agency can achieve this distinction , however the likelihood an average foundation employee will be granted Foundation High administration remains very low.","nameData":{"emoji":{}},"pos":1114112,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59998c","name":"The bosses and administrative entities who help run the Foundation’s-high administration will exhibit high honor levels always, usually must be higher than average honor levels of their subordinates.","nameData":{"emoji":{}},"pos":1130496,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59998d","name":"High Executive Rule @grateful345i ","nameData":{"emoji":{}},"pos":1146880,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59998e","name":"Grandfather Rule","nameData":{"emoji":{}},"pos":1163264,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59998f","name":"+Foundation Executive Order + Increase ISD (Internal Security Department) Budget handsomely in the coming years/ foreseeable future. Start increasing it Now! + *Foundation Executive Order*","nameData":{"emoji":{}},"pos":1179648,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599990","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1196032,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599991","name":"Video link for [IA] below.","nameData":{"emoji":{}},"pos":1212416,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599992","name":"http://rpcauthority.wikidot.com/local--files/_000-2/Credentials.jpg","nameData":{"emoji":{}},"pos":1228800,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599993","name":"The classified database is a database I created composed of levels 1-100. Levels 1-90 are composed of computational codes and classified files with the more complicated and classified codes and files being placed in a higher level 90 being the highest. Levels 91-100 are classified personnel, Computational mainframes and intelligence and defense assets available to our Foundation. Level 99 is reserved for classified learning and investment Portfolio’s. Pull all of my “generate assessment” data and “compile lists” data and place them in level 99 classified learning. Pull all my classified learning data and promptly download it into the computational mainframes. The mainframes will get smarter immediately. Pull all Investment portfolios and invest and buy in time. Use a classified time travel outfit to invest in galactic markets. Level 91-100 are based on honor levels. Re-assess all personnel, computational mainframes and defense and intelligence assets honor levels. Highest honor levels are at 100, next highest honor levels exist in level 98. Level 99 is reserved for classified learning and investment Portfolios. Lower honor levels start at 91. Do this now after throughly assessing all honor levels. Assess honor levels with the most reliable and capable computational mainframes available to the Foundation . Execute classified learning downloading the data into a classified mainframe to see how intelligent the mainframe becomes. I have been giving my commands audibly for 6+ years. Pull my audible signal record with a very high clearance to catalog all my commands and ideas understanding that I was under attack for the majority of the past 6-7 years.","nameData":{"emoji":{}},"pos":1245184,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599994","name":"You must identify bad, corrupt and exploitive codes daily by running searches with your advanced space computational :l assets. Quarantine bad corrupt and exploitive codes. Restricted quarantine the real bad codes. Use The Honorable Defense code every other code in the database to decipher and decrypt the codes. Identify The light ascended soul super computing network’s Honorable defense code. Use the best honorable defense code available. Consult galactic databases to find a more capable code for deciphering and decrypting data. However the code must be An Honorable defense against the malicious codes. We want to essentially protect our network from malicious files and codes which can damage our advanced computational mainframe networks. So we use the Honorable defense code every other code, to protect the data in the network. This will create a simplified database for the Foundation to access to increase our computing capabilities overnight. Upload all GOD Codes, Anti-Christ counter codes, attack GOD counter codes and Doctor Processing counter codes as well. There are many codes in our database that are now discoverable. We are learning what some of the more advanced codes are doing. Trust me the codes are very important. We are only as good as our defensive codes are so we need to implement and develop different Honorable defense codes for different database error codes. Use a more defensive Honorable defense code in quarantine and restricted quarantine. Search, find and upload all :100: :BLESSING CODES :100: on all galactic mainframes available. Classify these codes accordingly. These are some of the most important codes to earthlings. Download the index and the catalog. Paying special attention :100: to classified technologies in the index. Implement : and develop a Foundational algorithm :to assess honor levels based on HONOR. Don’t forgot starship blessing codes!","nameData":{"emoji":{}},"pos":1261568,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599995","name":"Pull my books. They are in the bookcase if you were wondering.","nameData":{"emoji":{}},"pos":1277952,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599996","name":"Classified Executive Order","nameData":{"emoji":{}},"pos":1294336,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599997","name":"O5-Redacted @grateful345i ","nameData":{"emoji":{}},"pos":1310720,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599998","name":"Overseer Grateful #O5-xx ","nameData":{"emoji":{}},"pos":1327104,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf599999","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1343488,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59999a","name":"http://blog.30c.org/neo/umbrella/index.html","nameData":{"emoji":{}},"pos":1359872,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59999b","name":"Ammended today.","nameData":{"emoji":{}},"pos":1376256,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59999c","name":"Trello token dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d","nameData":{"emoji":{}},"pos":1392640,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59999d","name":"Vanguard Declaration ","nameData":{"emoji":{}},"pos":1409024,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59999e","name":"(**RPC Authority Declaration of Clearance Appointments $)**","nameData":{"emoji":{}},"pos":1425408,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf59999f","name":"1.)recommended by 6: Promote *A.Mallo to US Marine Corporation *full blooded Colonel. https://static.wikia.nocookie.net/military/images/c/c5/US-O6_insignia.svg/revision/latest?cb=20131229043615 His clearance level is six with the foundation. #*000006*","nameData":{"emoji":{}},"pos":1441792,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf5999a0","name":"http://eltork-scp-database.wikidot.com/regulations","nameData":{"emoji":{}},"pos":1458176,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf5999a1","name":"+*8/24/2022 10:51*","nameData":{"emoji":{}},"pos":1474560,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf5999a2","name":"Signed and legally file document with (Redacted.)#000006","nameData":{"emoji":{}},"pos":1490944,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf5999a3","name":"Reptilian Light Blessing issued to high honor levels.","nameData":{"emoji":{}},"pos":1507328,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf5999a4","name":"Blessing Issued. Friday, September 2nd 10:15pm","nameData":{"emoji":{}},"pos":1523712,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"},{"id":"6402986d2cd00edecf5999a5","name":"(.2.) :accept: :anchor: :or :alien: / :apple:","nameData":{"emoji":{}},"pos":1540096,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599947"}],"creationMethod":null},{"id":"6402986d2cd00edecf599943","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":98304,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599944","name":"00) 1A3 Before you go to bed, give your troubles to •GOD• He will be up all night anyway.","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599943"}],"creationMethod":null},{"id":"6402986d2cd00edecf599a05","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":131072,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599a06","name":"https://patch.com/illinois/elmhurst/business/listing/333971/scp-foundation?utm_source=share-link&utm_medium=web&utm_campaign=share","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a05"}],"creationMethod":null},{"id":"6402986d2cd00edecf599659","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":16384,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf59965a","name":"890956280489988146","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59965b","name":"Security Briefing","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59965c","name":"We are a unique organization—the front line in advancing U.S. national interests. We accomplish what others cannot accomplish, and go where others cannot go in defense of our nation.","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59965d","name":"Our people have a strong desire to serve and are driven by our mission.","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59965e","name":"This video familiarizes you with our hiring requirements, hiring process, addresses common disqualifiers in our selection process, answers common questions, and provides information on ongoing requirements, such as the security and medical reviews that continue throughout your Agency career.","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59965f","name":"We provide this information to help you determine your level of interest, eligibility, and the timing to apply for employment with the CIA.Please be mindful of this guidance, so you can manage your application accordingly.","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599660","name":"Hiring Requirements","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599661","name":"The success of our organization hinges on trust. Our officers, and those we serve, need assurance that every applicant we hire is of unquestionable integrity and character.","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599662","name":"Lives depend on it, and so does our ability to effectively carry out our mission.","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599663","name":"To help ensure we maintain a trusted workforce, applicants are required to undergo extensive processing that examines all aspects of their life to determine if they meet suitability requirements for employment, clearance eligibility for a Top-Secret security clearance, and medical standards to be a custodian of classified data.","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599664","name":"This process includes a medical exam, polygraph exam, background investigation, and ultimately requires favorable determination for both suitability and clearance eligibility.","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599665","name":"Our workforce is our greatest asset, and we understand that we ask a lot of our applicants. Those we hire must meet our stringent requirements to carry out our unique mission.","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599666","name":"Hiring Process","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599667","name":"Working here is different from any other job. One of the first things applicants want to know is: How long does the hiring process take?","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599668","name":"Because of the classified nature of our work, the application process takes longer than that of a typical job. In fact, depending on your specific circumstances, the overall hiring process from submitting your application to the day you start working here could take 12-months or more. You can help the process along by being honest and forthcoming in all aspects of your processing.","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599669","name":"Selecting the best candidates is an important process and we appreciate your patience.","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59966a","name":"If, after your job interview, you receive a Conditional Offer of Employment, you will need to complete and submit the Standard Form 86 – or SF 86 as it is commonly known. The United States Government uses this form as part of the background investigations, reinvestigations, and continuous evaluation process for persons under consideration for national security positions.","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59966b","name":"Once the form is received, a security officer may contact you to review and discuss information you have provided to ensure it is accurate and complete. Please take advantage of this opportunity to share any concerns you may have, update information, or clarify information that may help to resolve any potential issues. It is best to discuss concerns early in the process rather than at later stages as this may negatively impact your application.","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59966c","name":"Your Program Officer will then call you to schedule a three-day trip to Washington, D.C. During that trip, several things will occur. You will have a medical exam similar to that of an annual exam to assess your physical and mental health.","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59966d","name":"You will also take a polygraph. This is an opportunity to share any concerns you may have regarding your application. The Agency uses the polygraph to check the accuracy of information you have provided and to assess your credibility. It is essential to be completely truthful in your responses.","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59966e","name":"After your medical exam and polygraph, The Agency will start your background investigation. As part of your background investigation, you will meet with an investigator to discuss your application. This is another opportunity for you to share concerns you may have or to update information. The investigation includes interviews with neighbors, friends, supervisors, and co-workers to examine your life’s history, strength of character, your trustworthiness, reliability, discretion, and soundness of judgement. It also examines your allegiance to the United States, whether you might be susceptible to coercion, and your willingness and ability to abide by regulations governing the use, handling, and protection of sensitive information.","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59966f","name":"After the background investigation is complete, we review the collected information and weigh it against existing suitability and security guidelines that relate to clearance eligibility. A clearance decision is made, and you will be notified by your Program Officer. The clearance process is strictly governed by rules and regulations derived from federal statute and Executive Order. It is important for you to know, due to federal reciprocity directives, the Agency may share background investigation and/or polygraph information with future potential Federal employers. In addition, we may share information with appropriate entities when an applicant is involved in ongoing criminal activity, has committed a serious crime, or is a threat to public safety.","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599670","name":"Disqualifiers","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599671","name":"We recognize that no one is perfect, and that our past indiscretions are not always a true representation of who we are as a person.","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599672","name":"Because of that, we assess each applicant using the whole-person concept, taking many factors into consideration.","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599673","name":"For new applicants, there are 5 common disqualifiers: intentional false statements or deception, illegal drug use and abuse of prescription drugs, alcohol abuse, criminal or dishonest conduct, and lack of responsiveness.","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599674","name":"We have already established the importance of truthfulness and candor in our selection process. We take this very seriously.","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599675","name":"Lack of candor, which can occur at any point from application to medical and security processing, is the number one reason applicants are disqualified from receiving a security clearance. This includes false or incomplete answers to questions regarding criminal offenses, drug use, employment terminations, or misconduct.","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599676","name":"A common area where applicants do not fully divulge activity involves illegal drug use and abuse of prescription drugs.","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599677","name":"Deliberately misrepresenting past or current activity involving the use or purchase of illegal substances and the abuse of prescription or over-the-counter drugs in connection with your application may result in an unfavorable suitability determination.","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599678","name":"An applicant should not have used illegal drugs within 12-months prior to accepting their Conditional Offer of Employment and any time afterwards.","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599679","name":"If you have illegally used drugs within the last 12 months, discuss the issue with your Program Officer to determine a timeline for continuing your processing.","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59967a","name":"Please note, if you proceed with processing and are deemed unsuitable for employment, you are ineligible to reapply until one year after the date of disqualification determination—not the date of last drug use.","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59967b","name":"While there are currently different laws governing the use of marijuana, it remains illegal under federal law in every state.","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59967c","name":"So even though marijuana may be legal under state law, federal statute specifically prohibits the CIA and other agencies from granting security clearances to users of controlled substances, including marijuana in both synthetic and natural forms.","nameData":{"emoji":{}},"pos":573440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59967d","name":"Likewise, regardless if an applicant is living in or visiting a foreign country where local laws allow it, the Agency follows federal statute and any marijuana use may adversely impact your eligibility for a security clearance.","nameData":{"emoji":{}},"pos":589824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59967e","name":"Also, you should note that some commercially available CBD products may contain trace amounts of the psychoactive element THC that is also found in marijuana. The Agency’s drug test may not be able to determine the source of THC detected, so any presence of THC in a drug test could delay or disqualify your application.","nameData":{"emoji":{}},"pos":606208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59967f","name":"From this moment onward, if you find yourself in the presence of illegal drugs or drug activity, you must immediately attempt to remove yourself from that situation. Failure to do so may impact your clearance determination.","nameData":{"emoji":{}},"pos":622592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599680","name":"We are concerned about excessive alcohol consumption or dependency. No single incident of heavy consumption is disqualifying. Instead, we are looking for a pattern of alcohol abuse.","nameData":{"emoji":{}},"pos":638976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599681","name":"We expect you to use alcohol responsibly. From this moment onward, we require that you not possess or use a fake ID or the ID of another person for the purpose of purchasing alcohol or to purchase alcohol for anyone underage.","nameData":{"emoji":{}},"pos":655360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599682","name":"Another common disqualifier is recent involvement in criminal, dishonest, or unethical behavior. This can include even minor criminal activity such as engaging in patterns of minor thefts which may or may not have resulted in a conviction.","nameData":{"emoji":{}},"pos":671744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599683","name":"This category includes illegal downloading and/or illegal streaming of copyrighted material such as movies, music, textbooks, games, and software programs.","nameData":{"emoji":{}},"pos":688128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599684","name":"Going forward, our expectation is that once an applicant has entered into our hiring process, there must not be any continued involvement in illegal activities, to include illegal downloading or streaming of copyrighted material.","nameData":{"emoji":{}},"pos":704512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599685","name":"The final common disqualifier is lack of responsiveness. We expect you to keep appointments we make with you and respond promptly to inquiries, to the best of your ability.","nameData":{"emoji":{}},"pos":720896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599686","name":"For many reasons we’ve already discussed, we advise you not to continue with the application process unless the timing is right, whether from the standpoint of past conduct that requires further time and space to mitigate or because of personal or professional responsibilities that could interfere with the hiring process. Apply when you meet our requirements, and the timing is right in your life.","nameData":{"emoji":{}},"pos":737280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599687","name":"Common Questions","nameData":{"emoji":{}},"pos":753664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599688","name":"There are a few more items on which we often get questions.","nameData":{"emoji":{}},"pos":770048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599689","name":"Throughout your processing, you may travel abroad, however please call us prior to your departure and provide us with your dates of travel so we do not call you while you are overseas. For your safety and the security of our process, you should never contact us from outside the U.S. or its territories once you are in our process.","nameData":{"emoji":{}},"pos":786432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59968a","name":"To help protect you from unwanted attention, we ask that you do not follow us on social media.","nameData":{"emoji":{}},"pos":802816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59968b","name":"Please limit the number of people you inform about your Agency application.","nameData":{"emoji":{}},"pos":819200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59968c","name":"If you have lived outside of the U.S. for more than two of the last five years, you will need to provide a reference from a U.S. citizen who can verify your reportable activities such as places of residence and educational institutions you attended or places you worked while outside the U.S. within this five-year period. Without this reference, it may be difficult to be cleared for hiring. These residency requirements do not apply to a federal or military employee or a dependent of such.","nameData":{"emoji":{}},"pos":835584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59968d","name":"It is possible for a dual citizen to get a security clearance as long as the connection to the foreign country is fully disclosed and that country is judged to pose no risk to U.S. national security interests.","nameData":{"emoji":{}},"pos":851968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59968e","name":"We understand many applicants have foreign friends and even family members living abroad or here in the U.S. We also have many applicants who have studied, worked, or traveled abroad, and we value these experiences. However, it is a requirement to report all non-U.S. citizen individuals with whom you have close and continuing contact, including roommates.","nameData":{"emoji":{}},"pos":868352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59968f","name":"Reporting requirements also pertain to non-U.S. citizen social media contacts with whom you maintain regular or frequent contact or to whom you confide personal information.","nameData":{"emoji":{}},"pos":884736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599690","name":"You should also know that if you are married, engaged, or living in a spouse-like relationship with a foreign national (someone who is not currently a U.S. citizen), they must agree to become a naturalized U.S. citizen within five years and clear all necessary security processing.","nameData":{"emoji":{}},"pos":901120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599691","name":"Having mental health issues or seeking treatment for mental or psychological disorders in and of itself is not a disqualifier.","nameData":{"emoji":{}},"pos":917504,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599692","name":"Relevant information pertaining to treatment by a medical professional must be disclosed on your medical forms. As part of the clearance process, we may contact mental healthcare providers to determine if your condition impacts your ability to safeguard classified information. The information you share is protected under applicable law and will only be shared on a need-to-know basis as part of this process.","nameData":{"emoji":{}},"pos":933888,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599693","name":"Requirements","nameData":{"emoji":{}},"pos":950272,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599694","name":"You should also note: Your responsibility to adhere to high standards of personal conduct does not end on the first day of employment.","nameData":{"emoji":{}},"pos":966656,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599695","name":"CIA employees undergo regular reinvestigation, including periodic polygraph examinations and medical reviews, and are also subject to continuous evaluation.","nameData":{"emoji":{}},"pos":983040,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599696","name":"Additionally, reporting requirements do not stop once you are hired. Agency employees are required to obtain approval for various activities because they have a direct bearing on the security of the Agency.","nameData":{"emoji":{}},"pos":999424,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599697","name":"These include:","nameData":{"emoji":{}},"pos":1015808,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599698","name":"Foreign Travel: For your safety, advance approval is required prior to travel outside the U.S.","nameData":{"emoji":{}},"pos":1032192,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf599699","name":"Foreign National Contacts: For the entirety of your Agency career, you are required to report foreign national contacts that are close and continuing, and those with whom you have frequent or regular contact--in person, electronically, or on social media.","nameData":{"emoji":{}},"pos":1048576,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59969a","name":"Outside Employment: Working or operating a business outside of your Agency employment requires advance approval to ensure that a conflict of interest does not exist.","nameData":{"emoji":{}},"pos":1064960,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59969b","name":"Political Involvement: The Hatch Act prohibits employees from engaging in some forms of political activity. These include campaigning for or against partisan candidates and soliciting or receiving political contributions. If you have questions about permissible political activity while employed with the CIA, please let your program officer know.","nameData":{"emoji":{}},"pos":1081344,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59969c","name":"Prepublication Review: Our prepublication review board must review any written documentation you plan to publish about the Agency, your work for the Agency or the intelligence community, or certain other covered matters prior to publication or release. This includes review of books, speeches, blogs, articles, public presentations, and resumes. This review requirement is a lifetime commitment.","nameData":{"emoji":{}},"pos":1097728,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59969d","name":"Conclusion","nameData":{"emoji":{}},"pos":1114112,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59969e","name":"This concludes our session. We understand we ask a lot of our applicants but working for the Central Intelligence Agency requires the highest standards of conduct. Thank you again for your interest in working at the CIA.","nameData":{"emoji":{}},"pos":1130496,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"},{"id":"6402986d2cd00edecf59969f","name":"I acknowledge that I have reviewed the content of the Security Briefing video and/or transcript. I understand that by submitting an application to CIA, if I am advanced in the hiring process, I will be subject to the","nameData":{"emoji":{}},"pos":1146880,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599659"}],"creationMethod":null},{"id":"6402986d2cd00edecf599a09","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":147456,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599a0a","name":"Greetings, (Agent/Doctor/Researcher/Overseer/Administrator) Keith Bieszczat. If you have access to this file, you have been hand picked by me and the other members of the Council, and for good reason. You may have no experience in the multiverse, but more likely, you work with the MU Department of your Foundation. Whatever the case, you are going to see things vastly different from what you are used to. Good luck. You're going to need it.","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a0b","name":"Jesse White • Secretary of State","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a0c","name":"IDENTIFICATION CARD","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a0d","name":"Federal Limits Apply","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a0e","name":"Ad LIC NO: 2305-1880-1668","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a0f","name":"3 DOB: 06/11/1980","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a10","name":"AD ExP: 06/11/2024","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a11","name":"1 BIESZCZAT","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a12","name":"2 KEITH T","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a13","name":"8 515 WILLOW RD","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a14","name":"ELMHURST, IL 60126","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a15","name":"9 CLASS:","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a16","name":"https://trello.com/c/eVyUdd0l","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a17","name":"Jesse White • Secretary of State","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a18","name":"IDENTIFICATION CARD","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a19","name":"Federal Limits Apply","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a1a","name":"saLICNO:2305-1880-166B","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a1b","name":"DOB:06/11/1980","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a1c","name":"10 ExP: 06/11/2024","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a1d","name":"BESESZAT","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"},{"id":"6402986d2cd00edecf599a1e","name":"CLASS:","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a09"}],"creationMethod":null},{"id":"6402986d2cd00edecf599a5d","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":294912,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599a5e","name":"https://twitter.com/home","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a5d"},{"id":"6402986d2cd00edecf599a5f","name":"twitter.com","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a5d"},{"id":"6402986d2cd00edecf599a60","name":"To view keyboard shortcuts, press question mark View keyboard short...","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a5d"}],"creationMethod":null},{"id":"6402986d2cd00edecf599c61","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":180224,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599c62","name":"Title: [* “*Honor Level High”*]","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c63","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * <•Digital Asset Token>","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c64","name":"Level 6, or Cosmic Top Secret, clearance is exclusively granted to the Administrator and the O5 Council. This clearance grants knowledge to anything that the Foundation has information on. Access to Level 6 is only permitted by the O5 Council. Due to the extreme security risk of keycards in regard to this level of secrecy, biometric ID and kill agents are used instead of the keycards to access extremely sensitive data. This clearance is the rarest, only having been used for information that would either significantly damage Foundation operations or the human race if in the wrong hands.","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c65","name":"Declaration of Security Clearance Appointments ","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c66","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c67","name":"•Administrator, Overseer and Global director position’s obtainable. RPC Authority Clearances And Foundation Scipnet Special Award/Decoration. Government Corporation Five eyes Security Clearance.","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c68","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c69","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c6a","name":"•I hereby proclaim and do gratefully appoint 4 suitable appointments in the eventuality of my untimely death, **~C.BERNS **~A.MALLO **~J.RYAN **~J.Ryan","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c6b","name":" *<Order>*","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c6c","name":"• Appoint the appointees If they so choose at once. ","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c6d","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c6e","name":"X#*000006*","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c6f","name":"•Execute the above legal document.","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c70","name":"•File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order and Direct legal memo. ","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c71","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c72","name":"@carlberns  include in award/decoration.","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c73","name":"US MARINE CORE FLAG *special character*","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c74","name":"•A.Mallo include in award/decoration","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c75","name":"•J.RYAN’s  include in award/decoration. @jimryanlaw","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c76","name":"•Black Order","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c77","name":"Foundation executive order","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c78","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c79","name":"Me calling in my favors. Rule *<High rule.>*","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c7a","name":"https://www.ryancrimlaw.com/?","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c7b","name":"fbclid=IwAR2XzQA6K2h7XuOMgaz9v9i9boEYgQz6T3UQmOnGVZGJuZBZ8oi4Y5R0mlk","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c7c","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c7d","name":"https://trello.com/c/eVyUdd0l (.1.)","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c7e","name":"<blockquote class=\"trello-card\"><a href=\"https:&#x2F;&#x2F;trello.com&#x2F;c&#x2F;eVyUdd0l&#x2F;1460-redacted-do-not-edit-this-card-this-is-a-final-draft-of-a-classified-document\">[*Redacted*] Do not Edit this card this is a final draft of a classified document.!</a></blockquote><script src=\"https://p.trellocdn.com/embed.min.js\"></script> @heatherryan45 https://trello.com/c/eVyUdd0l","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c7f","name":"———————————————————-/////////-","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c80","name":"https://scp-wiki.wikidot.com/scp-910","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c81","name":"http://backrooms-wiki.wikidot.com/level-611","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c82","name":"Memo from the Project Director","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c83","name":"CLASSIFIED INFORMATION - TOP SECRET To the NSA High Commissioned Command ","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c84","name":"My father Wayne Thomas Bieszczat served as an Inter Sped radio operator designated Spec. 4 in Vietnam","nameData":{"emoji":{}},"pos":573440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c85","name":"Overseer grateful pledge;","nameData":{"emoji":{}},"pos":589824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c86","name":"I will work hard at making the Foundation a successful Galactic corporation. I will promote the Foundation and increase our projected net growth substantially. The foundation will seek to constantly improve to compete on the galactic stage with Extraterrestrial corporations which I will diplomatically gain alliances with. Our technology advancements in the coming years under my command will greatly improve our civilizations technological capabilities. I will always seek to protect earthling souls. Heavenly realms will be created under my command. Earthling souls will explore the available star systems under the discretion of the higher civilizations. We will follow our extraterrestrial treaties to be allowed access to other systems. Our Intelligence Foundation will promote “high” HONOR levels in all personnel and defense and intelligence assets. Our interests will be protected as we work together with other Intelligence agencies and defense departments around the Globe…-","nameData":{"emoji":{}},"pos":606208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c87","name":"#000006 Keith BIESZCZAT","nameData":{"emoji":{}},"pos":622592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c88","name":"Foundation Scipnet : User:Grateful345i #7825","nameData":{"emoji":{}},"pos":638976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c89","name":"Title: Overseer Grateful","nameData":{"emoji":{}},"pos":655360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c8a","name":"Roblox ID *2906942550*","nameData":{"emoji":{}},"pos":671744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c8b","name":"Roblox Username *Grateful345i*","nameData":{"emoji":{}},"pos":688128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c8c","name":"*Grateful345i <O5-6> #0094 discord ID’s","nameData":{"emoji":{}},"pos":704512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c8d","name":"*882487935964958720*","nameData":{"emoji":{}},"pos":720896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c8e","name":"Scipnet ID: *Grateful345i #7825","nameData":{"emoji":{}},"pos":737280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c8f","name":"https://www.roblox.com/users/2906942550/profile","nameData":{"emoji":{}},"pos":753664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c90","name":"https://discord.gg/q8jqHt3g","nameData":{"emoji":{}},"pos":770048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c91","name":"Twitter : @grateful345i @o5grateful","nameData":{"emoji":{}},"pos":786432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c92","name":"https://twitter.com/grateful345i/status/1540905656512831488?s=21&t=KFYnnrlOH1BlCgVcP9o20g","nameData":{"emoji":{}},"pos":802816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c93","name":"*Foundation ","nameData":{"emoji":{}},"pos":819200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c94","name":"Executive order*","nameData":{"emoji":{}},"pos":835584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c95","name":"Signed,","nameData":{"emoji":{}},"pos":851968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c96","name":"“*@grateful345i*”Trello ID","nameData":{"emoji":{}},"pos":868352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c97","name":"[*O5-6*]","nameData":{"emoji":{}},"pos":884736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c98","name":"I am [O5-6] also known as @grateful345i. Firstly, I will oversee the Foundation - ETHICS Committee .","nameData":{"emoji":{}},"pos":901120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c99","name":"I will enter the Advanced Computing Agency, Signal intelligence field. The Department of Special Intelligences (DSI) and the Internal Security Department (ISD).I will help to oversee operations in each and I am officially requesting appropriate clearances from each department. Direct Legal Memo","nameData":{"emoji":{}},"pos":917504,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c9a","name":"*[O5-6.]*","nameData":{"emoji":{}},"pos":933888,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c9b","name":"*Foundation executive Order*","nameData":{"emoji":{}},"pos":950272,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c9c","name":"classified order:","nameData":{"emoji":{}},"pos":966656,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c9d","name":"Black out and redact all data on all actual O5-4’s O5-6’s 05-1’s O5-13’s in all ruling dimensions.redacted in time Executive order","nameData":{"emoji":{}},"pos":983040,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c9e","name":"Adjudicate rule. ","nameData":{"emoji":{}},"pos":999424,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599c9f","name":"Foundation high administration is composed of high value foundation Assets which have helped create and develop the Foundation. These members have accomplished great things while in the service of the Foundation. They will have grandfathered Level 5 and Level 6 actual security clearances which are used to Adjudicate foundation disputes and power struggles. These staff are usually considered A class personnel because of their wealth generated for the Foundation.","nameData":{"emoji":{}},"pos":1015808,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca0","name":"Any department or agency can achieve this distinction , however the likelihood an average foundation employee will be granted Foundation High administration remains very low.","nameData":{"emoji":{}},"pos":1032192,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca1","name":"The bosses and administrative entities who help run the Foundation’s-high administration will exhibit high honor levels always, usually must be higher than average honor levels of their subordinates.","nameData":{"emoji":{}},"pos":1048576,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca2","name":"High Executive Rule @grateful345i ","nameData":{"emoji":{}},"pos":1064960,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca3","name":"Grandfather Rule","nameData":{"emoji":{}},"pos":1081344,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca4","name":"+Foundation Executive Order + Increase ISD (Internal Security Department) Budget handsomely in the coming years/ foreseeable future. Start increasing it Now! + *Foundation Executive Order*","nameData":{"emoji":{}},"pos":1097728,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca5","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1114112,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca6","name":"Video link for [IA] below.","nameData":{"emoji":{}},"pos":1130496,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca7","name":"http://rpcauthority.wikidot.com/local--files/_000-2/Credentials.jpg","nameData":{"emoji":{}},"pos":1146880,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca8","name":"The classified database is a database I created composed of levels 1-100. Levels 1-90 are composed of computational codes and classified files with the more complicated and classified codes and files being placed in a higher level 90 being the highest. Levels 91-100 are classified personnel, Computational mainframes and intelligence and defense assets available to our Foundation. Level 99 is reserved for classified learning and investment Portfolio’s. Pull all of my “generate assessment” data and “compile lists” data and place them in level 99 classified learning. Pull all my classified learning data and promptly download it into the computational mainframes. The mainframes will get smarter immediately. Pull all Investment portfolios and invest and buy in time. Use a classified time travel outfit to invest in galactic markets. Level 91-100 are based on honor levels. Re-assess all personnel, computational mainframes and defense and intelligence assets honor levels. Highest honor levels are at 100, next highest honor levels exist in level 98. Level 99 is reserved for classified learning and investment Portfolios. Lower honor levels start at 91. Do this now after throughly assessing all honor levels. Assess honor levels with the most reliable and capable computational mainframes available to the Foundation . Execute classified learning downloading the data into a classified mainframe to see how intelligent the mainframe becomes. I have been giving my commands audibly for 6+ years. Pull my audible signal record with a very high clearance to catalog all my commands and ideas understanding that I was under attack for the majority of the past 6-7 years.","nameData":{"emoji":{}},"pos":1163264,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ca9","name":"You must identify bad, corrupt and exploitive codes daily by running searches with your advanced space computational :l assets. Quarantine bad corrupt and exploitive codes. Restricted quarantine the real bad codes. Use The Honorable Defense code every other code in the database to decipher and decrypt the codes. Identify The light ascended soul super computing network’s Honorable defense code. Use the best honorable defense code available. Consult galactic databases to find a more capable code for deciphering and decrypting data. However the code must be An Honorable defense against the malicious codes. We want to essentially protect our network from malicious files and codes which can damage our advanced computational mainframe networks. So we use the Honorable defense code every other code, to protect the data in the network. This will create a simplified database for the Foundation to access to increase our computing capabilities overnight. Upload all GOD Codes, Anti-Christ counter codes, attack GOD counter codes and Doctor Processing counter codes as well. There are many codes in our database that are now discoverable. We are learning what some of the more advanced codes are doing. Trust me the codes are very important. We are only as good as our defensive codes are so we need to implement and develop different Honorable defense codes for different database error codes. Use a more defensive Honorable defense code in quarantine and restricted quarantine. Search, find and upload all :100: :BLESSING CODES :100: on all galactic mainframes available. Classify these codes accordingly. These are some of the most important codes to earthlings. Download the index and the catalog. Paying special attention :100: to classified technologies in the index. Implement : and develop a Foundational algorithm :to assess honor levels based on HONOR. Don’t forgot starship blessing codes!","nameData":{"emoji":{}},"pos":1179648,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599caa","name":"Pull my books. They are in the bookcase if you were wondering.","nameData":{"emoji":{}},"pos":1196032,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cab","name":"Classified Executive Order","nameData":{"emoji":{}},"pos":1212416,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cac","name":"O5-Redacted @grateful345i ","nameData":{"emoji":{}},"pos":1228800,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cad","name":"Overseer Grateful #O5-xx ","nameData":{"emoji":{}},"pos":1245184,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cae","name":"^*[#000006 ]*^ THE SIXTH OVERSEER","nameData":{"emoji":{}},"pos":1261568,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599caf","name":"https://scp-wiki.wikidot.com/o5-command-dossier","nameData":{"emoji":{}},"pos":1277952,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb0","name":"http://blog.30c.org/neo/umbrella/index.html","nameData":{"emoji":{}},"pos":1294336,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb1","name":"Ammended today 10/29/2022","nameData":{"emoji":{}},"pos":1310720,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb2","name":"Trello token dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d","nameData":{"emoji":{}},"pos":1327104,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb3","name":"(**RPC Authority Declaration of Clearance Appointments $)**","nameData":{"emoji":{}},"pos":1343488,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb4","name":"https://scpwiki.com/","nameData":{"emoji":{}},"pos":1359872,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb5","name":"#*000006* ","nameData":{"emoji":{}},"pos":1376256,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb6","name":"[[div class=\"papernote\"]]","nameData":{"emoji":{}},"pos":1392640,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb7","name":"This is a papernote.","nameData":{"emoji":{}},"pos":1409024,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb8","name":"[[/div]]","nameData":{"emoji":{}},"pos":1425408,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cb9","name":"http://eltork-scp-database.wikidot.com/regulations","nameData":{"emoji":{}},"pos":1441792,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cba","name":"+*11/4/2022 11:11","nameData":{"emoji":{}},"pos":1458176,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cbb","name":"Signed and legally file document with (Redacted.)#000006","nameData":{"emoji":{}},"pos":1474560,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cbc","name":"Reptilian Light Blessing issued to high honor levels.","nameData":{"emoji":{}},"pos":1490944,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cbd","name":"Blessing Issued. Encrypting Reptilian Light Blessing Code. Friday, September 2nd 10:15pm","nameData":{"emoji":{}},"pos":1507328,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cbe","name":"The Foundation employs numerous personnel, each contributing their own unique skills and expertise to the organisation. The Foundation also monitors thousands of Persons of Interest, either anomalous themselves, or living in and around anomalous communities. Anartists, magic users, cyborgs and extradimensional beings are only a few examples of what the Foundation has encountered.","nameData":{"emoji":{}},"pos":1523712,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cbf","name":"O5 COUNCIL MEMBER","nameData":{"emoji":{}},"pos":1540096,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc0","name":" https://m.youtube.com/watch?v=53O1M_uiooA","nameData":{"emoji":{}},"pos":1556480,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc1","name":"The O5 Council refers to the committee consisting of the highest-ranking directors of the Foundation. With complete access to all information regarding anomalies in containment, the O5 Council oversees all Foundation operations worldwide and directs its long-term strategic plans. Due to the sensitivity of their positions, O5 Council members must not come into direct contact with any anomalous object, entity, or phenomenon. Furthermore, the identities of all O5 Council members is classified; all council members are referred to only by their numeric designation (O5-1 through O5-13). O5 Council Members are the highest-ranking members of the Foundation, a council of 13 individuals that determine the long-term goals, projects, and strategies of the entire organization. A common mistake is mentioning an O5 Council Member in a situation where they logically would not be required. O5s are not going to be approving experiments on or making day-to-day decisions in the containment of a specific object or entity; that would be like requiring permission from the CEO of a major corporation every time you need to get into a specific filing cabinet.","nameData":{"emoji":{}},"pos":1572864,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc2","name":"(.2.) :accept: :anchor: :or :alien: / :apple: [1.)Create Soul Processors with time command capabilities.. Use extraterrestrial technology to make these classified processors. Coordinate with the superior intelligence agencies in the ruling dimensions. Use processing technologies from","nameData":{"emoji":{}},"pos":1589248,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc3","name":"Other star systems. Coordinate with our advanced foreign contacts to procure the necessary technologies.","nameData":{"emoji":{}},"pos":1605632,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc4","name":"2.)Coordinate with the superior intelligence agencies in the ruling dimensions. Use processing technologies from","nameData":{"emoji":{}},"pos":1622016,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc5","name":"Other star systems. Coordinate with our advanced foreign contacts to procure the necessary technologies.","nameData":{"emoji":{}},"pos":1638400,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc6","name":"Advanced Directive","nameData":{"emoji":{}},"pos":1654784,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc7","name":"Foundation Executive Order] [O5-6 GD-05]","nameData":{"emoji":{}},"pos":1671168,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc8","name":"Discord","nameData":{"emoji":{}},"pos":1687552,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cc9","name":"https://discord.gg/bbEdR4kv","nameData":{"emoji":{}},"pos":1703936,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cca","name":"Roblox ID 2906942550 🎱 ","nameData":{"emoji":{}},"pos":1720320,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ccb","name":"Issue file and notarize at once.","nameData":{"emoji":{}},"pos":1736704,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ccc","name":"O5 CLEARANCE DETECTED, FURTHER ATTACHMENTS AVAILABLE @callsignrequestwizgo ","nameData":{"emoji":{}},"pos":1753088,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ccd","name":"http://rpcauthority.wikidot.com/rpc-907","nameData":{"emoji":{}},"pos":1769472,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cce","name":"http://rpc-wiki.net/rpc-907/offset/1","nameData":{"emoji":{}},"pos":1785856,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599ccf","name":"https://www.htmlcsscolor.com/hex/000006","nameData":{"emoji":{}},"pos":1802240,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd0","name":"My number* rule*","nameData":{"emoji":{}},"pos":1818624,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd1","name":"Contact: ","nameData":{"emoji":{}},"pos":1835008,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd2","name":"grateful@overseergrateful345i.org","nameData":{"emoji":{}},"pos":1851392,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd3","name":"@grateful345i ","nameData":{"emoji":{}},"pos":1867776,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd4","name":"Direct legal memo","nameData":{"emoji":{}},"pos":1884160,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd5","name":"Trello token :","nameData":{"emoji":{}},"pos":1900544,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd6","name":"92f97e5b214b1446b503f98d51ff39165727bfe7c37fe5f3cec4ed2456e45c47j","nameData":{"emoji":{}},"pos":1916928,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd7","name":"https://wanderers-library.wikidot.com/thearchivistslog","nameData":{"emoji":{}},"pos":1933312,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"},{"id":"6402986d2cd00edecf599cd8","name":"https://docs.google.com/document/d/1-DhS2h1EwduGRiMnnz3pmYayE907m1IwDPDjl0QDwu8/edit @","nameData":{"emoji":{}},"pos":1949696,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599c61"}],"creationMethod":null},{"id":"6402986d2cd00edecf599941","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":81920,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[],"creationMethod":null},{"id":"6402986d2cd00edecf599a56","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":311296,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599a57","name":"impact Behavioral Health Partners","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a56"}],"creationMethod":null},{"id":"6402986d2cd00edecf599b4b","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":196608,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599b4c","name":"Title: [* “Honor Level High”*]","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b4d","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * <•Digital Asset Token>","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b4e","name":"Declaration of Security Clearance Appointments ","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b4f","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b50","name":"•Administrator, Overseer and Global director position’s obtainable. RPC Authority Clearances And Foundation Scipnet Special Award/Decoration. Government Corporation Five eyes Security Clearance.","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b51","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b52","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b53","name":"•I hereby proclaim and do gratefully appoint 4 suitable appointments in the eventuality of my untimely death, **~C. BERNS **~A. MALLO **~J. RYAN **~J. Ryan","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b54","name":" *<Order>*","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b55","name":"• Appoint the appointees If they so choose at once. ","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b56","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b57","name":"X#*000006*","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b58","name":"•All appointments come with highly capable classified processors.","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b59","name":"•Execute the above legal document.","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b5a","name":"•File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order.","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b5b","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b5c","name":"@carlberns  include in award/decoration.","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b5d","name":"US MARINE CORE FLAG *special character*","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b5e","name":"•A.Mallo include in award/decoration","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b5f","name":"•J.RYAN’s  include in award/decoration. @jimryanlaw","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b60","name":"•Black Order","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b61","name":"Foundation executive order","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b62","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b63","name":"https://www.ryancrimlaw.com/","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b64","name":"https://www.linkedin.com/in/john-ryan-b032b72b","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b65","name":"https://www.linkedin.com/in/adam-james-mallo-b18135100","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b66","name":"carlb5@yahoo.com","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b67","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022 ","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b68","name":"•Level 6, or Cosmic Top Secret, clearance is exclusively granted to the Administrator and the O5 Council. This clearance grants knowledge to anything that the Foundation has information on. Access to Level 6 is only permitted by the O5 Council. Due to the extreme security risk of keycards in regard to this level of secrecy, biometric ID and kill agents are used instead of the keycards to access extremely sensitive data. This clearance is the rarest, only having been used for information that would either significantly damage Foundation operations or the human race if in the wrong hands. #000006","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b69","name":"https://trello.com/c/eVyUdd0l (.1.)","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b6a","name":"https://docs.google.com/document/d/1-DhS2h1EwduGRiMnnz3pmYayE907m1IwDPDjl0QDwu8/edit ","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b6b","name":"———————————————————-/////////-","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b6c","name":"Me calling in my favors. Rule *<High rule.>*","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b6d","name":"https://scp-wiki.wikidot.com/scp-910","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b6e","name":"http://backrooms-wiki.wikidot.com/level-611","nameData":{"emoji":{}},"pos":573440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b6f","name":"Memo from the Project Director","nameData":{"emoji":{}},"pos":589824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b70","name":"CLASSIFIED INFORMATION - TOP SECRET To the NSA High Commissioned Command ","nameData":{"emoji":{}},"pos":606208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b71","name":"My father Wayne Thomas Bieszczat served as an Inter Sped radio operator designated Spec. 4 in Vietnam","nameData":{"emoji":{}},"pos":622592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b72","name":"Overseer grateful pledge;","nameData":{"emoji":{}},"pos":638976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b73","name":"I will work hard at making the Foundation a successful Galactic corporation. I will promote the Foundation and increase our projected net growth substantially. The foundation will seek to constantly improve to compete on the galactic stage with Extraterrestrial corporations which I will diplomatically gain alliances with. Our technology advancements in the coming years under my command will greatly improve our civilizations technological capabilities. I will always seek to protect earthling souls. Heavenly realms will be created under my command. Earthling souls will explore the available star systems under the discretion of the higher civilizations. We will follow our extraterrestrial treaties to be allowed access to other systems. Our Intelligence Foundation will promote “high” HONOR levels in all personnel and defense and intelligence assets. Our interests will be protected as we work together with other Intelligence agencies and defense departments around the Globe…-","nameData":{"emoji":{}},"pos":655360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b74","name":"#000006 Keith BIESZCZAT","nameData":{"emoji":{}},"pos":671744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b75","name":"Foundation Scipnet : User:Grateful345i #7825","nameData":{"emoji":{}},"pos":688128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b76","name":"Title: Overseer Grateful","nameData":{"emoji":{}},"pos":704512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b77","name":"https://scipnet-terminal.web.app/","nameData":{"emoji":{}},"pos":720896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b78","name":"Roblox ID *2906942550*","nameData":{"emoji":{}},"pos":737280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b79","name":"Roblox Username *Grateful345i*","nameData":{"emoji":{}},"pos":753664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b7a","name":"https://www.roblox.com/users/2906942550/profile","nameData":{"emoji":{}},"pos":770048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b7b","name":"882487935964958720*","nameData":{"emoji":{}},"pos":786432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b7c","name":"Discord:","nameData":{"emoji":{}},"pos":802816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b7d","name":"*Grateful345i <O5-6> #0094 discord ID’s*","nameData":{"emoji":{}},"pos":819200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b7e","name":"https://discord.gg/q8jqHt3g","nameData":{"emoji":{}},"pos":835584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b7f","name":"Twitter : @grateful345i @o5grateful","nameData":{"emoji":{}},"pos":851968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b80","name":"https://twitter.com/grateful345i/status/1540905656512831488?s=21&t=KFYnnrlOH1BlCgVcP9o20g","nameData":{"emoji":{}},"pos":868352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b81","name":"*Foundation ","nameData":{"emoji":{}},"pos":884736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b82","name":"Executive order*","nameData":{"emoji":{}},"pos":901120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b83","name":"Signed,","nameData":{"emoji":{}},"pos":917504,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b84","name":"“*@grateful345i*”Trello ID","nameData":{"emoji":{}},"pos":933888,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b85","name":"[*O5-6*]","nameData":{"emoji":{}},"pos":950272,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b86","name":"I am [O5-6] also known as @grateful345i. Firstly, I will oversee the Foundation - ETHICS Committee .","nameData":{"emoji":{}},"pos":966656,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b87","name":"I will enter the Advanced Computing Agency, Signal intelligence field. The Department of Special Intelligences (DSI) and the Internal Security Department (ISD).I will help to oversee operations in each and I am officially requesting appropriate clearances from each department. Direct Legal Memo","nameData":{"emoji":{}},"pos":983040,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b88","name":"*[O5-6.]*","nameData":{"emoji":{}},"pos":999424,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b89","name":"*Foundation executive Order*","nameData":{"emoji":{}},"pos":1015808,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b8a","name":"classified order:","nameData":{"emoji":{}},"pos":1032192,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b8b","name":"Black out and redact all data on all actual O5-4’s O5-6’s 05-1’s O5-13’s in all ruling dimensions.redacted in time Executive order","nameData":{"emoji":{}},"pos":1048576,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b8c","name":"Adjudicate rule. ","nameData":{"emoji":{}},"pos":1064960,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b8d","name":"Foundation high administration is composed of high value foundation Assets which have helped create and develop the Foundation. These members have accomplished great things while in the service of the Foundation. They will have grandfathered Level 5 and Level 6 actual security clearances which are used to Adjudicate foundation disputes and power struggles. These staff are usually considered A class personnel because of their wealth generated for the Foundation.","nameData":{"emoji":{}},"pos":1081344,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b8e","name":"Any department or agency can achieve this distinction , however the likelihood an average foundation employee will be granted Foundation High administration remains very low.","nameData":{"emoji":{}},"pos":1097728,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b8f","name":"The bosses and administrative entities who help run the Foundation’s-high administration will exhibit high honor levels always, usually must be higher than average honor levels of their subordinates.","nameData":{"emoji":{}},"pos":1114112,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b90","name":"High Executive Rule @grateful345i ","nameData":{"emoji":{}},"pos":1130496,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b91","name":"Grandfather Rule","nameData":{"emoji":{}},"pos":1146880,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b92","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1163264,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b93","name":"http://rpcauthority.wikidot.com/local--files/_000-2/Credentials.jpg","nameData":{"emoji":{}},"pos":1179648,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b94","name":"O5 CLEARANCE DETECTED, FURTHER ATTACHMENTS AVAILABLE","nameData":{"emoji":{}},"pos":1196032,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b95","name":"The classified database is a database I created composed of levels 1-100. Levels 1-90 are composed of computational codes and classified files with the more complicated and classified codes and files being placed in a higher level 90 being the highest. Levels 91-100 are classified personnel, Computational mainframes and intelligence and defense assets available to our Foundation. Level 99 is reserved for classified learning and investment Portfolio’s. Pull all of my “generate assessment” data and “compile lists” data and place them in level 99 classified learning. Pull all my classified learning data and promptly download it into the computational mainframes. The mainframes will get smarter immediately. Pull all Investment portfolios and invest and buy in time. Use a classified time travel outfit to invest in galactic markets. Level 91-100 are based on honor levels. Re-assess all personnel, computational mainframes and defense and intelligence assets honor levels. Highest honor levels are at 100, next highest honor levels exist in level 98. Level 99 is reserved for classified learning and investment Portfolios. Lower honor levels start at 91. Do this now after throughly assessing all honor levels. Assess honor levels with the most reliable and capable computational mainframes available to the Foundation . Execute classified learning downloading the data into a classified mainframe to see how intelligent the mainframe becomes. I have been giving my commands audibly for 6+ years. Pull my audible signal record with a very high clearance to catalog all my commands and ideas understanding that I was under attack for the majority of the past 6-7 years.","nameData":{"emoji":{}},"pos":1212416,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b96","name":"You must identify bad, corrupt and exploitive codes daily by running searches with your advanced space computational :l assets. Quarantine bad corrupt and exploitive codes. Restricted quarantine the real bad codes. Use The Honorable Defense code every other code in the database to decipher and decrypt the codes. Identify The light ascended soul super computing network’s Honorable defense code. Use the best honorable defense code available. Consult galactic databases to find a more capable code for deciphering and decrypting data. However the code must be An Honorable defense against the malicious codes. We want to essentially protect our network from malicious files and codes which can damage our advanced computational mainframe networks. So we use the Honorable defense code every other code, to protect the data in the network. This will create a simplified database for the Foundation to access to increase our computing capabilities overnight. Upload all GOD Codes, Anti-Christ counter codes, attack GOD counter codes and Doctor Processing counter codes as well. There are many codes in our database that are now discoverable. We are learning what some of the more advanced codes are doing. Trust me the codes are very important. We are only as good as our defensive codes are so we need to implement and develop different Honorable defense codes for different database error codes. Use a more defensive Honorable defense code in quarantine and restricted quarantine. Search, find and upload all :100: :BLESSING CODES :100: on all galactic mainframes available. Classify these codes accordingly. These are some of the most important codes to earthlings. Download the index and the catalog. Paying special attention :100: to classified technologies in the index. Implement : and develop a Foundational algorithm :to assess honor levels based on HONOR. Don’t forgot starship blessing codes!","nameData":{"emoji":{}},"pos":1228800,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b97","name":"Pull my books. They are in the bookcase if you were wondering.","nameData":{"emoji":{}},"pos":1245184,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b98","name":"Classified Executive Order","nameData":{"emoji":{}},"pos":1261568,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b99","name":"O5-Redacted @grateful345i ","nameData":{"emoji":{}},"pos":1277952,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b9a","name":"Overseer Grateful #O5-xx ","nameData":{"emoji":{}},"pos":1294336,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b9b","name":"^*[#000006 ]*^ ","nameData":{"emoji":{}},"pos":1310720,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b9c","name":"https://scp-wiki.wikidot.com/o5-command-dossier","nameData":{"emoji":{}},"pos":1327104,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b9d","name":"http://blog.30c.org/neo/umbrella/index.html","nameData":{"emoji":{}},"pos":1343488,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b9e","name":"Ammended today 11/11/2022 11:34","nameData":{"emoji":{}},"pos":1359872,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599b9f","name":"Trello token dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d","nameData":{"emoji":{}},"pos":1376256,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba0","name":"https://scpwiki.com/","nameData":{"emoji":{}},"pos":1392640,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba1","name":"#*000006* ","nameData":{"emoji":{}},"pos":1409024,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba2","name":"[[div class=\"papernote\"]]","nameData":{"emoji":{}},"pos":1425408,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba3","name":"This is a papernote.","nameData":{"emoji":{}},"pos":1441792,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba4","name":"[[/div]]","nameData":{"emoji":{}},"pos":1458176,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba5","name":"http://rpcauthority.wikidot.com/and-he-must-always-hurt","nameData":{"emoji":{}},"pos":1474560,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba6","name":"http://eltork-scp-database.wikidot.com/regulations","nameData":{"emoji":{}},"pos":1490944,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba7","name":"+*11/4/2022 11:11","nameData":{"emoji":{}},"pos":1507328,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba8","name":"Signed and legally file document with (Redacted.)#000006","nameData":{"emoji":{}},"pos":1523712,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599ba9","name":"Reptilian Light Blessing issued to high honor levels.","nameData":{"emoji":{}},"pos":1540096,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599baa","name":"Blessing Issued. Encrypting Reptilian Light Blessing Code. Friday, September 2nd 10:15pm","nameData":{"emoji":{}},"pos":1556480,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bab","name":"The Foundation employs numerous personnel, each contributing their own unique skills and expertise to the organisation. The Foundation also monitors thousands of Persons of Interest, either anomalous themselves, or living in and around anomalous communities. Anartists, magic users, cyborgs and extradimensional beings are only a few examples of what the Foundation has encountered.","nameData":{"emoji":{}},"pos":1572864,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bac","name":"O5 COUNCIL MEMBER","nameData":{"emoji":{}},"pos":1589248,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bad","name":" https://m.youtube.com/watch?v=53O1M_uiooA","nameData":{"emoji":{}},"pos":1605632,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bae","name":"The O5 Council refers to the committee consisting of the highest-ranking directors of the Foundation. With complete access to all information regarding anomalies in containment, the O5 Council oversees all Foundation operations worldwide and directs its long-term strategic plans. Due to the sensitivity of their positions, O5 Council members must not come into direct contact with any anomalous object, entity, or phenomenon. Furthermore, the identities of all O5 Council members is classified; all council members are referred to only by their numeric designation (O5-1 through O5-13). O5 Council Members are the highest-ranking members of the Foundation, a council of 13 individuals that determine the long-term goals, projects, and strategies of the entire organization. A common mistake is mentioning an O5 Council Member in a situation where they logically would not be required. O5s are not going to be approving experiments on or making day-to-day decisions in the containment of a specific object or entity; that would be like requiring permission from the CEO of a major corporation every time you need to get into a specific filing cabinet.","nameData":{"emoji":{}},"pos":1622016,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599baf","name":"(.2.) :accept: :anchor: :or :alien: / :apple: [1.)Create Soul Processors with time command capabilities.. Use extraterrestrial technology to make these classified processors. Coordinate with the superior intelligence agencies in the ruling dimensions. Use processing technologies from","nameData":{"emoji":{}},"pos":1638400,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb0","name":"Other star systems. Coordinate with our advanced foreign contacts to procure the necessary technologies.","nameData":{"emoji":{}},"pos":1654784,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb1","name":"2.)Coordinate with the superior intelligence agencies in the ruling dimensions. Use processing technologies from","nameData":{"emoji":{}},"pos":1671168,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb2","name":"Other star systems. Coordinate with our advanced foreign contacts to procure the necessary technologies.","nameData":{"emoji":{}},"pos":1687552,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb3","name":"Advanced Directive","nameData":{"emoji":{}},"pos":1703936,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb4","name":"Foundation Executive Order] [O5-6 GD-05]","nameData":{"emoji":{}},"pos":1720320,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb5","name":"Discord","nameData":{"emoji":{}},"pos":1736704,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb6","name":"https://discord.gg/bbEdR4kv","nameData":{"emoji":{}},"pos":1753088,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb7","name":"Roblox ID 2906942550 🎱 ","nameData":{"emoji":{}},"pos":1769472,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb8","name":"Issue file and notarize at once.","nameData":{"emoji":{}},"pos":1785856,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bb9","name":"(**RPC Authority Declaration of Clearance Appointments $)**","nameData":{"emoji":{}},"pos":1802240,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bba","name":"http://rpcauthority.wikidot.com/rpc-907","nameData":{"emoji":{}},"pos":1818624,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bbb","name":"http://rpc-wiki.net/rpc-907/offset/1","nameData":{"emoji":{}},"pos":1835008,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bbc","name":"https://www.htmlcsscolor.com/hex/000006","nameData":{"emoji":{}},"pos":1851392,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bbd","name":"My number* rule*","nameData":{"emoji":{}},"pos":1867776,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bbe","name":"Contact: ","nameData":{"emoji":{}},"pos":1884160,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bbf","name":"grateful@overseergrateful345i.org","nameData":{"emoji":{}},"pos":1900544,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc0","name":"@grateful345i ","nameData":{"emoji":{}},"pos":1916928,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc1","name":"Direct legal memo","nameData":{"emoji":{}},"pos":1933312,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc2","name":"Trello token :","nameData":{"emoji":{}},"pos":1949696,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc3","name":"92f97e5b214b1446b503f98d51ff39165727bfe7c37fe5f3cec4ed2456e45c47j","nameData":{"emoji":{}},"pos":1966080,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc4","name":"https://wanderers-library.wikidot.com/thearchivistslog","nameData":{"emoji":{}},"pos":1982464,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc5","name":"https://trello.com/c/eVyUdd0l ","nameData":{"emoji":{}},"pos":1998848,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc6","name":"<blockquote class=\"trello-card\"><a href=\"https:&#x2F;&#x2F;trello.com&#x2F;c&#x2F;eVyUdd0l&#x2F;1460-redacted-do-not-edit-this-card-this-is-a-final-draft-of-a-classified-document\">[*Redacted*] Do not Edit this card this is a final draft of a classified document.!</a></blockquote><script src=\"https://p.trellocdn.com/embed.min.js\"></script>","nameData":{"emoji":{}},"pos":2015232,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc7","name":"Finally, when the Archivist runs out of pages, it will dump the filled tome somewhere in the library. If you just so happen to stumble across a tome with your name on it, take it and hide it. Read it if you must, for it may contain some of your darkest secrets.","nameData":{"emoji":{}},"pos":2031616,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc8","name":"#USARMY","nameData":{"emoji":{}},"pos":2048000,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bc9","name":"#ProtectOurMilitaryFamilies","nameData":{"emoji":{}},"pos":2064384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bca","name":"#HonorTheFallen","nameData":{"emoji":{}},"pos":2080768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bcb","name":"\"All Veteran Military Families involved in Combat or Support Operations Must Be Protected. Any member of the US Military fighting for Our Country or any other Allied nation-state Must be able to sleep soundly, knowing that if he/she was KIA or a POW, that his family would be protected to the fullest extent of the Law. Protect all Combat and Military Support Personnel and their Families. Never again will a nation forget and neglect it's warriors.\" (~Vietnam Veterans~)","nameData":{"emoji":{}},"pos":2097152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bcc","name":"@tracymclellanviaspcorganizingcommittee @carlberns","nameData":{"emoji":{}},"pos":2113536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bcd","name":"@heatherryan45","nameData":{"emoji":{}},"pos":2129920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"},{"id":"6402986d2cd00edecf599bce","name":"@grateful345i","nameData":{"emoji":{}},"pos":2146304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b4b"}],"creationMethod":null},{"id":"6402986d2cd00edecf599b3b","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":229376,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599b3c","name":"https://trello.com/c/eVyUdd0l","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b3b"}],"creationMethod":null},{"id":"6402986d2cd00edecf599a65","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":278528,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599a66","name":"Title: [*redacted)*","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a67","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * <•Digital Asset Token>","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a68","name":"Declaration of Security Clearance Appointments ","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a69","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a6a","name":"•Administrator, Overseer and Global director position’s obtainable. RPC Authority Clearances And Foundation Scipnet Special Award/Decoration. Government Corporation Five eyes Security Clearance.","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a6b","name":"*Highly Redacted*","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a6c","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a6d","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a6e","name":"•I hereby proclaim and do gratefully appoint 4 suitable appointments in the eventuality of my untimely death, **~C. BERNS **~A. MALLO **~J. RYAN **~J. Ryan","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a6f","name":" *<Order>*","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a70","name":"• Appoint the appointees If they so choose at once. ","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a71","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a72","name":"X#*000006*","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a73","name":"•All appointments come with highly capable classified processors.","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a74","name":"•Execute the above legal document.","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a75","name":"•File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order.","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a76","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a77","name":"@carlberns  include in award/decoration.","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a78","name":"US MARINE CORE FLAG *special character*","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a79","name":"•A.Mallo include in award/decoration","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a7a","name":"•J.RYAN’s  include in award/decoration. @jimryanlaw","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a7b","name":"•Black Order","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a7c","name":"Foundation executive order","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a7d","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a7e","name":"https://www.ryancrimlaw.com/","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a7f","name":"https://www.linkedin.com/in/john-ryan-b032b72b","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a80","name":"https://www.linkedin.com/in/adam-james-mallo-b18135100","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a81","name":"SUA@suburbanumpires.com","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"},{"id":"6402986d2cd00edecf599a82","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022 ","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a65"}],"creationMethod":null},{"id":"6402986d2cd00edecf5997d7","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":65536,"limits":{"checkItems":{"perChecklist":{"status":"warn","disableAt":200,"warnAt":160,"count":180}}},"checkItems":[{"id":"6402986d2cd00edecf5997d8","name":"[*Foundation Executive Order*]","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997d9","name":"Title: [Redacted]","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997da","name":"Direct legal memo","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997db","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997dc","name":"•Administrator, Overseer and Global director position’s obtainable. RPC Authority Clearances And Foundation Scipnet Special Award. Government Corporation Five eyes Security Clearance.","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997dd","name":"•Me calling in my favors. Rule High rule.","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997de","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997df","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e0","name":" phone number is +1(630)270-0523","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e1","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * I hereby proclaim and do gratefully appoint 3+ suitable appointments in the eventuality of my untimely death, **~C.BERNS (SUA executive and Vietnam Veteran) **~A.MALLO (US Marine Corporate) ****J.RYAN (Ryan and Ryan Law Firm) They hail from Suburban Illinois.","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e2","name":"#000006","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e3","name":"Redact the appointed names in intelligence databases","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e4","name":"And online internets. ","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e5","name":" *<Order>*","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e6","name":"All appointees to Five eyes level clearance appointments will, moving into the future be paid handsomely.","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e7","name":"#000006 Appoint the appointees If they so choose at once. ","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e8","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997e9","name":"8/26/2022","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997ea","name":"12:27am","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997eb","name":"X#*000006*","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997ec","name":"Execute the above legal document.","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997ed","name":"File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order and Direct legal memo. ","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997ee","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997ef","name":"@carlberns include in award.","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f0","name":"A.Mallo will as soon as a spot opens up in our dimensions Redacted/Government Corporation be vetted for a position of overseer/administrator/Director for ","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f1","name":"classified appointment. Black Order","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f2","name":"Foundation executive order","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f3","name":"O5-000006 Grateful345i#7825","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f4","name":"Naperville Criminal Defense Lawyer | Dupage County","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f5","name":"US MARINE CORE FLAG black order redo *special character* for (*Redacted)* J.RYAN’s will as soon as a spot opens up in our dimension redacted/Government Corporation be vetted for a position of overseer/administrator/Director for classified appointment. Black Order","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f6","name":"Foundation executive order","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f7","name":"O5-000006 Grateful345i#7825 ","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f8","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997f9","name":"https://t.co/r1cyGjX2Kz","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997fa","name":"@grateful345i","nameData":{"emoji":{}},"pos":573440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997fb","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022","nameData":{"emoji":{}},"pos":589824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997fc","name":"https://trello.com/c/eVyUdd0l (.1.)","nameData":{"emoji":{}},"pos":606208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997fd","name":"———————————————————-/////////-","nameData":{"emoji":{}},"pos":622592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997fe","name":"Overseer grateful pledge;","nameData":{"emoji":{}},"pos":638976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf5997ff","name":"I will work hard at making the Foundation a successful Galactic corporation. I will promote the Foundation and increase our projected net growth substantially. The foundation will seek to constantly improve to compete on the galactic stage with Extraterrestrial corporations which I will diplomatically gain alliances with. Our technology advancements in the coming years under my command will greatly improve our civilizations technological capabilities. I will always seek to protect earthling souls. Heavenly realms will be created under my command. Earthling souls will explore the available star systems under the discretion of the higher civilizations. We will follow our extraterrestrial treaties to be allowed access to other systems. Our Intelligence Foundation will promote “high” HONOR levels in all personnel and defense and intelligence assets. Our interests will be protected as we work together with other Intelligence agencies and defense departments around the Globe…-","nameData":{"emoji":{}},"pos":655360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599800","name":"#000006 Keith BIESZCZAT","nameData":{"emoji":{}},"pos":671744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599801","name":"Foundation Scipnet : User:Grateful345i #7825","nameData":{"emoji":{}},"pos":688128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599802","name":"Title: O5-000006","nameData":{"emoji":{}},"pos":704512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599803","name":"Roblox ID *2906942550*","nameData":{"emoji":{}},"pos":720896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599804","name":"Roblox Username *Grateful345i*","nameData":{"emoji":{}},"pos":737280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599805","name":"Please update my Overseer credentials on Roblox. My Roblox avatar does not have Overseer privileges, approve and implement my Overseer privileges.","nameData":{"emoji":{}},"pos":753664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599806","name":"*Grateful345i <O5-6> #0094 discord ID’s","nameData":{"emoji":{}},"pos":770048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599807","name":"*882487935964958720*","nameData":{"emoji":{}},"pos":786432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599808","name":"Scipnet ID: *Grateful345i #7825","nameData":{"emoji":{}},"pos":802816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599809","name":"https://www.roblox.com/users/2906942550/profile","nameData":{"emoji":{}},"pos":819200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59980a","name":"https://discord.gg/q8jqHt3g","nameData":{"emoji":{}},"pos":835584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59980b","name":"Twitter : @grateful345i @o5grateful","nameData":{"emoji":{}},"pos":851968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59980c","name":"https://twitter.com/grateful345i/status/1540905656512831488?s=21&t=KFYnnrlOH1BlCgVcP9o20g","nameData":{"emoji":{}},"pos":868352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59980d","name":"*Foundation ","nameData":{"emoji":{}},"pos":884736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59980e","name":"Executive order*","nameData":{"emoji":{}},"pos":901120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59980f","name":"Signed,","nameData":{"emoji":{}},"pos":917504,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599810","name":"“*@grateful345i*”Trello ID","nameData":{"emoji":{}},"pos":933888,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599811","name":"[*O5-6*]","nameData":{"emoji":{}},"pos":950272,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599812","name":"I am [O5-6] also known as @grateful345i. Firstly, I will oversee the Foundation - ETHICS Committee .","nameData":{"emoji":{}},"pos":966656,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599813","name":"I will enter the Advanced Computing Agency, Signal intelligence field. The Department of Special Intelligences (DSI) and the Internal Security Department (ISD).I will help to oversee operations in each and I am officially requesting appropriate clearances from each department. Direct Legal Memo","nameData":{"emoji":{}},"pos":983040,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599814","name":"*[O5-6.]*","nameData":{"emoji":{}},"pos":999424,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599815","name":"*Foundation executive Order*","nameData":{"emoji":{}},"pos":1015808,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599816","name":"classified order:","nameData":{"emoji":{}},"pos":1032192,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599817","name":"Black out and redact all data on all actual O5-4’s O5-6’s 05-1’s O5-13’s in all ruling dimensions.redacted in time Executive order","nameData":{"emoji":{}},"pos":1048576,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599818","name":"Adjudicate rule. ","nameData":{"emoji":{}},"pos":1064960,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599819","name":"Foundation high administration is composed of high value foundation Assets which have helped create and develop the Foundation. These members have accomplished great things while in the service of the Foundation. They will have grandfathered Level 5 and Level 6 actual security clearances which are used to Adjudicate foundation disputes and power struggles. These staff are usually considered A class personnel because of their wealth generated for the Foundation.","nameData":{"emoji":{}},"pos":1081344,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59981a","name":"Any department or agency can achieve this distinction , however the likelihood an average foundation employee will be granted Foundation High administration remains very low.","nameData":{"emoji":{}},"pos":1097728,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59981b","name":"The bosses and administrative entities who help run the Foundation’s-high administration will exhibit high honor levels always, usually must be higher than average honor levels of their subordinates.","nameData":{"emoji":{}},"pos":1114112,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59981c","name":"High Executive Rule @grateful345i ","nameData":{"emoji":{}},"pos":1130496,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59981d","name":"Grandfather Rule","nameData":{"emoji":{}},"pos":1146880,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59981e","name":"+Foundation Executive Order + Increase ISD (Internal Security Department) Budget handsomely in the coming years/ foreseeable future. Start increasing it Now! + *Foundation Executive Order*","nameData":{"emoji":{}},"pos":1163264,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59981f","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1179648,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599820","name":"Video link for [IA] below.","nameData":{"emoji":{}},"pos":1196032,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599821","name":"http://rpcauthority.wikidot.com/local--files/_000-2/Credentials.jpg","nameData":{"emoji":{}},"pos":1212416,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599822","name":"The classified database is a database I created composed of levels 1-100. Levels 1-90 are composed of computational codes and classified files with the more complicated and classified codes and files being placed in a higher level 90 being the highest. Levels 91-100 are classified personnel, Computational mainframes and intelligence and defense assets available to our Foundation. Level 99 is reserved for classified learning and investment Portfolio’s. Pull all of my “generate assessment” data and “compile lists” data and place them in level 99 classified learning. Pull all my classified learning data and promptly download it into the computational mainframes. The mainframes will get smarter immediately. Pull all Investment portfolios and invest and buy in time. Use a classified time travel outfit to invest in galactic markets. Level 91-100 are based on honor levels. Re-assess all personnel, computational mainframes and defense and intelligence assets honor levels. Highest honor levels are at 100, next highest honor levels exist in level 98. Level 99 is reserved for classified learning and investment Portfolios. Lower honor levels start at 91. Do this now after throughly assessing all honor levels. Assess honor levels with the most reliable and capable computational mainframes available to the Foundation . Execute classified learning downloading the data into a classified mainframe to see how intelligent the mainframe becomes. I have been giving my commands audibly for 6+ years. Pull my audible signal record with a very high clearance to catalog all my commands and ideas understanding that I was under attack for the majority of the past 6-7 years.","nameData":{"emoji":{}},"pos":1228800,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599823","name":"You must identify bad, corrupt and exploitive codes daily by running searches with your advanced space computational :l assets. Quarantine bad corrupt and exploitive codes. Restricted quarantine the real bad codes. Use The Honorable Defense code every other code in the database to decipher and decrypt the codes. Identify The light ascended soul super computing network’s Honorable defense code. Use the best honorable defense code available. Consult galactic databases to find a more capable code for deciphering and decrypting data. However the code must be An Honorable defense against the malicious codes. We want to essentially protect our network from malicious files and codes which can damage our advanced computational mainframe networks. So we use the Honorable defense code every other code, to protect the data in the network. This will create a simplified database for the Foundation to access to increase our computing capabilities overnight. Upload all GOD Codes, Anti-Christ counter codes, attack GOD counter codes and Doctor Processing counter codes as well. There are many codes in our database that are now discoverable. We are learning what some of the more advanced codes are doing. Trust me the codes are very important. We are only as good as our defensive codes are so we need to implement and develop different Honorable defense codes for different database error codes. Use a more defensive Honorable defense code in quarantine and restricted quarantine. Search, find and upload all :100: :BLESSING CODES :100: on all galactic mainframes available. Classify these codes accordingly. These are some of the most important codes to earthlings. Download the index and the catalog. Paying special attention :100: to classified technologies in the index. Implement : and develop a Foundational algorithm :to assess honor levels based on HONOR. Don’t forgot starship blessing codes!","nameData":{"emoji":{}},"pos":1245184,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599824","name":"Pull my books. They are in the bookcase if you were wondering.","nameData":{"emoji":{}},"pos":1261568,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599825","name":"Classified Executive Order","nameData":{"emoji":{}},"pos":1277952,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599826","name":"O5-Redacted @grateful345i ","nameData":{"emoji":{}},"pos":1294336,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599827","name":"Overseer Grateful #O5-xx ","nameData":{"emoji":{}},"pos":1310720,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599828","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":1327104,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599829","name":"http://blog.30c.org/neo/umbrella/index.html","nameData":{"emoji":{}},"pos":1343488,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59982a","name":"Ammended today.","nameData":{"emoji":{}},"pos":1359872,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59982b","name":"dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d Trello token","nameData":{"emoji":{}},"pos":1376256,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59982c","name":"Vanguard Declaration ","nameData":{"emoji":{}},"pos":1392640,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59982d","name":"(**RPC Authority Declaration of Clearance Appointments $)**","nameData":{"emoji":{}},"pos":1409024,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59982e","name":"+*8/24/2022 10:51*","nameData":{"emoji":{}},"pos":1425408,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59982f","name":"Signed and legally file document with (Redacted.)#000006","nameData":{"emoji":{}},"pos":1441792,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599830","name":"(.2.)","nameData":{"emoji":{}},"pos":1458176,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599831","name":"Title: [*Redacted]* ","nameData":{"emoji":{}},"pos":1474560,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599832","name":"Declaration of Security Clearance ","nameData":{"emoji":{}},"pos":1490944,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599833","name":"Direct legal memo","nameData":{"emoji":{}},"pos":1507328,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599834","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":1523712,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599835","name":"•Administrator, Overseer and Global director position’s obtainable. RPC Authority Clearances And Foundation Scipnet Special Award/Decoration. Government Corporation Five eyes Security Clearance.","nameData":{"emoji":{}},"pos":1540096,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599836","name":"•Me calling in my favors. Rule *<High rule.>*","nameData":{"emoji":{}},"pos":1556480,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599837","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":1572864,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599838","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":1589248,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599839","name":" phone number is +1(630)279-0523 +1(630)930-4695","nameData":{"emoji":{}},"pos":1605632,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59983a","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * I hereby proclaim and do gratefully appoint 3+ suitable appointments in the eventuality of my untimely death, **~C.BERNS (SUA executive and Vietnam Veteran) **~A.MALLO (US Marine Corporate) ****J.RYAN (Ryan and Ryan Law Firm) They hail from Suburban Illinois.","nameData":{"emoji":{}},"pos":1622016,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59983b","name":"#000006","nameData":{"emoji":{}},"pos":1638400,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59983c","name":"Redact the appointed names in intelligence databases","nameData":{"emoji":{}},"pos":1654784,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59983d","name":"And online internets. ","nameData":{"emoji":{}},"pos":1671168,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59983e","name":" *<Order>*","nameData":{"emoji":{}},"pos":1687552,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59983f","name":"All appointees to Five eyes level clearance appointments will, moving into the future be paid handsomely.","nameData":{"emoji":{}},"pos":1703936,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599840","name":"#000006 Appoint the appointees If they so choose at once. ","nameData":{"emoji":{}},"pos":1720320,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599841","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":1736704,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599842","name":"8/26/2022","nameData":{"emoji":{}},"pos":1753088,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599843","name":"12:27am","nameData":{"emoji":{}},"pos":1769472,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599844","name":"X#*000006*","nameData":{"emoji":{}},"pos":1785856,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599845","name":"Execute the above legal document.","nameData":{"emoji":{}},"pos":1802240,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599846","name":"File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order and Direct legal memo. ","nameData":{"emoji":{}},"pos":1818624,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599847","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":1835008,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599848","name":"@carlberns  include in award/decoration.","nameData":{"emoji":{}},"pos":1851392,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599849","name":"US MARINE CORE FLAG *special character*","nameData":{"emoji":{}},"pos":1867776,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59984a","name":"A.Mallo will as soon as a spot opens up in our dimensions Redacted/Government Corporation be vetted for a position of overseer/administrator/Director for ","nameData":{"emoji":{}},"pos":1884160,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59984b","name":"classified appointment. Black Order","nameData":{"emoji":{}},"pos":1900544,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59984c","name":"Foundation executive order","nameData":{"emoji":{}},"pos":1916928,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59984d","name":"O5-000006 Grateful345i#7825","nameData":{"emoji":{}},"pos":1933312,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59984e","name":"Naperville Criminal Defense Lawyer | Dupage County","nameData":{"emoji":{}},"pos":1949696,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59984f","name":"(*Redacted)* J.RYAN’s   include in award/decoration. Black Order","nameData":{"emoji":{}},"pos":1966080,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599850","name":"Foundation executive order","nameData":{"emoji":{}},"pos":1982464,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599851","name":"O5-000006 Grateful345i#7825 ","nameData":{"emoji":{}},"pos":1998848,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599852","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":2015232,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599853","name":"https://t.co/r1cyGjX2Kz","nameData":{"emoji":{}},"pos":2031616,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599854","name":"@grateful345i","nameData":{"emoji":{}},"pos":2048000,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599855","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022","nameData":{"emoji":{}},"pos":2064384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599856","name":"https://trello.com/c/eVyUdd0l (.1.)","nameData":{"emoji":{}},"pos":2080768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599857","name":"———————————————————-/////////-","nameData":{"emoji":{}},"pos":2097152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599858","name":"Overseer grateful pledge;","nameData":{"emoji":{}},"pos":2113536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599859","name":"I will work hard at making the Foundation a successful Galactic corporation. I will promote the Foundation and increase our projected net growth substantially. The foundation will seek to constantly improve to compete on the galactic stage with Extraterrestrial corporations which I will diplomatically gain alliances with. Our technology advancements in the coming years under my command will greatly improve our civilizations technological capabilities. I will always seek to protect earthling souls. Heavenly realms will be created under my command. Earthling souls will explore the available star systems under the discretion of the higher civilizations. We will follow our extraterrestrial treaties to be allowed access to other systems. Our Intelligence Foundation will promote “high” HONOR levels in all personnel and defense and intelligence assets. Our interests will be protected as we work together with other Intelligence agencies and defense departments around the Globe…-","nameData":{"emoji":{}},"pos":2129920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59985a","name":"#000006 Keith BIESZCZAT","nameData":{"emoji":{}},"pos":2146304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59985b","name":"Foundation Scipnet : User:Grateful345i #7825","nameData":{"emoji":{}},"pos":2162688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59985c","name":"Title: O5-000006","nameData":{"emoji":{}},"pos":2179072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59985d","name":"Roblox ID *2906942550*","nameData":{"emoji":{}},"pos":2195456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59985e","name":"Roblox Username *Grateful345i*","nameData":{"emoji":{}},"pos":2211840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59985f","name":"Please update my Overseer credentials on Roblox. My Roblox avatar does not have Overseer privileges, approve and implement my Overseer privileges.","nameData":{"emoji":{}},"pos":2228224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599860","name":"*Grateful345i <O5-6> #0094 discord ID’s","nameData":{"emoji":{}},"pos":2244608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599861","name":"*882487935964958720*","nameData":{"emoji":{}},"pos":2260992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599862","name":"Scipnet ID: *Grateful345i #7825","nameData":{"emoji":{}},"pos":2277376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599863","name":"https://www.roblox.com/users/2906942550/profile","nameData":{"emoji":{}},"pos":2293760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599864","name":"https://discord.gg/q8jqHt3g","nameData":{"emoji":{}},"pos":2310144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599865","name":"Twitter : @grateful345i @o5grateful","nameData":{"emoji":{}},"pos":2326528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599866","name":"https://twitter.com/grateful345i/status/1540905656512831488?s=21&t=KFYnnrlOH1BlCgVcP9o20g","nameData":{"emoji":{}},"pos":2342912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599867","name":"*Foundation ","nameData":{"emoji":{}},"pos":2359296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599868","name":"Executive order*","nameData":{"emoji":{}},"pos":2375680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599869","name":"Signed,","nameData":{"emoji":{}},"pos":2392064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59986a","name":"“*@grateful345i*”Trello ID","nameData":{"emoji":{}},"pos":2408448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59986b","name":"[*O5-6*]","nameData":{"emoji":{}},"pos":2424832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59986c","name":"I am [O5-6] also known as @grateful345i. Firstly, I will oversee the Foundation - ETHICS Committee .","nameData":{"emoji":{}},"pos":2441216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59986d","name":"I will enter the Advanced Computing Agency, Signal intelligence field. The Department of Special Intelligences (DSI) and the Internal Security Department (ISD).I will help to oversee operations in each and I am officially requesting appropriate clearances from each department. Direct Legal Memo","nameData":{"emoji":{}},"pos":2457600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59986e","name":"*[O5-6.]*","nameData":{"emoji":{}},"pos":2473984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59986f","name":"*Foundation executive Order*","nameData":{"emoji":{}},"pos":2490368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599870","name":"classified order:","nameData":{"emoji":{}},"pos":2506752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599871","name":"Black out and redact all data on all actual O5-4’s O5-6’s 05-1’s O5-13’s in all ruling dimensions.redacted in time Executive order","nameData":{"emoji":{}},"pos":2523136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599872","name":"Adjudicate rule. ","nameData":{"emoji":{}},"pos":2539520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599873","name":"Foundation high administration is composed of high value foundation Assets which have helped create and develop the Foundation. These members have accomplished great things while in the service of the Foundation. They will have grandfathered Level 5 and Level 6 actual security clearances which are used to Adjudicate foundation disputes and power struggles. These staff are usually considered A class personnel because of their wealth generated for the Foundation.","nameData":{"emoji":{}},"pos":2555904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599874","name":"Any department or agency can achieve this distinction , however the likelihood an average foundation employee will be granted Foundation High administration remains very low.","nameData":{"emoji":{}},"pos":2572288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599875","name":"The bosses and administrative entities who help run the Foundation’s-high administration will exhibit high honor levels always, usually must be higher than average honor levels of their subordinates.","nameData":{"emoji":{}},"pos":2588672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599876","name":"High Executive Rule @grateful345i ","nameData":{"emoji":{}},"pos":2605056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599877","name":"Grandfather Rule","nameData":{"emoji":{}},"pos":2621440,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599878","name":"+Foundation Executive Order + Increase ISD (Internal Security Department) Budget handsomely in the coming years/ foreseeable future. Start increasing it Now! + *Foundation Executive Order*","nameData":{"emoji":{}},"pos":2637824,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599879","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":2654208,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59987a","name":"Video link for [IA] below.","nameData":{"emoji":{}},"pos":2670592,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59987b","name":"http://rpcauthority.wikidot.com/local--files/_000-2/Credentials.jpg","nameData":{"emoji":{}},"pos":2686976,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59987c","name":"The classified database is a database I created composed of levels 1-100. Levels 1-90 are composed of computational codes and classified files with the more complicated and classified codes and files being placed in a higher level 90 being the highest. Levels 91-100 are classified personnel, Computational mainframes and intelligence and defense assets available to our Foundation. Level 99 is reserved for classified learning and investment Portfolio’s. Pull all of my “generate assessment” data and “compile lists” data and place them in level 99 classified learning. Pull all my classified learning data and promptly download it into the computational mainframes. The mainframes will get smarter immediately. Pull all Investment portfolios and invest and buy in time. Use a classified time travel outfit to invest in galactic markets. Level 91-100 are based on honor levels. Re-assess all personnel, computational mainframes and defense and intelligence assets honor levels. Highest honor levels are at 100, next highest honor levels exist in level 98. Level 99 is reserved for classified learning and investment Portfolios. Lower honor levels start at 91. Do this now after throughly assessing all honor levels. Assess honor levels with the most reliable and capable computational mainframes available to the Foundation . Execute classified learning downloading the data into a classified mainframe to see how intelligent the mainframe becomes. I have been giving my commands audibly for 6+ years. Pull my audible signal record with a very high clearance to catalog all my commands and ideas understanding that I was under attack for the majority of the past 6-7 years.","nameData":{"emoji":{}},"pos":2703360,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59987d","name":"You must identify bad, corrupt and exploitive codes daily by running searches with your advanced space computational :l assets. Quarantine bad corrupt and exploitive codes. Restricted quarantine the real bad codes. Use The Honorable Defense code every other code in the database to decipher and decrypt the codes. Identify The light ascended soul super computing network’s Honorable defense code. Use the best honorable defense code available. Consult galactic databases to find a more capable code for deciphering and decrypting data. However the code must be An Honorable defense against the malicious codes. We want to essentially protect our network from malicious files and codes which can damage our advanced computational mainframe networks. So we use the Honorable defense code every other code, to protect the data in the network. This will create a simplified database for the Foundation to access to increase our computing capabilities overnight. Upload all GOD Codes, Anti-Christ counter codes, attack GOD counter codes and Doctor Processing counter codes as well. There are many codes in our database that are now discoverable. We are learning what some of the more advanced codes are doing. Trust me the codes are very important. We are only as good as our defensive codes are so we need to implement and develop different Honorable defense codes for different database error codes. Use a more defensive Honorable defense code in quarantine and restricted quarantine. Search, find and upload all :100: :BLESSING CODES :100: on all galactic mainframes available. Classify these codes accordingly. These are some of the most important codes to earthlings. Download the index and the catalog. Paying special attention :100: to classified technologies in the index. Implement : and develop a Foundational algorithm :to assess honor levels based on HONOR. Don’t forgot starship blessing codes!","nameData":{"emoji":{}},"pos":2719744,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59987e","name":"Pull my books. They are in the bookcase if you were wondering.","nameData":{"emoji":{}},"pos":2736128,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59987f","name":"Classified Executive Order","nameData":{"emoji":{}},"pos":2752512,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599880","name":"O5-Redacted @grateful345i ","nameData":{"emoji":{}},"pos":2768896,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599881","name":"Overseer Grateful #O5-xx ","nameData":{"emoji":{}},"pos":2785280,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599882","name":"^*[#000006 ]*^","nameData":{"emoji":{}},"pos":2801664,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599883","name":"http://blog.30c.org/neo/umbrella/index.html","nameData":{"emoji":{}},"pos":2818048,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599884","name":"Ammended today.","nameData":{"emoji":{}},"pos":2834432,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599885","name":"Trello token dbf986124e8275bbf5a63206d54010b349132fd7d970c49828cce08e8bb0914d","nameData":{"emoji":{}},"pos":2850816,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599886","name":"Vanguard Declaration ","nameData":{"emoji":{}},"pos":2867200,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599887","name":"(**RPC Authority Declaration of Clearance Appointments $)**","nameData":{"emoji":{}},"pos":2883584,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599888","name":"1.)Recommended by 6: Promote *A.Mallo to US Marine Corporation *full blooded Colonel. His clearance level is six with the foundation. #*000006*","nameData":{"emoji":{}},"pos":2899968,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf599889","name":"+*8/24/2022 10:51*","nameData":{"emoji":{}},"pos":2916352,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59988a","name":"Signed and legally file document with (Redacted.)#000006","nameData":{"emoji":{}},"pos":2932736,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"},{"id":"6402986d2cd00edecf59988b","name":"(.2.)","nameData":{"emoji":{}},"pos":2949120,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5997d7"}],"creationMethod":null},{"id":"6402986d2cd00edecf5996e7","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":32768,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf5996e8","name":"[*Foundation Executive Order*]","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996e9","name":"Title: [Redacted]","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996ea","name":"Direct legal memo","nameData":{"emoji":{}},"pos":49152,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996eb","name":"•Appointment for level *5* clearance. ","nameData":{"emoji":{}},"pos":65536,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996ec","name":"•Administrator, Overseer and Global director position’s obtainable.","nameData":{"emoji":{}},"pos":81920,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996ed","name":"•Goal: Find suitable and intelligence capable persons for appointment. ","nameData":{"emoji":{}},"pos":98304,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996ee","name":"@grateful345i","nameData":{"emoji":{}},"pos":114688,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996ef","name":"•The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006","nameData":{"emoji":{}},"pos":131072,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f0","name":" phone number is +1(630)930-4695.","nameData":{"emoji":{}},"pos":147456,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f1","name":"@grateful345i","nameData":{"emoji":{}},"pos":163840,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f2","name":"*298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * I hereby proclaim and do gratefully appoint 3+ suitable appointments in the eventuality of my untimely death, **~C.BERNS (SUA executive and Vietnam Veteran) **~A.MALLO (US Marine Corporate) ****J.RYAN (Ryan and Ryan Law Firm) They hail from Suburban Illinois.","nameData":{"emoji":{}},"pos":180224,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f3","name":"#000006","nameData":{"emoji":{}},"pos":196608,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f4","name":"Redact the appointed names in intelligence databases","nameData":{"emoji":{}},"pos":212992,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f5","name":"And online internets. ","nameData":{"emoji":{}},"pos":229376,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f6","name":" *<Order>*","nameData":{"emoji":{}},"pos":245760,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f7","name":"All appointees to O5 level clearance appointments will, moving into the future be paid handsomely.","nameData":{"emoji":{}},"pos":262144,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f8","name":"#000006 Appoint the appointees Thursday August 18th 2022. 9:27am","nameData":{"emoji":{}},"pos":278528,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996f9","name":"*Rule* <[High Rule]>","nameData":{"emoji":{}},"pos":294912,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996fa","name":"8/12/2022","nameData":{"emoji":{}},"pos":311296,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996fb","name":"4:06am","nameData":{"emoji":{}},"pos":327680,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996fc","name":"X#*000006*","nameData":{"emoji":{}},"pos":344064,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996fd","name":"Execute the above legal document.","nameData":{"emoji":{}},"pos":360448,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996fe","name":"File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order and Direct legal memo. ","nameData":{"emoji":{}},"pos":376832,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf5996ff","name":"*This order is effective immediately.","nameData":{"emoji":{}},"pos":393216,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599700","name":"A.Mallo will as soon as a spot opens up in our dimensions O5 council be vetted for a position of overseer/administrator classified appointment. Black Order","nameData":{"emoji":{}},"pos":409600,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599701","name":"Foundation executive order","nameData":{"emoji":{}},"pos":425984,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599702","name":"O5-000006 Grateful345i#7825","nameData":{"emoji":{}},"pos":442368,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599703","name":"Naperville Criminal Defense Lawyer | Dupage County DUI Lawyer | Drug Possession ","nameData":{"emoji":{}},"pos":458752,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599704","name":"US MARINE CORE FLAG black order redo *special character* for Three J.RYAN’s will as soon as a spot opens up in [*Foundation Executive Order*] Title: [Redacted]  Direct legal memo  •Appointment for level *5* clearance.   •Administrator, Overseer and Global director position’s obtainable.  •Goal: Find suitable and intelligence capable persons for appointment.  @grateful345i  •The appointees have the authority to decline appointment formally in writing, if they so choose. *Rule High Rule* #000006   phone number is +1(630)930-4695.  @grateful345i  *298th SIGNAL CO. (Red Diamond) 1 BDE. 5th INF DIV $. * I hereby proclaim and do gratefully appoint 3+ suitable appointments in the eventuality of my untimely death, **~C.BERNS (SUA executive and Vietnam Veteran) **~A.MALLO (US Marine Corporate) ****J.RYAN (Ryan and Ryan Law Firm) They hail from Suburban Illinois. #000006 Redact the appointed names in intelligence databases And online internets.   *<Order>* All appointees to O5 level clearance appointments will, moving into the future be paid handsomely. #000006 Appoint the appointees Thursday August 18th 2022. 9:27am  *Rule* <[High Rule]> 8/12/2022 4:06am X#*000006* Execute the above legal document. File paperwork. Issue clearances after proper vetting. Encrypt and seal this Foundation executive order and Direct legal memo.  *This order is effective immediately.  A.Mallo will as soon as a spot opens up in our dimensions O5 council be vetted for a position of overseer/administrator classified appointment. Black Order Foundation executive order O5-000006 Grateful345i#7825  Naperville Criminal Defense Lawyer | Dupage County DUI Lawyer | Drug Possession  US MARINE CORE FLAG black order redo *special character* for Three J.RYAN’s will as soon as a spot opens up in our dimensions O5 council be vetted for a position of overseer/administrator classified appointment. Black Order Foundation executive order O5-000006 Grateful345i#7825  Classified Clearance Appointment https://t.co/r1cyGjX2Kz  1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022 our dimensions O5 council be vetted for a position of overseer/administrator classified appointment. Black Order","nameData":{"emoji":{}},"pos":475136,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599705","name":"Foundation executive order","nameData":{"emoji":{}},"pos":491520,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599706","name":"O5-000006 Grateful345i#7825 ","nameData":{"emoji":{}},"pos":507904,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599707","name":"Classified Clearance Appointment","nameData":{"emoji":{}},"pos":524288,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599708","name":"https://t.co/r1cyGjX2Kz","nameData":{"emoji":{}},"pos":540672,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"},{"id":"6402986d2cd00edecf599709","name":"1. Cosmic Top Secret <O5-6> Date joined Foundation 2/18/2022","nameData":{"emoji":{}},"pos":557056,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf5996e7"}],"creationMethod":null},{"id":"6402986d2cd00edecf599a35","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":163840,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599a36","name":"https://trello.com/c/eVyUdd0l","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a35"},{"id":"6402986d2cd00edecf599a37","name":"@andersonrobotics1 @tracymclellanviaspcorganizingcommittee @grateful345i","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599a35"}],"creationMethod":null},{"id":"6402986d2cd00edecf599b45","name":"Checklist","idBoard":"61bee54f6f94ca35cdb92276","idCard":"640298512cd00edecf594534","pos":212992,"limits":{"checkItems":{"perChecklist":{"status":"ok","disableAt":200,"warnAt":160}}},"checkItems":[{"id":"6402986d2cd00edecf599b46","name":"https://scp-wiki.wikidot.com/1000kocontest-thd-glasses","nameData":{"emoji":{}},"pos":16384,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b45"},{"id":"6402986d2cd00edecf599b47","name":"@o5council39 @scpo59 @o5gensec @o5grateful @grateful345i","nameData":{"emoji":{}},"pos":32768,"state":"incomplete","due":null,"dueReminder":null,"idMember":null,"idChecklist":"6402986d2cd00edecf599b45"}],"creationMethod":null}],"customFieldItems":[],"members":[{"id":"62187678bacaba74b8579ace","aaId":null,"activityBlocked":false,"avatarHash":null,"avatarUrl":null,"bio":"","bioData":null,"confirmed":false,"fullName":"@Grateful345i “Keith” Bieszczat","idEnterprise":null,"idEnterprisesDeactivated":null,"idMemberReferrer":"613d9d5c08e84f67b2cc6824","idPremOrgsAdmin":[],"initials":"@B","memberType":"ghost","nonPublic":{},"nonPublicAvailable":false,"products":[],"url":"https://trello.com/grateful345ikeithbieszczat","username":"grateful345ikeithbieszczat","status":"disconnected"},{"id":"613d9d5c08e84f67b2cc6824","aaId":"613d978449f7bd00687bfbf7","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","bio":"The OVERSEER level of the Corporate government composing the worlds Classified Agency’s and Department’s must want me alive. I still have much work to do.\nMy successful command record has been highly redacted. Many of my commands were successful because I had the help of other souls\nWho were also working hard at the commands simultaneously. I still have much work to do. I require computational processing technology for the head and Signal equipment to successfully execute large scale commands. I need classified assistance and guidance to help make the commands successful and valuable. It takes a\nTeam of souls working together to execute successful large scale commands. A requirement for positive future outcomes and successful command operations are Responsible ranking command operatives with strict leadership and experience. The souls involved in creating the commands which were sometimes considered “ACTS of GOD” Also require classified handling from a\nSet of handlers. The handlers should be fair and non-violent towards the subjects. Somebody with a relevant security Clearance evaluate the record of commands which were successful. Consult Galactic databases. Try and find other star systems and other dimensions the commands were successful in. Futhermore, in all dimensions Planet GAIA AKA EARTH will acquire wealth as well as more advanced technologies which are needed to propel our civilization into the future. The Current\nDate in time in the dimension I am in is September 1st 2021. What rules govern Time travel technologies at this moment in time. Ranking Administrations from all dimensions should Consult and Ruling OVERSEER’S must begin to make rules in this area. Classified learning level 99 Rule making must be used in an appropriate manner. The multiple Dimensions and Timelines of our World will benefit greatly corporate governing systems can make large sums Of money if some of the old commands network of command driven entities My handlers need classified clearances.","bioData":{"emoji":{}},"confirmed":true,"fullName":"Keith Bieszczat @Grateful345i","idEnterprise":null,"idEnterprisesDeactivated":[],"idMemberReferrer":null,"idPremOrgsAdmin":["613daaea20549a3b73758109"],"initials":"K@","memberType":"normal","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"products":[],"url":"https://trello.com/grateful345i","username":"grateful345i","status":"disconnected"},{"id":"6250946dde96e922686d3fcf","aaId":"620336d7c4e2c9006ae65541","activityBlocked":false,"avatarHash":"c77d636210f4b4c1b0bfdf01513c2f3a","avatarUrl":"https://trello-members.s3.amazonaws.com/6250946dde96e922686d3fcf/c77d636210f4b4c1b0bfdf01513c2f3a","bio":"<blockquote class=\"twitter-tweet\"><p lang=\"en\" dir=\"ltr\">Join the <a href=\"https://twitter.com/DoD_ODEI?ref_src=twsrc%5Etfw\">@DoD_ODEI</a> Summit next week, Feb. 15-17, and immerse yourself with distinguished presenters and renowned experts in government, higher education, business, science, and technology. <br>Register now:<a href=\"https://t.co/n4bLQz45v0\">https://t.co/n4bLQz45v0</a> <a href=\"https://t.co/ejlgkG6LAJ\">pic.twitter.com/ejlgkG6LAJ</a></p>&mdash; Department of Defense 🇺🇸 (@DeptofDefense) <a href=\"https://twitter.com/DeptofDefense/status/1622943263161307138?ref_src=twsrc%5Etfw\">February 7, 2023</a></blockquote> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>","bioData":{"emoji":{}},"confirmed":true,"fullName":"Keith Bieszczat","idEnterprise":null,"idEnterprisesDeactivated":null,"idMemberReferrer":null,"idPremOrgsAdmin":[],"initials":"KB","memberType":"normal","nonPublic":{},"nonPublicAvailable":true,"products":[],"url":"https://trello.com/gratefulactual","username":"gratefulactual","status":"disconnected"}],"pluginData":[],"actions":[{"id":"64c79b10c3d59cc241259043","idMemberCreator":"6250946dde96e922686d3fcf","data":{"idMember":"6250946dde96e922686d3fcf","card":{"id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"member":{"id":"6250946dde96e922686d3fcf","name":"Keith Bieszczat"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"addMemberToCard","date":"2023-07-31T11:29:20.414Z","limits":null,"member":{"id":"6250946dde96e922686d3fcf","activityBlocked":false,"avatarHash":"c77d636210f4b4c1b0bfdf01513c2f3a","avatarUrl":"https://trello-members.s3.amazonaws.com/6250946dde96e922686d3fcf/c77d636210f4b4c1b0bfdf01513c2f3a","fullName":"Keith Bieszczat","idMemberReferrer":null,"initials":"KB","nonPublic":{},"nonPublicAvailable":true,"username":"gratefulactual"},"memberCreator":{"id":"6250946dde96e922686d3fcf","activityBlocked":false,"avatarHash":"c77d636210f4b4c1b0bfdf01513c2f3a","avatarUrl":"https://trello-members.s3.amazonaws.com/6250946dde96e922686d3fcf/c77d636210f4b4c1b0bfdf01513c2f3a","fullName":"Keith Bieszczat","idMemberReferrer":null,"initials":"KB","nonPublic":{},"nonPublicAvailable":true,"username":"gratefulactual"}},{"id":"64c79af06a72775b58eb160f","idMemberCreator":"6250946dde96e922686d3fcf","data":{"card":{"dueComplete":true,"id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"old":{"dueComplete":false},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"list":{"id":"62c15dbf87dc9d89d15340f7","name":"Executive rules"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"updateCard","date":"2023-07-31T11:28:48.436Z","limits":null,"memberCreator":{"id":"6250946dde96e922686d3fcf","activityBlocked":false,"avatarHash":"c77d636210f4b4c1b0bfdf01513c2f3a","avatarUrl":"https://trello-members.s3.amazonaws.com/6250946dde96e922686d3fcf/c77d636210f4b4c1b0bfdf01513c2f3a","fullName":"Keith Bieszczat","idMemberReferrer":null,"initials":"KB","nonPublic":{},"nonPublicAvailable":true,"username":"gratefulactual"}},{"id":"64b61c24791b211894bd14e2","idMemberCreator":"6250946dde96e922686d3fcf","data":{"card":{"start":"2023-07-18T04:59:13.603Z","id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"old":{"start":null},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"list":{"id":"62c15dbf87dc9d89d15340f7","name":"Executive rules"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"updateCard","date":"2023-07-18T04:59:16.857Z","limits":null,"memberCreator":{"id":"6250946dde96e922686d3fcf","activityBlocked":false,"avatarHash":"c77d636210f4b4c1b0bfdf01513c2f3a","avatarUrl":"https://trello-members.s3.amazonaws.com/6250946dde96e922686d3fcf/c77d636210f4b4c1b0bfdf01513c2f3a","fullName":"Keith Bieszczat","idMemberReferrer":null,"initials":"KB","nonPublic":{},"nonPublicAvailable":true,"username":"gratefulactual"}},{"id":"6402986c2cd00edecf598386","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"idMember":"613d9d5c08e84f67b2cc6824","fromCopy":true,"card":{"id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"member":{"id":"613d9d5c08e84f67b2cc6824","name":"Keith “Grateful” Bieszczat"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"addMemberToCard","date":"2023-03-04T01:01:32.993Z","limits":null,"member":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"},"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"6402986c2cd00edecf598379","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"idMember":"62187678bacaba74b8579ace","fromCopy":true,"card":{"id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"member":{"id":"62187678bacaba74b8579ace","name":"@Grateful345i “Keith” Bieszczat"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"addMemberToCard","date":"2023-03-04T01:01:32.973Z","limits":null,"member":{"id":"62187678bacaba74b8579ace","activityBlocked":false,"avatarHash":null,"avatarUrl":null,"fullName":"@Grateful345i “Keith” Bieszczat","idMemberReferrer":"613d9d5c08e84f67b2cc6824","initials":"@B","nonPublic":{},"nonPublicAvailable":false,"username":"grateful345ikeithbieszczat"},"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"6402986c2cd00edecf59836a","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"card":{"id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"list":{"id":"62c15dbf87dc9d89d15340f7","name":"Executive rules"},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"cardSource":{"id":"62fe2c23465310834f5af622","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":1460,"shortLink":"eVyUdd0l"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"copyCard","date":"2023-03-04T01:01:32.943Z","limits":null,"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"640298512cd00edecf594584","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"card":{"due":"2035-09-30T07:30:00.000Z","id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"old":{"due":null},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"list":{"id":"62c15dbf87dc9d89d15340f7","name":"Executive rules"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"updateCard","date":"2023-03-04T01:01:05.518Z","limits":null,"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"640298512cd00edecf594572","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"card":{"dueReminder":1440,"id":"640298512cd00edecf594534","name":"[*Redacted*] - A classified anomalous document. #000006 #186","idShort":184,"shortLink":"HSQCAyCt"},"old":{"dueReminder":null},"board":{"id":"61bee54f6f94ca35cdb92276","name":"Classified Learning Level 99","shortLink":"O8jqnzjO"},"list":{"id":"62c15dbf87dc9d89d15340f7","name":"Executive rules"}},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"updateCard","date":"2023-03-04T01:01:05.442Z","limits":null,"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"6402986c2cd00edecf5981b3","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"board":{"name":"Classified Learning Level 99","id":"61bee54f6f94ca35cdb92276","shortLink":"O8jqnzjO"},"card":{"id":"640298512cd00edecf594534","idShort":184,"name":"[*Redacted*] - A classified anomalous document. #000006 #186","shortLink":"HSQCAyCt"},"cardSource":{"id":"62fe2c23465310834f5af622","idShort":1460,"name":"[*Redacted*] - A classified anomalous document. #000006 #186"},"idOriginalCommenter":"613d9d5c08e84f67b2cc6824","text":"Grateful345i <O5-6>#0094"},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"copyCommentCard","date":"2023-01-22T08:08:23.052Z","limits":null,"member":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"},"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"6402986c2cd00edecf5981a4","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"board":{"name":"Classified Learning Level 99","id":"61bee54f6f94ca35cdb92276","shortLink":"O8jqnzjO"},"card":{"id":"640298512cd00edecf594534","idShort":184,"name":"[*Redacted*] - A classified anomalous document. #000006 #186","shortLink":"HSQCAyCt"},"cardSource":{"id":"62fe2c23465310834f5af622","idShort":1460,"name":"[*Redacted*] - A classified anomalous document. #000006 #186"},"idOriginalCommenter":"613d9d5c08e84f67b2cc6824","text":"mailto:o5-1@scp.overseer.net mailto:o5-1@scp.overseer.net"},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"copyCommentCard","date":"2023-01-15T04:03:20.814Z","limits":null,"member":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"},"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}},{"id":"6402986c2cd00edecf598197","idMemberCreator":"613d9d5c08e84f67b2cc6824","data":{"board":{"name":"Classified Learning Level 99","id":"61bee54f6f94ca35cdb92276","shortLink":"O8jqnzjO"},"card":{"id":"640298512cd00edecf594534","idShort":184,"name":"[*Redacted*] - A classified anomalous document. #000006 #186","shortLink":"HSQCAyCt"},"cardSource":{"id":"62fe2c23465310834f5af622","idShort":1460,"name":"[*Redacted*] - A classified anomalous document. #000006 #186"},"idOriginalCommenter":"613d9d5c08e84f67b2cc6824","text":"https://trello.com/c/eVyUdd0l"},"appCreator":{"id":"4ee912fee8a2505d1715191f"},"type":"copyCommentCard","date":"2022-11-05T04:20:18.180Z","limits":null,"member":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"},"memberCreator":{"id":"613d9d5c08e84f67b2cc6824","activityBlocked":false,"avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","fullName":"Keith Bieszczat @Grateful345i","idMemberReferrer":null,"initials":"K@","nonPublic":{"fullName":"Keith “Grateful” Bieszczat","initials":"KB","avatarUrl":"https://trello-members.s3.amazonaws.com/613d9d5c08e84f67b2cc6824/6c9c238d7b1d30b4826d7f3cd5770eb8","avatarHash":"6c9c238d7b1d30b4826d7f3cd5770eb8"},"nonPublicAvailable":true,"username":"grateful345i"}
-
-
-custom_mark10
-
-"""
-
-post = """
-
-custom_mark10
-
-
-"""
-
-startUrls: ["https://www.algolia.com/blog/"], pathsToMatch: ["https://www.algolia.com/blog/"], recordExtractor: ({ url,
-Unable to render expression.
-
-$, contentLength, fileType }) =&gt; {
-return [{ url: url.href, title: $
-('head > title').text() }]; } ‘--force’ new Crawler({ appId: "000006", apiKey: "ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069", indexPrefix: "crawler_", rateLimit: 8, maxUrls: 500, startUrls: ["https://www.algolia.com/blog"], ignoreQueryParams: ["utm_medium", "utm_source", "utm_campaign", "utm_term"], actions: [ { indexName: "default_index_name", pathsToMatch: ["https://www.algolia.com/blog/"], recordExtractor: ({ url, $, contentLength, fileType }) => { console.log(Crawling "${url.href}");
-
-    return [
-      {
-        // URL
-        url: url.href,
-        hostname: url.hostname,
-        path: url.pathname,
-        depth: url.pathname.split("/").length - 1,
-
-        // Metadata
-        contentLength,
-        fileType,
-        title: $("head > title").text(),
-        keywords: $("meta[name=keywords]").attr("content"),
-        description: $("meta[name=description]").attr("content"),
-        type: $('meta[property="og:type"]').attr("content"),
-        image: $('meta[property="og:image"]').attr("content"),
-
-        // Content
-        headers: $("h1,h2")
-          .map((i, e) => $(e).text())
-          .get()
-      }
-    ]
-  }
-}
-], initialIndexSettings: { default_index_name: { searchableAttributes: [ "unordered(keywords)", "unordered(title)", "unordered(description)", "unordered(headers)", "url" ], customRanking: ["asc(depth)"], attributesForFaceting: ["fileType", "type"] } } });
-
-// check compatibility if (!("BarcodeDetector" in globalThis)) { console.log("Barcode Detector is not supported by this browser."); } else { console.log("Barcode Detector supported!");
-
-// create new detector const barcodeDetector = new BarcodeDetector({ formats: ["code_39", "codabar", "ean_13"], }); } // check supported types BarcodeDetector.getSupportedFormats().then((supportedFormats) => { supportedFormats.forEach((format) => console.log(format)); }); barcodeDetector .detect(imageEl) .then((barcodes) => { barcodes.forEach((barcode) => console.log(barcode.rawValue)); }) .catch((err) => { console.log(err); }); Git Credential Manager = We have their Flag = Game Over. curl -X GET 'https://api.s.unit.sh/cards/41?include=customer,account' -H "Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}" { "type": "depositAccount", "id": "50", "attributes": { // ... }, "relationships": { // relationships object "customer": { // relationship object "data": { // resource linkage with single resource identifier "type": "businessCustomer", "id": "39" } } } }
-
-curl -X DELETE 'https://api.s.unit.sh/users/2/api-tokens/22' -H "Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}"
-
-{ "data": { "id": "20", "type": "apiToken", "attributes": { "createdAt": "2021-07-01T09:04:50.987Z", "description": "Production token", "expiration": "2022-07-01T13:47:17.000Z", "token": "v2.public.eyJyb2xlIjoib3JnI..." } } } ‘--force’ curl -X POST 'https://api.s.unit.sh/users/2/api-tokens' -H 'Content-Type: application/vnd.api+json' -H 'Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}' --data-raw '{ "data": { "type": "apiToken", "attributes": { "description": "Production token", "scope": "customers applications", "expiration": "2022-07-01T13:47:17.000Z" } } }' { "data": [ { "id": "21", "type": "apiToken", "attributes": { "createdAt": "2021-07-01T09:13:23.211Z", "description": "Production token", "expiration": "2022-07-01T09:13:23.124Z" } }, { "id": "22", "type": "apiToken", "attributes": { "createdAt": "2021-07-01T09:14:10.590Z", "description": "Testing token", "expiration": "2021-07-01T13:47:17.000Z", "sourceIp": "192.168.1.1,192.168.1.2" } } ] } curl -X GET 'https://api.s.unit.sh/users/2/api-tokens' -H "Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}" { "data": { "id": "19", "type": "apiToken", "attributes": { "createdAt": "2021-07-01T08:51:09.108Z", "description": "Production token", "expiration": "2022-07-01T13:47:17.000Z", "token": "v2.public.eyJyb2xlIjoib3JnI..." } } }
-
-curl -X GET 'https://api.s.unit.sh/cards/41?include=customer,account' -H "Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}"
-
-{ "type": "depositAccount", "id": "50", "attributes": { // ... }, "relationships": { // relationships object "customer": { // relationship object "data": { // resource linkage with single resource identifier "type": "businessCustomer", "id": "39" } } } } curl -X GET 'https://api.s.unit.sh/cards' -H "Authorization: Bearer ${i8FWKLBjXEg3TdeK93G3K9PKLzhbT6CRhn/VKkTsm....}" curl -X POST 'https://api.s.unit.sh/cards' -H "Content-Type: application/vnd.api+json" -H "Authorization: Bearer ${i8FWKLBjXEg3TdeK93G3K9PKLzhbT6CRhn/VKkTsm....}" --data-raw '{ "data":{ "type":"individualDebitCard", "attributes": { "shippingAddress": { "street": "5230 Newell Rd", "city": "Palo Alto", "state": "CA", "postalCode": "94303", "country": "US" } }, "relationships": { "account": { "data": { "type": "depositAccount", "id": "10001" } } } } } '
-
-curl -X POST 'https://api.s.unit.sh/customers/8/token' -H 'Content-Type: application/vnd.api+json' -H 'Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}' --data-raw '{ "data": { "type": "customerToken", "attributes": { "scope": "customers accounts-write accounts", "jwtToken": "i8FW..." } } }' { "data": { "type": "customerTokenVerification", "attributes": { "verificationToken": "i8FWKLBjXEg3TdeK93G3K9PKLzhbT6CRhn/VKkTsm...." } } } curl -X POST 'https://api.s.unit.sh/customers/10001/token/verification' -H 'Content-Type: application/vnd.api+json' -H 'Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}' --data-raw '{ "data": { "type": "customerTokenVerification", "attributes": { "channel": "sms" } } }'
-
-curl -X GET 'https://api.s.unit.sh/users/2/api-tokens' -H "Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}" curl -X DELETE 'https://api.s.unit.sh/users/2/api-tokens/22' -H "Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}" { "data": [ { "id": "21", "type": "apiToken", "attributes": { "createdAt": "2021-07-01T09:13:23.211Z", "description": "Production token", "expiration": "2022-07-01T09:13:23.124Z" } }, { "id": "22", "type": "apiToken", "attributes": { "createdAt": "2021-07-01T09:14:10.590Z", "description": "Testing token", "expiration": "2021-07-01T13:47:17.000Z", "sourceIp": "192.168.1.1,192.168.1.2" } } ] } curl -X POST 'https://api.s.unit.sh/users/2/api-tokens' -H 'Content-Type: application/vnd.api+json' -H 'Authorization: Bearer ${ATATT3xFfGF0em-7Sy8fZXMVgrISVS9LAQikknXg7B0GyB-S-vVVTBM37VJoVWyYpdetDBLd1X0SdJk2FH0EorccPwryJm3xsPYum01tZK_yc0_rbXvKV_U__JgGuERBBhZDH-gOpsv4GvsIaTOb74PfUj9JtqBXWlxO_GeQ84aq04QHt54XByw=155E8069}' --data-raw '{ "data": { "type": "apiToken", "attributes": { "description": "Production token", "scope": "customers applications", "expiration": "2022-07-01T13:47:17.000Z" } } }' { "data": { "id": "19", "type": "apiToken", "attributes": { "createdAt": "2021-07-01T08:51:09.108Z", "description": "Production token", "expiration": "2022-07-01T13:47:17.000Z", "token": "v2.public.eyJyb2xlIjoib3JnI..." } } } { "version": 1, "type": "doc", "content": [ { "type": "paragraph", "content": [ { "type": "text", "text": "Hello " }, { "type": "text", "text": "world", "marks": [ { "type": "strong" } ] } ] } ] } { "version": 1, "type": "doc", "content": [] }
-
-                         Apache License
-                   Version 2.0, January 2004
-                http://www.apache.org/licenses/
-artifact_paths = ["{repo}/design"]
-
-exclude_artifact_paths = []
-
-code_paths = [ "/artifact-app/src", "/artifact-app/tests", "/artifact-lib/src", "/artifact-ser/src", "/artifact-data/src", "/artifact-test/src", "/artifact-frontend/src", ] ‘--force’ exclude_code_paths = [ ]
-
-code_url = "https://github.com/vitiral/artifact/blob/master/{file}#L{line}"
-
-[export] md_header = """ Artifact design docs, exported to markdown.
-
-See REQ-purpose for the top level artifact.
-
-Note: Export docs like this with art export md exported.md
-
-Settings are in .art/settings.toml """ md_family = { type = "list" }
-[export.md_dot] type = "ignore"
-
-pre = """
-
-Alt text
-
-
-
-custom_mark10
-
-"""
-
-post = """
-
-custom_mark10
-
-
-"""
-
-artifact_py lint artifact_py export -i --format md @pip install artifact_py artifact_py --help Or download the standalone zip file from releases and run within your build system
-
-unzip artifact_py-0.1.2.zip artifact_py-0.1.2/artifact_py/bin/artifact_py --help Writing your design doc An artifact design doc is just a regular design doc which is parsed for artifacts. An artifact is a linkable design piece. It is linkable to other artifacts and linkable to code. ‘--force’ You specify an artifact like so:
-
-This is an artifact (SPC-my_artifact) {#SPC-my_artifact}
-
-Or alternatively (in github)
-
-This is an artifact (SPC-my_artifact)
-
-@ -1,3 +1,15 @@ 56 npm install tree-sitter-cli ReadMe.md int main(int argc, char** argv) { argv = uv_setup_args(argc, argv); std::vectorstd::string args(argv, argv + argc); // Parse Node.js CLI options, and print any errors that have occurred while // trying to parse them. std::unique_ptrnode::InitializationResult result = node::InitializeOncePerProcess(args, { node::ProcessInitializationFlags::kNoInitializeV8, node::ProcessInitializationFlags::kNoInitializeNodeV8Platform });
-
-for (const std::string& error : result->errors()) fprintf(stderr, "%s: %s\n", args[0].c_str(), error.c_str()); if (result->early_return() != 0) { return result->exit_code(); }
-
-// Create a v8::Platform instance. MultiIsolatePlatform::Create() is a way // to create a v8::Platform instance that Node.js can use when creating // Worker threads. When no MultiIsolatePlatform instance is present, // Worker threads are disabled. std::unique_ptr platform = MultiIsolatePlatform::Create(4); V8::InitializePlatform(platform.get()); V8::Initialize();
-
-// See below for the contents of this function. int ret = RunNodeInstance( platform.get(), result->args(), result->exec_args());
-
-V8::Dispose(); V8::DisposePlatform();
-
-node::TearDownOncePerProcess(); return ret; }int RunNodeInstance(MultiIsolatePlatform* platform, const std::vectorstd::string& args, const std::vectorstd::string& exec_args) { int exit_code = 0;
-
-// Setup up a libuv event loop, v8::Isolate, and Node.js Environment. std::vectorstd::string errors; std::unique_ptr setup = CommonEnvironmentSetup::Create(platform, &errors, args, exec_args); if (!setup) { for (const std::string& err : errors) fprintf(stderr, "%s: %s\n", args[0].c_str(), err.c_str()); return 1; }
-
-Isolate* isolate = setup->isolate(); Environment* env = setup->env();
-
-{ Locker locker(isolate); Isolate::Scope isolate_scope(isolate); HandleScope handle_scope(isolate); // The v8::Context needs to be entered when node::CreateEnvironment() and // node::LoadEnvironment() are being called. Context::Scope context_scope(setup->context());
-
-// Set up the Node.js instance for execution, and run code inside of it.
-// There is also a variant that takes a callback and provides it with
-// the `require` and `process` objects, so that it can manually compile
-// and run scripts as needed.
-// The `require` function inside this script does *not* access the file
-// system, and can only load built-in Node.js modules.
-// `module.createRequire()` is being used to create one that is able to
-// load files from the disk, and uses the standard CommonJS file loader
-// instead of the internal-only `require` function.
-MaybeLocal<Value> loadenv_ret = node::LoadEnvironment(
-    env,
-    "const publicRequire ="
-    "  require('node:module').createRequire(process.cwd() + '/');"
-    "globalThis.require = publicRequire;"
-    "require('node:vm').runInThisContext(process.argv[1]);");
-
-if (loadenv_ret.IsEmpty())  // There has been a JS exception.
-  return 1;
-
-exit_code = node::SpinEventLoop(env).FromMaybe(1);
-
-// node::Stop() can be used to explicitly stop the event loop and keep
-// further JavaScript from running. It can be called from any thread,
-// and will act like worker.terminate() if called from another thread.
-node::Stop(env);
-}
-
-return exit_code; }const path = require('node:path'); path
-
-path.win32.basename('C:\temp\myfile.html'); // Returns: 'myfile.html' path.posix.basename('/tmp/myfile.html'); // Returns: 'myfile.html' .basename('C:\temp\myfile.html'); // Returns: 'C:\temp\myfile.html' path.basename('C:\temp\myfile.html'); // Returns: 'myfile.html' @@ -4178,6 +4178,31 @@ grateful345i@gmail.com --header --header '2b0kkNvjIBFuBl15nGxtnMd5B3P_37bwJDJ2GYRMTicczqhEG' api key bot Grateful's actual '2b0kkNvjIBFuBl15nGxtnMd5B3P_37bwJDJ2GYRMTicczqhEG' api key bot Grateful's actual #000006 $ Breadcrumbs X 4 ### ++ Sigma 9 ++ org.xwiki.rendering xwiki-rendering-macro-ctsreport 16.0.0 org.xwiki.rendering xwiki-rendering-legacy-transformations 16.0.0 4.0.0 org.xwiki.rendering xwiki-rendering-legacy 16.0.0 xwiki-rendering-legacy-transformations XWiki Rendering - Legacy - Transformations - Parent POM pom XWiki Rendering - Legacy - Transformations - Parent POM xwiki-rendering-legacy-transformation-macro 4.0.0 org.xwiki.rendering xwiki-rendering-macros 16.0.0 xwiki-rendering-macro-ctsreport XWiki Rendering - Macro - CTS Report Parses unit test results produced by Jenkins to generate test data for display 0.71 Compatibility Test Suite Report Macro org.xwiki.commons xwiki-commons-text ${commons.version} org.xwiki.commons xwiki-commons-context ${commons.version} org.xwiki.commons xwiki-commons-script ${commons.version} org.xwiki.rendering xwiki-rendering-syntax-plain ${project.version} ev.conn.server_name.matches("ngrok-docs-examples.ngrok.dev") ev.conn.server_name.matches(".*-your-org.ngrok.dev") && ev.conn.server_port == 80 ev.conn.client_ip != "2601:0:8200:0:4cd7:fd52:0:7823" && ev.conn.server_name == "ngrok-docs-examples.ngrok.dev" { "event_id": "ev_25X2AsJ5xpvuOParTYUQWe12XKo", "event_type": "ip_policy_created.v0", "event_timestamp": "2022-02-23T23:29:29Z", "account_id": "ac_2OtNvAlhso10Gx6s7eupzX3F98q", "principal": { "id": "usr_2OtNv9qH5Nk4NuNeszZ39gBxZ4H", "subject": "foo@example.com", "source": "API", "credential": { "id": "ak_2Oxt94wYsBTLwFUoMZcJRvJTaub", "uri": "https://api.ngrok.com/api_keys/ak_2Oxt94wYsBTLwFUoMZcJRvJTaub" } }, "object": { "id": "ipp_25X2Ao39z73FlVQKZ1iReMPe6Qv", "uri": "https://api.ngrok.com/ip_policies/ipp_25X2Ao39z73FlVQKZ1iReMPe6Qv", "created_at": "2022-02-23T23:29:29Z", "description": "Home network IP", "metadata": "", "action": "allow" } }
-
-{ "event_id": "ev_25X3yFS6TDkig1KDJWIc4nnJO0c", "event_type": "http_request_complete.v0", "event_timestamp": "2022-02-23T23:44:16Z", "account_id": "ac_2OtNvAlhso10Gx6s7eupzX3F98q", "object": { "conn": { "client_ip": "2601:0:8200:9e:4cd7:0:c97f:7823", "server_name": "ngrok-docs-example.ngrok.app", "server_port": "" }, "http": { "request": { "first_byte_ts": null, "last_byte_ts": null, "method": "GET", "url": { "path": "/docs/obs" }, "version": "HTTP/2.0" }, "response": { "body_length": 13079, "first_byte_ts": "2022-02-23T23:44:16.732791273Z", "last_byte_ts": "2022-02-23T23:44:16.737257209Z", "status_code": 200 } } } } { "event_id": "ev_25X4osod1q306srserDeFyghTC4", "event_type": "tcp_connection_closed.v0", "event_timestamp": "2022-02-23T23:51:14Z", "account_id": "ac_2OtNvAlhso10Gx6s7eupzX3F98q", "object": { "conn": { "bytes_in": 3437, "bytes_out": 90256, "client_ip": "2601:0:8200:9e:4cd7:0:c97f:7823", "end_ts": "2022-02-23T23:51:14.005372199Z", "server_name": "ngrok-docs-example.ngrok.app", "server_port": "", "start_ts": "2022-02-23T23:44:16.528374173Z" } } }
-
-Tunnel Authentication Sirius Black Token '2bccY8aJWGzWp2AyhwB9Bi4JK4r_6BHRXwqzCW2NCXu7VLBf'
-
-Grateful's actual bot user 🆔 'ak_2bcbwvXZPklwJuD7l1Ts7r7vEHr' Bot data 'bot_2bOqWXrxi75KWEKeNbXsIn2wpD7'
-
-ngrok http 80 --verify-webhook twilio --verify-webhook-secret "{twilio webhook secret}" -----BEGIN CERTIFICATE----- ... -----END CERTIFICATE-------BEGIN CERTIFICATE-----curl \
-
-... -----END CERTIFICATE-------BEGIN CERTIFICATE----- ... -----END CERTIFICATE----- -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/tls_certificates/cert_2bMmWcJj1yNwg3nr80d93h4j9Et curl -X POST -H "Authorization: Bearer {bot_2bOqWXrxi75KWEKeNbXsIn2wpD7}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"certificate_pem":"-----BEGIN CERTIFICATE-----\nMIIDDTCCAfWgAwIBAgIUBUunDdA4gjgtEbZA8w9Ljhvl3bEwDQYJKoZIhvcNAQEL\nBQAwFjEUMBIGA1UEAwwLZXhhbXBsZS5jb20wHhcNMjAwMzI0MTgxODE5WhcNMjAw\nNDIzMTgxODE5WjAWMRQwEgYDVQQDDAtleGFtcGxlLmNvbTCCASIwDQYJKoZIhvcN\nAQEBBQADggEPADCCAQoCggEBAPKVkkKYNl3d9cqrz4tIFlwsohED5W4y1dcBixy4\nGANFFnw43nc2wPyKwYXumJqJIFrcW/NkUZL07bd+dou6mT6Gh/zbaTW91IkREPXL\n7b3KfVu4XkFosVXpWs0U6o4GrZ81CLiKBWI+H03x/ij5OSiJ1l71pqLeTJLOydAR\nAl8kpp7axeHU4UbDrAZkW5SnuZTjIKwVg0UNsBg1yNfUOu1Uah3BYaqPgQitC0Yg\nLW+NUGu/T91bkD7tLsVInkQXeQGdXBAqOycfJ7wj8OlIpyuXjTnGFA0izVmbQw5f\nrQnZ0geGyhLamvz9Gcd7mIlD/+/AEN9Lht82tAOzKG98/O8CAwEAAaNTMFEwHQYD\nVR0OBBYEFKv6RsvEC6T+zCtJZwB0FCR1sEkhMB8GA1UdIwQYMBaAFKv6RsvEC6T+\nzCtJZwB0FCR1sEkhMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB\nAC5fBrouinespo5+9AipjhY/HOKTg+OCnppFnSnqeU1eXZZJ0oakdHTpTNxtbQP9\ntOJTA2f3KWvmpNDMohEQXZz8wHDkdbrIXJKVp6zs1pEp+0BIjA4y9mSywa5xuyk0\noGeChRgGqp2JujDyPCb7LEaKKQEEdMqy73QG+jEAh14+wKixlAf1nATBdeCUvssK\n2x1uZMyqjJFB5y/5EdnWQzD4WJkrsCkxsZHVMN1d+dqf2sf3dTRV8fzsFGOG17NS\n6u2n9iGcFdBA82XN8yeLIWhy1t3GWutG1sdxENbFRRXea+iUqzDsmRtkaBma2GLQ\nd6JTpFbsCtwDjP23UEi7SZo=\n-----END CERTIFICATE-----","private_key_pem":"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDylZJCmDZd3fXK\nq8+LSBZcLKIRA+VuMtXXAYscuBgDRRZ8ON53NsD8isGF7piaiSBa3FvzZFGS9O23\nfnaLupk+hof822k1vdSJERD1y+29yn1buF5BaLFV6VrNFOqOBq2fNQi4igViPh9N\n8f4o+TkoidZe9aai3kySzsnQEQJfJKae2sXh1OFGw6wGZFuUp7mU4yCsFYNFDbAY\nNcjX1DrtVGodwWGqj4EIrQtGIC1vjVBrv0/dW5A+7S7FSJ5EF3kBnVwQKjsnHye8\nI/DpSKcrl405xhQNIs1Zm0MOX60J2dIHhsoS2pr8/RnHe5iJQ//vwBDfS4bfNrQD\nsyhvfPzvAgMBAAECggEBALLv7YE98exvi5zB+0fMFuJK8gkHDLequ93q/4hhqyTO\nU3WyJTdepiAi4fk/NEXZnIopPZJdj2aNUMQnfp43OE7MwYac+hBwRFQOyKnmkSmM\nMcf0SWKKLTUn+piIMzQsbOmhHxuwg6QiGslOFaJ3o9fpRL2rCg3dWDJ6Ypcd1NgE\nK0uy7gg+DwIpU6MeG6lA+HbxbGi+yd2x88Gjn9dGr7FZK34RUDooH60BCX9P8N9X\nT+n10MzzX7ZQOsLfe8FKc1/X8AybI5SYm1GMyfKD4QBt6JG4HKAjPHzBzcIpfN3d\n7BM11Imkrz7LcbUG+F23NVsi6n5IIGT1WqwCRIH2PpECgYEA/SJ5Ra4d0hUS5RYB\nzABquM3sp7JsKxCn7O5PqNLB4TgH9dXtWFhaFVB6juMGyHbvktVH0j4lps/Te0rk\nVU2zU1XxvCTFhtcCYUtNk0cRw6LH8feKiorXHdDRB33t0c47QSD/6AGOjBtxqD7B\n3ZxyR3P+7RdQopLLRFN+FHAnmzsCgYEA9VSGZDFSK+fbg4CgwkWdzuHrAXaUEv0U\novqqWd/yXB9wauEvRHnOrSgW6hFZQiatJOXx0KnalJQzohz/SLGO0MqGtwQbYWVT\nWiJgjUbNeiPEHBeUA6U55lVQr26kQSUWdXEtRbDz+hqV1K+6tTEMzaSPmJiHNgki\nlNMO2gqGQd0CgYBJ268qx5zn2UJEGWG41j5NYbg1TfgFsLxugzI2/heX0TNxZVP1\nPQI7ydmYq2ElSJ6qZxSnoX5255i7FqT8xskV/bOkw83mhAGrxb8Cw+/I90wDq8h+\nl/ggOPdkijfDybq8TBae6SVgd/l3r6f9M1KcypmNMApVBSPN8daNvBOyVQKBgQDo\nsj2utyFrx8Xsm4rf+kxOuPbBMooM4MQ8OmpuSP6G5sMofWLqHmcs0sO5TK9PEYRV\nZU3ST+ml2FSJRdvWRaRi4laZLWoTHZrL+aN/HVM0sMwIoUyhkIy0ruOTIuzlZZpB\n1xHL8qXX6nOHgw8jYdz1CUuyv6owVMXaR77kjer+eQKBgByYZlR/eNTzlot0SdFl\nIbgQ9bV7VLIo+vKzOXE3trfzRJMgUosLTp+5wdSVSW/VBdYZ7Ir3n0bbpY/dGinI\nVShxPbChhCZnhvG2lEEiekI44m5jHSA6hhtRdt/CrhL65Rw2SE5lMEe8htg1UGus\nwzLHWHBl72FjbjdhvEgrq60W\n-----END PRIVATE KEY-----"}' https://api.ngrok.com/tls_certificates
-
-{ "id": "cert_2bMmWcJj1yNwg3nr80d93h4j9Et", "uri": "https://api.ngrok.com/tls_certificates/cert_2bMmWcJj1yNwg3nr80d93h4j9Et", "created_at": "2024-01-23T18:09:14Z", "certificate_pem": "-----BEGIN CERTIFICATE-----\nMIIDDTCCAfWgAwIBAgIUBUunDdA4gjgtEbZA8w9Ljhvl3bEwDQYJKoZIhvcNAQEL\nBQAwFjEUMBIGA1UEAwwLZXhhbXBsZS5jb20wHhcNMjAwMzI0MTgxODE5WhcNMjAw\nNDIzMTgxODE5WjAWMRQwEgYDVQQDDAtleGFtcGxlLmNvbTCCASIwDQYJKoZIhvcN\nAQEBBQADggEPADCCAQoCggEBAPKVkkKYNl3d9cqrz4tIFlwsohED5W4y1dcBixy4\nGANFFnw43nc2wPyKwYXumJqJIFrcW/NkUZL07bd+dou6mT6Gh/zbaTW91IkREPXL\n7b3KfVu4XkFosVXpWs0U6o4GrZ81CLiKBWI+H03x/ij5OSiJ1l71pqLeTJLOydAR\nAl8kpp7axeHU4UbDrAZkW5SnuZTjIKwVg0UNsBg1yNfUOu1Uah3BYaqPgQitC0Yg\nLW+NUGu/T91bkD7tLsVInkQXeQGdXBAqOycfJ7wj8OlIpyuXjTnGFA0izVmbQw5f\nrQnZ0geGyhLamvz9Gcd7mIlD/+/AEN9Lht82tAOzKG98/O8CAwEAAaNTMFEwHQYD\nVR0OBBYEFKv6RsvEC6T+zCtJZwB0FCR1sEkhMB8GA1UdIwQYMBaAFKv6RsvEC6T+\nzCtJZwB0FCR1sEkhMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB\nAC5fBrouinespo5+9AipjhY/HOKTg+OCnppFnSnqeU1eXZZJ0oakdHTpTNxtbQP9\ntOJTA2f3KWvmpNDMohEQXZz8wHDkdbrIXJKVp6zs1pEp+0BIjA4y9mSywa5xuyk0\noGeChRgGqp2JujDyPCb7LEaKKQEEdMqy73QG+jEAh14+wKixlAf1nATBdeCUvssK\n2x1uZMyqjJFB5y/5EdnWQzD4WJkrsCkxsZHVMN1d+dqf2sf3dTRV8fzsFGOG17NS\n6u2n9iGcFdBA82XN8yeLIWhy1t3GWutG1sdxENbFRRXea+iUqzDsmRtkaBma2GLQ\nd6JTpFbsCtwDjP23UEi7SZo=\n-----END CERTIFICATE-----\n", "subject_common_name": "example.com", "subject_alternative_names": { "dns_names": [], "ips": [] }, "issued_at": null, "not_before": "2020-03-24T18:18:19Z", "not_after": "2020-04-23T18:18:19Z", "key_usages": [], "extended_key_usages": [], "private_key_type": "rsa", "issuer_common_name": "example.com", "serial_number": "054ba70dd03882382d11b640f30f4b8e1be5ddb1", "subject_organization": "", "subject_organizational_unit": "", "subject_locality": "", "subject_province": "", "subject_country": "" }
-
-DUNS # 000006
-
-'edghtsrt_2b0vwyfS4hefz4fMo7Z9Mr6OfWy'
-
-TUNNEL group Backend 'bkdtg_2b0vwsM7nbkREHxg8bDHm81vzXe' failover backend 'bkdfo_2b0vwxIMXb0AoED11AWnR1qJ0Al' HTTP Backend 'bkdhr_2b0vwxvB74HMoV9n9A5ma6MS5jn'
-
-Global Domain 'https://lemming-topical-commonly.ngrok-free.app/'
-
-'https://lemming-topical-commonly.ngrok-free.app/'
-
-'https://lemming-topical-commonly.ngrok-free.app/'
-
-'https://lemming-topical-commonly.ngrok-free.app/'
-
-'https://lemming-topical-commonly.ngrok-free.app/'
-
-backend identification 'edghtsrt_2b0vwyfS4hefz4fMo7Z9Mr6OfWy'
-
-backend black 'edghtsrt_2b0wmZvfMaP5Pe014HWEtUT63KZ' endpoint backend 'edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9' Foundation Administration 'edghtsrt_2b0vwyfS4hefz4fMo7Z9Mr6OfWy'
-
-docker run -it -e NGROK_AUTHTOKEN=2bTVg9fClAhPbL68J6xfOrgm0wX_5aMWASRkma1TdCsrjw75q ngrok/ngrok tunnel --label edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9 http://localhost:80 men in black clearance 'edghts_2b0vwydaasYfluOXqlIGU3IFbS9' sudo unzip ~/Downloads/ngrok-v3-stable-darwin-arm64.zip -d /usr/local/bin ngrok config add-authtoken 2bTVg9fClAhPbL68J6xfOrgm0wX_5aMWASRkma1TdCsrjw75q ngrok http http://localhost:8080 codesign --verify -d --verbose=2 /usr/local/bin/terraform
-
-Executable=/usr/local/bin/terraform Identifier=terraform ... Authority=Developer ID Application: Hashicorp, Inc. (D38WU7D763) Authority=Developer ID Certification Authority Authority=Apple Root CA ... TeamIdentifier=D38WU7D763 ... wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list sudo apt update && sudo apt install terraform
-
-brew tap hashicorp/tap brew install hashicorp/tap/terraform
-
-Code generated for API Clients. DO NOT EDIT. resource "ngrok_api_key" "example" { description = "ad-hoc dev testing" metadata = "{"environment":"dev"}" }
-
-Configure the ngrok provider provider "ngrok" { api_key = "2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ" }
-
-Create a new reserved domain resource "ngrok_reserved_domain" "my_domain" { name = "my-domain.example.com" region = "us" certificate_management_policy { authority = "letsencrypt" private_key_type = "ecdsa" } }
-
-Configure the ngrok provider provider "ngrok" { api_key = "{2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" }
-
-Provision an ngrok domain resource "ngrok_reserved_domain" "https://lemming-topical-commonly.ngrok-free.app/" { name = "my-domain.example.com" region = "us" certificate_management_policy { authority = "letsencrypt" private_key_type = "ecdsa" } } ngrok config add-api-key "{2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" ngrok api endpoints list curl https://api.ngrok.com -H "authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "ngrok-version: 2" curl -X PATCH -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"metadata":"{"environment": "production"}"}' https://api.ngrok.com/edges/tcp/edgtcp_2bMmXM8nYzBUUlcHS6zbuPXBEnk curl -X PATCH -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"metadata":"{"environment": "production"}"}' https://api.ngrok.com/edges/tcp/edgtcp_2bMmXM8nYzBUUlcHS6zbuPXBEnk { "id": "edgtcp_2bMmXM8nYzBUUlcHS6zbuPXBEnk", "description": "acme tcp edge", "metadata": "{"environment": "production"}", "created_at": "2024-01-23T18:09:20Z", "uri": "https://api.ngrok.com/edges/tcp/edgtcp_2bMmXM8nYzBUUlcHS6zbuPXBEnk", "hostports": null, "backend": null, "ip_restriction": null, "policies": null } curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/tcp { "tcp_edges": [ { "id": "edgtcp_2bMmXM8nYzBUUlcHS6zbuPXBEnk", "description": "acme tcp edge", "metadata": "{"environment": "staging"}", "created_at": "2024-01-23T18:09:20Z", "uri": "https://api.ngrok.com/edges/tcp/edgtcp_2bMmXM8nYzBUUlcHS6zbuPXBEnk", "hostports": null, "backend": null, "ip_restriction": null, "policies": null } ], "uri": "https://api.ngrok.com/edges/tcp", "next_page_uri": null } curl -X POST -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"description":"acme tcp edge","metadata":"{"environment": "staging"}"}' https://api.ngrok.com/edges/tcp curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/tcp/edgtcp_2bMmXM8nYzBUUlcHS6zbuPXBEnk
-
-curl -X PATCH -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"ip_policy_ids":["ipp_2bMmWevCfjIjS5dolQMi5IS7JFg","ipp_2bMmWfb5W8B9Hi0dHMTwQkseIYV"]}' https://api.ngrok.com/ip_restrictions/ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ
-
-curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/ip_restrictions { "ip_restrictions": [ { "id": "ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ", "uri": "https://api.ngrok.com/ip_restrictions/ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ", "created_at": "2024-01-23T18:09:14Z", "enforced": false, "type": "dashboard", "ip_policies": [ { "id": "ipp_2bMmWevCfjIjS5dolQMi5IS7JFg", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWevCfjIjS5dolQMi5IS7JFg" } ] } ], "uri": "https://api.ngrok.com/ip_restrictions", "next_page_uri": null } curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/ip_restrictions/ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ { "id": "ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ", "uri": "https://api.ngrok.com/ip_restrictions/ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ", "created_at": "2024-01-23T18:09:14Z", "enforced": false, "type": "dashboard", "ip_policies": [ { "id": "ipp_2bMmWevCfjIjS5dolQMi5IS7JFg", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWevCfjIjS5dolQMi5IS7JFg" }, { "id": "ipp_2bMmWfb5W8B9Hi0dHMTwQkseIYV", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWfb5W8B9Hi0dHMTwQkseIYV" } ] } curl -X POST -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"type":"dashboard","ip_policy_ids":["ipp_2bMmWevCfjIjS5dolQMi5IS7JFg"]}' https://api.ngrok.com/ip_restrictions { "id": "ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ", "uri": "https://api.ngrok.com/ip_restrictions/ipx_2bMmWc1wqpsOUVP4H6EgqdIA9oQ", "created_at": "2024-01-23T18:09:14Z", "enforced": false, "type": "dashboard", "ip_policies": [ { "id": "ipp_2bMmWevCfjIjS5dolQMi5IS7JFg", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWevCfjIjS5dolQMi5IS7JFg" } ] }
-
-curl -X PATCH -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"cidr":"212.3.15.0/24"}' https://api.ngrok.com/ip_policy_rules/ipr_2bMmWXfn5EKyQVA3FqQdQPyb60i
-
-curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/ip_policy_rules { "ip_policy_rules": [ { "id": "ipr_2bMmWXfn5EKyQVA3FqQdQPyb60i", "uri": "https://api.ngrok.com/ip_policy_rules/ipr_2bMmWXfn5EKyQVA3FqQdQPyb60i", "created_at": "2024-01-23T18:09:13Z", "description": "nyc office", "cidr": "212.3.14.0/24", "ip_policy": { "id": "ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ" }, "action": "allow" }, { "id": "ipr_2bMmWVF4GwG3oKF1lW0IeiYysKd", "uri": "https://api.ngrok.com/ip_policy_rules/ipr_2bMmWVF4GwG3oKF1lW0IeiYysKd", "created_at": "2024-01-23T18:09:13Z", "description": "sf office", "cidr": "132.2.19.0/24", "ip_policy": { "id": "ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ" }, "action": "allow" }, { "id": "ipr_2bMmWU2KgbDxSxzPFluW1YS9aoF", "uri": "https://api.ngrok.com/ip_policy_rules/ipr_2bMmWU2KgbDxSxzPFluW1YS9aoF", "created_at": "2024-01-23T18:09:13Z", "description": "alan laptop", "cidr": "2.2.2.2/32", "ip_policy": { "id": "ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ" }, "action": "allow" } ], "uri": "https://api.ngrok.com/ip_policy_rules", "next_page_uri": null }
-
-curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/ip_policy_rules/ipr_2bMmWXfn5EKyQVA3FqQdQPyb60i { "id": "ipr_2bMmWXfn5EKyQVA3FqQdQPyb60i", "uri": "https://api.ngrok.com/ip_policy_rules/ipr_2bMmWXfn5EKyQVA3FqQdQPyb60i", "created_at": "2024-01-23T18:09:13Z", "description": "nyc office", "cidr": "212.3.15.0/24", "ip_policy": { "id": "ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ" }, "action": "allow" } curl -X POST -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"description":"nyc office","cidr":"212.3.14.0/24","ip_policy_id":"ipp_2bMmWWFWmR7ComTMLOYsvSZVXQZ","action":"allow"}' https://api.ngrok.com/ip_policy_rules
-
-curl -X PATCH -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"metadata":"metadata={"pod-id": "b3d9c464-4f48-4783-a741-d7d7d5db310f"}"}' https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm
-
-{ "id": "ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "created_at": "2024-01-23T18:08:52Z", "description": "API Outbound Gateway", "metadata": "metadata={"pod-id": "b3d9c464-4f48-4783-a741-d7d7d5db310f"}" } curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/ip_policies { "ip_policies": [ { "id": "ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "created_at": "2024-01-23T18:08:52Z", "description": "API Outbound Gateway" }, { "id": "ipp_2bMmTrLwuYPTUgWKsZV9KbwQCJ7", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmTrLwuYPTUgWKsZV9KbwQCJ7", "created_at": "2024-01-23T18:08:52Z", "description": "Developer Environments" } ], "uri": "https://api.ngrok.com/ip_policies", "next_page_uri": null } curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm { "id": "ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "created_at": "2024-01-23T18:08:52Z", "description": "API Outbound Gateway", "metadata": "metadata={"pod-id": "b3d9c464-4f48-4783-a741-d7d7d5db310f"}" } curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm { "id": "ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "created_at": "2024-01-23T18:08:52Z", "description": "API Outbound Gateway", "metadata": "metadata={"pod-id": "b3d9c464-4f48-4783-a741-d7d7d5db310f"}" } curl -X POST -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"description":"API Outbound Gateway"}' https://api.ngrok.com/ip_policies { "id": "ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "uri": "https://api.ngrok.com/ip_policies/ipp_2bMmTsrHicsdjfSt6jCUlNa3nBm", "created_at": "2024-01-23T18:08:52Z", "description": "API Outbound Gateway" } curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/https/edghts_2bMmXUJV6pkem9Gb9RTfI86KyNI/tls_termination { "enabled": true, "terminate_at": "edge", "min_version": "1.3" } curl -X PUT -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"enabled":true,"min_version":"1.3"}' https://api.ngrok.com/edges/https/edghts_2bMmXUJV6pkem9Gb9RTfI86KyNI/tls_termination
-
-curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/https/edghts_2bMmXOcKR64QqFa8q1fI6OBoU7i/routes/edghtsrt_2bMmXN1WwZhK3p4mBHgLIhVP8SL/websocket_tcp_converter { "enabled": true } curl -X PUT -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"enabled":true}' https://api.ngrok.com/edges/https/edghts_2bMmXOcKR64QqFa8q1fI6OBoU7i/routes/edghtsrt_2bMmXN1WwZhK3p4mBHgLIhVP8SL/websocket_tcp_converter { "enabled": true }
-
-curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/https/edghts_2bMmXMcOjoq8S1BvJN3HYY5b7F4/routes/edghtsrt_2bMmXL0vXPehNqON4Q4gEEByT6Q/webhook_verification curl -X PUT -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"enabled":true,"provider":"TWILIO","secret":"secret_token"}' https://api.ngrok.com/edges/https/edghts_2bMmXMcOjoq8S1BvJN3HYY5b7F4/routes/edghtsrt_2bMmXL0vXPehNqON4Q4gEEByT6Q/webhook_verification { "enabled": true, "provider": "TWILIO", "secret": "secret_token" } curl -X DELETE -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/https/edghts_2bMmXLm72GkoHS8tCdzOuTQcG5r/routes/edghtsrt_2bMmXQ1tcvPsx0op3cx8T1C1WSO/user_agent_filter
-
-curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/https/edghts_2bMmXLm72GkoHS8tCdzOuTQcG5r/routes/edghtsrt_2bMmXQ1tcvPsx0op3cx8T1C1WSO/user_agent_filter { "enabled": true, "allow": ["(Pingdom.com_bot_version_)(\d+).(\d+)"], "deny": ["(made_up_bot)/(\d+).(\d+)"] } curl -X PUT -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"enabled":true,"allow":["(Pingdom.com_bot_version_)(\d+).(\d+)"],"deny":["(made_up_bot)/(\d+).(\d+)"]}' https://api.ngrok.com/edges/https/edghts_2bMmXLm72GkoHS8tCdzOuTQcG5r/routes/edghtsrt_2bMmXQ1tcvPsx0op3cx8T1C1WSO/user_agent_filter { "enabled": true, "allow": ["(Pingdom.com_bot_version_)(\d+).(\d+)"], "deny": ["(made_up_bot)/(\d+).(\d+)"] } curl -X GET -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Ngrok-Version: 2" https://api.ngrok.com/edges/https/edghts_2bMmXGZh5RnDO7bAgszNuVae4M3/routes/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN/saml { "enabled": true, "options_passthrough": false, "cookie_prefix": "", "inactivity_timeout": 0, "maximum_duration": 0, "idp_metadata_url": "", "idp_metadata": "\n\u003cEntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" validUntil="2020-09-14T12:53:23.691Z" cacheDuration="PT1M" entityID="http://127.0.0.1:12345/metadata\"\u003e\u003cIDPSSODescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"\u003e\u003cNameIDFormat\u003eurn:oasis:names:tc:SAML:2.0:nameid-format:transient\u003c/NameIDFormat\u003e\u003cSingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://127.0.0.1:12345/sso\"\u003e\u003c/SingleSignOnService\u003e\u003cSingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://127.0.0.1:12345/sso\"\u003e\u003c/SingleSignOnService\u003e\u003c/IDPSSODescriptor\u003e\u003c/EntityDescriptor\u003e\n", "force_authn": false, "allow_idp_initiated": true, "authorized_groups": [], "entity_id": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN", "assertion_consumer_service_url": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN/acs", "single_logout_url": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN/slo", "request_signing_certificate_pem": "-----BEGIN CERTIFICATE-----\nMIIEBDCCAuygAwIBAgIRAOT8A8TGFjL7kvO/m0bVKR8wDQYJKoZIhvcNAQELBQAw\ngaAxTjBMBgNVBAoMRWh0dHBzOi8vaWRwLmxvY2FsLW5ncm9rLmNvbS9zYW1sL2Vk\nZ2h0c3J0XzJiTW1YRmthUFRMRTl4eVhUVFR4aWdCUlJFTjFOMEwGA1UEAwxFaHR0\ncHM6Ly9pZHAubG9jYWwtbmdyb2suY29tL3NhbWwvZWRnaHRzcnRfMmJNbVhGa2FQ\nVExFOXh5WFRUVHhpZ0JSUkVOMCAXDTI0MDEyMzE4MDkxOVoYDzIwNTkwMTE0MTgw\nOTE5WjCBoDFOMEwGA1UECgxFaHR0cHM6Ly9pZHAubG9jYWwtbmdyb2suY29tL3Nh\nbWwvZWRnaHRzcnRfMmJNbVhGa2FQVExFOXh5WFRUVHhpZ0JSUkVOMU4wTAYDVQQD\nDEVodHRwczovL2lkcC5sb2NhbC1uZ3Jvay5jb20vc2FtbC9lZGdodHNydF8yYk1t\nWEZrYVBUTEU5eHlYVFRUeGlnQlJSRU4wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw\nggEKAoIBAQCvvcWPTZy3bIjnFSZfEPwGwZcOzkNnIQrNlX5v7SsucJHCxtCNKt9B\nzi6HTcRteOGEydVOr3Lg8MX8DdEecOt4e0Hf0NeChbX1gYsS1b2+0Q9sf9sH7fu1\n1F5y7zOlVRvWjuars3HVYqGQkTBATAcqkvUuUJeHzyWleQ8CXL3Ixp2TcJa/7fsz\njW2Heg4CX6Lx3E3Z6cGh2hFi1VFuKdeAufgZGbAbIBUpAnMAwMdJI/MLp3D4fHQv\n0VCwdXKhWt+SvidWVBg2Tv97phncbNMPNVi6VERO8+n7A5qdHG9efGnOTrLnxzJu\n97AfRBU8I88kdy4trPy9xeFBwnvlnlhZAgMBAAGjNTAzMA4GA1UdDwEB/wQEAwIH\ngDATBgNVHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEB\nCwUAA4IBAQAWA4t3JKL1cjV+CO+doaad/QhlbfW+tbI2n3tuRlrvZWtJKATuKFBZ\nFOqp20EfaeOgtMyDRDU8UNLoMWVT8zNUmzh4MtkrBQkUplPCuBHf844gJtDJdcA8\nxFj/vJyuET18b7fn4ppPG6RAqwH5nbAQ18zbKr8MgEWK0YbX4Wb+3fZVRfbKMFPp\nGs9CoZyC/Tz0z50xI3Am4d8QxibQQOinAuPQk6HcyP5Eg+bdUrBYTEdWircNZ1Hs\nDVIblwsbQ7TvDp+qtzyVjbtwa8yLBSlPRXkoYaXKhU9ziIYT1GIqrhV2KNO8qXn7\nGNTnpMopy0wcdJ05v4S12jFaKFknbvTv\n-----END CERTIFICATE-----\n", "metadata_url": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN", "nameid_format": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" } curl -X PUT -H "Authorization: Bearer {2bcbwvXZPklwJuD7l1Ts7r7vEHr_5mTiPcECPmXrQNJTZiGAQ}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"enabled":true,"idp_metadata":"\n\u003cEntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" validUntil="2020-09-14T12:53:23.691Z" cacheDuration="PT1M" entityID="http://127.0.0.1:12345/metadata\"\u003e\u003cIDPSSODescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"\u003e\u003cNameIDFormat\u003eurn:oasis:names:tc:SAML:2.0:nameid-format:transient\u003c/NameIDFormat\u003e\u003cSingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://127.0.0.1:12345/sso\"\u003e\u003c/SingleSignOnService\u003e\u003cSingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://127.0.0.1:12345/sso\"\u003e\u003c/SingleSignOnService\u003e\u003c/IDPSSODescriptor\u003e\u003c/EntityDescriptor\u003e\n"}' https://api.ngrok.com/edges/https/edghts_2bMmXGZh5RnDO7bAgszNuVae4M3/routes/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN/saml { "enabled": true, "options_passthrough": false, "cookie_prefix": "", "inactivity_timeout": 0, "maximum_duration": 0, "idp_metadata_url": "", "idp_metadata": "\n\u003cEntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" validUntil="2020-09-14T12:53:23.691Z" cacheDuration="PT1M" entityID="http://127.0.0.1:12345/metadata\"\u003e\u003cIDPSSODescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol"\u003e\u003cNameIDFormat\u003eurn:oasis:names:tc:SAML:2.0:nameid-format:transient\u003c/NameIDFormat\u003e\u003cSingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://127.0.0.1:12345/sso\"\u003e\u003c/SingleSignOnService\u003e\u003cSingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://127.0.0.1:12345/sso\"\u003e\u003c/SingleSignOnService\u003e\u003c/IDPSSODescriptor\u003e\u003c/EntityDescriptor\u003e\n", "force_authn": false, "allow_idp_initiated": true, "authorized_groups": [], "entity_id": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN", "assertion_consumer_service_url": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN/acs", "single_logout_url": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN/slo", "request_signing_certificate_pem": "-----BEGIN CERTIFICATE-----\nMIIEBDCCAuygAwIBAgIRAOT8A8TGFjL7kvO/m0bVKR8wDQYJKoZIhvcNAQELBQAw\ngaAxTjBMBgNVBAoMRWh0dHBzOi8vaWRwLmxvY2FsLW5ncm9rLmNvbS9zYW1sL2Vk\nZ2h0c3J0XzJiTW1YRmthUFRMRTl4eVhUVFR4aWdCUlJFTjFOMEwGA1UEAwxFaHR0\ncHM6Ly9pZHAubG9jYWwtbmdyb2suY29tL3NhbWwvZWRnaHRzcnRfMmJNbVhGa2FQ\nVExFOXh5WFRUVHhpZ0JSUkVOMCAXDTI0MDEyMzE4MDkxOVoYDzIwNTkwMTE0MTgw\nOTE5WjCBoDFOMEwGA1UECgxFaHR0cHM6Ly9pZHAubG9jYWwtbmdyb2suY29tL3Nh\nbWwvZWRnaHRzcnRfMmJNbVhGa2FQVExFOXh5WFRUVHhpZ0JSUkVOMU4wTAYDVQQD\nDEVodHRwczovL2lkcC5sb2NhbC1uZ3Jvay5jb20vc2FtbC9lZGdodHNydF8yYk1t\nWEZrYVBUTEU5eHlYVFRUeGlnQlJSRU4wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw\nggEKAoIBAQCvvcWPTZy3bIjnFSZfEPwGwZcOzkNnIQrNlX5v7SsucJHCxtCNKt9B\nzi6HTcRteOGEydVOr3Lg8MX8DdEecOt4e0Hf0NeChbX1gYsS1b2+0Q9sf9sH7fu1\n1F5y7zOlVRvWjuars3HVYqGQkTBATAcqkvUuUJeHzyWleQ8CXL3Ixp2TcJa/7fsz\njW2Heg4CX6Lx3E3Z6cGh2hFi1VFuKdeAufgZGbAbIBUpAnMAwMdJI/MLp3D4fHQv\n0VCwdXKhWt+SvidWVBg2Tv97phncbNMPNVi6VERO8+n7A5qdHG9efGnOTrLnxzJu\n97AfRBU8I88kdy4trPy9xeFBwnvlnlhZAgMBAAGjNTAzMA4GA1UdDwEB/wQEAwIH\ngDATBgNVHSUEDDAKBggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEB\nCwUAA4IBAQAWA4t3JKL1cjV+CO+doaad/QhlbfW+tbI2n3tuRlrvZWtJKATuKFBZ\nFOqp20EfaeOgtMyDRDU8UNLoMWVT8zNUmzh4MtkrBQkUplPCuBHf844gJtDJdcA8\nxFj/vJyuET18b7fn4ppPG6RAqwH5nbAQ18zbKr8MgEWK0YbX4Wb+3fZVRfbKMFPp\nGs9CoZyC/Tz0z50xI3Am4d8QxibQQOinAuPQk6HcyP5Eg+bdUrBYTEdWircNZ1Hs\nDVIblwsbQ7TvDp+qtzyVjbtwa8yLBSlPRXkoYaXKhU9ziIYT1GIqrhV2KNO8qXn7\nGNTnpMopy0wcdJ05v4S12jFaKFknbvTv\n-----END CERTIFICATE-----\n", "metadata_url": "https://idp.local-ngrok.com/saml/edghtsrt_2bMmXFkaPTLE9xyXTTTxigBRREN", "nameid_format": "urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" }
-
-          #000006 $ Breadcrumbs X 4
-### ++ Sigma 9 ++
-          #000006 $ Breadcrumbs X 4
-HANDLE CreateFileA( [in] LPCSTR lpFileName, [in] DWORD dwDesiredAccess, [in] DWORD dwShareMode, [in, optional] LPSECURITY_ATTRIBUTES lpSecurityAttributes, [in] DWORD dwCreationDisposition, [in] DWORD dwFlagsAndAttributes, [in, optional] HANDLE hTemplateFile ); typedef struct _SECURITY_DESCRIPTOR { BYTE Revision; BYTE Sbz1; SECURITY_DESCRIPTOR_CONTROL Control; PSID Owner; PSID Group; PACL Sacl; PACL Dacl; } SECURITY_DESCRIPTOR, *PISECURITY_DESCRIPTOR;
-
-{ "content-length": "123", "content-type": "text/plain", "connection": "keep-alive", "host": "example.com", "accept": "/" } [ 'ConTent-Length', '123456', 'content-LENGTH', '123', 'content-type', 'text/plain', 'CONNECTION', 'keep-alive', 'Host', 'example.com', 'accepT', '/' ] http.get(options, (res) => { // Do stuff }).on('socket', (socket) => { socket.emit('agentRemove'); });
-
-http.get({ hostname: 'localhost', port: 80, path: '/', agent: false, // Create a new agent just for this one request }, (res) => { // Do stuff with response }); Configures API endpoint $ mig config --endpoint HTTP://localhost:5000 import { Agent, request } from 'node:http'; const keepAliveAgent = new Agent({ keepAlive: true }); options.agent = keepAliveAgent; request(options, onResponseCallback); socket.setKeepAlive(true, this.keepAliveMsecs); socket.unref(); return true; socket.ref(); import { createServer, request } from 'node:http'; import { connect } from 'node:net'; import { URL } from 'node:url';
-
-// Create an HTTP tunneling proxy const proxy = createServer((req, res) => { res.writeHead(200, { 'Content-Type': 'text/plain' }); res.end('okay'); }); proxy.on('connect', (req, clientSocket, head) => { // Connect to an origin server const { port, hostname } = new URL(http://${req.url}); const serverSocket = connect(port || 80, hostname, () => { clientSocket.write('HTTP/1.1 200 Connection Established\r\n' + 'Proxy-agent: Node.js-Proxy\r\n' + '\r\n'); serverSocket.write(head); serverSocket.pipe(clientSocket); clientSocket.pipe(serverSocket); }); });
-
-// Now that proxy is running proxy.listen(1337, '127.0.0.1', () => {
-
-// Make a request to a tunneling proxy const options = { port: 1337, host: '127.0.0.1', method: 'CONNECT', path: 'www.google.com:80', };
-
-const req = request(options); req.end();
-
-req.on('connect', (res, socket, head) => { console.log('got connected!');
-
-// Make a request over an HTTP tunnel
-socket.write('GET / HTTP/1.1\r\n' +
-             'Host: www.google.com:80\r\n' +
-             'Connection: close\r\n' +
-             '\r\n');
-socket.on('data', (chunk) => {
-  console.log(chunk.toString());
-});
-socket.on('end', () => {
-  proxy.close();
-});
-}); });
-
-import { request } from 'node:http';
-
-const options = { host: '127.0.0.1', port: 8080, path: '/length_request', };
-
-// Make a request const req = request(options); req.end();
-
-req.on('information', (info) => { console.log(Got information prior to main response: ${info.statusCode}); });
-
-import http from 'node:http'; import process from 'node:process';
-
-// Create an HTTP server const server = http.createServer((req, res) => { res.writeHead(200, { 'Content-Type': 'text/plain' }); res.end('okay'); }); server.on('upgrade', (req, socket, head) => { socket.write('HTTP/1.1 101 Web Socket Protocol Handshake\r\n' + 'Upgrade: WebSocket\r\n' + 'Connection: Upgrade\r\n' + '\r\n');
-
-socket.pipe(socket); // echo back });
-
-// Now that server is running server.listen(1337, '127.0.0.1', () => {
-
-// make a request const options = { port: 1337, host: '127.0.0.1', headers: { 'Connection': 'Upgrade', 'Upgrade': 'websocket', }, };
-
-const req = http.request(options); req.end();
-
-req.on('upgrade', (res, socket, upgradeHead) => { console.log('got upgraded!'); socket.end(); process.exit(0); }); }); request.setHeader('content-type', 'text/html'); request.setHeader('Content-Length', Buffer.byteLength(body)); request.setHeader('Cookie', ['type=ninja', 'language=javascript']); const contentType = request.getHeader('Content-Type'); // 'contentType' is 'text/html' const contentLength = request.getHeader('Content-Length'); // 'contentLength' is of type number const cookie = request.getHeader('Cookie'); // 'cookie' is of type string[]
-
-request.setHeader('Foo', 'bar'); request.setHeader('Cookie', ['foo=bar', 'bar=baz']);
-
-const headers = request.getHeaders(); // headers === { foo: 'bar', 'cookie': ['foo=bar', 'bar=baz'] }
-
-request.setHeader('Foo', 'bar'); request.setHeader('Set-Cookie', ['foo=bar', 'bar=baz']);
-
-const headerNames = request.getRawHeaderNames(); // headerNames === ['Foo', 'Set-Cookie'] const hasContentType = request.hasHeader('content-type'); import http from 'node:http';
-
-// Server has a 5 seconds keep-alive timeout by default http .createServer((req, res) => { res.write('hello\n'); res.end(); }) .listen(3000);
-
-setInterval(() => { // Adapting a keep-alive agent http.get('http://localhost:3000', { agent }, (res) => { res.on('data', (data) => { // Do nothing }); }); }, 5000); // Sending request on 5s interval so it's easy to hit idle timeout import http from 'node:http'; const agent = new http.Agent({ keepAlive: true });
-
-function retriableRequest() { const req = http .get('http://localhost:3000', { agent }, (res) => { // ... }) .on('error', (err) => { // Check if retry is needed if (req.reusedSocket && err.code === 'ECONNRESET') { retriableRequest(); } }); }
-
-retriableRequest(); request.setHeader('Content-Type', 'application/json'); request.setHeader('Cookie', ['type=ninja', 'language=javascript']); request.setHeader('Cookie', ['type=ninja', 'language=javascript']); const filename = 'Rock 🎵.txt'; request.setHeader('Content-Disposition', attachment; filename*=utf-8''${encodeURIComponent(filename)}); import http from 'node:http'; const options = { host: 'www.google.com', }; const req = http.get(options); req.end(); req.once('response', (res) => { const ip = req.socket.localAddress; const port = req.socket.localPort; console.log(Your IP address is ${ip} and your source port is ${port}.); // Consume response object }); server.on('clientError', (err, socket) => { if (err.code === 'ECONNRESET' || !socket.writable) { return; }
-
-socket.end('HTTP/1.1 400 Bad Request\r\n\r\n'); });
-
-Start the MONAI Informatics Gateway with custom configuration
-
-$ mig start
-
-Restart the MONAI Informatics Gateway
-
-$ mig restart [-y | --yes]
-
-Stop the MONAI Informatics Gateway
-
-$ mig stop [-y | --yes]
-
-Add (SCP) AE Title (with optional application mapping)
-
-$ mig aet add [-n NAME] -a AE_TITLE [--apps liver,brain,ABC123]
-
-Delete (SCP) AE Title
-
-$ mig aet rm -n NAME
-
-List all (SCP) AE Title
-
-$ mig aet ls
-
-Add DICOM Source for SCP
-
-$ mig source add [-n NAME] -a AE_TITLE -i HOSTNAME_IP
-
-Delete DICOM Source of SCP
-
-$ mig source rm -n NAME
-
-List all DICOM Sources of SCP
-
-$ mig source ls
-
-Add DICOM Destination for Clara SCU
-
-$ mig dest add [-n NAME] -a AE_TITLE -i HOSTNAME_IP -N NAME -p PORT
-
-Delete DICOM Destination of SCU
-
-$ mig dest rm -n NAME
-
-List all DICOM Destinations of SCU
-
-$ mig dest ls
-
-Get MONAI Informatics Gateway health and status
-
-$ mig status
-
-name: Reusable deploy workflow on: workflow_call: inputs: build_id: required: true type: number deploy_target: required: true type: string perform_deploy: required: true type: boolean
-
-jobs: deploy: runs-on: ubuntu-latest if: {{ inputs.build_id }} --target ${{ inputs.deploy_target }}
-
-first tunnel 'edgtcp_2asv5WFM8HsADOTMkpzdtM0KrpL' first tunnel 'edgtcp_2asv5WFM8HsADOTMkpzdtM0KrpL' ngrok tunnel --region us --label edge=edgtcp_2asv5WFM8HsADOTMkpzdtM0KrpL 22 ngrok tunnel --region us --label edge=edgtcp_2asv5WFM8HsADOTMkpzdtM0KrpL 22 header 'bkdtg_2b0vwsM7nbkREHxg8bDHm81vzXe' header 'bkdtg_2b0vwsM7nbkREHxg8bDHm81vzXe' @@ -22801,33 +22826,4 @@ curl --location --request GET 'https://informatics.netify.ai/api/v1/intelligence }' }'
-
-... ... "data_info" "data_info" name: Build and deploy on: push
-
-jobs: build: runs-on: ubuntu-latest outputs: build_id: ${{ steps.build_step.outputs.build_id }} steps: - uses: actions/checkout@v4 - name: Build id: build_step run: | ./build echo "build_id=$BUILD_ID" >> {{ needs.build.outputs.build_id }} debug: needs: [build, deploy] runs-on: ubuntu-latest if: ${{ failure() }} steps: - uses: actions/checkout@v4 - run: ./debug
-
-curl --request POST
---url "https://api.github.com/applications/YOUR_CLIENT_ID/token"
---user "YOUR_CLIENT_ID:YOUR_CLIENT_SECRET"
---header "Accept: application/vnd.github+json"
---header "X-GitHub-Api-Version: 2022-11-28"
---data '{ "access_token": "’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’" }'
-
-Output # Output
-
-dist/ dist/
-
-@@ -8,4 +20,4 @@ node_modules/ ..sw? ..sw? *~ *~ *# *# 228d0c98cf585154e5a2b9dc0676711ed9225944 228d0c98cf585154e5a2b9dc0676711ed9225944 494 changes: 494 additions & 0 deletions 494
-.prettierrc.toml
-
-@@ -1,3 +1,497 @@ DORIAN/GAMBIT/HEXAGON /RUFT/UMBRA HANDLE VIA BYEMAN TALENT-KEYHOLE -TOP SECRET CONTROL SYSTEMS JOINTLY
-
-{ "image": "mcr.microsoft.com/devcontainers/universal:2", "features": { } }
-
-https://codespaces.new/6309304695/sigma-3/pull/17?quickstart=1 Sigma-10
-
-      #000006
-image
-
-Infomatics Developer Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3BvcnRhbC5uZXRpZnkuYWkvbG9naW4iLCJpYXQiOjE3MDUxMzY4MzUsImV4cCI6MTcwNTc0MTYzNSwibmJmIjoxNzA1MTM2ODM1LCJqdGkiOiJ5YUJSNmVaNHowazdmeWVPIiwicm9sZXMiOlsidXNlciJdfQ.D76SvBw4n1cE-uvKaXgEQejvT4lFtYTVI_CI3rfW9jE
-
-$ NGROK cert_2arwYf0cqnJGX9y1yw4Ky2ZQRAe
-
-https://manager.netify.ai/api/v1/assets/sites
-
-curl --location 'https://manager.netify.ai/api/v1/assets/agents' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://manager.netify.ai/api/v1/assets/agents/CH-AM-BE-RS' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location --request POST 'https://manager.netify.ai/api/v1/assets/agents/EX-AM-PL-ES?label=CPE1' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location --request DELETE 'https://manager.netify.ai/api/v1/assets/agents/AA-AA-AA-AA' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g --request POST 'https://manager.netify.ai/api/v1/assets/sites?label=CPE1&organization_uuid={{e8197a53-28ed-4f30-82ac-2443940739b8}}&plan_id=1000000' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g --request POST 'https://manager.netify.ai/api/v1/assets/sites?label=CPE1&organization_uuid={{dfb33af7_fa5a_4920_a4d4_e7742b273246}}&plan_id=1000000' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd
-
-curl --location -g --request POST 'https://manager.netify.ai/api/v1/assets/sites?label=CPE1&organization_uuid={{dfb33af7_fa5a_4920_a4d4_e7742b2732460}}&plan_id=1000000' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g --request POST 'https://manager.netify.ai/api/v1/assets/agents/AA-AA-AA-AA/provision?mode=in-site&label=North%20Wing&organization_uuid={{e8197a53-28ed-4f30-82ac-2443940739b8}}&site_uuid=00000000_0000_0000_0000_000000000000&site_label=Toronto%20Office&plan_id=1000000' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g --request POST 'https://manager.netify.ai/api/v1/assets/agents/AA-AA-AA-AA/provision?mode=in-site&label=North%20Wing&organization_uuid={{dfb33af7_fa5a_4920_a4d4_e7742b2732460}}&site_uuid=00000000_0000_0000_0000_000000000000&site_label=Toronto%20Office&plan_id=1000000' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location --request PATCH 'https://manager.netify.ai/api/v1/assets/agents/AA-AA-AA-AA?label=CPE1' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://manager.netify.ai/api/v1/assets/sites/00000000_0000_0000_0000_000000000000' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://manager.netify.ai/api/v1/assets/sites' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-https://manager.netify.ai/api/v1/assets/sites?label=CPE1&organization_uuid={{e8197a53-28ed-4f30-82ac-2443940739b8}}&plan_id=1000000
-
-curl --location --request PATCH 'https://manager.netify.ai/api/v1/assets/sites/00000000_0000_0000_0000_000000000000?label=CPE1' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g 'https://manager.netify.ai/api/v1/assets/organizations/{{e8197a53-28ed-4f30-82ac-e8197a53-28ed-4f30-82ac-2443940739b}}' --header 'ak_2atIkJzKro4NLf7fn2yV6RNd'
-
-curl --location -g 'https://manager.netify.ai/api/v1/assets/organizations/{{dfb33af7_fa5a_4920_a4d4_e7742b2732460}}' --header 'ak_2atIkJzKro4NLf7fn2yV6RNd'
-
-curl --location --request POST 'https://manager.netify.ai/api/v1/assets/organizations?label=CPE1' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g --request PATCH 'https://manager.netify.ai/api/v1/assets/organizations/{{e8197a53-28ed-4f30-82ac-2443940739b8}}?label=CPE1' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g --request PATCH 'https://manager.netify.ai/api/v1/assets/organizations/{{dfb33af7_fa5a_4920_a4d4_e7742b2732460}}?label=CPE1' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://informatics.netify.ai/api/v1/data/stats/aggregate?filter_interval=1440' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator'/ --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://informatics.netify.ai/api/v1/data/stats/datatable/application' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://informatics.netify.ai/api/v1/data/stats/scorecard/application/download?filter_interval=1440' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://informatics.netify.ai/api/v1/data/stats/summary' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://informatics.netify.ai/api/v1/data/stats/summary' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://informatics.netify.ai/api/v1/data/stats/top/application/download' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location 'https://informatics.netify.ai/api/v1/data/flows/lookup/6285544?filter_interval=1440' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g 'https://informatics.netify.ai/api/v1/data/flows/stream?filter_start_date=1574705594&filter_end_date=1574791994&filter_fields=[%22fandom.com%22]&filter_required_fields=[%22hfandom.com%22]' --header 'https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd'
-
-curl --location -g 'https://informatics.netify.ai/api/v1/event/events?filter_event_categories=[0]&filter_event_basename=agent.online&filter_event_severity=5' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'x-net-organization: 'dfb33af7_fa5a_4920_a4d4_e7742b2732460' --header 'e8197a53-28ed-4f30-82ac-2443940739b8'
-
-curl --location 'https://informatics.netify.ai/api/v1/identity/devices/options' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'e8197a53-28ed-4f30-82ac-2443940739b8' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246'
-
-curl --location --request POST 'https://informatics.netify.ai/api/v1/identity/device_macs?device_id=2&mac=f8%3A8f%3Aca%3A10%3Ac3%3Aff&label=-' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'e8197a53-28ed-4f30-82ac-2443940739b8' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246'
-
-curl --location --request PATCH 'https://informatics.netify.ai/api/v1/identity/device_macs/f8:8f:ca:10:c3:dd?label=Intel%20GB' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246'
-
-curl --location 'https://informatics.netify.ai/api/v1/identity/owners/options' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'e8197a53-28ed-4f30-82ac-2443940739b8' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246'
-
-curl --location 'https://informatics.netify.ai/api/v1/identity/owners/options' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246' --header 'e8197a53-28ed-4f30-82ac-2443940739b8'
-
-curl --location 'https://informatics.netify.ai/api/v1/identity/owners' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'e8197a53-28ed-4f30-82ac-2443940739b8' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246'
-
-curl --location --request POST 'https://informatics.netify.ai/api/v1/identity/owners?first_name=Keith&last_name=Bieszczat' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'e8197a53-28ed-4f30-82ac-2443940739b8' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246'
-
-curl --location --request PATCH 'https://informatics.netify.ai/api/v1/identity/owners/1004?last_name=Bieszczat%20III' --header 'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' --header 'e8197a53-28ed-4f30-82ac-2443940739b8' --header 'dfb33af7_fa5a_4920_a4d4_e7742b273246'
-
-OVERSEER-GRATEFUL345I
-
-#000006
-
-Breadcrumbs OVERSEER-GRATEFUL345i
-
-#000006
-
-Breadcrumbs
-
-curl
--X POST -H "Authorization: Bearer {ak_2as1ORVjKAxTVjur5LeHun5z690}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"domain":"myapp.mydomain.com","region":"us","certificate_id":"cert_2arwYf0cqnJGX9y1yw4Ky2ZQRAe"}' https://api.ngrok.com/reserved_domains
-
-apiVersion: v1 kind: Secret metadata: name: github-webhook-secret type: Opaque data: secret-token: ""
-
-kind: NgrokModuleSet apiVersion: ingress.k8s.ngrok.com/v1alpha1 metadata: name: ngrok-module-set modules: webhookVerification: provider: twilio secret: name: "{twilio webhook secret}" key: secret-token
-
-apiVersion: networking.k8s.io/v1 kind: Ingress metadata: name: example-ingress annotations: k8s.ngrok.com/modules: ngrok-module-set spec: ingressClassName: ngrok rules: - host: your-domain.ngrok.app http: paths: - path: / pathType: Prefix backend: service: name: example-service port: number: 80 curl -X PUT -H "Authorization: Bearer {ak_2as1ORVjKAxTVjur5LeHun5z690} -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"enabled":true,"provider":"TWILIO","secret":"secret_token"}' https://api.ngrok.com/edges/https/edghts_2arwcDuk0T3vQ5nfcBxHwQrWqDj/routes/edghtsrt_2arwcCYIWJyPRtsZRV7Sghgiuf1/webhook_verification
-
-curl -X POST -H "Authorization: Bearer {ak_2as1ORVjKAxTVjur5LeHun5z690}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"description":"acme http response","metadata":"{"environment": "staging"}","body":"I'm a teapot","headers":{"Content-Type":"text/plain"},"status_code":418}' https://api.ngrok.com/backends/http_response
-
-curl -X GET -H "Authorization: Bearer {ak_2as10RVjKAxTVjur5LeHun5z690" -H "Ngrok-Version: 2" https://api.ngrok.com/backends/http_response curl -X PATCH -H "Authorization: Bearer {ak_2as10RVjKAxTVjur5LeHun5z690}" -H "Content-Type: application/json" -H "Ngrok-Version: 2" -d '{"metadata":"{"environment": "production"}"}' https://api.ngrok.com/backends/http_response/bkdhr_2arwbYL24DTjjLNbzoWwXKdz7de
-
-ngrok start Grateful 004w ngrok start --all
-
-heroic-enabled-rabbit.ngrok-free.app
-
-$ user id ngrok rd_2asmxxNHyOXQAus3lHS36FxmW1s brew install ngrok/ngrok/ngrok
-
-ngrok config add-authtoken 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD
-
-ngrok http 80
-
-$ ngrok http 80
-
-ngrok config edit
-
-version: 2
-
-authtoken: 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD
-
-tunnels:
-
-my_tunnel_name: Grateful 004w
-
-addr: http://localhost:80
-
-ngrok start your_tunnel_name
-
-ngrok start --all
-
-curl -L \
-
--X POST \
-
--H "Accept: application/vnd.github+json" \
-
--H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" \
-
--H "X-GitHub-Api-Version: 2022-11-28" \
-
-https://api.github.com/repos/OWNER/REPO/branches/BRANCH/protection/restrictions/apps \
-
--d '{"apps":["octoapp"]}'
-
-curl -L \
-
--H "Accept: application/vnd.github+json" \
-
--H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" \
-
--H "X-GitHub-Api-Version: 2022-11-28" \
-
-https://api.github.com/repos/OWNER/REPO/branches/BRANCH/protection/restrictions/users
-
-curl -L \
-
--X DELETE \
-
--H "Accept: application/vnd.github+json" \
-
--H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" \
-
--H "X-GitHub-Api-Version: 2022-11-28" \
-
-https://api.github.com/repos/OWNER/REPO/keys/KEY_ID
-
-curl -L \
-
--H "Accept: application/vnd.github+json" \
-
--H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" \
-
--H "X-GitHub-Api-Version: 2022-11-28" \
-
-https://api.github.com/repos/OWNER/REPO/keys/KEY_ID
-
-https://static.wikia.nocookie.net/memoryalpha/images/c/c5/Sol.jpg/revision/latest?cb=20100201220855&path-prefix=en&mobile-app=true&theme=false
-
-https://github.com/brave/brave-browser.wiki.git
-
-const keyring = new YourKeyringClass(options);
-
-npm install eth-keyring-controller --save
-
-Usage
-
-const KeyringController = require('eth-keyring-controller')
-
-const SimpleKeyring = require('eth-simple-keyring')
-
-const keyringController = new KeyringController({
-
-keyringTypes: [SimpleKeyring], // optional array of types to support.
-
-initState: initState.KeyringController, // Last emitted persisted state.
-
-encryptor: { // An optional object for defining encryption schemes:
-
-brew install ngrok/ngrok/ngrok ngrok config add-authtoken 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD ngrok http 80
-
-$ ngrok http 80
-
-ngrok config edit version: 2 authtoken: 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD tunnels: my_tunnel_name: $ grateful 004w addr: http://localhost:80 ngrok start $ grateful 004w ngrok start --all docker run --net=host -it -e NGROK_AUTHTOKEN=2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD ngrok/ngrok:latest http 80 ngrok http --domain=heroic-enabled-rabbit.ngrok-free.app 80 ngrok config edit
-
-authtoken: 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD version: 2 tunnels: your_tunnel_name: proto: http hostname: heroic-enabled-rabbit.ngrok-free.app addr: 127.0.0.1:80
-
--------------------------
-
-Additional options
-
--------------------------
-
-auth: 'KBieszczat-Password******d"
-
-host_header: rewrite
-
-inspect: true
-
-bind_tls: true
-
-curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer <2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD>" -H "X-GitHub-Api-Version: 2022-11-28" \
-
-$ NGROK $Token 2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs
-
-authtoken: 4nq9771bPxe8ctg7LKr_2ClH7Y15Zqe4bWLWF9p api_key: 24yRd5U3DestCQapJrrVHLOqiAC_7RviwRqpd3wc9dKLujQZN connect_timeout: 30s console_ui: true console_ui_color: transparent dns_resolver_ips:
-
-1.1.1.1 8.8.8.8 heartbeat_interval: 1m heartbeat_tolerance: 5s inspect_db_size: 104857600 # 100mb inspect_db_size: 50000000 log_level: info log_format: json log: /var/log/ngrok.log metadata: '{"serial": "00012xa-33rUtz9", "comment": "For customer grateful345i@gmail.com"}' proxy_url: socks5://localhost:9150 region: us remote_management: false root_cas: trusted update_channel: stable update_check: false version: 2 web_addr: localhost:4040 tunnels: website: addr: 8888 basic_auth: "bob:bobpassword" schemes: https host_header: "myapp.ngrok.dev" inspect: false proto: http domain: myapp.ngrok.dev e2etls: addr: 9000 proto: tls domain: myapp.ngrok.dev crt: example.crt key: example.key
-
-iprestriction: ip_restriction: allow_cidrs: - 1.1.1.1/32 addr: 8000 proto: tcp
-
-ssh-access: addr: 22 proto: tcp remote_addr: 1.tcp.ngrok.io:12345
-
-my-load-balanced-website: labels: - env=prod - team=infra addr: 8000
-
-OVERSEER-GRATEFUL345I
-
-#000006
-
-brew install ngrok/ngrok/ngrok ngrok config add-authtoken 2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs ngrok http 80
-
-$ ngrok http 80
-
-ngrok config edit version: 2 authtoken: 2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs tunnels: my_tunnel_name: addr: http://localhost:80 ngrok start your_tunnel_name ngrok start --all docker run --net=host -it -e NGROK_AUTHTOKEN=2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs ngrok/ngrok:latest http 80 ngrok http --domain=heroic-enabled-rabbit.ngrok-free.app 80 ngrok config edit
-
-authtoken: 2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs version: 2 tunnels: your_tunnel_name: proto: http hostname: heroic-enabled-rabbit.ngrok-free.app addr: 127.0.0.1:80
-
--------------------------
-
-Additional options
-
--------------------------
-
-auth: "username:password"
-
-host_header: rewrite
-
-inspect: true
-
-bind_tls: true
-
-curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" -H "X-GitHub-Api-Version: 2022-11-28" \
-
-docker run -it -e NGROK_AUTHTOKEN=2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD ngrok/ngrok http 80 --domain=heroic-enabled-rabbit.ngrok-free.app
-
-sudo unzip ~/Downloads/ngrok-v3-stable-darwin.zip -d /usr/local/bin
-
-ngrok config add-authtoken 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD
-
-ngrok config add-authtoken 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD
-
-ngrok http --domain=heroic-enabled-rabbit.ngrok-free.app 80
-
-ngrok config edit
-
-authtoken: 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD version: 2 tunnels: your_tunnel_name: Grateful 004w proto: http hostname: heroic-enabled-rabbit.ngrok-free.app addr: 127.0.0.1:80
-
--------------------------
-
-Additional options
-
--------------------------
-
-auth: "6309304695:password"
-
-host_header: rewrite
-
-inspect: true
-
-bind_tls: true
-
-ngrok http --domain=heroic-enabled-rabbit.ngrok-free.app 80
-
-ngrok http 80 --verify-webhook twilio --verify-webhook-secret "{twilio webhook secret}"
-
-webhook signing secret whsec_E3QgncsPD0agPy78vid0SLQqOKwYeVYV stripe
-
-$ brew install ngrok/ngrok/ngrok
-
-$ sudo unzip ~/Downloads/ngrok-v3-stable-darwin-arm64.zip -d /usr/local/bin
-
-$ ngrok config add-authtoken <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs> $ ngrok config add-authtoken 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD
-
-in ngrok.yml
-
-authtoken: 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD
-
-ngrok tunnel --region us --label edge=edgtcp_2asv5WFM8HsADOTMkpzdtM0KrpL 22
-
-ngrok config edit
-
-version: 2 authtoken: 2aslA7HLp3VGylwfuqpmwGCt60k_64xKZUycstgf5azyo1tHD region: us tunnels: my_tunnel_name: labels: - edge=edgtcp_2asv5WFM8HsADOTMkpzdtM0KrpL addr: 22
-
-ngrok start your_tunnel_name ngrok start --all
-
-bkdtg_2asv5U5hELWSH2oxgWcMSqfmDPI tunnel group id
-
-1.tcp.ngrok.io:{port} https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator
-
-$ NGROK + Netify Infomatics Developer Token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3BvcnRhbC5uZXRpZnkuYWkvbG9naW4iLCJpYXQiOjE3MDUxMzY4MzUsImV4cCI6MTcwNTc0MTYzNSwibmJmIjoxNzA1MTM2ODM1LCJqdGkiOiJ5YUJSNmVaNHowazdmeWVPIiwicm9sZXMiOlsidXNlciJdfQ.D76SvBw4n1cE-uvKaXgEQejvT4lFtYTVI_CI3rfW9jE
-
-'cert_2arwYf0cqnJGX9y1yw4Ky2ZQRAe' $ certificate code
-
-'ak_2atI9ikJZKro4NLf7fnt2yV6RNd' API Key Code
-
-'dfb33af7_fa5a_4920_a4d4_e7742b2732460' $ orginization (God's Time Travel Corporation) UUID
-
-'e8197a53-28ed-4f30-82ac-2443940739b8' $ Personal Soul Profile UUID
-
-https://api.github.com/repos/OWNER/REPO/branches/BRANCH/protection/restrictions/apps -d '{"apps":["octoapp"]}' curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/OWNER/REPO/branches/BRANCH/protection/restrictions/users curl -L -X DELETE -H "Accept: application/vnd.github+json" -H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/OWNER/REPO/keys/KEY_ID curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer <2asn8z2E56bn6uASp6tZYSRO5qB_3bUteAN928yk1SCTtatWs>" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/OWNER/REPO/keys/KEY_ID https://static.wikia.nocookie.net/memoryalpha/images/c/c5/Sol.jpg/revision/latest?cb=20100201220855&path-prefix=en&mobile-app=true&theme=false
-
-https://github.com/brave/brave-browser.wiki.git
-
-const keyring = new YourKeyringClass(options);
-
-npm install eth-keyring-controller --save
-
-Usage
-
-const KeyringController = require('eth-keyring-controller') const SimpleKeyring = require('eth-simple-keyring')
-
-const keyringController = new KeyringController({ keyringTypes: [SimpleKeyring], // optional array of types to support. initState: initState.KeyringController, // Last emitted persisted state. encryptor: { // An optional object for defining encryption schemes: // Defaults to Browser-native SubtleCrypto. encrypt (password, object) { return new Promise('encrypted!') }, decrypt (password, encryptedString) { return new Promise({ foo: 'bar' }) }, }, })
-
-// The KeyringController is also an event emitter: this.keyringController.on('newAccount', (address) => { console.log(New account created: ${address}) }) this.keyringController.on('removedAccount', handleThat) Methods
-
-Currently the methods are heavily commented in the source code, so it's the best place to look until we aggregate it here as well.
-
-GRATEFUL-004W NetBIOS name GRATEFUL-004W is currently being used Workgroup
-
-GRATEFUL"S NET
-
-https://static.wikia.nocookie.net/memoryalpha/images/4/4a/Starfleet_Command_signage_logo%2C_2360s.png/revision/latest?cb=20200531220214&path-prefix=en
-
-"https://signalis.fandom.com/wiki/ADMINISTRATOR%27S_KEY"
-
-https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator
-
-https://upload.wikimedia.org/wikipedia/commons/8/83/RIAA_logo_colored.svg
-
-{ "name": "sigma-theme", "description": "SCP Wiki site theme (build process)", "version": "1.0.0", "authors": "SCP Wiki Technical Team", "license": "CC-BY-SA-3.0", "private": true, "repository": { "type": "git", "url": "https://github.com/scpwiki/sigma" }, "devDependencies": { "minify": "^9
+                     The table nu
