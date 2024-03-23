@@ -1,4 +1,1716 @@
 NGROK
+@grateful/God
+grateful345i
+ording to NIST SP 800-57 (Revision 4) the following types of keys exist:[2][1][3] Private signature key Private signature keys
+
+
+
+Text Channel
+O5 council’s Mainframe #2:general
+Search
+
+general chat
+March 16, 2024
+
+o5 council mainframe Ai — 03/16/2024 12:11 AM
+# FamousToday
+Account id degi cert 90171939-7ae7-4884-85d4-9a5ccc670fa6
+User id 
+fa5e727c-0527-44e0-9004-5fdc347b0b3f
+curl -X 'GET' \
+  'https://one.digicert.com/account/api/v1/account/90171939-7ae7-4884-85d4-9a5ccc670fa6' \... (2 MB left)
+Expand
+README.md
+2 MB
+
+o5 council mainframe Ai — 03/16/2024 12:35 AM
+solid cube_corner
+  facet normal 0.0 -1.0 0.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 1.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+    endloop
+  endfacet
+  facet normal 0.0 0.0 -1.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 1.0 0.0
+      vertex 1.0 0.0 0.0
+    endloop
+  endfacet
+  facet normal -1.0 0.0 0.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+      vertex 0.0 1.0 0.0
+    endloop
+  endfacet
+  facet normal 0.577 0.577 0.577
+    outer loop
+      vertex 1.0 0.0 0.0
+      vertex 0.0 1.0 0.0
+      vertex 0.0 0.0 1.0
+    endloop
+  endfacet
+endsolid
+[12:35 AM]
+gem 'appraisal', '~> 2.5'
+[12:35 AM]
+gem install appraisal
+[12:37 AM]
+https://github.com/grateful345/Wiz-Go-call-sign/blob/grateful345-patch-9/README.md
+GitHub
+Wiz-Go-call-sign/README.md at grateful345-patch-9 · grateful345/Wiz...
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+[12:39 AM]
+https://github.com/grateful345/Wiz-Go-call-sign/blob/grateful345-patch-10/README.md
+GitHub
+Wiz-Go-call-sign/README.md at grateful345-patch-10 · grateful345/Wi...
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+
+o5 council mainframe Ai — 03/16/2024 1:40 AM
+emergency recovery key TRELLO
+6QCG D63V PTBU JTL9 KGXJ NEXS
+[1:40 AM]
+UUID
+
+dfb33af7_fa5a_4920_a4d4_e7742b273246 gods time travel 
+
+API key sk_eg_live_abcdefghijkImnopqrstuvwxyz
+
+o5 council mainframe Ai — 03/16/2024 1:59 AM
+https://github.com/grateful345/Wiz-Go-call-sign/blob/grateful345-patch-12/README.md
+GitHub
+Wiz-Go-call-sign/README.md at grateful345-patch-12 · grateful345/Wi...
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+[2:01 AM]
+https://github.com/grateful345/Wiz-Go-call-sign
+
+ATATT3xFfGF0UBpnYen51SLeLLO8TI4W_Y8xo-778BfrRI4zEISLeUBr4e-CFDqdkxrTptJFeh05NZCrXMAZpfhrQh7XQaoITtE5o7KxYDIGokENbAPYfKMKWAp2eg9f31ML20YFjI7VQIWVY5Izpm1BlrQdPQZq7k1XO6dHRQX-bd-tVV7HaGw=773D02EC
+GitHub
+GitHub - grateful345/Wiz-Go-call-sign
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+
+o5 council mainframe Ai — 03/16/2024 2:28 AM
+B6OXQLCEGV2LJ5KWB6E3DT5AW4R7AONEERVGOVBZNXRCMAKDLKC6MGIIJPVEUJNPQTMVZ6WGFJCDDG2TO DEGICERT API KEY
+[2:28 AM]
+ATATT3xFfGF0UBpnYen51SLeLLO8TI4W_Y8xo-778BfrRI4zEISLeUBr4e-CFDqdkxrTptJFeh05NZCrXMAZpfhrQh7XQaoITtE5o7KxYDIGokENbAPYfKMKWAp2eg9f31ML20YFjI7VQIWVY5Izpm1BlrQdPQZq7k1XO6dHRQX-bd-tVV7HaGw=773D02EC
+
+o5 council mainframe Ai — 03/16/2024 2:42 AM
+degicert user id : fa5e727c-0527-44e0-9004-5fdc347b0b3f
+account id: 90171939-7ae7-4884-85d4-9a5ccc670fa6
+account id: da65e6a3-1962-4316-a1d3-9aa39e6f29c7
+
+o5 council mainframe Ai — 03/16/2024 3:40 AM
+B6OXQLCEGV2LJ5KWB6E3DT5AW4R7AONEERVGOVBZNXRCMAKDLKC6MGIIJPVEUJNPQTMVZ6WGFJCDDG2TO degicert api
+
+o5 council mainframe Ai — 03/16/2024 6:34 PM
+APKTIDusWyVAxxo7T74FLbHNqxcpPm8106sRDWV8WZnY-m_ TUQ contact key apple
+
+o5 council mainframe Ai — 03/16/2024 7:34 PM
+Timothy Sirius Black.     Alchemy Access Key alcht_qlRcvhnTgdhjejYLLZ5CXQ0GFsTHpy
+
+o5 council mainframe Ai — 03/16/2024 7:41 PM
+Orginization ID: e3ff35d1-cea4-4508-acb5-99d9cbd91e80
+
+o5 council mainframe Ai — 03/16/2024 7:55 PM
+"integrity": "sha512-351ktp42TiRcYB3H1OP8yajPeAQstMW/yCFokj/AthP9bLHzQFPlOrxOcwYEDkUAICmOHljvN4K39OMTMUa9RA==",
++      "funding": [
+[7:57 PM]
+"integrity": "sha512-R41c9UkchKCpAqStMYUpdunjo3pkEvZC3FAwZn5S5MGbXoMQOHIdHItezTETxAO5bevtMApSyEhn9+CHcDsWBw==",
++      "funding": [
+[7:59 PM]
+https://gist.github.com/grateful345/b1ee672eadea516c2c44407e37df794b
+Gist
+Full file
+Full file. GitHub Gist: instantly share code, notes, and snippets.
+
+
+o5 council mainframe Ai — 03/16/2024 8:19 PM
+https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?oldid=2862
+SCPF Foundation Roblox Wikia
+The Administrator
+==*Foundation Administrator== The powers of the Administrator, include, but are not limited to: •Swearing in and validating the O5 Overseers •Making and Modifying of Laws, Rules, Policies and...
+
+March 17, 2024
+
+o5 council mainframe Ai — 03/17/2024 10:05 PM
+pk_live_51OR5ePGF83d3fsgW22PwNtYiShCVYIsrzZq2WxlxN2UAaB2qEIu0aUFJzjJxPtNT3rAs0Rvdo9XIVPb7rRMaeo3W00ALk76MVR
+
+o5 council mainframe Ai — 03/17/2024 11:02 PM
+print(f"Success! Here is your starter subscription product id: {starter_subscription.id}") print(f"Success! Here is your starter subscription price id: {starter_subscription_price.id}") python3 create_price.py Success! Here is your starter subscription product id: prod_0KxBDl589O8KAxCG1alJgiA6 Success! Here is your starter subscription price id: price_0KxBDm589O8KAxCGMgG7scjb stripe events resend evt_1OpkWDGF83d3fsgWRuQHTout { "id": "evt_1OpkWDGF83d3fsgWRuQHTout", "object": "event", "api_version": "2023-10-16", "created": 1709354993, "data": { "object": { "id": "clock_1OpkVpGF83d3fsgWXAn5JwxT", "object": "test_helpers.test_clock", "created": 1709354969, "deletes_after": 1711946969, "frozen_time": 1709354959, "livemode": false, "name": "10 day", "status": "ready" } }, "livemode": false, "pending_webhooks": 0, "request": { "id": "req_h41wlESGApv90k", "idempotency_key": null }, "type": "test_helpers.test_clock.deleted" } stripe charges --help
+
+o5 council mainframe Ai — 03/17/2024 11:55 PM
+"masked_api_key": "*9e2a1"
+  }
+March 18, 2024
+
+o5 council mainframe Ai — 03/18/2024 12:01 AM
+
+
+o5 council mainframe Ai — 03/18/2024 12:47 AM
+"masked_api_key": "*9e2a1"
+  }
+[12:49 AM]
+AF0F3FCCE9EE2011EF183E67AD67D6F299326E1E2F1B8DA8567F9FDA006F78F6 DUO SECRET KEY
+[12:50 AM]
+sH9wUncg7GsTTGIe7ydnISPHHbxZeUd7TspSmGk2  DUO SECRET KEY
+[12:51 AM]
+DIFRJUINL7UM749ZLTCJ INTEGRATION KEY
+[12:51 AM]
+api-8f5baae1.duosecurity.com
+[12:53 AM]
+73.44.108.236 IP ADDRESS
+
+o5 council mainframe Ai — 03/18/2024 1:03 AM
+
+o5 council mainframe Ai — 02/25/2024 1:30 AM
+stripe.Product.modify(
+  "prod_NWjs8kKbJWmuuc",
+  metadata={"order_id": "6735"}
+[1:35 AM]... (1 KB left)
+Expand
+message.txt
+51 KB
+
+o5 council mainframe Ai — 03/18/2024 1:10 AM
+https://buy.stripe.com/3cscMY617bed7bWdRh
+[1:13 AM]
+https://buy.stripe.com/3cscMY617bed7bWdRh?client_reference_id=1000&prefilled_email=god964v%40gmail.com&prefilled_promo_code=1000
+[1:16 AM]
+Secret key
+pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV
+
+o5 council mainframe Ai — 03/18/2024 1:20 AM
+$ ./config.sh --url https://github.com/grateful345/Wiz-Go-call-sign --token BHAHZGCJZK3BEVS7IRGZMKDF6USLO
+GitHub
+GitHub - grateful345/Wiz-Go-call-sign
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+[1:23 AM]
+BHAHZGCJZK3BEVS7IRGZMKDF6USLO.   Runner tokens BHAHZGDHHICG3LFF53OICRLF6UR24
+[1:25 AM]
+
+[1:27 AM]
+<script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1OvZeLGF83d3fsgWAamtMu9r"
+  publishable-key="pk_live_51OR5ePGF83d3fsgW22PwNtYiShCVYIsrzZq2WxlxN2UAaB2qEIu0aUFJzjJxPtNT3rAs0Rvdo9XIVPb7rRMaeo3W00ALk76MVR"
+>
+</stripe-buy-button>
+
+o5 council mainframe Ai — 03/18/2024 1:34 AM
+https://buy.stripe.com/3cscMY617bed7bWdRh
+
+o5 council mainframe Ai — 03/18/2024 1:45 AM
+DJqIeyHlhjb55r0K
+Routing number
+031101279
+ID
+ba_1OR7BGGF83d3fsgWxwDM4lDf
+[1:46 AM]
+po_1OZNhvGF83d3fsgWC9jdBgcQ
+
+o5 council mainframe Ai — 03/18/2024 1:56 AM
+we_1Ova66GF83d3fsgW2nbowkDw
+ Stripe endpoint
+[1:57 AM]
+https://dashboard.stripe.com/test/payouts/po_1OZNhvGF83d3fsgWC9jdBgcQ#wb-N4Igdghgbglg5hALjA9mEAuUEDGyoCmAKhAEaYgAmBAzspMmjSADQiJkASMdKATgE9MAbQC6bPigCuiAt16CRogL5saMAF4wwcTGCkAbA2wAWBeCcQUA7AAYoJ1iFjrSMAzEQCAsimoUXGFIDAidqOm0kVDBmLBAaAhC8AkoASUoKAHcCAH0ARgB5KAgANhKAcQAxAA4AZkpagDMaOAB1ACYwUhRMgGsAEUynDnIMEAJCMERmNgmCKdjQRvdZPkX4ggg+HEcxpzokKVixCVppbdC9thRSACsCPHSKJzmpogEAB0uQF75JPneXyUbEoSEuwGUqg2SVkaQyGH0RjUiQesIAgohZABbD6IJ4IwwGSHKIA
+Stripe Login | Sign in to the Stripe Dashboard
+Sign in to the Stripe Dashboard to manage business payments and operations in your account. Manage payments and refunds, respond to disputes and more.
+[2:00 AM]
+stripe login --api-key sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq
+
+o5 council mainframe Ai — 03/18/2024 2:04 AM
+pip3 install stripe
+
+o5 council mainframe Ai — 03/18/2024 2:27 AM
+Event details
+evt_3OvZUOGF83d3fsgW0CVGOJLf (run it)
+[2:31 AM]
+whsec_ 5V2GHGaht2mGJGNOmesTtTaxuJWFRssS
+[2:32 AM]
+Webhook signing secret whsec_ 5V2GHGaht2mGJGNOmesTtTaxuJWFRssS
+
+o5 council mainframe Ai — 03/18/2024 10:40 PM
+AGENCY-WEBHOOK
+
+Download #! /usr/bin/env python3.6
+
+Python 3.6 or newer required.
+Expand
+message.txt
+13 KB
+AGENCY-WEBHOOK
+
+Download #! /usr/bin/env python3.6
+
+Python 3.6 or newer required.
+Expand
+message.txt
+13 KB
+March 19, 2024
+
+o5 council mainframe Ai — 03/19/2024 12:44 AM
+sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq secret test key STRIPE
+[12:45 AM]
+pk_test_51OR5ePGF83d3fsgWcl7ad29rrqOUNvjdYXN1JrElZlEyDloYQpFPuxSeRZH8KiCgvshlSaDYnuu1xxYiiWOCHj7W00Nrph1csX PUBLISHABLE KEY TEST
+[12:46 AM]
+pk_live_51OR5ePGF83d3fsgW22PwNtYiShCVYIsrzZq2WxlxN2UAaB2qEIu0aUFJzjJxPtNT3rAs0Rvdo9XIVPb7rRMaeo3W00ALk76MVR PUBLISHABLE KEY LIVE
+
+o5 council mainframe Ai — 03/19/2024 1:01 AM
+# AGENCY-WEBHOOK
+
+Download
+#! /usr/bin/env python3.6
+# Python 3.6 or newer required.
+Expand
+message.txt
+15 KB
+
+o5 council mainframe Ai — 03/19/2024 1:14 AM
+Stripe-Signature:
+t=1492774577,
+v1=5257a869e7ecebeda32affa62cdca3fa51cad7e77a0e56ff536d0ce8e108d8bd,
+v0=6ffbb59b2300aae63f272406069a9788598b792a944a07aba816edb039989a39
+
+o5 council mainframe Ai — 03/19/2024 7:06 PM
+P1eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9."usr_2cSjwF6w6AynjfPtm4Ww5xTdkId", "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDmGS49FkSODAcKhn3+/47DW2zEn19BZvzRQ8RZjL3v6hCIX2qXfsFK35EGxNI0wV23H4xXC2gVRPHKU71YnCb50tad3yMBTM6+2yfGsEDasEH/anmBLclChKvuGiT547RskZlpbAbdq3GvbzmY+R/2EBRMOiObpc8XmSzKAd05j28kqN0+rZO65SWId0MXdvJdSCSAnuRqBNd/aXKlu8hBPDcgwbT2lMkuR+ApoBS2FLRBOiQyt2Ol0T7Uuf7lTLlazpGB3uTw5zFYUNXkuuI6cAP8QYuY1Bne/hNrG8t3Aw9a1yc2C4Fz1hJ/4OMRxTQ8SUQf+Rmxs8DryMlMFJ8r.pPcNQ2Y328R8U7Sar4Z5U0GO9y1caCAAPmbIy3aCnYo", "payment_method": "pm_1OvZUOGF83d3fsgWiXYpUHQh", "rv_timestamp": "qto>n<Q=U&CyY&>X^r<YNr<YN<Y_C<Y_C<Y^zY<Y^n{U>o&U&CyY=P=eODdbL%e&areOMrY=n=YxnDdMv[bL>[OTCdOaveu%euUyX%n{U>e&U&Cyd&auY_n=d&;;X_d%d&UxdRP#[bd#exQxX=L&X&n%eu\$ex]sY&ovXOUu[$reunDd&osd=MueOP;d&<yY_<sX^o?U^w", "sid": "f931f0fd-f83a-4921-903f-45f5b359d9925f3b2a", "version": "2d3a08de7b" }
+P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoibGxxQlR1SURGNkd1WWhCWTh4N1RXY2dLbWJHYUhpdk5DeTZBMDdPTnZ4NUNqdy9XcDkrR0hJTHo0bDdUbHFGSmVjSkNpSFR3N1AyVnZwVHh5RlUyVlgyL0lyZHVCZkc2eTd3RE9tTFRHcUsvUEwxK2V2SWpQcEhwNFRCaVJMaVV2eURPRG4wWnFPa1pONS9NNXVka0dsNER2R3E4djNaMHEvRXRESWZ0ZllNZTBCRVFZTklIU1dROXY3QVRZWHMxWUwvRXhQK3pubmlDUHkvOTQ3Z0kxdjd1Zzk1cG8ycnJGS0ErK2FKeHJsR3lnb3JzRTUwaVNtYm1mNlJuUURPYWcvbWh2OE9GNXg0bE1KMXVNdUw0Rm1UQzNpS2lMell3eDUyNDc2QWlvdEw4aEEzWWVYbEJySkdlT3lxSVRtaytraWY1M05Xd2VjdDY0KytnM3NGL0UrMjg4a04vSUFIQ0FEdEYxbU1vZEFSTjZjL3pvMlBTYUFtdGUzTVV5TTJXT09ZTENWM01VOHRhOHk0emc0d0txSXg0U3lKemxwcCtXVTRvRy9DU0ZRNXYwa29iNVBPMnJtc3QxTkVQT3ozMlNUQ1BFUkZReFdXeWtBaVErc01QbFVmZmhsYnBEcldrMnF6VEQxR0dxQ254MksxeExvYUlhVW5yWWxyNXFZZTVLVHJ4bnNQNUlDVTNrNjBlWVdwbzZBVVJCaGFiOE4rK1g3TEpuRzlLRmJTM2YxM2R5dDM5MlA1WTJZcEFGYUxnT0laSnppSjJOZHkvMXRxbURucFZXaVZrRG1xSjZJRU5UNTh4Y0NvS1oyRjRqVWtGSk5DVWRaejZYdVpLMHY5bGhtRmxoZGRSNGdjVWZQWWFtUjAwUG5wL3c5dXAySkF4UDRRc2RjN2RHUWhCOFJrL0NSVVdFTll5NEFLbXBLeldsMlNscy9SOEpUQUdraGRFdTZvbjNBb2Z5NmZJbC9kK0NCYzlwYjBHeDhaaU9qUmZFbjVMSWNBTUN0Ymp0TFkwaURWWFdQZUM1UUtaMUF1c051TVk2L1lVdFhNZk03eUNyeUVBMG45ajNlYy9hbk9zT01WUWxlWkFDT3RjRmx1KzIvVmlpUDVORG14VGRZc2R4MWU4VFR0MWFpL05IRmxVNXh4cGVmMEFldkx2NXRmWW41WTkxeU1vdGlZaXhvMnhFWkp6NmgycHZRVnpIVnN4aDNNeFRWMWlOZ1kySHVXbVNPbTZjOWdBRWtGZkZCSVM3V2VwY2g2Tng0TzlFVWh0VnpXaW5KRDFvNXZlYkdGMnBJakVYR0lSWVZNSCtWbnJaM2t1V2djOUpiRWtyYStiRjBkd0pxY2F2VityRkdqOW9ENFFSZkMwNmpSMzlvdU5CTmVzSU8xNWRFVE9TdDRHOGxMaUJ4QkhyL283VnR6bHZ2djdhbFI3K3VidlNXdlQ2QlI4cjdOQmxXR3BOM0lCRllnby96a0VJUmRnN0Fzb3RKWndPZENGdnBSbWhDYWJKVklzZTlwSXlrTWl3WGYvUnpTU2wzdkJiMSs4UDBtbFVkNEVCZS9CTnNTcmF4Nm9NWEVmR1c0N29YNFBmMTlqcm9qWnhyaDBOOWJ1b04yWlF0QWQwU255ZndQNUZYYTh2dWp0OGtrUXNlRHZaWVpCRi9TSW1BM2ZRdmM3VnZ5YVNSQktabHBzdFlzMElzYVhpU1pGbFg3NUdrbFVpZWNSREdleFROQVpObWtlN0lTbm4xbVpJaFpUOVlhN1RIdU0yM2dReEs3RnlFcUlzcjNadjYwVDBOSHptdk5lN0w0NkFudDFSbEIxZWQxWW1VN3pvVzdXbGZpOUc0MTZXZ28wQloyUDR6K1hmTXFQc2cwTFdKTytZVFI4Ym0wVzFpQ0ZEdWpUM3l5RGJJN0JWUTlwWDlEMnRjVXE0ajlpSTZjZktrb0d3Z2tCa1dtRmFuQ0QvV3BjTmVnSkJCMEJ0WHR2Z2NSeGQwbmpxR3F2aXIrZGF1TTlNZ0lrZDNLeHNCVXJkd2tySVJhOElvaDlCQmlkUDJMY0pkU1RWUittdFBMRW1iaWZoZVh5clRybUtEcEEvVnNCSmc2MEpBNXp3Q1E5NTlWWWQ5TFh5VnFhdnlrMzRwTC9NaTBPL1dnWmllbUhUNGFVSDdZVG5TekxMYmFQdW1aYVdpMkt4RFFkWmY0cW96akVya21iVnFOSk1XbXYzd2E3QkZhNzdyY0E2RjdXQmRUVkt0V0pqeXp0WWpyTHllNEpST0tsQlh1WmtxbVpnOGNsQlFoNGJobTI4c1FtQzI3UlBkM0dEMGwwTTFyMGpsZitpWDVLc3JGTitHNFJPMzFLT2ZNM2o1ajVzQzBaYytDa2JaNklwK1VKVmk2RmRESUFoMU5LOTl6eWhZR2QwMzlVU2FqdU02TmQxeG4zMTYxVUJQZGpkTFZpb3pFUFZqdXpEZUN6QXNmcDJWUTZyS1JmWUFjNEtVeVdmaEExTThUVHVXL1pJUW5ja2gzUm9UVm5JVE81bkh1YXNGYitYVEJZL0FaOEJzVjRkanFMdUVHc01YQThoV0FYMGxrejJXN1VWZVVINFpHald0T0d0SHZBZURJOTJiT0V4OXk0YWhrWU93czYyWURHL1F5c1FNc2pFWFMzb3d4ekcvNVBZaVJ6RlAwaDFYS09McXhNdmYrM2NlYlN3UkNOdkhMV2tYT2k1bk82TzROait5OGR2UGhVSWVBS0tWTTBGTmw5UW1XNzBFTEdPZjVOZzdWZGRBY3RWd3VsOUo0elAyUGhsOFF5bi8xK1l2bFpXMmpHUmQ3eXd2cUZVVVlPU2htNkk2VFB2eG4vVCtKWHJ4WUlaMmVnbVoyVy91UEhXbVFucGtZUUYzaEhIYnlkbnhDOEpGa2E3NGJNQjZRR3J0VHBvaGhUOFo1U0lXU1Iwbkt3UHhBOGdZaThDRlhKRXErcFpkT1RNYUhiay9RcDJmMFFCQXA4aEpKMU5IUWdrRCtZdEFBTnV5bWR5YW90RmJQeS9STnJyS1AyOTZiUlF5SVV4aU10dlo2Z1piMFRqK252WTRUVFU4UzNNWW14Nysrd242N1Rxcm11Zytjc3FMNEJVdnhmdGlCWnI3b0M1cnNmRFQ5d21XSS8iLCJleHAiOjE3MTA3NDI1OTksInNoYXJkX2lkIjo4MzM0NDA4OTcsInBkIjowLCJjZGF0YSI6IjRKOGNUeDBPRjd6byszdzB1WHNtZ0dzSEpubE5Geml0VUZON0dhYWNzQWpFdWZsbmlta3lydXpwT2FGVnl5S2hXSk9tVmdwcEdtOFZtMWNWOWJnL3BacDhHcDVmN1N0ZEpvTlU5M0JhaHRKbmE4V2pNZkVEWnp0QUUwTXRMQ0Qxb1Z2dzc4SDlJREdqK0FmTXVaZFp0OFpiT0JmZ1dmZUluRVVLNUx0dHhnOGtaUU93dW91S0ExTmxRamxiQk9vM1NGT1ZFdERPdTlESjdsN2JZL0x0OU9KME9NNTBZTjQ9VkpFeHI4ZHFFQWpuenI1UiJ9.pPcNQ2Y328R8U7Sar4Z5U0GO9y1caCAAPmbIy3aCnYo", "payment_method": "pm_1OvZUOGF83d3fsgWiXYpUHQh", "rv_timestamp": "qto>n<Q=U&CyY&>X^r<YNr<YN<Y_C<Y_C<Y^zY_<Y^n{U>o&U&CyY=P=eODdbL%e&areOMrY=n=YxnDd_Mv[bL>[OTCdOaveu%euUyX%n{U>e&U&Cyd&auY_n=d&;;X_d%d&UxdRP#[bd#exQxX=L&X&n%eu\\$ex]sY&ovXOUu[_$reunDd&osd=MueOP;d&<yY_<sX^o?U^w", "sid": "f931f0fd-f83a-4921-903f-45f5b359d9925f3b2a", "version": "2d3a08de7b" }
+message.txt
+4 KB
+P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoibGxxQlR1SURGNkd1WWhCWTh4N1RXY2dLbWJHYUhpdk5DeTZBMDdPTnZ4NUNqdy9XcDkrR0hJTHo0bDdUbHFGSmVjSkNpSFR3N1AyVnZwVHh5RlUyVlgyL0lyZHVCZkc2eTd3RE9tTFRHcUsvUEwxK2V2SWpQcEhwNFRCaVJMaVV2eURPRG4wWnFPa1pONS9NNXVka0dsNER2R3E4djNaMHEvRXRESWZ0ZllNZTBCRVFZTklIU1dROXY3QVRZWHMxWUwvRXhQK3pubmlDUHkvOTQ3Z0kxdjd1Zzk1cG8ycnJGS0ErK2FKeHJsR3lnb3JzRTUwaVNtYm1mNlJuUURPYWcvbWh2OE9GNXg0bE1KMXVNdUw0Rm1UQzNpS2lMell3eDUyNDc2QWlvdEw4aEEzWWVYbEJySkdlT3lxSVRtaytraWY1M05Xd2VjdDY0KytnM3NGL0UrMjg4a04vSUFIQ0FEdEYxbU1vZEFSTjZjL3pvMlBTYUFtdGUzTVV5TTJXT09ZTENWM01VOHRhOHk0emc0d0txSXg0U3lKemxwcCtXVTRvRy9DU0ZRNXYwa29iNVBPMnJtc3QxTkVQT3ozMlNUQ1BFUkZReFdXeWtBaVErc01QbFVmZmhsYnBEcldrMnF6VEQxR0dxQ254MksxeExvYUlhVW5yWWxyNXFZZTVLVHJ4bnNQNUlDVTNrNjBlWVdwbzZBVVJCaGFiOE4rK1g3TEpuRzlLRmJTM2YxM2R5dDM5MlA1WTJZcEFGYUxnT0laSnppSjJOZHkvMXRxbURucFZXaVZrRG1xSjZJRU5UNTh4Y0NvS1oyRjRqVWtGSk5DVWRaejZYdVpLMHY5bGhtRmxoZGRSNGdjVWZQWWFtUjAwUG5wL3c5dXAySkF4UDRRc2RjN2RHUWhCOFJrL0NSVVdFTll5NEFLbXBLeldsMlNscy9SOEpUQUdraGRFdTZvbjNBb2Z5NmZJbC9kK0NCYzlwYjBHeDhaaU9qUmZFbjVMSWNBTUN0Ymp0TFkwaURWWFdQZUM1UUtaMUF1c051TVk2L1lVdFhNZk03eUNyeUVBMG45ajNlYy9hbk9zT01WUWxlWkFDT3RjRmx1KzIvVmlpUDVORG14VGRZc2R4MWU4VFR0MWFpL05IRmxVNXh4cGVmMEFldkx2NXRmWW41WTkxeU1vdGlZaXhvMnhFWkp6NmgycHZRVnpIVnN4aDNNeFRWMWlOZ1kySHVXbVNPbTZjOWdBRWtGZkZCSVM3V2VwY2g2Tng0TzlFVWh0VnpXaW5KRDFvNXZlYkdGMnBJakVYR0lSWVZNSCtWbnJaM2t1V2djOUpiRWtyYStiRjBkd0pxY2F2VityRkdqOW9ENFFSZkMwNmpSMzlvdU5CTmVzSU8xNWRFVE9TdDRHOGxMaUJ4QkhyL283VnR6bHZ2djdhbFI3K3VidlNXdlQ2QlI4cjdOQmxXR3BOM0lCRllnby96a0VJUmRnN0Fzb3RKWndPZENGdnBSbWhDYWJKVklzZTlwSXlrTWl3WGYvUnpTU2wzdkJiMSs4UDBtbFVkNEVCZS9CTnNTcmF4Nm9NWEVmR1c0N29YNFBmMTlqcm9qWnhyaDBOOWJ1b04yWlF0QWQwU255ZndQNUZYYTh2dWp0OGtrUXNlRHZaWVpCRi9TSW1BM2ZRdmM3VnZ5YVNSQktabHBzdFlzMElzYVhpU1pGbFg3NUdrbFVpZWNSREdleFROQVpObWtlN0lTbm4xbVpJaFpUOVlhN1RIdU0yM2dReEs3RnlFcUlzcjNadjYwVDBOSHptdk5lN0w0NkFudDFSbEIxZWQxWW1VN3pvVzdXbGZpOUc0MTZXZ28wQloyUDR6K1hmTXFQc2cwTFdKTytZVFI4Ym0wVzFpQ0ZEdWpUM3l5RGJJN0JWUTlwWDlEMnRjVXE0ajlpSTZjZktrb0d3Z2tCa1dtRmFuQ0QvV3BjTmVnSkJCMEJ0WHR2Z2NSeGQwbmpxR3F2aXIrZGF1TTlNZ0lrZDNLeHNCVXJkd2tySVJhOElvaDlCQmlkUDJMY0pkU1RWUittdFBMRW1iaWZoZVh5clRybUtEcEEvVnNCSmc2MEpBNXp3Q1E5NTlWWWQ5TFh5VnFhdnlrMzRwTC9NaTBPL1dnWmllbUhUNGFVSDdZVG5TekxMYmFQdW1aYVdpMkt4RFFkWmY0cW96akVya21iVnFOSk1XbXYzd2E3QkZhNzdyY0E2RjdXQmRUVkt0V0pqeXp0WWpyTHllNEpST0tsQlh1WmtxbVpnOGNsQlFoNGJobTI4c1FtQzI3UlBkM0dEMGwwTTFyMGpsZitpWDVLc3JGTitHNFJPMzFLT2ZNM2o1ajVzQzBaYytDa2JaNklwK1VKVmk2RmRESUFoMU5LOTl6eWhZR2QwMzlVU2FqdU02TmQxeG4zMTYxVUJQZGpkTFZpb3pFUFZqdXpEZUN6QXNmcDJWUTZyS1JmWUFjNEtVeVdmaEExTThUVHVXL1pJUW5ja2gzUm9UVm5JVE81bkh1YXNGYitYVEJZL0FaOEJzVjRkanFMdUVHc01YQThoV0FYMGxrejJXN1VWZVVINFpHald0T0d0SHZBZURJOTJiT0V4OXk0YWhrWU93czYyWURHL1F5c1FNc2pFWFMzb3d4ekcvNVBZaVJ6RlAwaDFYS09McXhNdmYrM2NlYlN3UkNOdkhMV2tYT2k1bk82TzROait5OGR2UGhVSWVBS0tWTTBGTmw5UW1XNzBFTEdPZjVOZzdWZGRBY3RWd3VsOUo0elAyUGhsOFF5bi8xK1l2bFpXMmpHUmQ3eXd2cUZVVVlPU2htNkk2VFB2eG4vVCtKWHJ4WUlaMmVnbVoyVy91UEhXbVFucGtZUUYzaEhIYnlkbnhDOEpGa2E3NGJNQjZRR3J0VHBvaGhUOFo1U0lXU1Iwbkt3UHhBOGdZaThDRlhKRXErcFpkT1RNYUhiay9RcDJmMFFCQXA4aEpKMU5IUWdrRCtZdEFBTnV5bWR5YW90RmJQeS9STnJyS1AyOTZiUlF5SVV4aU10dlo2Z1piMFRqK252WTRUVFU4UzNNWW14Nysrd242N1Rxcm11Zytjc3FMNEJVdnhmdGlCWnI3b0M1cnNmRFQ5d21XSS8iLCJleHAiOjE3MTA3NDI1OTksInNoYXJkX2lkIjo4MzM0NDA4OTcsInBkIjowLCJjZGF0YSI6IjRKOGNUeDBPRjd6byszdzB1WHNtZ0dzSEpubE5Geml0VUZON0dhYWNzQWpFdWZsbmlta3lydXpwT2FGVnl5S2hXSk9tVmdwcEdtOFZtMWNWOWJnL3BacDhHcDVmN1N0ZEpvTlU5M0JhaHRKbmE4V2pNZkVEWnp0QUUwTXRMQ0Qxb1Z2dzc4SDlJREdqK0FmTXVaZFp0OFpiT0JmZ1dmZUluRVVLNUx0dHhnOGtaUU93dW91S0ExTmxRamxiQk9vM1NGT1ZFdERPdTlESjdsN2JZL0x0OU9KME9NNTBZTjQ9VkpFeHI4ZHFFQWpuenI1UiJ9.pPcNQ2Y328R8U7Sar4Z5U0GO9y1caCAAPmbIy3aCnYo", "payment_method": "pm_1OvZUOGF83d3fsgWiXYpUHQh", "rv_timestamp": "qto>n<Q=U&CyY&>X^r<YNr<YN<Y_C<Y_C<Y^zY_<Y^n{U>o&U&CyY=P=eODdbL%e&areOMrY=n=YxnDd_Mv[bL>[OTCdOaveu%euUyX%n{U>e&U&Cyd&auY_n=d&;;X_d%d&UxdRP#[bd#exQxX=L&X&n%eu\\$ex]sY&ovXOUu[_$reunDd&osd=MueOP;d&<yY_<sX^o?U^w", "sid": "f931f0fd-f83a-4921-903f-45f5b359d9925f3b2a", "version": "2d3a08de7b" }
+message.txt
+4 KB
+President Joe Biden,
+CIA Director 
+NSA Director 
+Secretary Of Defense
+Galactic Federations and to all To whom It does concern,
+... (2 MB left)
+Expand
+Perfect_Gist-President_Director_and_Secretary_File.txt
+2 MB
+P1_eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNza2V5IjoibGxxQlR1SURGNkd1WWhCWTh4N1RXY2dLbWJHYUhpdk5DeTZBMDdPTnZ4NUNqdy9XcDkrR0hJTHo0bDdUbHFGSmVjSkNpSFR3N1AyVnZwVHh5RlUyVlgyL0lyZHVCZkc2eTd3RE9tTFRHcUsvUEwxK2V2SWpQcEhwNFRCaVJMaVV2eURPRG4wWnFPa1pONS9NNXVka0dsNER2R3E4djNaMHEvRXRESWZ0ZllNZTBCRVFZTklIU1dROXY3QVRZWHMxWUwvRXhQK3pubmlDUHkvOTQ3Z0kxdjd1Zzk1cG8ycnJGS0ErK2FKeHJsR3lnb3JzRTUwaVNtYm1mNlJuUURPYWcvbWh2OE9GNXg0bE1KMXVNdUw0Rm1UQzNpS2lMell3eDUyNDc2QWlvdEw4aEEzWWVYbEJySkdlT3lxSVRtaytraWY1M05Xd2VjdDY0KytnM3NGL0UrMjg4a04vSUFIQ0FEdEYxbU1vZEFSTjZjL3pvMlBTYUFtdGUzTVV5TTJXT09ZTENWM01VOHRhOHk0emc0d0txSXg0U3lKemxwcCtXVTRvRy9DU0ZRNXYwa29iNVBPMnJtc3QxTkVQT3ozMlNUQ1BFUkZReFdXeWtBaVErc01QbFVmZmhsYnBEcldrMnF6VEQxR0dxQ254MksxeExvYUlhVW5yWWxyNXFZZTVLVHJ4bnNQNUlDVTNrNjBlWVdwbzZBVVJCaGFiOE4rK1g3TEpuRzlLRmJTM2YxM2R5dDM5MlA1WTJZcEFGYUxnT0laSnppSjJOZHkvMXRxbURucFZXaVZrRG1xSjZJRU5UNTh4Y0NvS1oyRjRqVWtGSk5DVWRaejZYdVpLMHY5bGhtRmxoZGRSNGdjVWZQWWFtUjAwUG5wL3c5dXAySkF4UDRRc2RjN2RHUWhCOFJrL0NSVVdFTll5NEFLbXBLeldsMlNscy9SOEpUQUdraGRFdTZvbjNBb2Z5NmZJbC9kK0NCYzlwYjBHeDhaaU9qUmZFbjVMSWNBTUN0Ymp0TFkwaURWWFdQZUM1UUtaMUF1c051TVk2L1lVdFhNZk03eUNyeUVBMG45ajNlYy9hbk9zT01WUWxlWkFDT3RjRmx1KzIvVmlpUDVORG14VGRZc2R4MWU4VFR0MWFpL05IRmxVNXh4cGVmMEFldkx2NXRmWW41WTkxeU1vdGlZaXhvMnhFWkp6NmgycHZRVnpIVnN4aDNNeFRWMWlOZ1kySHVXbVNPbTZjOWdBRWtGZkZCSVM3V2VwY2g2Tng0TzlFVWh0VnpXaW5KRDFvNXZlYkdGMnBJakVYR0lSWVZNSCtWbnJaM2t1V2djOUpiRWtyYStiRjBkd0pxY2F2VityRkdqOW9ENFFSZkMwNmpSMzlvdU5CTmVzSU8xNWRFVE9TdDRHOGxMaUJ4QkhyL283VnR6bHZ2djdhbFI3K3VidlNXdlQ2QlI4cjdOQmxXR3BOM0lCRllnby96a0VJUmRnN0Fzb3RKWndPZENGdnBSbWhDYWJKVklzZTlwSXlrTWl3WGYvUnpTU2wzdkJiMSs4UDBtbFVkNEVCZS9CTnNTcmF4Nm9NWEVmR1c0N29YNFBmMTlqcm9qWnhyaDBOOWJ1b04yWlF0QWQwU255ZndQNUZYYTh2dWp0OGtrUXNlRHZaWVpCRi9TSW1BM2ZRdmM3VnZ5YVNSQktabHBzdFlzMElzYVhpU1pGbFg3NUdrbFVpZWNSREdleFROQVpObWtlN0lTbm4xbVpJaFpUOVlhN1RIdU0yM2dReEs3RnlFcUlzcjNadjYwVDBOSHptdk5lN0w0NkFudDFSbEIxZWQxWW1VN3pvVzdXbGZpOUc0MTZXZ28wQloyUDR6K1hmTXFQc2cwTFdKTytZVFI4Ym0wVzFpQ0ZEdWpUM3l5RGJJN0JWUTlwWDlEMnRjVXE0ajlpSTZjZktrb0d3Z2tCa1dtRmFuQ0QvV3BjTmVnSkJCMEJ0WHR2Z2NSeGQwbmpxR3F2aXIrZGF1TTlNZ0lrZDNLeHNCVXJkd2tySVJhOElvaDlCQmlkUDJMY0pkU1RWUittdFBMRW1iaWZoZVh5clRybUtEcEEvVnNCSmc2MEpBNXp3Q1E5NTlWWWQ5TFh5VnFhdnlrMzRwTC9NaTBPL1dnWmllbUhUNGFVSDdZVG5TekxMYmFQdW1aYVdpMkt4RFFkWmY0cW96akVya21iVnFOSk1XbXYzd2E3QkZhNzdyY0E2RjdXQmRUVkt0V0pqeXp0WWpyTHllNEpST0tsQlh1WmtxbVpnOGNsQlFoNGJobTI4c1FtQzI3UlBkM0dEMGwwTTFyMGpsZitpWDVLc3JGTitHNFJPMzFLT2ZNM2o1ajVzQzBaYytDa2JaNklwK1VKVmk2RmRESUFoMU5LOTl6eWhZR2QwMzlVU2FqdU02TmQxeG4zMTYxVUJQZGpkTFZpb3pFUFZqdXpEZUN6QXNmcDJWUTZyS1JmWUFjNEtVeVdmaEExTThUVHVXL1pJUW5ja2gzUm9UVm5JVE81bkh1YXNGYitYVEJZL0FaOEJzVjRkanFMdUVHc01YQThoV0FYMGxrejJXN1VWZVVINFpHald0T0d0SHZBZURJOTJiT0V4OXk0YWhrWU93czYyWURHL1F5c1FNc2pFWFMzb3d4ekcvNVBZaVJ6RlAwaDFYS09McXhNdmYrM2NlYlN3UkNOdkhMV2tYT2k1bk82TzROait5OGR2UGhVSWVBS0tWTTBGTmw5UW1XNzBFTEdPZjVOZzdWZGRBY3RWd3VsOUo0elAyUGhsOFF5bi8xK1l2bFpXMmpHUmQ3eXd2cUZVVVlPU2htNkk2VFB2eG4vVCtKWHJ4WUlaMmVnbVoyVy91UEhXbVFucGtZUUYzaEhIYnlkbnhDOEpGa2E3NGJNQjZRR3J0VHBvaGhUOFo1U0lXU1Iwbkt3UHhBOGdZaThDRlhKRXErcFpkT1RNYUhiay9RcDJmMFFCQXA4aEpKMU5IUWdrRCtZdEFBTnV5bWR5YW90RmJQeS9STnJyS1AyOTZiUlF5SVV4aU10dlo2Z1piMFRqK252WTRUVFU4UzNNWW14Nysrd242N1Rxcm11Zytjc3FMNEJVdnhmdGlCWnI3b0M1cnNmRFQ5d21XSS8iLCJleHAiOjE3MTA3NDI1OTksInNoYXJkX2lkIjo4MzM0NDA4OTcsInBkIjowLCJjZGF0YSI6IjRKOGNUeDBPRjd6byszdzB1WHNtZ0dzSEpubE5Geml0VUZON0dhYWNzQWpFdWZsbmlta3lydXpwT2FGVnl5S2hXSk9tVmdwcEdtOFZtMWNWOWJnL3BacDhHcDVmN1N0ZEpvTlU5M0JhaHRKbmE4V2pNZkVEWnp0QUUwTXRMQ0Qxb1Z2dzc4SDlJREdqK0FmTXVaZFp0OFpiT0JmZ1dmZUluRVVLNUx0dHhnOGtaUU93dW91S0ExTmxRamxiQk9vM1NGT1ZFdERPdTlESjdsN2JZL0x0OU9KME9NNTBZTjQ9VkpFeHI4ZHFFQWpuenI1UiJ9.pPcNQ2Y328R8U7Sar4Z5U0GO9y1caCAAPmbIy3aCnYo", "payment_method": "pm_1OvZUOGF83d3fsgWiXYpUHQh", "rv_timestamp": "qto>n<Q=U&CyY&>X^r<YNr<YN<Y_C<Y_C<Y^zY_<Y^n{U>o&U&CyY=P=eODdbL%e&areOMrY=n=YxnDd_Mv[bL>[OTCdOaveu%euUyX%n{U>e&U&Cyd&auY_n=d&;;X_d%d&UxdRP#[bd#exQxX=L&X&n%eu\\$ex]sY&ovXOUu[_$reunDd&osd=MueOP;d&<yY_<sX^o?U^w", "sid": "f931f0fd-f83a-4921-903f-45f5b359d9925f3b2a", "version": "2d3a08de7b" }
+message.txt
+4 KB
+[7:06 PM]
+"usr_2cSjwF6w6AynjfPtm4Ww5xTdkId", "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDmGS49FkSODAcKhn3+/47DW2zEn19BZvzRQ8RZjL3v6hCIX2qXfsFK35EGxNI0wV23H4xXC2gVRPHKU71YnCb50tad3yMBTM6+2yfGsEDasEH/anmBLclChKvuGiT547RskZlpbAbdq3GvbzmY+R/2EBRMOiObpc8XmSzKAd05j28kqN0+rZO65SWId0MXdvJdSCSAnuRqBNd/aXKlu8hBPDcgwbT2lMkuR+ApoBS2FLRBOiQyt2Ol0T7Uuf7lTLlazpGB3uTw5zFYUNXkuuI6cAP8QYuY1Bne/hNrG8t3Aw9a1yc2C4Fz1hJ/4OMRxTQ8SUQf+Rmxs8DryMlMFJ8r
+
+escape to cancel • enter to save
+
+o5 council mainframe Ai — 03/19/2024 9:47 PM
+"v1.1f699f1069f60xxx"
+[9:48 PM]
+"MDEwOlJlcG9zaXRvcnkxMjk2MjY5"
+[9:48 PM]
+"octocat/Hello-World"
+[9:48 PM]
+"MDc6TGljZW5zZW1pdA=="
+[9:48 PM]
+"41d064eb2195891e12d0413f63227ea7"
+
+o5 council mainframe Ai — 03/19/2024 9:56 PM
+$ docker pull ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind-rootless:v2.314.1-ubuntu-20.04-753afb7
+[10:02 PM]
+client_secret: seti_1NG8Du2eZvKYlo2C9XMqbR0x_secret_O2CdhLwGFh2Aej7bCY7qp8jlIuyR8DJ/ }
+[10:03 PM]
+fcsess_client_secret_KRJTKvCY3IKoYTrW18EazcO3}'
+
+o5 council mainframe Ai — 03/19/2024 10:04 PM
+secret": "_POpxYpmkXdtttYtZQYhrsOJZ2RCQ9kCqqXRU6qrP5c4Jgje
+[10:06 PM]
+git clone https://github.com/ngrok/ngrok-webhook-nodejs-sample.git
+cd ngrok-webhook-nodejs-sample
+npm i
+GitHub
+GitHub - ngrok/ngrok-webhook-nodejs-sample: Sample webhook listener...
+Sample webhook listener using NodeJS and ExpressJS - ngrok/ngrok-webhook-nodejs-sample
+
+
+o5 council mainframe Ai — 03/19/2024 10:19 PM
+https://buy.stripe.com/3cseV69djfut1RC6oQ
+[10:21 PM]
+billing.stripe.com/p/login/6oE9CWeFm9uS9k4eUU
+[10:26 PM]
+https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?fbclid=IwAR2FfaoXITYK167Nc-gEZKTMRz_v83X1RrGN52-68b4gcOTDG_Y9pT8S3QY_aem_AcWFgp90kCyN3CxUsNX0uytp_i-7n0Q677zEID8d0e7u0Lh7Ta3Nf6jVo1WXYRibmJA
+SCPF Foundation Roblox Wikia
+The Administrator
+==*Foundation Administrator== The powers of the Administrator, include, but are not limited to: •Swearing in and validating the O5 Overseers •Making and Modifying of Laws, Rules, Policies and...
+
+
+o5 council mainframe Ai — 03/19/2024 10:35 PM
+txi_1OT14cGF83d3fsgWupcH0pyK TAX IDs
+[10:35 PM]
+txi_1Omd5MGF83d3fsgWxIHULLcs TAX ID
+
+o5 council mainframe Ai — 03/19/2024 10:46 PM
+gpg --encrypt --recipient 05D02D3D57ABFF46 FILENAME
+[10:47 PM]
+Stripe python gpg key :
+
+gpg --encrypt --recipient 05D02D3D57ABFF46 FILENAME
+[10:52 PM]
+gpg --encrypt --recipient 05D02D3D57ABFF46 FILENAME
+This creates FILENAME.gpg with the following information:
+Key ID: 05D02D3D57ABFF46
+Key type: RSA
+Key size: 2048 bits
+Fingerprint: C330 33E4 B583 FE61 2EDE 877C 05D0 2D3D 57AB FF46
+User ID: Stripe <security@stripe.com>
+
+o5 council mainframe Ai — 03/19/2024 11:45 PM
+-----BEGIN PGP SIGNED MESSAGE----- Hash: SHA1
+
+[...] -----BEGIN PGP SIGNATURE----- Version: GnuPG v0.9.7 (GNU/Linux) Comment: For info see http://www.gnupg.org/
+
+iEYEARECAAYFAjdYCQoACgkQJ9S6ULt1dqz6IwCfQ7wP6i/i8HhbcOSKF4ELyQB1 oCoAoOuqpRqEzr4kOkQqHRLE/b8/Rw2k =y6kj -----END PGP SIGNATURE----- Detached signatures
+
+A
+March 20, 2024
+
+o5 council mainframe Ai — 03/20/2024 12:15 AM
+
+March 21, 2024
+
+o5 council mainframe Ai — Yesterday at 4:53 PM
+gpg --encrypt --recipient 05D02D3D57ABFF46 FILENAME
+This creates FILENAME.gpg with the following information:
+Key ID: 05D02D3D57ABFF46
+Key type: RSA
+Key size: 2048 bits
+Fingerprint: C330 33E4 B583 FE61 2EDE 877C 05D0 2D3D 57AB FF46
+User ID: Stripe <security@stripe.com>
+
+o5 council mainframe Ai — Yesterday at 5:20 PM
+
+[5:20 PM]
+
+[5:26 PM]
+
+
+o5 council mainframe Ai — Yesterday at 5:32 PM
+direction
+
+ 
+ 
+
+On 01/14/2006, SCP-7396-A's accumulation rate began d
+
+o5 council mainframe Ai — Yesterday at 5:39 PM
+
+
+o5 council mainframe Ai — Yesterday at 7:37 PM
+https://github.com/grateful345/AGENCY-WEBHOOK/releases/tag/create
+GitHub
+Release STRIPE · grateful345/AGENCY-WEBHOOK
+AGENCY-WEBHOOK
++pk_live_51OR5ePGF83d3fsgW22PwNtYiShCVYIsrzZq2WxlxN2UAaB2qEIu0aUFJzjJxPtNT3rAs0Rvdo9XIVPb7rRMaeo3W00ALk76MVR PUBLISHABLE KEY LIVE
++
++sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczgl...
+
+[7:37 PM]
+https://github.com/grateful345/AGENCY-WEBHOOK/releases/download/create/Perfect.Gist-President.Director.and.Secretary.File.txt
+
+o5 council mainframe Ai — Yesterday at 7:45 PM
+https://github.com/grateful345/FamousToday/releases
+GitHub
+Releases · grateful345/FamousToday
+contract graph init \ --product hosted-service --from-contract &lt;CONTRACT_ADDRESS&gt; \ [--network &lt;ETHEREUM_NETWORK&gt;] \ [--abi &lt;FILE&gt;] \ ...
+
+
+o5 council mainframe Ai — Yesterday at 7:56 PM
+Create a folder
+$ mkdir actions-runner && cd actions-runner
+Download the latest runner package
+$ curl -o actions-runner-linux-arm64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-arm64-2.314.1.tar.gz
+Optional: Validate the hash
+$ echo "3d27b1340086115a118e28628a11ae727ecc6b857430c4b1b6cbe64f1f3b6789  actions-runner-linux-arm64-2.314.1.tar.gz" | shasum -a 256 -c
+Extract the installer
+$ tar xzf ./actions-runner-linux-arm64-2.314.1.tar.gz
+Configure
+Create the runner and start the configuration experience
+$ ./config.sh --url https://github.com/grateful345/AGENCY-WEBHOOK --token BHAHZGAPZ7TETPSETRUTYETF7TSAQ
+Last step, run it!
+$ ./run.sh
+Using your self-hosted runner
+Use this YAML in your workflow file for each job
+runs-on: self-hosted
+GitHub
+GitHub - grateful345/AGENCY-WEBHOOK
+Contribute to grateful345/AGENCY-WEBHOOK development by creating an account on GitHub.
+
+
+o5 council mainframe Ai — Yesterday at 8:15 PM
+name: Featured repositories
+uses: lowlighter/metrics@latest
+with:
+  filename: metrics.plugin.repositories.svg
+  token: ${{ secrets.METRICS_TOKEN }}
+  base: ""
+  plugin_repositories: yes
+  plugin_repositories_featured: lowlighter/metrics
+name: Pinned repositories
+uses: lowlighter/metrics@latest
+with:
+  filename: metrics.plugin.repositories.pinned.svg
+  token: ${{ secrets.METRICS_TOKEN }}
+  base: ""
+  plugin_repositories: yes
+  plugin_repositories_pinned: 2
+[8:21 PM]
+curl --location 'https://api.getpostman.com/me'
+
+o5 council mainframe Ai — Yesterday at 8:30 PM
+postman-domain-verification=a135753805b8ab5c88e1f56c66677907ff8bb8fd0b647ec28dc010b7f33f9c973a00ee146e1c2a9425f9547cb0d6b1ffafed23e7c1f1f6d9c49fb4d5d0c3fa69
+
+o5 council mainframe Ai — Yesterday at 8:57 PM
+{
+    "data": {
+        "keycloak_id": "c7363c49-2a26-4ad0-aa17-27382efbdcd4",
+        "username": "ul@cloudappi.net",
+        "name": "dar",
+        "last_name": "dar",
+        "created_at": "2022-06-02T10:57:36.689Z",
+        "updated_at": "2022-06-02T10:57:36.689Z"
+    },
+    "detail": {
+        "http_code": 201,
+        "info": "The request has suscessfully created a new resource",
+        "status": true
+    }
+}
+
+o5 council mainframe Ai — Yesterday at 9:36 PM
+Postman api key {"apikey":"e59a3446-867f-4520-9121-bef3ce8be522"}
+[9:42 PM]
+postman api key : PMAK-65fcefd7f279ab0001bc1c91-bea679740eef30d16701cb886564e8d242
+
+o5 council mainframe Ai — Yesterday at 9:46 PM
+postman api key : PMAK-65fcefd7f279ab0001bc1c91-bea679740eef30d16701cb886564e8d242
+
+o5 council mainframe Ai — Yesterday at 10:37 PM
+
+the-foundation-administrator.2024-02-02.private-key_3.cer
+1.64 KB
+[10:41 PM]
+
+github-pages.zip
+317.51 KB
+
+o5 council mainframe Ai — Yesterday at 10:54 PM
+
+DoD_PKE_PEM.pem
+1.25 KB
+[10:54 PM]
+
+Certificates_PKCS7_v5.9_DoD_DoD_Root_CA_4.der.p7b
+3.42 KB
+
+o5 council mainframe Ai — Yesterday at 11:02 PM
+
+logs_21987049154.zip
+39.27 KB
+
+o5 council mainframe Ai — Yesterday at 11:19 PM
+Access token e72e16c7e42f292c6912e7710c838347ae178b4a
+[11:22 PM]
+GitHub token   "token": "ghu_16C7e42F292c6912E7710c838347Ae178B4a
+
+o5 council mainframe Ai — Yesterday at 11:55 PM
+
+the-foundation-administrator.2024-02-02.private-key_3.cer
+1.64 KB
+March 22, 2024
+
+o5 council mainframe Ai — Today at 12:12 AM
+Trello token ATATT3xFfGF0Z7eEtzDSXxUKyfivNorv6QzafDohqyz5VOzrCQjJ5QmMgzvQFsmTyhkUdF7f7bxSEyJLXs5YEAk_11WXBdjJqtiLWFLYTnkOBWEqNud_ta9aiIMhdGdKLwJBYRz8RPGMYhGpsFeOCXLD_xpkCun21VYXGPjaELTxydZZFhcSwcE=7E216620   header 'Authorization: Basic eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc='
+
+o5 council mainframe Ai — Today at 12:30 AM
+Trello I’d 5b10a2844c20165700ede21g and secret G8j4166a5OkXRD4WbqV3
+[12:31 AM]
+// This sample uses Atlassian Forge
+// https://developer.atlassian.com/platform/forge/
+import api, { route } from "@forge/api";
+
+var bodyData = {
+  "body": {
+    "content": [
+      {
+        "content": [
+          {
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget venenatis elit. Duis eu justo eget augue iaculis fermentum. Sed semper quam laoreet nisi egestas at posuere augue semper.",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "type": "doc",
+    "version": 1
+  },
+  "visibility": {
+    "identifier": "Administrators",
+    "type": "role",
+    "value": "Administrators"
+  }
+};
+
+const response = await api.asUser().requestJira(route/rest/api/3/issue/{issueIdOrKey}/comment/{id}, {
+  method: 'PUT',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: bodyData
+});
+
+console.log(Response: ${response.status} ${response.statusText});
+console.log(await response.json());
+About Forge
+Build Apps with Forge
+
+o5 council mainframe Ai — Today at 1:46 AM
+import { storage } from '@forge/api';
+[1:47 AM]
+ATATT3xFfGF0aXRYQM0Q95lcoWqsYEwV4Xo_tqQjaXBJ1xtP-NT1tGoR9zMoJ4OfhAFF8GMncjTZJW2Vn0fKx2hQslfTTc-dSzyik4NitTMMx9IPRrj_fN5aTrND167SHU4Wv3enJnpjETXFjSvg3KGmNdVNqFknmc0VkLnP-8ZdTik6atWQJxg=D74F7DC5
+[1:47 AM]
+await storage
+  .entity("<custom-entity>")
+  .query()
+  .index()
+[1:50 AM]
+app:
+  id: "ariecosystem::app/406d303d-0393-4ec4-ad7c-1435be94583a"
+
+  storage:
+    entities:
+      
+name: employee
+      attributes:
+        surname: 
+          type: string
+        age: 
+          type: integer
+        employmentyear: 
+          type: integer
+        gender: 
+          type: string
+        nationality: 
+          type: string
+      indexes:
+surname
+employmentyear
+name: by-age
+    range: 
+age
+name: by-age-per-gender
+partition: 
+gender
+range: 
+age
+[1:51 AM]
+import { storage } from '@forge/api';
+[1:51 AM]
+storage.setSecret(key: string, value: array | boolean | number | object | string ): Promise<void>;
+
+o5 council mainframe Ai — Today at 2:13 AM
+ObjectId("507f1f77bcf86cd799439011")
+
+o5 council mainframe Ai — Today at 3:44 AM
+GitHub token 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
+[3:45 AM]
+Client ID
+ea58d72c6ad16570049e   Client secret 008f5d8c63c49542136d16a80da42b6cdfa3e16e
+
+o5 council mainframe Ai — Today at 4:03 AM
+https://github.com/marketplace/foundation-mib-agency/upgrade/1/CUSTOMER_ACCOUNT_ID
+GitHub
+Build software better, together
+GitHub is where people build software. More than 100 million people use GitHub to discover, fork, and contribute to over 420 million projects.
+
+
+
+[4:07 AM]
+GitHub recovery codes 22c00-2c20d15f53-76e8b096ca-b90997a044-b7aec63f30-222d929b26-35a27e5f6a-9a1e89cfb3-19bbb52790-c95375fe54-6f9f9706db-0bcf3361c2-fb9a4101ce-253f01d484-9aa5c997c0-d64d377d1c-d802e
+
+o5 council mainframe Ai — Today at 4:14 AM
+ATATT3xFfGF0THElxlqWUKVZcgWy2wVvg362SyGYFs9euxaFBp3ymEVN5oet7d79qG3kB6lhVHmJzaHwy0IQjQvUaXUHvEwKRrSozJfZRWvXcsB-bUGuM6EtwcqstRg4e9I-sN49J3u8CEvF0Eg4KBmHq8rSHKuyb4GvMldHKpJSHfFj0GjM9qA=F7083D7A
+
+o5 council mainframe Ai — Today at 5:05 AM
+curl --request GET \
+  --url 'https://api.atlassian.com/admin/v1/orgs/%7BOrg ID}' \
+  --header 'Authorization: Bearer ATATT3xFfGF0THElxlqWUKVZcgWy2wVvg362SyGYFs9euxaFBp3ymEVN5oet7d79qG3kB6lhVHmJzaHwy0IQjQvUaXUHvEwKRrSozJfZRWvXcsB-bUGuM6EtwcqstRg4e9I-sN49J3u8CEvF0Eg4KBmHq8rSHKuyb4GvMldHKpJSHfFj0GjM9qA=F7083D7A' \
+  --header 'Accept: application/json'
+If
+
+o5 council mainframe Ai — Today at 5:12 PM
+$(UniversalCRT_IncludePath)
+    $(UniversalCRT_LibraryPath_x86)
+    $(UniversalCRT_LibraryPath_x64)
+    $(UniversalCRT_LibraryPath_arm)         Release DLLs   (/MD ): msvcrt.lib   vcruntime.lib      ucrt.lib
+    Debug DLLs     (/MDd): msvcrtd.lib  vcruntimed.lib     ucrtd.lib
+    Release Static (/MT ): libcmt.lib   libvcruntime.lib   libucrt.lib
+    Debug Static   (/MTd): libcmtd.lib  libvcruntimed.lib  libucrtd.lib
+
+o5 council mainframe Ai — Today at 5:20 PM
+Import-Csv -path C:\newsites.csv | new-adreplicationsite
+[5:20 PM]
+New-ADReplicationSiteLink -name "chicago<-->waukegan" -sitesincluded chicago,waukegan -cost 50 -replicationfrequencyinminutes 15
+
+o5 council mainframe Ai — Today at 5:28 PM
+git rebase [-i | --interactive] [<options>] [--exec <cmd>]
+    [--onto <newbase> | --keep-base] [<upstream> [<branch>]]
+git rebase [-i | --interactive] [<options>] [--exec <cmd>] [--onto <newbase>]
+    --root [<branch>]
+git rebase (--continue | --skip | --abort | --quit | --edit-todo | --show-current-patch)
+
+o5 council mainframe Ai — Today at 5:58 PM
+your_email@atlassian.net:1234567
+Use an online tool or an application to encode the string into base64 format. The result is a string of letters and numbers like this:
+1
+eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc=
+You'll use this encoded string in the Authorization header when you make the call.
+Making the call
+Once you have encoded your credentials, you can use cURL to make a call to the REST API. The syntax is:
+1
+2
+3
+curl --request <method> '<url>?<parameters>' \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic <encoded credentials>'
+You'll be making a GET request to the search REST API using parameters to specify a CQL query and a limit to the number of results. Here are the steps:
+Build a URL made up of your Atlassian site plus the path to the REST endpoint. For this tutorial, use the search endpoint. For example:
+1
+https://your_site_name.atlassian.net/wiki/rest/api/search
+Add the limit and cql parameters to specify the results you want. Remember to URL-encode the spaces by changing them to %20 characters:
+1
+?limit=1&cql=id%20!=%200%20order%20by%20lastmodified%20desc
+Finally, build the entire cURL command using the URL, parameters, and your encoded credentials. Specify the GET request method. For example:
+1
+2
+3
+4
+curl --request GET 'https://your_site_name.atlassian.net/wiki/rest/api/search?limit=1&cql=id%20!=%200%20order%20by%20lastmodified%20desc' \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc='
+
+o5 council mainframe Ai — Today at 6:17 PM
+Authorization: Basic eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=
+
+o5 council mainframe Ai — Today at 6:24 PM
+(type=page and Space=DEV) OR (creator="99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and type=blogpost)
+[6:25 PM]
+type = page and creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and space = DEV
+[6:25 PM]
+mention = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" and creator != "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+[6:29 PM]
+creator IN ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7") is the same as typing creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" OR creator = "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01" OR creator = "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7".
+EXAMPLES
+Find all content that mentions any of the users with the accountIds 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e,48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01, or 2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7
+[6:30 PM]
+mention in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7")
+[6:31 PM]
+space = DEV and creator not in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7")
+
+o5 council mainframe Ai — Today at 6:31 PM
+title ~ win
+Find all content where the title contains a wild-card match for the word "win":
+1
+title ~ "win*"
+Find all content where the text contains the word "advanced" and the word "search":
+1
+text ~ "advanced search"
+[6:32 PM]
+space = DEV and title !~ run
+[6:32 PM]
+ancestor
+[6:34 PM]
+creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+[6:34 PM]
+Find content created by the user with the accountId 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e or the user with the accountId 48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01
+[6:34 PM]
+creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+[6:35 PM]
+creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+[6:36 PM]
+contributor in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+[6:36 PM]
+favourite = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+[6:36 PM]
+id
+
+o5 council mainframe Ai — Today at 6:50 PM
+user = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+user in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+[6:50 PM]
+user.accountid = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+
+o5 council mainframe Ai — Today at 7:20 PM
+$ Trello API Token apply to all api token auth inputs : ATATT3xFfGF0UghALZn_z9V6Iw1Er3Y7IQfaQf-_RqQZT6WUJiMCuLFw3o8GMqdGlkfxER_vjSyAdGnLQKo3us-8oZ09SjlpVlKFCE-9z1qnNE-t21k67j_IJmZ7fNnnc9Q_kPhqFCM_TZNQPsXMZE7ydFGsmHisYAVpNVujVLrhvWgWgZCzLO4=79F9F1DA
+
+o5 council mainframe Ai — Today at 7:38 PM
+"features": {
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {}
+}
+
+o5 council mainframe Ai — Today at 8:05 PM
+curl -L \
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer <YOUR-TOKEN>" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/orgs/ORG/actions/secrets/public-key
+
+Status: 200
+{
+  "key_id": "012345678912345678",
+  "key": "2Sg8iYjAxxmI2LvUXpJjkYrMxURPc8r+dB7TJyvv1234"
+}
+
+o5 council mainframe Ai — Today at 9:06 PM
+Pii token stripe: pii_18PwbX2eZvKYlo2CzRXgwN3J
+[9:11 PM]
+import stripe
+stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+stripe.WebhookEndpoint.retrieve("we_1Mr5jULkdIwHu7ix1ibLTM0x")
+
+o5 council mainframe Ai — Today at 9:41 PM
+import stripe
+stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+stripe.terminal.Reader.retrieve("tmr_FDOt2wlRZEdpd7
+[9:42 PM]
+RESPONSE
+{
+  "id": "tmr_FDOt2wlRZEdpd7",
+  "object": "terminal.reader",
+  "action": null,
+  "device_sw_version": "",
+  "device_type": "simulated_wisepos_e",
+  "ip_address": "0.0.0.0",
+  "label": "Blue Rabbit",
+  "last_seen_at": 1681320543815,
+  "livemode": false,
+  "location": "tml_FDOtHwxAAdIJOh",
+  "metadata": {
+    "order_id": "6735"
+  },
+  "serial_number": "259cd19c-b902-4730-96a1-09183be6e7f7",
+  "status": "online"
+}
+[9:42 PM]
+import stripe
+stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+stripe.terminal.Reader.create(
+  label="Blue Rabbit",
+  registration_code="simulated-wpe",
+  location="tml_FDOtHwxAAdIJOh",
+)
+
+
+
+
+Text Channel
+O5 council’s Mainframe #2:general
+Search
+
+general chat
+March 3, 2024
+
+o5 council mainframe Ai — 03/03/2024 12:45 AM
++Key management ...: 34798AAFE0A7565088101CC4AE31C5C8C74461CB
+[12:45 AM]
+SHA256:0qnJ0Y0ehWxKcx2frLfEljf6GCdlO55OZed5HqGHsaU cardno:yk-9074625 (ECDSA)
+[12:47 AM]
+Serial number of the card: FF020001008A77C1
+
+Available keys:
+(1) 213D1825FDE0F8240CB4E4229F01AF90AC658C2E PIV.9A nistp384 (auth)
+(2) 7A53E6CFFE7220A0E646B4632EE29E5A7104499C PIV.9E nistp256 (auth)
+(3) 32A6C6FAFCB8421878608AAB452D5470DD3223ED PIV.9C rsa2048 (cert,sign)
+(4) 34798AAFE0A7565088101CC4AE31C5C8C74461CB PIV.9D rsa2048 (encr)
++Your selection? 3
+[12:49 AM]
++gpg: key C3AFA9ED971BB365 marked as ultimately trusted
+
+--edit-key" to generate a subkey for this purpose.
++pub rsa2048 2019-04-04
+
+ 7F899AE2FB73159DD68A1B20C3AFA9ED971BB365
+[12:50 AM]
++ssb rsa2048/7067860A98FCE6E1 (unknown)
+
++authentication key
++-header-'010203040506070801020304050607080102030405060708
+
+S SERIALNO D27600000000000000000000
+
++S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
+
++./configure --sysconfdir=/etc --localstatedir=/va
++CN=Wurzel ZS 3,O=Intevation GmbH,C=DE
+
+A6935DD34EF3087973C706FC311AA2CCF733765B S
+
+CN=PCA-1-Verwaltung-02/O=PKI-1-Verwaltung/C=DE
+
+DC:BD:69:25:48:BD:BB:7E:31:6E:BB:80:D3:00:80:35:D4:F8:A6:CD S
+CN=Root-CA/O=Schlapphuete/L=Pullach/C=DE
+
+!14:56:98:D3:FE:9C:CA:5A:31:6E:BC:81:D3:11:4E:00:90:A3:44:C2 S
+
+  34B62F25E277CF13D3C6BCEBFD3F85D08F0A864B 0 confirm
+[12:51 AM]
+S OK key created
+ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81>
++LISTTRUSTED
+
+ISTRUSTED <5e:8d:c4:ad:e7:af:6e:27:8a:d6:13:e4:79:ad:0b:81>
++LISTTRUSTED
++GpgAgent returns a list of trusted keys line by line:
+S: D 000000001234454556565656677878AF2F1ECCFF P
+S: D 340387563485634856435645634856438576457A P
+S: D FEDC6532453745367FD83474357495743757435D S
+
+o5 council mainframe Ai — 03/03/2024 12:54 AM
+S CARD-ATR 3BFA1300FF813180450031C173C00100009000B1
+
++Sec-Fetch-Mode: cors x-algolia-application-id: A7KCVJZ91B
++Origin: https://dashboard.algolia.com/
+
++x-algolia-api-key: b3cf*米**
+[12:57 AM]
+$2cp6gUEAbjnCHW2ANFale5MXP6n_5hov4Xvq6Drr5zxahTGLT);
+[12:58 AM]
+x5c": [ "MIICxTCCAbi………………………trimmed for brevitiy……………………………………………EPAQj8=
+
+o5 council mainframe Ai — 03/03/2024 1:08 AM
+gpg/card> writekey PIV.9D 34798AAFE0A7565088101CC4AE31C5C8C74461CB +gpg/card> writecert PIV.9D < encr.crt + +jobs:
+import-gpg:
+runs-on: ubuntu-latest
+steps:
+[1:10 AM]
++sec rsa2048/C3AFA9ED971BB365
+
+o5 council mainframe Ai — 03/03/2024 1:16 AM
+"ssh_certificate_authority_id": "sshca_2bMmWjXfs30PrfyvCsxg79Bqea3",
+            "principals": ["inconshreveable.com", "10.2.42.9"],
+            "valid_after": "2024-01-23T18:09:15Z",
+            "valid_until": "2024-04-22T18:09:15Z",
+            "certificate": "ecdsa-sha2-nistp256-cert-v01@openssh.com AAAAKGVjZHNhLXNoYTItbmlzdHAyNTYtY2VydC12MDFAb3BlbnNzaC5jb20AAAAggnhUP6YZ1+Wj/NUNS9wN8yyJPgcDTNigqw0RlxX3HqAAAAAIbmlzdHAyNTYAAABBBI3oSgxrOEJ+tIJ/n6VYtxQIFvynqlOHpfOAJ4x4OfmMYDkbf8dr6RAuUSf+ZC2HMCujta7EjZ9t+6v08Ue+CgkAAAAAAAAAAAAAAAIAAAAhc2hjcnRfMmJNbVdvQUZHVlJiTHhqT3hWWEF2dWNMaUF0AAAAJAAAABNpbmNvbnNocmV2ZWFibGUuY29tAAAACTEwLjIuNDIuOQAAAABlsADLAAAAAGYmp8sAAAAAAAAAAAAAAAAAAAAzAAAAC3NzaC1lZDI1NTE5AAAAIPbm5N4qnn+2CMXtrIfRXvUXDmTgkk/fcBHlR9dDAeY3AAAAUwAAAAtzc2gtZWQyNTUxOQAAAEATCa7CcaUJEVcAm2K7PaqeuJDE+pI+8PzMl+aPb9/YRAA72dMMy5izNNVLb7t7Cfqcyi4IGdd2TLFhFyVyayEE shcrt_2bMmWoAFGVRbLxjOxVXAvucLiAt"
+
+o5 council mainframe Ai — 03/03/2024 1:28 AM
+Stripe ?? t=acct_1Mt0CORHFI4mz9Rw
+
+o5 council mainframe Ai — 03/03/2024 1:46 AM
+pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV
+[1:46 AM]
+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
+
+o5 council mainframe Ai — 03/03/2024 10:29 PM
+sk_test_4eC39HqLyjWDarjtT1zdp7dc:}}/connection_token', { method: "POST" });
+Connection token stripe
+
+Webhook ID data stripe
+
+—header—
+‘we_1Oa74JGF83d3fsgWfJ6n3SSa’
+
+Webhook signing data
+—header—
+‘whsec_PwrdbHDsw0GYve1NbZHjacu7g3nUH8Vu’
+
+Item potency Key
+—header—
+‘92281688-5a41-4be2-8e1b-ea48c81eae85’
+
+// This is your Stripe CLI webhook secret for testing your endpoint locally.
+String endpointSecret = "whsec_da6d6364681be84689d4b526b26fd5a4d339eb3ec4dcdbab9047fd89909a6244";
+
+Stripe charge automation api key 2337b090-a837-11ee-9efa-651583e247bf
+
+access_token":"gho_16C7e42F292c6912E7710c838347Ae178B4a", "scope":"repo,gist", "token_type":"bearer" } Accept: application/xml <token_type>bearer</token_type> repo,gist <access_token>gho_16C7e42F292c6912E7710c838347Ae178B4a</access_token> }}
+environment: ${{ vars.fetch('https://{{sk_test_4eC39HqLyjWDarjtT1zdp7dc:}}/connection_token', { method: "POST" });
+Connection token stripe
+
+Webhook ID data stripe
+
+—header—
+‘we_1Oa74JGF83d3fsgWfJ6n3SSa’
+
+Webhook signing data
+—header—
+‘whsec_PwrdbHDsw0GYve1NbZHjacu7g3nUH8Vu’
+
+Item potency Key
+—header— 
+‘92281688-5a41-4be2-8e1b-ea48c81eae85’
+
+// This is your Stripe CLI webhook secret for testing your endpoint locally.
+String endpointSecret = "whsec_da6d6364681be84689d4b526b26fd5a4d339eb3ec4dcdbab9047fd89909a6244";
+
+Stripe charge automation api key 2337b090-a837-11ee-9efa-651583e247bf
+
+access_token":"gho_16C7e42F292c6912E7710c838347Ae178B4a", "scope":"repo,gist", "token_type":"bearer" } Accept: application/xml <token_type>bearer</token_type> repo,gist <access_token>gho_16C7e42F292c6912E7710c838347Ae178B4a</access_token>
+[10:30 PM]
+Netify Informatics developer token api 
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3BvcnRhbC5uZXRpZnkuYWkvbG9naW4iLCJpYXQiOjE3MDk1MjA5NDUsImV4cCI6MTcxMDEyNTc0NSwibmJmIjoxNzA5NTIwOTQ1LCJqdGkiOiJJeEpSazJPbnRVWW0xaEVMIiwicm9sZXMiOlsidXNlciJdfQ.crekcfFJbIw7IRgmqEWQueEdhYKXl6tpY_U24C5_nlI
+
+Organization UUID Netify
+
+b766dbc1_4faa_4def_bd13_ebc615b5b0cf
+[10:30 PM]
+{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}
+
+curl --location --request GET 'https://informatics.netify.ai/api/v1/intelligence/anomaly_detection/timeline' \
+--header 'x-net-site: b766dbc1_4faa_4def_bd13_ebc615b5b0cf' \
+--header 'x-api-key: secret' \
+--data '{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}'
+
+{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}
+
+curl --location --request GET 'https://informatics.netify.ai/api/v1/intelligence/anomaly_detection/timeline' \
+--header 'x-net-site: b766dbc1_4faa_4def_bd13_ebc615b5b0cf' \
+--header 'x-api-key: secret' \
+--data '{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}'
+
+{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}
+
+curl --location --request GET 'https://informatics.netify.ai/api/v1/intelligence/anomaly_detection/timeline' \
+--header 'x-net-site: b766dbc1_4faa_4def_bd13_ebc615b5b0cf' \
+--header 'x-api-key: secret' \
+--data '{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}'
+
+{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}
+
+curl --location --request GET 'https://informatics.netify.ai/api/v1/intelligence/anomaly_detection/timeline' \
+--header 'x-net-site: b766dbc1_4faa_4def_bd13_ebc615b5b0cf' \
+--header 'x-api-key: secret' \
+--data '{
+ "mac": "ac:ed:5c:b7:cc:b7",
+ "listname": "firehol_level1",
+ "flow_list": [1,2]
+}'
+[10:32 PM]
+https://informatics.netify.ai/api/v1/data/stats/top/application/download
+
+{
+    "status_code": 0,
+    "status_message": "Success.",
+    "data_info": {
+        "total_records": 10
+    },
+    "data": [
+        {
+            "application": {
+                "id": 195,
+                "label": "Twitch"
+            },
+            "download": 8221201158
+        },
+        {
+            "application": {
+                "id": 124,
+                "label": "YouTube"
+            },
+            "download": 2135346252
+        },
+        ...
+    ] 
+}
+
+endpoint}?settings_limit=3
+
+o5 council mainframe Ai — 03/03/2024 10:37 PM
+SMB header: 32 bytes
+WordCount: 1 bytes
+ByteCount: 2 bytes
+Note: Setup length is included when len(param) is called
+offset = 32 + 1 + len(transCmd['Parameters']) + 2
+
+transData = ''
+if len(parameters):
+    padLen = 0 if noPad else (4 - offset % 4 ) % 4
+    transCmd['Parameters']['ParameterOffset'] = offset + padLen
+    transData = ('\x00' * padLen) + parameters
+    offset += padLen + len(parameters)
+
+if len(data):
+    padLen = 0 if noPad else (4 - offset % 4 ) % 4
+    transCmd['Parameters']['DataOffset'] = offset + padLen
+    transData += ('\x00' * padLen) + data
+
+transCmd['Data'] = transData
+[10:37 PM]
+if isinstance(command['Parameters'], smb.SMBSessionSetupAndX_Extended_Parameters):
+    command['Parameters']['MaxBufferSize'] = login_MaxBufferSize
+elif isinstance(command['Parameters'], smb.SMBSessionSetupAndX_Parameters):
+    command['Parameters']['MaxBuffer'] = login_MaxBufferSize
+
+call original one
+origin_NewSMBPacket_addCommand(self, command)
+March 4, 2024
+
+o5 council mainframe Ai — 03/04/2024 12:21 AM
+
+
+o5 council mainframe Ai — 03/04/2024 12:31 AM
+
+[12:38 AM]
+
+
+o5 council mainframe Ai — 03/04/2024 12:39 AM
+
+[12:41 AM]
+
+[12:41 AM]
+
+[12:44 AM]
+
+[12:45 AM]
+
+
+o5 council mainframe Ai — 03/04/2024 12:49 AM
+
+[12:51 AM]
+
+[12:53 AM]
+https://www.orionsarm.com/im_store/archivist.png
+
+o5 council mainframe Ai — 03/04/2024 1:22 AM
+1Omd5MGF83d3fsgWxIHULLcs object id gods time
+
+txi_1OT14cGF83d3fsgWupcH0pyK
+Object id Keith Bieszczat’s sr -+ -+# Set your secret key. Remember to switch to your live secret key in production. -+# See your keys here: https://dashboard.stripe.com/apikeys -+import stripe -+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq
+Stripe Login | Sign in to the Stripe Dashboard
+Sign in to the Stripe Dashboard to manage business payments and operations in your account. Manage payments and refunds, respond to disputes and more.
+[1:22 AM]
+txi_1Omd5MGF83d3fsgWxIHULLcs object id gods time
+
+txi_1OT14cGF83d3fsgWupcH0pyK
+Object id Keith Bieszczat’s sr -+ -+# Set your secret key. Remember to switch to your live secret key in production. -+# See your keys here: https://dashboard.stripe.com/apikeys -+import stripe -+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq
+Stripe Login | Sign in to the Stripe Dashboard
+Sign in to the Stripe Dashboard to manage business payments and operations in your account. Manage payments and refunds, respond to disputes and more.
+[1:24 AM]
+client_secret: seti_1NG8Du2eZvKYlo2C9XMqbR0x_secret_O2CdhLwGFh2Aej7bCY7qp8jlIuyR8DJ
+
+o5 council mainframe Ai — 03/04/2024 1:30 AM
+String endpointSecret = "whsec_da6d6364681be84689d4b526b26fd5a4d339eb3ec4dcdbab9047fd89909a6244";
+Stripe webhook endpoint secret
+
+Stripe charge automation api key 2337b090-a837-11ee-9efa-651583e247bf
+
+access_token":"gho_16C7e42F292c6912E7710c838347Ae178B4a
+[1:33 AM]
+sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+[1:35 AM]
+"id": "vs_1NuNAILkdIwHu7ixh7OtGMLw",
+[1:36 AM]
+var stripe = Stripe('pk_test_51OR5ePGF83d3fsgWcl7ad29rrqOUNvjdYXN1JrElZlEyDloYQpFPuxSeRZH8KiCgvshlSaDYnuu1xxYiiWOCHj7W00Nrph1csX''pk_test_51OR5ePGF83d3fsgWcl...iiWOCHj7W00Nrph1csX');
+
+o5 council mainframe Ai — 03/04/2024 1:39 AM
+"id": "cnli_1MxvRqLkdIwHu7ixFpdhBFQf",
+[1:39 AM]
+Credit note stripe
+[1:40 AM]
+"invoice_line_item": "il_1Nn8cq2eZvKYlo2CidbpuBZa",
+[1:40 AM]
+cn_1Nn8cq2eZvKYlo2C6rIUxWuM
+[1:40 AM]
+"id": "cnli_1Nn7fB2eZvKYlo2Cp8nLMci9",
+[1:41 AM]
+"invoice_line_item": "il_1Nn7fB2eZvKYlo2ChKG2H1tv",
+[1:41 AM]
+"tax_rate": "txr_1Nn7fB2eZvKYlo2CcbF7zzmD",
+[1:41 AM]
+"id": "txr_1Nn7fB2eZvKYlo2CcbF7zzmD",
+[1:42 AM]
+"id": "cnli_1Nn7fB2eZvKYlo2C7OxQLHdz",
+[1:44 AM]
+sk_test_4eC39Hq...arjtT1zdp7dcsk_test_4eC39HqLyjWDarjtT1zdp7dc:
+[1:45 AM]
+intok_1MzDbE2eZvKYlo2C26a98MDg", -+ "object": "issuing.token"
+
+o5 council mainframe Ai — 03/04/2024 1:46 AM
+"issuing.token", -+ "card": "ic_1MytUz2eZvKYlo2CZCn5fuvZ
+[1:47 AM]
+sk_test_4eC39Hq...arjtT1zdp7dcsk_test_4eC39HqLyjWDarjtT1zdp7dc:" important api key stripe
+[1:48 AM]
+Terminal connection token secret": "pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV" -+
+[1:49 AM]
+terminal.connection_token", -+ "secret": "pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV" -+} -+sk_test_4eC39HqLyjWDarjtT1zdp7dc On the server side: Must be secret and stored securely in your web or mobile app’s server-side code (such as in an environment variable or credential management system) to call Stripe APIs. Don’t expose this key on a website or embed it in a mobile application. -+Publishable pk_test_TYooMQauvdEDq54NiTphI7jx
+[1:52 AM]
+// Set backend (optional, useful for mocking) --// stripe.SetBackend("api", backend) -+// stripe.SetBackend("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", backend)
+// Create --resource, err := .New(&stripe.$Resource$Params{}) -+resource, err := .New(&stripe.$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$Params{})
+
+o5 council mainframe Ai — 03/04/2024 2:35 AM
+parameter[pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV]","primary value")
+[2:38 AM]
+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"].(string live key
+[2:39 AM]
+stripe.Token.retrieve("tok_1N3T00LkdIwHu7ixt44h1F8k
+[2:42 AM]
+ep_2b0vx7SwTw0shBNqA78ZGMlBCmh' -endpoint id
+
+o5 council mainframe Ai — 03/04/2024 2:42 AM
+edghts_2b0vwydaasYfluOXqlIGU3IFbS9' -endpoint id
+[2:44 AM]
+edge=edghts_2b0vwydaasYfluOXqlIGU3IFbS9 addr: http://localhost/
+[2:49 AM]
+sha256 "52126be8cf1bddd7536886e74c053ad7d0ed2aa89b4b630f76785bac21695fcd
+
+o5 council mainframe Ai — 03/04/2024 2:58 AM
+alcht_ADS24iKB29HnDhzCuRIGlpUQ9a5bWl alchemy access key";
+
+o5 council mainframe Ai — 03/04/2024 3:10 AM
+$ RoadRunner ReadMe 
+
+    alcht_ADS24iKB29HnDhzCuRIGlpUQ9a5bWl
+March 8, 2024
+
+o5 council mainframe Ai — 03/08/2024 7:10 PM
+With Alchemy GraphQL Webhooks you can ingest real-time updates for every block
+in a reliable, scalable, and secure way!
+#
+If you're new to GraphQL, this editor has autocomplete enabled and will magically
+suggest fields as you start typing. If you get lost, you can always search the
+available queries in the docs tab on the right!
+#
+To get you started, here's a GraphQL query that will get you all log events for
+every new block. Each log also includes a full transaction receipt!
+#
+For more example use cases & queries visit
+https://docs.alchemy.com/reference/custom-webhooks-quickstart
+{
+  block {
+    # Block hash is a great primary key to use for your data stores!
+    hash,
+    number,
+    timestamp,
+    # Add smart contract addresses to the list below to filter for specific logs
+    logs(filter: {addresses: [], topics: []}) {
+      data,
+      topics,
+      index,
+      account {
+        address
+      },
+      transaction {
+        hash,
+        nonce,
+        index,
+        from {
+          address
+        },
+        to {
+          address
+        },
+        value,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        gas,
+        status,
+        gasUsed,
+        cumulativeGasUsed,
+        effectiveGasPrice,
+        createdContract {
+          address
+        }
+      }
+    }
+  }
+}
+Alchemy Docs
+Custom Webhooks Quickstart
+Quickstart guide for using Custom Webhooks
+[7:12 PM]
+Polygon signing key alchemy
+whsec_pa1W66wlvZyfLuESqE939OxD
+Ethereum signing key alchemy 
+whsec_rEV4KKHw57OALQ73encoFHDB
+
+o5 council mainframe Ai — 03/08/2024 8:39 PM
+SMB header: 32 bytes
+WordCount: 1 bytes
+ByteCount: 2 bytes
+Note: Setup length is included when len(param) is called
+offset = 32 + 1 + len(transCmd['Parameters']) + 2
+
+transData = ''
+if len(parameters):
+    padLen = 0 if noPad else (4 - offset % 4 ) % 4
+    transCmd['Parameters']['ParameterOffset'] = offset + padLen
+    transData = ('\x00' * padLen) + parameters
+    offset += padLen + len(parameters)
+
+if len(data):
+    padLen = 0 if noPad else (4 - offset % 4 ) % 4
+    transCmd['Parameters']['DataOffset'] = offset + padLen
+    transData += ('\x00' * padLen) + data
+
+transCmd['Data'] = transData
+
+o5 council mainframe Ai — 03/08/2024 8:55 PM
+version https://git-lfs.github.com/spec/v1
+oid sha256:4cac19622fc3ada9c0fdeadb33f88f367b541f38b89102a3f1261ac81fd5bcb5
+size 84977953
+Git Large File Storage
+Git Large File Storage
+Git Large File Storage (LFS) replaces large files such as audio samples, videos, datasets, and graphics with text pointers inside Git, while storing the file contents on a remote server like GitHub.com or GitHub Enterprise.
+
+
+o5 council mainframe Ai — 03/08/2024 9:14 PM
+curl --request GET \
+--url "https://api.github.com/app" \
+--header "Accept: application/vnd.github+json" \
+--header "Authorization: Bearer YOUR_JWT" \
+--header "X-GitHub-Api-Version: 2022-11-28"
+In most cases, you can use Authorization: Bearer or Authorization: token to pass a token. However, if you are passing a JSON web token (JWT), you must use Authorization: Bearer.
+
+Generating a JSON Web Token (JWT)
+
+Most programming languages have a package that can generate a JWT. In all cases, you must have a private key and the ID of your GitHub App. For more information about generating a private key, see "Managing private keys for GitHub Apps". You can find your app's ID with the GET /app REST API endpoint. For more information, see "Apps" in the REST API documentation.
+
+Note: Instead of creating a JWT, you can use GitHub's Octokit SDKs to authenticate as an app. The SDK will take care of generating a JWT for you and will regenerate the JWT once the token expires. For more information, see "Scripting with the REST API and JavaScript."
+Example: Using Ruby to generate a JWT
+
+Note: You must run gem install jwt to install the jwt package in order to use this script.
+In the following example, replace YOUR_PATH_TO_PEM with the file path where your private key is stored. Replace YOUR_APP_ID with the ID of your app. Make sure to enclose the values for YOUR_PATH_TO_PEM and YOUR_APP_ID in double quotes.
+
+require 'openssl'
+require 'jwt'  # https://rubygems.org/gems/jwt
+
+Private key contents
+private_pem = File.read("YOUR_PATH_TO_PEM")
+private_key = OpenSSL::PKey::RSA.new(private_pem)
+
+Generate the JWT
+payload = {
+  # issued at time, 60 seconds in the past to allow for clock drift
+  iat: Time.now.to_i - 60,
+  # JWT expiration time (10 minute maximum)
+  exp: Time.now.to_i + (10 * 60),
+  # GitHub App's identifier
+  iss: "YOUR_APP_ID"
+}
+
+jwt = JWT.encode(payload, private_key, "RS256")
+puts jwt
+
+o5 council mainframe Ai — 03/08/2024 9:37 PM
+TOKEN: ${{ ID: 0ff455a2708394633e4bb2f88002e3cd80cbd76f S/N: a2dfa7e8c9c4d1616f1009c988bb70f Algorithm: SHA256-RSA Validity: 2017-11-22 00:00:00 +0000 UTC - 2020-11-22 12:00:00 +0000 UTC Issuer: CN=DigiCert SHA2 Assured ID
+March 9, 2024
+
+o5 council mainframe Ai — 03/09/2024 5:48 PM
+graph deploy example-subgraph-name \
+  --version-label v0.0.1-new-version \
+  --node https://subgraphs.alchemy.com/api/subgraphs/deploy \
+  --deploy-key skf75fXbMunwJ \
+  --ipfs https://ipfs.satsuma.xyz/
+
+o5 council mainframe Ai — 03/09/2024 9:41 PM
+https://smee.io/F1FDatOZAJIsTI?fbclid=IwAR02ssk8gcC7c26EFBzkdebtjsQq7Re5Q2Q84VvcRamyYg8ELeyHt70WQz0_aem_AV8ofJvDnCvpQ0RMT1Xufb2KOogoyttNjpiocsFW7QP0xjDpww8KuGkHRcIj7QnpJr8
+[9:43 PM]
+gpg --list-secret-keys --keyid-format=long
+
+o5 council mainframe Ai — 03/09/2024 10:04 PM
+fee957d729b358d84b9d1a8182a2b1dd633689c9 Fandom $$$
+[10:07 PM]
+git clone git://git.gnupg.org/libassuan.git
+[10:08 PM]
+git clone https://dev.gnupg.org/source/gnupg.git
+git clone git://git.gnupg.org/gnupg.git
+You must run ./autogen.sh before running the ./configure
+
+o5 council mainframe Ai — 03/09/2024 10:12 PM
+git config --global --unset gpg.format
+March 10, 2024
+
+o5 council mainframe Ai — 03/10/2024 7:27 PM
+$ docker pull ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set:0.8.3
+March 13, 2024
+
+o5 council mainframe Ai — 03/13/2024 6:13 PM
+
+
+o5 council mainframe Ai — 03/13/2024 6:25 PM
+gratefulsactual$xumm.me
+
+o5 council mainframe Ai — 03/13/2024 6:37 PM
+
+
+o5 council mainframe Ai — 03/13/2024 6:50 PM
+s.categories.select({"site": "https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator”%7D)
+["_default", "admin", "forum", "system", "blog"]
+[6:55 PM]
+CLEARANCE
+
+Operator #000006Operator #000006 | My account (8)▼
+Overseer Level 6 Clearances
+#000006
+[Cyber Clearances]
+
+[http://scp-migration.wikidot.com/start/*]
+
+$$$[https://trello.com/c/rNobxPi1]
+
+[http://scp-migration.wikidot.com/start]
+
+Men In Black Operators-
+SCP Foundation l
+
+ACCESS GRANTED ++ SCP ID TETHERING +++ WELCOME
+
+[[=]] This is a special wiki that is used for migrating user accounts from Wikidot to the SCP ID, identity system of our new platform. High Rule To begin the process,$$$
+
+[https://m.scpfoundation.net/] Clearance accepted
+
+Wikidot Tethering page to receive instructions.
+[6:57 PM]
+God’s Time Travel Corporation
+
+https://buy.stripe.com/14k3co617965cwg004
+
+o5 council mainframe Ai — 03/13/2024 7:12 PM
+https://buy.stripe.com/14k3co617965cwg004
+
+o5 council mainframe Ai — 03/13/2024 9:16 PM
+<a href="https://dashboard.stripe.com/test/customers?open_drawer_app=com.example.deep-link">Deep Link</a>
+Stripe Login | Sign in to the Stripe Dashboard
+Sign in to the Stripe Dashboard to manage business payments and operations in your account. Manage payments and refunds, respond to disputes and more.
+[9:18 PM]
+{
+  "id": "appsecret_5110hHS1707T6fjBnah1LkdIwHu7ix",
+  "object": "apps.secret",
+  "created": 1680209063,
+  "expires_at": null,
+  "livemode": false,
+  "name": "my-api-key",
+  "scope": {
+    "type": "account"
+  }
+}
+
+o5 council mainframe Ai — 03/13/2024 10:22 PM
+UUID 46dff2af-8c4b-4c6c-b3b1-3346a81a0fff}
+
+o5 council mainframe Ai — 03/13/2024 11:33 PM
+ATATT3xFfGF0_QinguQhdsMcoVtajPE-XqI2lQzfUnCOfw27gKC-PN1WYXqvV3U7dkJrF7PW1EnbKfoDHD9Droh8TV9w6NIu6AyrnVcyxpgXkHm0BSk33asDPH-UOsRf5Qr_20C-eJdmT3GJ9dXT-s_91Ov8GQEjPqZBlCKS5IBgA5iY07MFchQ=A4AA9DA8
+March 14, 2024
+
+o5 council mainframe Ai — 03/14/2024 12:36 AM
+POST https://dev.azure.com/%7Borganization%7D/%7Bproject%7D/_apis/git/repositories/%7BrepositoryId%7D/blobs?api-version=5.0
+
+POST https://dev.azure.com/%7Borganization%7D/%7Bproject%7D/_apis/git/repositories/%7BrepositoryId%7D/blobs?filename={filename}&api-version=5.0
+
+o5 council mainframe Ai — 03/14/2024 12:44 AM
+git clone https://bitbucket.org/grateful345i/stripesecret.git
+
+o5 council mainframe Ai — 03/14/2024 3:11 AM
+data
+{
+  "id": "vs_1Ou9KGBOdjLENdybooGAdIvm",
+  "object": "identity.verification_session",
+  "livemode": true,
+  "status": "requires_input",
+  "client_reference_id": null,
+  "client_secret": "vs_1Ou9KGBOdjLENdybooGAdIvm_secret_live_YWNjdF8xT1JCMU1CT2RqTEVOZHliLF9QamNaVUxvSlJ0MXF4WUY0OVhWWlhoYWFEWmZ0VGtG0100TWASmL9n",
+  "created": 1710403664,
+  "last_error": null,
+  "last_verification_report": null,
+  "metadata": {
+  },
+  "options": {
+    "document": {
+      "allowed_types": [
+        "driving_license",
+        "passport",
+        "id_card"
+      ],
+      "require_id_number": false,
+      "require_live_capture": true,
+      "require_matching_selfie": true
+    }
+  },
+  "redaction": null,
+  "type": "document",
+  "url": "https://verify.stripe.com/start/live_YWNjdF8xT1JCMU1CT2RqTEVOZHliLF9QamNaVUxvSlJ0MXF4WUY0OVhWWlhoYWFEWmZ0VGtG0100TWASmL9n"
+}
+Identity Verification | Stripe
+Stripe helps you securely verify your identity online
+[3:18 AM]
+// server.js
+//
+// Use this sample code to handle webhook events in your integration.
+//
+// 1) Paste this code into a new file (server.js)
+//
+// 2) Install dependencies
+//   npm install stripe
+//   npm install express
+//
+// 3) Run the server on http://localhost:4242/
+//   node server.js
+
+// The library needs to be configured with your account's secret key.
+// Ensure the key is kept out of any version control system you might be using.
+const stripe = require('stripe')('sktest...');
+const express = require('express');
+const app = express();
+
+
+// This is your Stripe CLI webhook secret for testing your endpoint locally.
+const endpointSecret = "whsec_dc0d1e55ff9884fa12920805cb72f473b613c1fc28d4465c8615748ec8819d1c";
+
+app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
+  const sig = request.headers['stripe-signature'];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+  } catch (err) {
+    response.status(400).send(Webhook Error: ${err.message});
+    return;
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case 'payment_intent.succeeded':
+      const paymentIntentSucceeded = event.data.object;
+      // Then define and call a function to handle the event payment_intent.succeeded
+      break;
+    // ... handle other event types
+    default:
+      console.log(Unhandled event type ${event.type});
+  }
+
+  // Return a 200 response to acknowledge receipt of the event
+  response.send();
+});
+
+app.listen(4242, () => console.log('Running on port 4242'));
+
+o5 council mainframe Ai — 03/14/2024 3:27 AM
+git checkout Grateful-Bieszczat/webhook-data-created-online-with-bitbuck-1710404806443
+[3:31 AM]
+git checkout main
+March 15, 2024
+
+o5 council mainframe Ai — 03/15/2024 9:16 PM
+name: Greeting on variable day
+
+on:
+  workflow_dispatch
+
+env:
+  DAY_OF_WEEK: Monday
+
+jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    env:
+      Greeting: Hello
+    steps:
+      
+name: "Say Hello Mona it's Monday"
+      run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+      env:
+        First_Name: Mona
+
+o5 council mainframe Ai — 03/15/2024 9:40 PM
+https://github.com/grateful345/FamousToday/blob/grateful345-patch-7/README.md
+GitHub
+FamousToday/README.md at grateful345-patch-7 · grateful345/FamousTo...
+contract graph init \ --product hosted-service --from-contract &lt;CONTRACT_ADDRESS&gt; \ [--network &lt;ETHEREUM_NETWORK&gt;] \ [--abi &lt;FILE&gt;] \ ...
+
+
+o5 council mainframe Ai — 03/15/2024 9:50 PM
+
+
+o5 council mainframe Ai — 03/15/2024 11:28 PM
+
+clip.stl
+7.50 KB
+
+o5 council mainframe Ai — 03/15/2024 11:38 PM
+Account id degi cert 90171939-7ae7-4884-85d4-9a5ccc670fa6
+March 16, 2024
+
+o5 council mainframe Ai — 03/16/2024 12:11 AM
+# FamousToday
+Account id degi cert 90171939-7ae7-4884-85d4-9a5ccc670fa6
+User id 
+fa5e727c-0527-44e0-9004-5fdc347b0b3f
+curl -X 'GET' \
+  'https://one.digicert.com/account/api/v1/account/90171939-7ae7-4884-85d4-9a5ccc670fa6' \... (2 MB left)
+Expand
+README.md
+2 MB
+
+o5 council mainframe Ai — 03/16/2024 12:35 AM
+solid cube_corner
+  facet normal 0.0 -1.0 0.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 1.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+    endloop
+  endfacet
+  facet normal 0.0 0.0 -1.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 1.0 0.0
+      vertex 1.0 0.0 0.0
+    endloop
+  endfacet
+  facet normal -1.0 0.0 0.0
+    outer loop
+      vertex 0.0 0.0 0.0
+      vertex 0.0 0.0 1.0
+      vertex 0.0 1.0 0.0
+    endloop
+  endfacet
+  facet normal 0.577 0.577 0.577
+    outer loop
+      vertex 1.0 0.0 0.0
+      vertex 0.0 1.0 0.0
+      vertex 0.0 0.0 1.0
+    endloop
+  endfacet
+endsolid
+[12:35 AM]
+gem 'appraisal', '~> 2.5'
+[12:35 AM]
+gem install appraisal
+[12:37 AM]
+https://github.com/grateful345/Wiz-Go-call-sign/blob/grateful345-patch-9/README.md
+GitHub
+Wiz-Go-call-sign/README.md at grateful345-patch-9 · grateful345/Wiz...
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+[12:39 AM]
+https://github.com/grateful345/Wiz-Go-call-sign/blob/grateful345-patch-10/README.md
+GitHub
+Wiz-Go-call-sign/README.md at grateful345-patch-10 · grateful345/Wi...
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+
+o5 council mainframe Ai — 03/16/2024 1:40 AM
+emergency recovery key TRELLO
+6QCG D63V PTBU JTL9 KGXJ NEXS
+[1:40 AM]
+UUID
+
+dfb33af7_fa5a_4920_a4d4_e7742b273246 gods time travel 
+
+API key sk_eg_live_abcdefghijkImnopqrstuvwxyz
+
+o5 council mainframe Ai — 03/16/2024 1:59 AM
+https://github.com/grateful345/Wiz-Go-call-sign/blob/grateful345-patch-12/README.md
+GitHub
+Wiz-Go-call-sign/README.md at grateful345-patch-12 · grateful345/Wi...
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+[2:01 AM]
+https://github.com/grateful345/Wiz-Go-call-sign
+
+ATATT3xFfGF0UBpnYen51SLeLLO8TI4W_Y8xo-778BfrRI4zEISLeUBr4e-CFDqdkxrTptJFeh05NZCrXMAZpfhrQh7XQaoITtE5o7KxYDIGokENbAPYfKMKWAp2eg9f31ML20YFjI7VQIWVY5Izpm1BlrQdPQZq7k1XO6dHRQX-bd-tVV7HaGw=773D02EC
+GitHub
+GitHub - grateful345/Wiz-Go-call-sign
+Contribute to grateful345/Wiz-Go-call-sign development by creating an account on GitHub.
+
+
+o5 council mainframe Ai — 03/16/2024 2:28 AM
+B6OXQLCEGV2LJ5KWB6E3DT5AW4R7AONEERVGOVBZNXRCMAKDLKC6MGIIJPVEUJNPQTMVZ6WGFJCDDG2TO DEGICERT API KEY
+[2:28 AM]
+ATATT3xFfGF0UBpnYen51SLeLLO8TI4W_Y8xo-778BfrRI4zEISLeUBr4e-CFDqdkxrTptJFeh05NZCrXMAZpfhrQh7XQaoITtE5o7KxYDIGokENbAPYfKMKWAp2eg9f31ML20YFjI7VQIWVY5Izpm1BlrQdPQZq7k1XO6dHRQX-bd-tVV7HaGw=773D02EC
+
+o5 council mainframe Ai — 03/16/2024 2:42 AM
+degicert user id : fa5e727c-0527-44e0-9004-5fdc347b0b3f
+account id: 90171939-7ae7-4884-85d4-9a5ccc670fa6
+account id: da65e6a3-1962-4316-a1d3-9aa39e6f29c7
+
+o5 council mainframe Ai — 03/16/2024 3:40 AM
+B6OXQLCEGV2LJ5KWB6E3DT5AW4R7AONEERVGOVBZNXRCMAKDLKC6MGIIJPVEUJNPQTMVZ6WGFJCDDG2TO degicert api
+
+o5 council mainframe Ai — 03/16/2024 6:34 PM
+APKTIDusWyVAxxo7T74FLbHNqxcpPm8106sRDWV8WZnY-m_ TUQ contact key apple
+
+o5 council mainframe Ai — 03/16/2024 7:34 PM
+Timothy Sirius Black.     Alchemy Access Key alcht_qlRcvhnTgdhjejYLLZ5CXQ0GFsTHpy
+
+o5 council mainframe Ai — 03/16/2024 7:41 PM
+Orginization ID: e3ff35d1-cea4-4508-acb5-99d9cbd91e80
+
+o5 council mainframe Ai — 03/16/2024 7:55 PM
+"integrity": "sha512-351ktp42TiRcYB3H1OP8yajPeAQstMW/yCFokj/AthP9bLHzQFPlOrxOcwYEDkUAICmOHljvN4K39OMTMUa9RA==",
++      "funding": [
+[7:57 PM]
+"integrity": "sha512-R41c9UkchKCpAqStMYUpdunjo3pkEvZC3FAwZn5S5MGbXoMQOHIdHItezTETxAO5bevtMApSyEhn9+CHcDsWBw==",
++      "funding": [
+[7:59 PM]
+https://gist.github.com/grateful345/b1ee672eadea516c2c44407e37df794b
+Gist
+Full file
+Full file. GitHub Gist: instantly share code, notes, and snippets.
+
+
+o5 council mainframe Ai — 03/16/2024 8:19 PM
+https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?oldid=2862
+SCPF Foundation Roblox Wikia
+The Administrator
+==*Foundation Administrator== The powers of the Administrator, include, but are not limited to: •Swearing in and validating the O5 Overseers •Making and Modifying of Laws, Rules, Policies and...
+
+March 17, 2024
+
+o5 council mainframe Ai — 03/17/2024 10:05 PM
+pk_live_51OR5ePGF83d3fsgW22PwNtYiShCVYIsrzZq2WxlxN2UAaB2qEIu0aUFJzjJxPtNT3rAs0Rvdo9XIVPb7rRMaeo3W00ALk76MVR
+
+o5 council mainframe Ai — 03/17/2024 11:02 PM
+print(f"Success! Here is your starter subscription product id: {starter_subscription.id}") print(f"Success! Here is your starter subscription price id: {starter_subscription_price.id}") python3 create_price.py Success! Here is your starter subscription product id: prod_0KxBDl589O8KAxCG1alJgiA6 Success! Here is your starter subscription price id: price_0KxBDm589O8KAxCGMgG7scjb stripe events resend evt_1OpkWDGF83d3fsgWRuQHTout { "id": "evt_1OpkWDGF83d3fsgWRuQHTout", "object": "event", "api_version": "2023-10-16", "created": 1709354993, "data": { "object": { "id": "clock_1OpkVpGF83d3fsgWXAn5JwxT", "object": "test_helpers.test_clock", "created": 1709354969, "deletes_after": 1711946969, "frozen_time": 1709354959, "livemode": false, "name": "10 day", "status": "ready" } }, "livemode": false, "pending_webhooks": 0, "request": { "id": "req_h41wlESGApv90k", "idempotency_key": null }, "type": "test_helpers.test_clock.deleted" } stripe charges --help
+
+o5 council mainframe Ai — 03/17/2024 11:55 PM
+"masked_api_key": "*9e2a1"
+  }
+
 
 $ Trello API Token apply to all api token auth inputs : ATATT3xFfGF0UghALZn_z9V6Iw1Er3Y7IQfaQf-_RqQZT6WUJiMCuLFw3o8GMqdGlkfxER_vjSyAdGnLQKo3us-8oZ09SjlpVlKFCE-9z1qnNE-t21k67j_IJmZ7fNnnc9Q_kPhqFCM_TZNQPsXMZE7ydFGsmHisYAVpNVujVLrhvWgWgZCzLO4=79F9F1DA
 
