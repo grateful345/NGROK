@@ -3,7 +3,7 @@ curl --request GET \
   --header 'Authorization: Bearer ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5' \
   --header 'Accept: application/json'
 
-https://api.atlassian.com/admin/<version>/orgs/<resource-name>
+https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Board>
 
 {
   "info": {
@@ -86,7 +86,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -137,7 +137,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -181,7 +181,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -235,7 +235,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -290,7 +290,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -334,7 +334,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -421,7 +421,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -465,7 +465,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -503,7 +503,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -560,7 +560,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -598,7 +598,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -646,7 +646,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -690,7 +690,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -731,7 +731,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -775,7 +775,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -829,7 +829,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -876,7 +876,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -913,7 +913,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -970,7 +970,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -1007,7 +1007,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -1051,7 +1051,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -1095,7 +1095,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -1139,7 +1139,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -1194,7 +1194,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -1244,7 +1244,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -1298,7 +1298,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             }
           },
@@ -1348,7 +1348,7 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
               "bearer": {
                 "key": "token",
                 "type": "string",
-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
+                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
               }
             },
             "body": {
@@ -1385,3 +1385,55 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
     }
   ]
 }
+
+From b3770ee5e1ce7c247a65c661c6787f95d464801c Mon Sep 17 00:00:00 2001
+From: keith T bieszczat sr <163609752+grateful345@users.noreply.github.com>
+Date: Mon, 25 Mar 2024 07:55:07 -0500
+Subject: [PATCH] Update AtlassianPostman.md
+
+ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5
+---
+ AtlassianPostman.md | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/AtlassianPostman.md b/AtlassianPostman.md
+index 4b292ae..08eb088 100644
+--- a/AtlassianPostman.md
++++ b/AtlassianPostman.md
+@@ -1,6 +1,6 @@
+ curl --request GET \
+   --url 'https://api.atlassian.com/admin/v1/orgs/{Org ID}' \
+-  --header 'Authorization: Bearer ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1' \
++  --header 'Authorization: Bearer ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5' \
+   --header 'Accept: application/json'
+ 
+ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
+@@ -42,13 +42,13 @@ https://api.atlassian.com/admin/<version>/orgs/<resource-name>
+                 "value": "application/json"
+               }
+             ],
+-            "description": "Returns a list of your organizations (ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1).",
++            "description": "Returns a list of your organizations (ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5).",
+             "auth": {postman api key : PMAK-65fcefd7f279ab0001bc1c91-bea679740eef30d16701cb886564e8d242}
+               "type": "bearer",
+               "bearer": {
+                 "key": "token",
+                 "type": "string",
+-                "value": "{{ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1}}"
++                "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
+               }
+             }
+           },
+
+https://github.com/grateful345/NGROK.git
+https://github.com/grateful345/NGROK/pull/24.patch
+
+git@github.com:grateful345/NGROK.git
+
+git pull origin main
+Step 2: Switch to the base branch of the pull request.
+git checkout main
+Step 3: Merge the head branch into the base branch.
+git merge grateful345-patch-24
+Step 4: Push the changes.
+git push -u origin main
