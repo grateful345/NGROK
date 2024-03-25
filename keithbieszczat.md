@@ -11,7 +11,34 @@ sudo mv linode.gpg /etc/apt/trusted.gpg.d/linode.gpg
 stretch
 sudo mkdir /etc/linode/
 echo '266096EE-CDBA-0EBB-23D067749E27B9ED' | sudo tee /etc/linode/longview.key
-POST https://api.linode.com/v4/account/betas
+sudo apt update
+sudo apt install linode-longview
+sudo systemctl status longview
+
+● longview.service - LSB: Longview Monitoring Agent
+Loaded: loaded (/etc/init.d/longview; generated; vendor preset: enabled)
+Active: active (running) since Mon 2019-12-09 21:55:39 UTC; 2s ago
+    Docs: man:systemd-sysv-generator(8)
+Process: 2997 ExecStart=/etc/init.d/longview start (code=exited, status=0/SUCCESS)
+    Tasks: 1 (limit: 4915)
+CGroup: /system.slice/longview.service
+        └─3001 linode-longview
+sudo systemctl start longview
+curl -X POST https://api.linode.com/v4/linode/instances \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" -H "Content-type: application/json" \
+    -d '{"type": "g6-standard-2", "region": "us-east", "image": "linode/debian11", "root_pass": "[password]", "label": "[label]"}'
+curl [options] | json_pp
+Authorization: Bearer <token-string>
+export TOKEN=<token-string>
+curl https://api.linode.com/v4/images/ | json_pp
+curl https://api.linode.com/v4/linode/types/ | json_pp
+curl https://api.linode.com/v4/regions | json_pp
+curl -X POST https://api.linode.com/v4/linode/instances \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" -H "Content-type: application/json" \
+    -d '{"type": "g5-standard-2", "region": "us-east", "image": "linode/debian9", "root_pass": "root_password", "label": "prod-1"}'
+    
+    
+    POST https://api.linode.com/v4/account/betas
 
 curl https://api.linode.com/v4/account/betas \
     -H "Authorization: Bearer $TOKEN" \
