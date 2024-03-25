@@ -1,4 +1,201 @@
+[
+](https://static.wikia.nocookie.net/scpf-foundation-roblox/images/8/81/Scp_Administration_black_out.png/revision/latest?cb=20240125034650)
+
+while true; do
+  touch "/cephfs/blah-`date`"
+done
+MANTLE WITH VSTART.SH
+
+Start Ceph and tune the logging so we can see migrations happen:
+cd build
+../src/vstart.sh -n -l
+for i in a b c; do
+  bin/ceph --admin-daemon out/mds.$i.asok config set debug_ms 0
+  bin/ceph --admin-daemon out/mds.$i.asok config set debug_mds 2
+  bin/ceph --admin-daemon out/mds.$i.asok config set mds_beacon_grace 1500
+done
+Put the balancer into RADOS:
+bin/rados put --pool=cephfs_metadata_a greedyspill.lua ../src/mds/balancers/greedyspill.lua
+Activate Mantle:
+bin/ceph fs set cephfs max_mds 5
+bin/ceph fs set cephfs_a balancer greedyspill.lua
+Mount CephFS in another window:
+  bin/ceph-fuse /cephfs -o allow_other &
+  tail -f out/mds.a.log
+curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+  https://api.linode.com/v4/object-storage/buckets/us-east-1
+curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+  https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket
+curl -H "Content-Type: application/json" \ -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+  -X POST -d '{
+      "cors_enabled": true,
+      "acl": "private"
+    }' \
+  https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/access
+curl -H "Content-Type: application/json" \ -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+  -X PUT -d '{
+      "cors_enabled": true,
+      "acl": "private"
+    }' \
+  https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/access
+curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+  https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
+{
+  "acl": "public-read",
+  "acl_xml": "<AccessControlPolicy>...</AccessControlPolicy>"
+}
+curl -H "Content-Type: application/json" \ -H "Authorization: Bearer $TOKEN" \
+  -X PUT -d '{
+    "acl": "public-read",
+    "name": "example.txt"
+  }' \
+  https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl
+curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+  https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-list
+{
+  "data": [
+    {
+      "etag": "9f254c71e28e033bf9e0e5262e3e72ab",
+      "is_truncated": true,
+      "last_modified": "2019-01-01T01:23:45",
+      "name": "example",
+      "next_marker": "bd021c21-e734-4823-97a4-58b41c2cd4c8.892602.184",
+      "owner": "bfc70ab2-e3d4-42a4-ad55-83921822270c",
+      "size": 123
+    }
+  ]
+}
+curl https://api.linode.com/v4/account/betas \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72"
+curl https://api.linode.com/v4/account/betas \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+    -H "Content-Type: application/json" \
+    -X POST -d '{
+        "id": "example_open"
+    }'
+
+curl https://api.linode.com/v4/account/betas/$betaId \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72"
+curl https://api.linode.com/v4/betas \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72"
+
+curl https://api.linode.com/v4/betas/$betaId \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72
+
 curl -s https://lv.linode.com/FDC71C6F-66B3-4FDA-8FE2187096708C8E | sudo bash
+ssh-keygen -t ed25519 -C "user@domain.tld"
+GOOGLE API KEY:AIzaSyCzjnPRnNCckDfjRjtnh1bSyyEWTgsUnz4
+
+
+Note that if you look at the last MDS (which could be a, b, or c -- it's
+random), you will see an attempt to index a nil value. This is because the
+last MDS tries to check the load of its neighbor, which does not exist.
+Run a simple benchmark. In our case, we use the Docker mdtest image to create load:
+for i in 0 1 2; do
+  docker run -d \
+    --name=client$i \
+    -v /cephfs:/cephfs \
+    michaelsevilla/mdtest \
+    -F -C -n 100000 -d "/cephfs/client-test$i"
+done
+When you are done, you can kill all the clients with:
+for i in 0 1 2 3; do docker rm -f client$i; done
+
+
+GET /{[bucket](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?fbclid=IwAR2FfaoXITYK167Nc-gEZKTMRz_v83X1RrGN52-68b4gcOTDG_Y9pT8S3QY_aem_AcWFgp90kCyN3CxUsNX0uytp_i-7n0Q677zEID8d0e7u0Lh7Ta3Nf6jVo1WXYRibmJA)}?acl HTTP/1.1
+Host: cname.domain.com
+
+Authorization: AWS {API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72}:{hash-of-header-and-secret}
+PUT /{[bucket](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?fbclid=IwAR2FfaoXITYK167Nc-gEZKTMRz_v83X1RrGN52-68b4gcOTDG_Y9pT8S3QY_aem_AcWFgp90kCyN3CxUsNX0uytp_i-7n0Q677zEID8d0e7u0Lh7Ta3Nf6jVo1WXYRibmJA)}?acl HTTP/1.1
+GET /{[bucket](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?fbclid=IwAR2FfaoXITYK167Nc-gEZKTMRz_v83X1RrGN52-68b4gcOTDG_Y9pT8S3QY_aem_AcWFgp90kCyN3CxUsNX0uytp_i-7n0Q677zEID8d0e7u0Lh7Ta3Nf6jVo1WXYRibmJA)}?uploads HTTP/1.1
+PUT  /{[bucket](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?fbclid=IwAR2FfaoXITYK167Nc-gEZKTMRz_v83X1RrGN52-68b4gcOTDG_Y9pT8S3QY_aem_AcWFgp90kCyN3CxUsNX0uytp_i-7n0Q677zEID8d0e7u0Lh7Ta3Nf6jVo1WXYRibmJA)}?versioning  HTTP/1.1
+
+[
+](http://<curl -s https://lv.linode.com/FDC71C6F-66B3-4FDA-8FE2187096708C8E | sudo bash
+API Key: 14496832-187E-4897-8D420686F1A72ACB
+ssh [user]@[10.0.0.0/24 - 172.234.16.97]
+su - root
+curl -s https://lv.linode.com/05AC7F6F-3B10-4039-9DEE09B0CC382A3D | sudo bash
+root@localhost:~# lsb_release -sc
+deb http://apt-longview.linode.com/ stretch main
+sudo curl -O https://apt-longview.linode.com/linode.gpg
+sudo mv linode.gpg /etc/apt/trusted.gpg.d/linode.gpg
+2600:3c06::f03c:94ff:fe15:4865
+ssh root@172.234.16.97
+ssh -t grateful000006@lish-us-ord.linode.com debian-us-ord>:<curl -s https://lv.linode.com/FDC71C6F-66B3-4FDA-8FE2187096708C8E | sudo bash
+API Key: 14496832-187E-4897-8D420686F1A72ACB
+ssh [user]@[10.0.0.0/24 - 172.234.16.97]
+su - root
+curl -s https://lv.linode.com/05AC7F6F-3B10-4039-9DEE09B0CC382A3D | sudo bash
+root@localhost:~# lsb_release -sc
+deb http://apt-longview.linode.com/ stretch main
+sudo curl -O https://apt-longview.linode.com/linode.gpg
+sudo mv linode.gpg /etc/apt/trusted.gpg.d/linode.gpg
+2600:3c06::f03c:94ff:fe15:4865
+ssh root@172.234.16.97
+ssh -t grateful000006@lish-us-ord.linode.com debian-us-ord>/api
+or, if HTTPS is enabled (please refer to SSL/TLS Support):
+
+https://<server_addr>:<ssl_server_port>/api
+The Ceph API leverages the following standards:
+
+HTTP 1.1 for API syntax and semantics,
+JSON for content encoding,
+HTTP Content Negotiation and MIME for versioning,
+OAuth 2.0 and JWT for authentication and authorization.
+Warning
+
+Some endpoints are still under active development, and should be carefully used since new Ceph releases could bring backward incompatible changes.
+AUTHENTICATION AND AUTHORIZATION
+
+Requests to the Ceph API pass through two access control checkpoints:
+
+Authentication: ensures that the request is performed on behalf of an existing and valid user account.
+Authorization: ensures that the previously authenticated user can in fact perform a specific action (create, read, update or delete) on the target endpoint.
+So, prior to start consuming the Ceph API, a valid JSON Web Token (JWT) has to be obtained, and it may then be reused for subsequent requests. The /api/auth endpoint will provide the valid token:
+
+curl -X POST "https://example.com:8443/api/auth" \
+-H  "Accept: application/vnd.ceph.api.v1.0+json" \
+-H  "Content-Type: application/json" \
+-d '{"username": <username>, "password": <password>}'
+{ "token": "<API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>", ...}
+The token obtained must be passed together with every API request in the Authorization HTTP header:
+
+curl -H "Authorization: Bearer <API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>" ...
+Authentication and authorization can be further configured from the Ceph CLI, the Ceph-Dashboard UI and the Ceph API itself (please refer to User and Role Management).
+
+VERSIONING
+
+One of the main goals of the Ceph API is to keep a stable interface. For this purpose, Ceph API is built upon the following principles:
+
+Mandatory: in order to avoid implicit defaults, all endpoints require an explicit default version (starting with 1.0).
+Per-endpoint: as this API wraps many different Ceph components, this allows for a finer-grained change control.
+Content/MIME Type: the version expected from a specific endpoint is stated by the Accept: application/vnd.ceph.api.v<major>.<minor>+json HTTP header. If the current Ceph API server is not able to address that specific major version, a 415 - Unsupported Media Type response will be returned.
+Semantic Versioning: with a major.minor version:
+Major changes are backward incompatible: they might result in non-additive changes to the request and/or response formats of a specific endpoint.
+Minor changes are backward/forward compatible: they basically consists of additive changes to the request or response formats of a specific endpoint.
+An example:
+
+curl -X GET "https://example.com:8443/api/osd" \
+-H  "Accept: application/vnd.ceph.api.v1.0+json" \
+-H  "Authorization: Bearer <API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>"
+SPECIFICATION
+
+AUTH
+
+POST /api/auth
+Example request:
+
+POST /api/auth HTTP/1.1
+Host: example.com
+Content-Type: application/json
+
+{
+    "password": "string",
+    "username": "string"
+}
+Status Codes
+)curl -s https://lv.linode.com/FDC71C6F-66B3-4FDA-8FE2187096708C8E | sudo bash
 API Key: 14496832-187E-4897-8D420686F1A72ACB
 ssh [user]@[10.0.0.0/24 - 172.234.16.97]
 su - root
@@ -1382,5 +1579,425 @@ query {
     }
   }
 }
+MON=1 MGR=1 OSD=0 MDS=0 ../src/vstart.sh -d -n -x --cephadm
+~/.ssh/id_dsa[.pub] is used as the cluster key. It is assumed that this key is authorized to ssh with no passphrase to root@`hostname`.
+cephadm does not try to manage any daemons started by vstart.sh (any nonzero number in the environment variables). No service spec is defined for mon or mgr.
+You’ll see health warnings from cephadm about stray daemons--that’s because the vstart-launched daemons aren’t controlled by cephadm.
+The default image is quay.io/ceph-ci/ceph:main, but you can change this by passing -o container_image=... or ceph config set global container_image ....
+CSTART AND CPATCH
 
- 
+The cstart.sh script will launch a cluster using cephadm and put the conf and keyring in your build dir, so that the bin/ceph ... CLI works (just like with vstart). The ckill.sh script will tear it down.
+
+A unique but stable fsid is stored in fsid (in the build dir).
+The mon port is random, just like with vstart.
+The container image is quay.io/ceph-ci/ceph:$tag where $tag is the first 8 chars of the fsid.
+If the container image doesn’t exist yet when you run cstart for the first time, it is built with cpatch.
+There are a few advantages here:
+
+The cluster is a “normal” cephadm cluster that looks and behaves just like a user’s cluster would. In contrast, vstart and teuthology clusters tend to be special in subtle (and not-so-subtle) ways (e.g. having the lockdep turned on).
+To start a test cluster:
+
+sudo ../src/cstart.sh
+The last line of the output will be a line you can cut+paste to update the container image. For instance:
+
+sudo ../src/script/cpatch -t quay.io/ceph-ci/ceph:8f509f4e
+By default, cpatch will patch everything it can think of from the local build dir into the container image. If you are working on a specific part of the system, though, can you get away with smaller changes so that cpatch runs faster. For instance:
+
+sudo ../src/script/cpatch -t quay.io/ceph-ci/ceph:8f509f4e --py
+will update the mgr modules (minus the dashboard). Or:
+
+sudo ../src/script/cpatch -t quay.io/ceph-ci/ceph:8f509f4e --core
+will do most binaries and libraries. Pass -h to cpatch for all options.
+
+Once the container is updated, you can refresh/restart daemons by bouncing them with:
+
+sudo systemctl restart ceph-`cat fsid`.target
+When you’re done, you can tear down the cluster with:
+
+sudo ../src/ckill.sh   # or,
+sudo ../src/cephadm/cephadm rm-cluster --force --fsid `cat fsid`
+CEPHADM BOOTSTRAP --SHARED_CEPH_FOLDER
+
+Cephadm can also be used directly without compiled ceph binaries.
+
+Run cephadm like so:
+
+sudo ./cephadm bootstrap --mon-ip 127.0.0.1 \
+  --ssh-private-key /home/<user>/.ssh/id_rsa \
+  --skip-mon-network \
+  --skip-monitoring-stack --single-host-defaults \
+  --skip-dashboard \
+  --shared_ceph_folder /home/<user>/path/to/ceph/
+~/.ssh/id_rsa is used as the cluster key. It is assumed that this key is authorized to ssh with no passphrase to root@`hostname`.
+Source code changes made in the pybind/mgr/ directory then require a daemon restart to take effect.
+
+KCLI: A VIRTUALIZATION MANAGEMENT TOOL TO MAKE EASY ORCHESTRATORS DEVELOPMENT
+
+Kcli is meant to interact with existing virtualization providers (libvirt, KubeVirt, oVirt, OpenStack, VMware vSphere, GCP and AWS) and to easily deploy and customize VMs from cloud images.
+
+It allows you to setup an environment with several vms with your preferred configuration (memory, cpus, disks) and OS flavor.
+
+MAIN ADVANTAGES:
+
+Fast. Typically you can have a completely new Ceph cluster ready to debug and develop orchestrator features in less than 5 minutes.
+“Close to production” lab. The resulting lab is close to “real” clusters in QE labs or even production. It makes it easy to test “real things” in an almost “real” environment.
+Safe and isolated. Does not depend of the things you have installed in your machine. And the vms are isolated from your environment.
+Easy to work “dev” environment. For “not compiled” software pieces, for example any mgr module. It is an environment that allow you to test your changes interactively.
+INSTALLATION:
+
+Complete documentation in kcli installation but we suggest to use the container image approach.
+
+So things to do:
+1. Review requirements and install/configure whatever is needed to meet them.
+2. get the kcli image and create one alias for executing the kcli command
+
+# podman pull quay.io/karmab/kcli
+# alias kcli='podman run --net host -it --rm --security-opt label=disable -v $HOME/.ssh:/root/.ssh -v $HOME/.kcli:/root/.kcli -v /var/lib/libvirt/images:/var/lib/libvirt/images -v /var/run/libvirt:/var/run/libvirt -v $PWD:/workdir -v /var/tmp:/ignitiondir quay.io/karmab/kcli'
+Note
+
+This assumes that /var/lib/libvirt/images is your default libvirt pool…. Adjust if using a different path
+Note
+
+Once you have used your kcli tool to create and use different labs, we suggest you stick to a given container tag and update your kcli alias. Why? kcli uses a rolling release model and sticking to a specific container tag will improve overall stability. what we want is overall stability.
+TEST YOUR KCLI INSTALLATION:
+
+See the kcli basic usage workflow
+
+CREATE A CEPH LAB CLUSTER
+
+In order to make this task simple, we are going to use a “plan”.
+
+A “plan” is a file where you can define a set of vms with different settings. You can define hardware parameters (cpu, memory, disks ..), operating system and it also allows you to automate the installation and configuration of any software you want to have.
+
+There is a repository with a collection of plans that can be used for different purposes. And we have predefined plans to install Ceph clusters using Ceph ansible or cephadm, so let’s create our first Ceph cluster using cephadm:
+
+# kcli create plan -u https://github.com/karmab/kcli-plans/blob/master/ceph/ceph_cluster.yml
+This will create a set of three vms using the plan file pointed by the url. After a few minutes, let’s check the cluster:
+
+Take a look to the vms created:
+
+# kcli list vms
+Enter in the bootstrap node:
+
+# kcli ssh ceph-node-00
+Take a look to the ceph cluster installed:
+
+[centos@ceph-node-00 ~]$ sudo -i
+[root@ceph-node-00 ~]# cephadm version
+[root@ceph-node-00 ~]# cephadm shell
+[ceph: root@ceph-node-00 /]# ceph orch host ls
+CREATE A CEPH CLUSTER TO MAKE EASY DEVELOPING IN MGR MODULES (ORCHESTRATORS AND DASHBOARD)
+
+The cephadm kcli plan (and cephadm) are prepared to do that.
+
+The idea behind this method is to replace several python mgr folders in each of the ceph daemons with the source code folders in your host machine. This “trick” will allow you to make changes in any orchestrator or dashboard module and test them intermediately. (only needed to disable/enable the mgr module)
+
+So in order to create a ceph cluster for development purposes you must use the same cephadm plan but with a new parameter pointing to your Ceph source code folder:
+
+# kcli create plan -u https://github.com/karmab/kcli-plans/blob/master/ceph/ceph_cluster.yml -P ceph_dev_folder=/home/mycodefolder/ceph
+CEPH DASHBOARD DEVELOPMENT
+
+Ceph dashboard module is not going to be loaded if previously you have not generated the frontend bundle.
+
+For now, in order load properly the Ceph Dashboardmodule and to apply frontend changes you have to run “ng build” on your laptop:
+
+# Start local frontend build with watcher (in background):
+sudo dnf install -y nodejs
+cd <path-to-your-ceph-repo>
+cd src/pybind/mgr/dashboard/frontend
+sudo chown -R <your-user>:root dist node_modules
+NG_CLI_ANALYTICS=false npm ci
+npm run build -- --deleteOutputPath=false --watch &
+After saving your changes, the frontend bundle will be built again. When completed, you’ll see:
+
+"Localized bundle generation complete."
+Then you can reload your Dashboard browser tab.
+
+CEPHADM BOX CONTAINER (PODMAN INSIDE PODMAN) DEVELOPMENT ENVIRONMENT
+
+As kcli has a long startup time, we created an alternative which is faster using Podman inside Podman. This approach has its downsides too as we have to simulate the creation of osds and addition of devices with loopback devices.
+
+Cephadm’s box environment is simple to set up. The setup requires you to get the required Podman images for Ceph and what we call boxes. A box is the first layer of Podman containers which can be either a seed or a host. A seed is the main box which holds Cephadm and where you bootstrap the cluster. On the other hand, you have hosts with a SSH server setup so you can add those hosts to the cluster. The second layer, managed by Cephadm, inside the seed box, requires the Ceph image.
+
+Warning
+
+This development environment is still experimental and can have unexpected behaviour. Please take a look at the road map and the known issues section to see what the development progress.
+REQUIREMENTS
+
+podman-compose
+lvm
+SETUP
+
+In order to setup Cephadm’s box run:
+
+cd src/cephadm/box
+./box.py -v cluster setup
+Note
+
+It is recommended to run box with verbose (-v) as it will show the output of shell commands being run.
+After getting all needed images we can create a simple cluster without OSDs and hosts with:
+
+./box.py -v cluster start
+If you want to deploy the cluster with more OSDs and hosts::
+# 3 osds and 3 hosts by default sudo box -v cluster start --extended # explicitly change number of hosts and osds sudo box -v cluster start --extended --osds 5 --hosts 5
+
+Warning
+
+OSDs are still not supported in the box implementation with Podman. It is work in progress.
+Without the extended option, explicitly adding either more hosts or OSDs won’t change the state of the cluster.
+
+Note
+
+Cluster start will try to setup even if cluster setup was not called.
+Note
+
+OSDs are created with loopback devices and hence, sudo is needed to create loopback devices capable of holding OSDs.
+Note
+
+Each osd will require 5GiB of space.
+After bootstrapping the cluster you can go inside the seed box in which you’ll be able to run Cephadm commands:
+
+./box.py -v cluster bash
+[root@8d52a7860245] cephadm --help
+[root@8d52a7860245] cephadm shell
+...
+If you want to navigate to the dashboard enter https://localhost:8443 on you browser.
+
+You can also find the hostname and ip of each box container with:
+
+./box.py cluster list
+and you’ll see something like:
+
+IP               Name            Hostname
+172.30.0.2       box_hosts_1     6283b7b51d91
+172.30.0.3       box_hosts_3     3dcf7f1b25a4
+172.30.0.4       box_seed_1      8d52a7860245
+172.30.0.5       box_hosts_2     c3c7b3273bf1
+To remove the cluster and clean up run:
+
+./box.py cluster down
+If you just want to clean up the last cluster created run:
+
+./box.py cluster cleanup
+To check all available commands run:
+
+./box.py --help
+If you want to run the box with Docker you can. You’ll have to specify which engine you want to you like:
+
+./box.py -v --engine docker cluster list
+With Docker commands like bootstrap and osd creation should be called with sudo since it requires privileges to create osds on VGs and LVs:
+
+sudo ./box.py -v --engine docker cluster start --expanded
+Warning
+
+Using Docker as the box engine is dangerous as there were some instances where the Xorg session was killed.
+KNOWN ISSUES
+
+If you get permission issues with Cephadm because it cannot infer the keyring and configuration, please run cephadm like this example:
+
+cephadm shell --config /etc/ceph/ceph.conf --keyring /etc/ceph/ceph.kerying
+Docker containers run with the --privileged flag enabled which has been seen to make some computers log out.
+If SELinux is not disabled you’ll probably see unexpected behaviour. For example: if not all permissions of Ceph repo files are set to your user it will probably fail starting with podman-compose.
+If running a command it fails to run a podman command because it couldn’t find the container, you can debug by running the same podman-compose .. up command displayed with the flag -v.
+ROAD MAP
+
+Create osds with ceph-volume raw.
+Enable ceph-volume to mark loopback devices as a valid block device in the inventory.
+Make the box ready to run dashboard CI tests (including cluster expansion).
+NOTE REGARDING NETWORK CALLS FROM CLI HANDLERS
+
+Executing any cephadm CLI commands like ceph orch ls will block the mon command handler thread within the MGR, thus preventing any concurrent CLI calls. Note that pressing ^C will not resolve this situation, as only the client will be aborted, but not execution of the command within the orchestrator manager module itself. This means, cephadm will be completely unresponsive until the execution of the CLI handler is fully completed. Note that even ceph orch ps will not respond while another handler is executing.
+
+This means we should do very few synchronous calls to remote hosts. As a guideline, cephadm should do at most O(1) network calls in CLI handlers. Everything else should be done asynchronously in other threads, like serve().
+
+NOTE REGARDING DIFFERENT VARIABLES USED IN THE CODE
+
+a service_type is something like mon, mgr, alertmanager etc defined in ServiceSpec
+a service_id is the name of the service. Some services don’t have names.
+a service_name is <service_type>.<service_id>
+a daemon_type is the same as the service_type, except for ingress, which has the haproxy and keepalived daemon types.
+a daemon_id is typically <service_id>.<hostname>.<random-string>. (Not the case for e.g. OSDs. OSDs are always called OSD.N)
+a daemon_name is <daemon_type>.<daemon_id>
+COMPILING CEPHADM
+
+Recent versions of cephadm are based on Python Zip Application support, and are “compiled” from Python source code files in the ceph tree. To create your own copy of the cephadm “binary” use the script located at src/cephadm/build.py in the Ceph tree. The command should take the form ./src/cephadm/build.py [output].
+
+You can pass a limited set of version metadata values to be stored in the compiled cepadm. These options can be passed to the build script with the --set-version-var or -S option. The values should take the form KEY=VALUE and valid keys include: * CEPH_GIT_VER * CEPH_GIT_NICE_VER * CEPH_RELEASE * CEPH_RELEASE_NAME * CEPH_RELEASE_TYPE
+
+Example: ./src/cephadm/build.py -SCEPH_GIT_VER=$(git rev-parse HEAD) -SCEPH_GIT_NICE_VER=$(git describe) /tmp/cephadm
+
+Typically these values will be passed to build.py by other, higher level, build tools - such as cmake.
+
+The compiled version of the binary may include a curated set of dependencies within the zipapp. The tool used to fetch the bundled dependencies can be Python’s pip, locally installed RPMs, or bundled dependencies can be disabled. To select the mode for bundled dependencies use the --bundled-dependencies or -B option with a value of pip, rpm, or none.
+
+The compiled cephadm zipapp file retains metadata about how it was built. This can be displayed by running cephadm version --verbose. The command will emit a JSON formatted object showing version metadata (if available), a list of the bundled dependencies generated by the build script (if bundled dependencies were enabled), and a summary of the top-level contents of the zipapp. Example:
+
+$ ./cephadm version --verbose
+{
+  "name": "cephadm",
+  "ceph_git_nice_ver": "18.0.0-6867-g6a1df2d0b01",
+  "ceph_git_ver": "6a1df2d0b01da581bfef3357940e1e88d5ce70ce",
+  "ceph_release_name": "reef",
+  "ceph_release_type": "dev",
+  "bundled_packages": [
+    {
+      "name": "Jinja2",
+      "version": "3.1.2",
+      "package_source": "pip",
+      "requirements_entry": "Jinja2 == 3.1.2"
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "2.1.3",
+      "package_source": "pip",
+      "requirements_entry": "MarkupSafe == 2.1.3"
+    }
+  ],
+  "zip_root_entries": [
+    "Jinja2-3.1.2-py3.9.egg-info",
+    "MarkupSafe-2.1.3-py3.9.egg-info",
+    "__main__.py",
+    "__main__.pyc",
+    "_cephadmmeta",
+    "cephadmlib",
+    "jinja2",
+    "markupsafe"
+  ]
+}$ WITH_JAEGER=true ./install-deps.sh
+Compile Ceph with Jaeger enabled:
+for precompiled build:
+
+$ cd build
+$ cmake -DWITH_JAEGER=ON ..
+for fresh compilation using do_cmake.sh:
+
+$ ./do_cmake.sh -DWITH_JAEGER=ON && ninja vstart
+3. After successful compiling, start a vstart cluster with --jaeger which will deploy jaeger all-in-one using container deployment services(docker/podman):
+
+$ MON=1 MGR=0 OSD=1 ../src/vstart.sh --with-jaeger
+if the deployment is unsuccessful, you can deploy all-in-one service manually and start vstart cluster without jaeger as well.
+
+Test the traces using rados-bench write:
+
+$ bin/rados -p test bench 5 write --no-cleanup
+ +-----------+                         +-------------+
+|           |                         |             |
+|           |                         | Accelerated |
+| Processor |                         |  Function   |
+|           |  +--------+             |    Unit     |  +--------+
+|           |--| Memory |             |    (AFU)    |--| Memory |
+|           |  +--------+             |             |  +--------+
++-----------+                         +-------------+
+     |                                       |
++-----------+                         +-------------+
+|    TL     |                         |    TLX      |
++-----------+                         +-------------+
+     |                                       |
++-----------+                         +-------------+
+|    DL     |                         |    DLX      |
++-----------+                         +-------------+
+     |                                       |
+     |                   PHY                 |
+     +---------------------------------------+
+         Coccinelle
+
+
+Coccinelle allows programmers to easily write some complex
+style-preserving source-to-source transformations on C source code,
+like for instance to perform some refactorings.
+
+To install Coccinelle from its source, see the instructions in install.txt.
+Once you have installed coccinelle, there is a script 'spatch' in /usr/bin
+or /usr/local/bin that invokes the Coccinelle program.
+
+If you want to run Coccinelle without installing it, you can run the
+Coccinelle program directly from the download/build directory. You may then
+have to setup a few environment variables so that the Coccinelle program
+knows where to find its configuration files.
+For bash do:
+
+  $ source env.sh
+
+For tcsh do:
+
+  $ source env.csh
+
+
+You can test coccinelle with:
+
+  $ spatch -sp_file demos/simple.cocci demos/simple.c -o /tmp/new_simple.c
+
+If you haven't installed coccinelle, run then ./spatch or ./spatch.opt
+
+
+
+If you downloaded the bytecode version of spatch you may first
+have to install OCaml (which contains the 'ocamlrun' bytecode interpreter,
+the equivalent of 'java', the Java virtual machine, but for OCaml) and then do:
+
+  $ ocamlrun spatch -sp_file demos/simple.cocci demos/simple.c -o /tmp/new_simple.c
+
+
+For more information on Coccinelle, type 'make docs' and have a look at the
+files in the docs/ directory. You may need to install the texlive-fonts-extra
+packages from your distribution to compile some of the LaTeX documentation
+files.
+
+ ** Runtime dependencies under Debian/Ubuntu**
+
+ - For the OCaml scripting feature in SmPL
+	ocaml-native-compilers
+     or ocaml-nox
+
+ - For the Python scripting feature in SmPL: python3-dev
+   Note python3-dev is only a runtime dependency: it is _not_ required for
+   building coccinelle.
+
+---------------------------------------------------------------------------
+
+Contributing:
+
+Contributions are welcome.  Please sign your contributions, according to
+the following text extracted from Documentation/SubmittingPatches.txt of
+the Linux kernel:
+
+The sign-off is a simple line at the end of the explanation for the
+patch, which certifies that you wrote it or otherwise have the right to
+pass it on as an open-source patch.  The rules are pretty simple: if you
+can certify the below:
+
+        Developer's Certificate of Origin 1.1
+
+        By making a contribution to this project, I certify that:
+
+        (a) The contribution was created in whole or in part by me and I
+            have the right to submit it under the open source license
+            indicated in the file; or
+
+        (b) The contribution is based upon previous work that, to the best
+            of my knowledge, is covered under an appropriate open source
+            license and I have the right under that license to submit that
+            work with modifications, whether created in whole or in part
+            by me, under the same open source license (unless I am
+            permitted to submit under a different license), as indicated
+            in the file; or
+
+        (c) The contribution was provided directly to me by some other
+            person who certified (a), (b) or (c) and I have not modified
+            it.
+
+	(d) I understand and agree that this project and the contribution
+	    are public and that a record of the contribution (including all
+	    personal information I submit with it, including my sign-off) is
+	    maintained indefinitely and may be redistributed consistent with
+	    this project or the open source license(s) involved.
+
+then you just add a line saying
+
+	Signed-off-by: Random J Developer <random@developer.example.org>
+./autogen
+./configure
+make
+as a regular user, and install it with:
+
+sudo make install
