@@ -1,4 +1,25 @@
 NGROK
+
+ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1
+---
+ README.md | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/README.md b/README.md
+index 9c8fdcf..43bc453 100644
+--- a/README.md
++++ b/README.md
+@@ -5,6 +5,9 @@ Secret api token for Trello input where necessary :(b6ffa170da74846855071ebb9a12
+ 
+ ording to NIST SP 800-57 (Revision 4) the following types of keys exist:[2][1][3] Private signature key Private signature keys
+ 
++atlassian Api token:
++
++ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1
+ 
+ 
+ Text Channel
+
 @grateful/God
 @grateful345i
 Secret api token for Trello input where necessary :(b6ffa170da74846855071ebb9a12c2195e0a0373ef269a815e93da498ac2175c)
