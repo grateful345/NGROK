@@ -1780,4 +1780,220 @@ authorization key SCP Foundation
 --header
 '0xh723hfva83445na7fn342h'
 
-curl --location 'https://informatics.netify.ai/api/v1/intelligence/tls_versions/statusboard' \ --header '[https://scp-db.fandom.com/w
+curl -D- \
+   -u grateful345i@gmail.com:ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD \
+   -X GET \
+   -H "Content-Type: application/json" \
+   https://your-domain.atlassian.net/rest/api/2/issue/createmeta
+echo -n grateful345i@gmail.com:ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD | base64
+curl -D- \
+   -X GET \
+   -H "Authorization: Basic ZnJlZDpmcmVk" \
+   -H "Content-Type: application/json" \
+   "https://your-domain.atlassian.net/rest/api/2/issue/QA-31"
+https://auth.atlassian.com/authorize?
+  audience=api.atlassian.com&
+  client_id=YOUR_CLIENT_ID&TrelloID:
+{"id":"5abbe4b7ddc1b351ef961414"}
+[5abbe4b7ddc1b351ef961414"],"idOrganizations":Trello creator file:
+creator IN ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7") is the same as typing creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" OR creator = "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01" OR creator = "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7".
+EXAMPLES Find all content that mentions any of the users with the accountIds 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e,48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01, or 2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7
+
+mention in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7")
+
+accountId 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e or the user with the accountId 48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01
+
+creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01") or contributor in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+
+NOT IN ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7") is the same as typing creator != "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" AND creator != "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01" AND creator != "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7". EXAMPLES Find all content where the creator is someone other than the users with the accountIds 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e,48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01, or 2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7
+
+space = DEV and creator not in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01", "2223:48d-3a-XXXX-XXXX-XXXX-8d9dd0e98as7")
+
+creator.fullname ~ "keith_Bieszczat"
+
+title ~ win Find all content where the title contains a wild-card match for the word "win": 1 title ~ "win*" Find all content where the text contains the word "advanced" and the word "search": 1 text ~ "advanced search"
+
+space = DEV and title !~ run
+
+ancestor
+
+1 ancestor = 123 Find descendants of a group of ancestor pages 1 ancestor in (123, 456, 789) Content Search for content that have a given content ID. This is an alias of the ID field. SYNTAX 1 content
+
+content = 123 Find content in a set of content ids 1 content in (123, 223, 323)
+
+created
+
+created > 2014/09/01
+
+created >= now("-4w")
+
+creator
+
+creator = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e"
+
+Find content created by the user with the accountId 99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e or the user with the accountId 48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01
+
+creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01") creator in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01") contributor contributor = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" contributor in ("99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e", "48293:5s04-XXXX-XXXX-XXXX-d7a9b9d8c9f01")
+
+favourite = currentUser()
+
+favourite = "99:27935d01-XXXX-XXXX-XXXX-a9b8d3b2ae2e" id id = 123 Find content in a set of content IDs 1 id in (123, 223, 323) Label Search for content that has a particular label SYNTAX 1 label
+
+label = finished Find content that doesn't have the label draft or review 1 label not in (draft, review)
+  scope=REQUESTED_SCOPE_ONE%20REQUESTED_SCOPE_TWO&
+  redirect_uri=https://YOUR_APP_CALLBACK_URL&
+  state=YOUR_USER_BOUND_VALUE&
+  response_type=code&
+  prompt=consent
+   curl --request POST \
+  --url 'https://auth.atlassian.com/oauth/token' \
+  --header 'Content-Type: application/json' \
+  --data '{"grant_type": "authorization_code",""secret" : "G8j4166a5OkXRD4WbqV3" Atlassian": "YOUR_CLIENT_ID",""secret" : "G8j4166a5OkXRD4WbqV3" Atlassian": "YOUR_CLIENT_SECRET",""secret" : "G8j4166a5OkXRD4WbqV3" Atlassian": "YOUR_AUTHORIZATION_CODE","redirect_uri": "https://YOUR_APP_CALLBACK_URL"}'
+
+  HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "access_token": <ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD>,
+  "expires_in": <expiry time of access_token in second>,
+  "scope": <string>
+}
+curl --request GET \
+  --url https://api.atlassian.com/oauth/token/accessible-resources \
+  --header 'Authorization: ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD' \
+  --header 'Accept: application/json'
+
+  grateful345i@gmail.com:TrelloID:
+{"id":"5abbe4b7ddc1b351ef961414"}
+Use an online tool or an application to encode the string into base64 format. The result is a string of letters and numbers like this:
+1
+eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc=
+You'll use this encoded string in the Authorization header when you make the call.
+Making the call
+Once you have encoded your credentials, you can use cURL to make a call to the REST API. The syntax is:
+1
+2
+3
+curl --request <method> '<[url](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator)>?<parameters>' \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic <eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=/eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc=ZnJlZDpmcmVk/ ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD>
+You'll be making a GET request to the search REST API using parameters to specify a CQL query and a limit to the number of results. Here are the steps:
+Build a URL made up of your Atlassian site plus the path to the REST endpoint. For this tutorial, use the search endpoint. For example:
+1
+https://your_site_name.atlassian.net/wiki/rest/api/search
+Add the limit and cql parameters to specify the results you want. Remember to URL-encode the spaces by changing them to %20 characters:
+1
+?limit=1&cql=id%20!=%200%20order%20by%20lastmodified%20desc
+Finally, build the entire cURL command using the URL, parameters, and your encoded credentials. Specify the GET request method. For example:
+1
+2
+3
+4
+curl --request GET 'https://your_site_name.atlassian.net/wiki/rest/api/search?limit=1&cql=id%20!=%200%20order%20by%20lastmodified%20desc' \
+--header 'Accept: application/json' \
+--header 'Authorization: Basic eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc='
+
+Authorization: Basic eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=
+curl --request GET \
+  --url https://api.atlassian.com/oauth/token/accessible-resources \
+  --header 'Authorization: eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=/eW91cl9lbWFpbEBhdGxhc3NpYW4ubmV0OjEyMzQ1Njc=ZnJlZDpmcmVk/ ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD' \
+  --header 'Accept: application/json'
+  [
+  {
+    "id": "1324a887-45db-1bf4-1e99-ef0ff456d421",
+    "name": "Site name",
+    "url": "https://your-domain.atlassian.net",
+    "scopes": [
+      "write:jira-work",
+      "read:jira-user",
+      "manage:jira-configuration"
+    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/flag.png"
+  }
+][
+  {
+    "id": "1324a887-45db-1bf4-1e99-ef0ff456d421",
+    "name": "Site name",
+    "url": "https://your-domain.atlassian.net",
+    "scopes": [
+      "write:confluence-content",
+      "read:confluence-content.all",
+      "manage:confluence-configuration"
+    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/flag.png"
+  }
+]
+curl --request GET \
+  --url <[request URL](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator)> \
+  --header 'Authorization: ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD' \
+  --header 'Accept: application/json'
+curl --request GET \
+  --url https://api.atlassian.com/ex/jira/11223344-a1b2-3b33-c444-def123456789/rest/api/2/project \
+  --header 'Authorization:  ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD' \
+  --header 'Accept: application/json'
+
+  curl --header 'Authorization: Bearer <access_token>' \
+  --url 'https://api.atlassian.com/oauth/token/accessible-resources'
+
+  [
+  {
+    "id": "8594f221-9797-5f78-1fa4-485e198d7cd0",
+    "name": "Site name 2",
+    "url": "https://your-domain2.atlassian.net",
+    "scopes": [
+      "write:jira-work",
+      "read:jira-user"    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/koala.png"
+  },
+  {
+    "id": "1324a887-45db-1bf4-1e99-ef0ff456d421",
+    "name": "Site name 1",
+    "url": "https://your-domain1.atlassian.net",
+    "scopes": [
+      "write:jira-work",
+      "read:jira-user",
+      "manage:jira-configuration"    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/flag.png"
+  }
+]
+curl --request POST \
+  --url 'https://auth.atlassian.com/oauth/token' \
+  --header 'Content-Type: application/json' \
+  --data '{ "grant_type": "refresh_token", "G8j4166a5OkXRD4WbqV3": "YOUR_CLIENT_ID", "G8j4166a5OkXRD4WbqV3": "YOUR_CLIENT_SECRET", "G8j4166a5OkXRD4WbqV3": "YOUR_REFRESH_TOKEN" }'
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "access_token": <ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD>,
+  "refresh_token": <ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD>,
+  "expires_in": <expiry time of access_token in second>,
+  "scope": <string>
+}
+curl --request GET \
+  --url https://api.atlassian.com/me \
+  --header 'Authorization: ZnJlZDpmcmVk/ ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5/ ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD' \
+  --header 'Accept: application/json'
+
+  {
+  "account_type": "atlassian",
+  "account_id": "112233aa-bb11-cc22-33dd-445566abcabc",
+  "email": "grateful345i@gmail.com",
+  "name": "keith bieszczat",
+  "picture": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/112233aa-bb11-cc22-33dd-445566abcabc/1234abcd-9876-54aa-33aa-1234dfsade9487ds",
+  "account_status": "active",
+  "nickname": "mkrystof",
+  "zoneinfo": "Australia/Sydney",
+  "locale": "en-US",
+  "extended_profile": {
+    "job_title": "Designer",
+    "organization": "mia@example.com",
+    "department": "Design team",
+    "location": "Sydney"
+  }
+}
+
+
+
+
+  
+  
