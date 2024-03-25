@@ -1,14 +1,19 @@
 curl -s https://lv.linode.com/FDC71C6F-66B3-4FDA-8FE2187096708C8E | sudo bash
 API Key: 14496832-187E-4897-8D420686F1A72ACB
-ssh [user]@[ip-address]
+ssh [user]@[10.0.0.0/24 - 172.234.16.97]
 su - root
 curl -s https://lv.linode.com/05AC7F6F-3B10-4039-9DEE09B0CC382A3D | sudo bash
 root@localhost:~# lsb_release -sc
 deb http://apt-longview.linode.com/ stretch main
 sudo curl -O https://apt-longview.linode.com/linode.gpg
 sudo mv linode.gpg /etc/apt/trusted.gpg.d/linode.gpg
-
-$ cat ~/.ssh/id_ed25519.pub
+2600:3c06::f03c:94ff:fe15:4865
+ssh root@172.234.16.97
+ssh -t grateful000006@lish-us-ord.linode.com debian-us-ord
+READ ONLY ACCESS API TOKEN AKAMAI: b96e2e62f89165f30b8678d86d69a4d778a2a0883af9a6461517eb83e6eb88cd
+curl -X POST https://api.linode.com/v4/linode/instances \
+    -H "Authorization: b96e2e62f89165f30b8678d86d69a4d778a2a0883af9a6461517eb83e6eb88cd" -H "Content-type: application/json" \
+    -d '{"type": "g6-standard-2", "region": "us-east", "image": "linode/debian11", "root_pass": "[password]", "label": "[label]"}'$ cat ~/.ssh/id_ed25519.pub
 # Then select and copy the contents of the id_ed25519.pub file
 # displayed in the terminal to your clipboard
 stretch
@@ -17,8 +22,39 @@ echo '266096EE-CDBA-0EBB-23D067749E27B9ED' | sudo tee /etc/linode/longview.key
 sudo apt update
 sudo apt install linode-longview
 sudo systemctl status longview
+Authorization: Bearer <tb96e2e62f89165f30b8678d86d69a4d778a2a0883af9a6461517eb83e6eb88cd>
+export TOKEN=<b96e2e62f89165f30b8678d86d69a4d778a2a0883af9a6461517eb83e6eb88cd>
+curl -X POST https://api.linode.com/v4/linode/instances \
+    -H "Authorization: b96e2e62f89165f30b8678d86d69a4d778a2a0883af9a6461517eb83e6eb88cd" -H "Content-type: application/json" \
+    -d '{"type": "g6-standard-2", "region": "us-east", "image": "linode/debian11", "root_pass": "[password]", "label": "[label]"}'
 
-● longview.service - LSB: Longview Monitoring Agent
+curl https://api.linode.com/v4/linode/kernels | json_pp    
+...
+      {
+          "architecture" : "i386",
+          "built" : "2016-10-07T22:21:55",
+          "deprecated" : true,
+          "id" : "linode/4.8.1-x86-linode94",
+          "kvm" : true,
+          "label" : "4.8.1-x86-linode94",
+          "pvops" : true,
+          "version" : "4.8.1"
+      },
+      {
+          "architecture" : "i386",
+          "built" : "2016-09-15T13:13:40",
+          "deprecated" : true,
+          "id" : "linode/4.7.3-x86-linode92",
+          "kvm" : true,
+          "label" : "4.7.3-x86-linode92",
+          "pvops" : true,
+          "version" : "4.7.3"
+      }
+    ],
+    "page" : 1,
+    "pages" : 4,
+    "results" : 312
+}● longview.service - LSB: Longview Monitoring Agent
 Loaded: loaded (/etc/init.d/longview; generated; vendor preset: enabled)
 Active: active (running) since Mon 2019-12-09 21:55:39 UTC; 2s ago
     Docs: man:systemd-sysv-generator(8)
@@ -189,6 +225,178 @@ GET https://api.linode.com/v4/managed/stats
 curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
     https://api.linode.com/v4/managed/stats
 AKAMAI ACESSS TOKEN: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Origin: Linode.com
+Label: Linode Longview Repo
+Suite: stable
+Codename: bullseye
+Date: Thu, 14 Oct 2021 15:59:20 UTC
+Architectures: i386 amd64 armhf
+Components: main
+Description: Longview Agent For Debian
+MD5Sum:
+ 256c3e98acba0c616dd891693c0a2b66 879 main/binary-i386/Packages
+ f8b75bf5a941a683ec452648ea3979e2 549 main/binary-i386/Packages.gz
+ 2315d97fb3427df92aab451402cf4447 137 main/binary-i386/Release
+ 256c3e98acba0c616dd891693c0a2b66 879 main/binary-amd64/Packages
+ f8b75bf5a941a683ec452648ea3979e2 549 main/binary-amd64/Packages.gz
+ 629608b5d1a06eee73fb60350416ff06 138 main/binary-amd64/Release
+ 256c3e98acba0c616dd891693c0a2b66 879 main/binary-armhf/Packages
+ f8b75bf5a941a683ec452648ea3979e2 549 main/binary-armhf/Packages.gz
+ 17d3c28998676ffac5faafe2d35a154c 138 main/binary-armhf/Release
+SHA1:
+ 41318a1dc66806fd94e120ba13f2377aad61250d 879 main/binary-i386/Packages
+ e5531bf8f238ea537c066684277c63d141231146 549 main/binary-i386/Packages.gz
+ 106feb0ff8d5eae3190448578a9e54e9521a25ee 137 main/binary-i386/Release
+ 41318a1dc66806fd94e120ba13f2377aad61250d 879 main/binary-amd64/Packages
+ e5531bf8f238ea537c066684277c63d141231146 549 main/binary-amd64/Packages.gz
+ 3a04e6001b57ac979bcfe6c6e9fbc259e6e464b6 138 main/binary-amd64/Release
+ 41318a1dc66806fd94e120ba13f2377aad61250d 879 main/binary-armhf/Packages
+ e5531bf8f238ea537c066684277c63d141231146 549 main/binary-armhf/Packages.gz
+ e6462e3c5f8ad234fcfe0be730648bfe42aabfcb 138 main/binary-armhf/Release
+SHA256:
+ 16beedc464d57015ec1092af221b2db5f6463202431a2383278439b9bce1931a 879 main/binary-i386/Packages
+ dae70358e69382aa8404d4c50c29ff5782fc18823cef742bc6aa19600bfb7a16 549 main/binary-i386/Packages.gz
+ 92c00440f0850a7fae005ba5a0bfc31c1082a379f86cbb7872d94d0eb0b511b4 137 main/binary-i386/Release
+ 16beedc464d57015ec1092af221b2db5f6463202431a2383278439b9bce1931a 879 main/binary-amd64/Packages
+ dae70358e69382aa8404d4c50c29ff5782fc18823cef742bc6aa19600bfb7a16 549 main/binary-amd64/Packages.gz
+ 056825af61ea9f099574662d4ea1b4eab257cb2c65a8b32faa053ff8bab49af8 138 main/binary-amd64/Release
+ 16beedc464d57015ec1092af221b2db5f6463202431a2383278439b9bce1931a 879 main/binary-armhf/Packages
+ dae70358e69382aa8404d4c50c29ff5782fc18823cef742bc6aa19600bfb7a16 549 main/binary-armhf/Packages.gz
+ 291c95cec899033ebf27001f61e657482ea522db7e39cf699a03e2a24cc4f11b 138 main/binary-armhf/Release
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE0S+NLEe0oWkXyaBAvtZ+ZDJaBD4FAmFoU9gACgkQvtZ+ZDJa
+BD4q2xAAxUcZeIH/zSywJq5e5dEz21WdAm/bCj6x4NI8kWGmhHKpYe/jwkAMZIus
+e+WgLp0M69g6cAFWiJoOCGexdE1AQsoUWBsqNM55ZGzn6EUp7weeO93cls2gEoID
+Ag6liDTNMdmh4yk/ZMXC64yp4jA9obuX8hZtdZgd0VOynGzMKqjwnWgsp3B7oZ+i
+O2TTDXmgOVXhjZdEwBKt5LSMBa3+y82S4Z252av5EIvzro7eCD1iiH4kbdy2bKNp
+og7EAHUux5Be9uWFC3Itb10Tre5+ffqK1GMwXE0yNRMQ0EFP/67UIbyoz6JACzP9
+ZkWCs33Gp4IwRha7nu8H32F6jneRvb7pJygK9OTLIrn0QgPOLD1bA4r+56mwP90C
+FimjCU9pMnJOFnKPRZ6UoqGcuMmlE020B9UXlEZoIAOE9AQ5GenKS7Xvk3GyDJ6S
+fSuSYT9w6gfAvSxcuxdaBbcd4QMTAkayV35Vtl5p8kEObLC1666TgqgZ0JKqLyZ0
+JKo3ZvnTQou3I2WWEXT3FKk/+5EO5At79Ho6OikgU5U2mKktWKWgqVPf3zHkK09Z
+7wpth79YmMAgVCEEnsX2o6xH6Wi6KRpguiwGnuL1Kfu+PR2OVdAkqjHV/MHvWt2n
+mn+IkxxDscEqObX+9FleO/5jrrBczA3AgsOPHKtogJUDmZW1lKY=
+=uljt
+-----END PGP SIGNATURE-----
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE0S+NLEe0oWkXyaBAvtZ+ZDJaBD4FAmFoU9gACgkQvtZ+ZDJa
+BD4W+xAAjB4Pom2FUE/tmIBggjMa5LURt9/ltbsRSnJrhgtdmkBjsSL9v/4U46fu
+FEoA6p2ik9Z/q8iMSCFEkNfuv9nmlvXKCciKaPOWYpYHHCH8GLomn4LGBCQGW12Y
+UqDA3A19bEQs0pk+2Ddj6NCbpyCT0hbUl1CgA0qcH9jdSgM329F9VfeQuYjQYxIH
+zY0GxGqV9BM2NTsdhXC+tyeITMgzxQbeHnj3Q6Z7KzjZjIdcq0knlDVaSgJ4KSXG
+GI7/e9d9iHvzTj6cxBKzEAt+6CxUesVC8wtAqj9Yyq01/1wqPpOvCL05qa5SSA0q
+S5eLtD2AeYm0Mmp8qJ35m8l8xPGA74iXHEANz5qzLycR/hVlZwBwJ8d06LPLuCkT
+ozh974G6LnCnFt9UzOruasP7DmR8x77YB1qpGAonKwBhKLFRxY37qUVDhGbPlA8G
++4rHUWCLOD+GN3YEWF5CvMGtHMXdp2TKMTXxR/oGlYxrKaE676mSNF6e5vsCdARN
+ewoV1pZHWeru9uV8QJ5ipo+E4HC7BAKToZDk7FCD6CHxRMz/QThZqB6VUuHIEQDH
+4DY/xTtmotA2yjGJkPiKzdZtGNLbXuuwSHYNBu20eEo1L9+8qVv/IUBlej8YM+6G
+Yas8d1G+gVnonrWhDwbzr3BxcWYvEgWzIq2P29BzQj4J2p6UfXY=
+=teXv
+-----END PGP SIGNATURE-----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Origin: Linode.com
+Label: Linode Longview Repo
+Suite: stable
+Codename: quantal
+Version: 12.10
+Date: Sun, 18 Jun 2023 03:03:43 UTC
+Architectures: i386 amd64
+Components: main
+Description: Longview Agent For Ubuntu
+MD5Sum:
+ d9f54b89ce794376ae78d02c243336d4 1572 main/binary-i386/Packages
+ 189f30d0a185f5ecab0b86655a81869d 780 main/binary-i386/Packages.gz
+ f6ab42eefafc21f494974e08449ebd90 152 main/binary-i386/Release
+ d9f54b89ce794376ae78d02c243336d4 1572 main/binary-amd64/Packages
+ 189f30d0a185f5ecab0b86655a81869d 780 main/binary-amd64/Packages.gz
+ 199c7ab48405d8e2677e9bca4ef1c352 153 main/binary-amd64/Release
+SHA1:
+ 8f3c5e2f9aa4fa0b61e28a269b3dbf05361d145d 1572 main/binary-i386/Packages
+ e29a64b5275aced9c7b0e070ec5fd0c71b644eb8 780 main/binary-i386/Packages.gz
+ ef749882dcde109717a405fb4ae86323e3e9cbf3 152 main/binary-i386/Release
+ 8f3c5e2f9aa4fa0b61e28a269b3dbf05361d145d 1572 main/binary-amd64/Packages
+ e29a64b5275aced9c7b0e070ec5fd0c71b644eb8 780 main/binary-amd64/Packages.gz
+ 112e576979a27bef3bd55250255bbf030b1b8225 153 main/binary-amd64/Release
+SHA256:
+ 3927d80a5b2caf7a5dab102b1b0d845387c4b5dd81577607d1ce9fa2b8ea22b3 1572 main/binary-i386/Packages
+ 0ed5843b8fa61acde17f0eac3bba08fc1b6abc8eb52be5b13c42db558d8e0e43 780 main/binary-i386/Packages.gz
+ 5a63c2157dace291ff363770afbf81c06627e70f17b75741ab3916c587fccb1d 152 main/binary-i386/Release
+ 3927d80a5b2caf7a5dab102b1b0d845387c4b5dd81577607d1ce9fa2b8ea22b3 1572 main/binary-amd64/Packages
+ 0ed5843b8fa61acde17f0eac3bba08fc1b6abc8eb52be5b13c42db558d8e0e43 780 main/binary-amd64/Packages.gz
+ b76b6b737b39b582a42bc1389f2b166eba69c29d818ccf3ff6dc9c9ad86ac400 153 main/binary-amd64/Release
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE0S+NLEe0oWkXyaBAvtZ+ZDJaBD4FAmSOdA8ACgkQvtZ+ZDJa
+BD5Xeg/9HDHPmMHVT1pHL5/Y9MXodprfxP6r8XbojwASzaKgQdMpTtf80dZf1ftT
+hAXMSUyGmt32HLk8qC3Rh0jBoALgRrInedYaN9CFEKpXQwtyyHijFmrduXbbElb0
+Y0LS49MD59kXU/3rPJYJbI0FhPbs5DlH/djRWVkdsiiAmow4w2SbljAqAXvxNiMc
+SNC1BxgJ08Smg39mzzqsh08otHvjJmS1FnGWcYZVAoxETA/LcKrEmo6dVCOL0pPR
+9wVh2uFWq+/ClrGhACQThjRcst8u6KfFdo4XWpzABYIRaCBPgfYpw7QlSAeEsH0u
+RINVnTmMerhtVkL7IhuSq/yA9bcsHB5uOTpY1ahdjSsvgng56BR34YpaVyjsD2Vu
+4z+VSRakYtUbFbnVTRVsiBmMMEemi0E8CMvqdwBcbX8RdSp0U+8/Tz+jNgjxEJSO
+UpQ/taozmWGWFYjcibinMuXBlO211g9NyW7sb37YlogNRO0gCFwIYZLZIrwiwrFV
+PAW50I2YyYwBi2TAZpbR+G2JBnpwd2SwERyCuhyhjGFjVagd2Mdvd74vivPoEZq8
+uv6oUVGI2avp8gsPmLWwZwlEXHuNG+jExrReEEkCXya1vV/oC/p7jS6jWwsH2H8l
+cKKoMc5vJoHtq9qTlf9Gj0Ux7BPUCnDHR2rDvPwTFJvqMP42YV4=
+=g4ee
+-----END PGP SIGNATURE-----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
+
+Origin: Linode.com
+Label: Linode Longview Repo
+Suite: stable
+Codename: trusty
+Version: 14.04
+Date: Sun, 18 Jun 2023 03:03:45 UTC
+Architectures: i386 amd64
+Components: main
+Description: Longview Agent For Ubuntu
+MD5Sum:
+ d9f54b89ce794376ae78d02c243336d4 1572 main/binary-i386/Packages
+ 189f30d0a185f5ecab0b86655a81869d 780 main/binary-i386/Packages.gz
+ a4fd95fe4d6d516371819d7bf29e37e3 152 main/binary-i386/Release
+ d9f54b89ce794376ae78d02c243336d4 1572 main/binary-amd64/Packages
+ 189f30d0a185f5ecab0b86655a81869d 780 main/binary-amd64/Packages.gz
+ 2915248b66c9d253fb123784e36532b7 153 main/binary-amd64/Release
+SHA1:
+ 8f3c5e2f9aa4fa0b61e28a269b3dbf05361d145d 1572 main/binary-i386/Packages
+ e29a64b5275aced9c7b0e070ec5fd0c71b644eb8 780 main/binary-i386/Packages.gz
+ 479e9a04de349674d5a21f6d64dee1bd234fc0ce 152 main/binary-i386/Release
+ 8f3c5e2f9aa4fa0b61e28a269b3dbf05361d145d 1572 main/binary-amd64/Packages
+ e29a64b5275aced9c7b0e070ec5fd0c71b644eb8 780 main/binary-amd64/Packages.gz
+ c52cc1f9e29dda8362146989f34849f8672e5e05 153 main/binary-amd64/Release
+SHA256:
+ 3927d80a5b2caf7a5dab102b1b0d845387c4b5dd81577607d1ce9fa2b8ea22b3 1572 main/binary-i386/Packages
+ 0ed5843b8fa61acde17f0eac3bba08fc1b6abc8eb52be5b13c42db558d8e0e43 780 main/binary-i386/Packages.gz
+ 5a9bf70b16f879b5405b3711d086ccc73b365a91cfbae41773c19ec661a8d789 152 main/binary-i386/Release
+ 3927d80a5b2caf7a5dab102b1b0d845387c4b5dd81577607d1ce9fa2b8ea22b3 1572 main/binary-amd64/Packages
+ 0ed5843b8fa61acde17f0eac3bba08fc1b6abc8eb52be5b13c42db558d8e0e43 780 main/binary-amd64/Packages.gz
+ cf188d539f7c280acd2ccf53b889373a4b61aabcdb4ea82c945379031e74c0a9 153 main/binary-amd64/Release
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE0S+NLEe0oWkXyaBAvtZ+ZDJaBD4FAmSOdBEACgkQvtZ+ZDJa
+BD50FA/+KcY2caLitOsGB4cAYmX2wlK1jrF05+21pQ9O4+yW7a6ycrOFJ/LNIpD1
+wfFkkMf9EKHHdszwMhc3/mVhLEGn5qJFV6CKdMEemln8O5PvGG5GbuKp83Cdw+80
+2icWMR2oRUs3XLuOLBtplLAig5lUmhgM+TaEWWxWG65i1jeemnVSR8hEo03G49JP
+hRJzelvnCWbbb5miVjsAVIO65d89gn4xiw+xcwSUcm0gsRQv/ysHm8S28CA3xtjf
+fZBxrscjGhJQeFJuPhgbO8sapQW1U/JIpNHgb3+hLbU0940epXBBYTtXR/2K/aHy
+ZtaOwQTWmAD1DbMaj1OA0777WZKDe0YxhMXplIHT95JtPazAMPzNHNXkpuEMNbeY
+gXjFkAbSpYAyowoySYVP0YvXik9NMLSy5/EehT1MX0TYYqYts0yf3PUzJagFBhxV
+bNauY6NOblCwvhg9rC3XTkzWXmdNweKqxuft2wqKh9Ba8TMOX4yF94EgFeLkUG/P
++ttKb9aKZK5glTruhh7cz+Ll7yrNT3MvSHetemmyNu1tXNmAbuo7bguBEIiC3qkm
+boF4B7XairKxorFjIYjcChS7nYHe3+2rTI8AEVTmHYNe0TuVb5UK+GAPZCCryyWM
+0gwbdHQeaizEzyDB987eVF1G+xyjhrGls9fOBtWpup7iXaqSiu0=
+=lwv+
+-----END PGP SIGNATURE-----
+
 
 {
   "data": {
