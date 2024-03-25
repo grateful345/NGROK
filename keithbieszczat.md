@@ -29,7 +29,7 @@ curl -X POST https://api.linode.com/v4/linode/instances \
     -d '{"type": "g6-standard-2", "region": "us-east", "image": "linode/debian11", "root_pass": "[password]", "label": "[label]"}'
 curl [options] | json_pp
 Authorization: Bearer <token-string>
-export TOKEN=<token-string>
+export TOKEN=<6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>
 curl https://api.linode.com/v4/images/ | json_pp
 curl https://api.linode.com/v4/linode/types/ | json_pp
 curl https://api.linode.com/v4/regions | json_pp
@@ -41,13 +41,13 @@ curl -X POST https://api.linode.com/v4/linode/instances \
     POST https://api.linode.com/v4/account/betas
 
 curl https://api.linode.com/v4/account/betas \
-    -H "Authorization: Bearer $TOKEN" \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
     -H "Content-Type: application/json" \
     -X POST -d '{
         "id": "example_open"
     }'
 curl https://api.linode.com/v4/account/betas \
-    -H "Authorization: Bearer $TOKEN"
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72"
 {
   "data": [
     {
@@ -64,7 +64,7 @@ curl https://api.linode.com/v4/account/betas \
   "results": 1
 }[
 ](https://api.linode.com/v4/account/betas)
-curl -H "Authorization: Bearer $TOKEN" \
+curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
     https://api.linode.com/v4/account
 {
         "isSharedPolicy": true,
@@ -182,3 +182,79 @@ Devices to create for this Firewall. When a Device is created, the Firewall is a
   ],
   "updated": "2018-01-02T00:01:01"
 }
+GET https://api.linode.com/v4/managed/stats
+curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+    https://api.linode.com/v4/managed/stats
+AKAMAI ACESSS TOKEN: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72
+
+{
+  "data": {
+    "cpu": [
+      {
+        "true": 29.94,
+        "x": 11513761600000
+      }
+    ],
+    "disk": [
+      {
+        "true": 29.94,
+        "x": 11513761600000
+      }
+    ],
+    "net_in": [
+      {
+        "true": 29.94,
+        "x": 11513761600000
+      }
+    ],
+    "net_out": [
+      {
+        "true": 29.94,
+        "x": 11513761600000
+      }
+    ],
+    "swap": [
+      {
+        "true": 29.94,
+        "x": 11513761600000
+      }
+    ]
+  }
+}
+curl -H "Content-Type: application/json" \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+    -X POST \
+    https://api.linode.com/v4/managed/services/9994/enable
+curl -H "Content-Type: application/json" \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+    -X POST -d '{
+      "label": "my-object-storage-key",
+      "bucket_access": [
+        {
+          "cluster": "ap-south-1",
+          "bucket_name": "bucket-example-1",
+          "permissions": "read_write"
+        },
+        {
+          "cluster": "us-east-1",
+          "bucket_name": "bucket-example-2",
+          "permissions": "read_only"
+        }
+      ]
+    }' \
+  https://api.linode.com/v4/object-storage/keys
+{
+  "access_key": "KVAKUTGBA4WTR2NSJQ81",
+  "bucket_access": [
+    {
+      "bucket_name": "example-bucket",
+      "cluster": "ap-south-1",
+      "permissions": "read_only"
+    }
+  ],
+  "id": 123,
+  "label": "my-key",
+  "limited": true,
+  "secret_key": "OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw"
+}    
+POST https://api.linode.com/v4/object-storage/keys
