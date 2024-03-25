@@ -5,6 +5,9 @@ Secret api token for Trello input where necessary :(b6ffa170da74846855071ebb9a12
 
 ording to NIST SP 800-57 (Revision 4) the following types of keys exist:[2][1][3] Private signature key Private signature keys
 
+atlassian Api token:
+
+ATATT3xFfGF0XmLbrkDjnV3mjB9PvJ51M7nyw7NtrmOSYIdoETrVPQ8ewgxGaWGzVt51nPp6XB0gIdv16qB-cSSfsozIvhi3ntzSgkosHJvYnUy9dJ4pGSeDIZwDAqRE2MI23uiBIc_IYx2E9Oumwgxldv8QAHIx5WChVgy_gaYIyXdGbPZPFt8=F92622C1
 
 
 Text Channel
