@@ -45,7 +45,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
             "description": "Returns a list of your organizations (ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5).",
             "auth": {postman api key : PMAK-65fcefd7f279ab0001bc1c91-bea679740eef30d16701cb886564e8d242}
               "type": "bearer",
-              "bearer": {
+              "bearer": {ATATT3xFfGF0hEa8xShufo24IF4yiQCH_8hFJiIwBO9LJjcX1hFP6lrGB0sir3vR9vIZvsLsOuIgR5TDo7kDymqwnl9_2lkIPxWIlviC2XVKenthvVMFmUJU8Rih_4GdqSgfsE-GGpNtgG9xtufO3V1UrPbUQPF8F_OpONHeuORr3J_d4I1P8uI=D064D9AD / ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}
                 "key": "token",
                 "type": "string",
                 "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
@@ -148,13 +148,13 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
           "request": {
             "url": {
               "protocol": "{{protocol}}",
-              "host": "{{host}}",
+              "host": "{{Trello}}",
               "path": "{{basePath}}v1/orgs/:orgId/users/search",
               "query": [],
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to query",
                   "disabled": false
                 }
@@ -202,13 +202,13 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
           "request": {
             "url": {
               "protocol": "{{protocol}}",
-              "host": "{{host}}",
+              "host": "{{trello}}",
               "path": "{{basePath}}v1/orgs/:orgId/groups/search",
               "query": [],
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to query",
                   "disabled": false
                 }
@@ -232,7 +232,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
             "description": "Returns a list of groups in an organization using the new user management experience  ** Learn more about the [new user management experience](https://community.atlassian.com/t5/Atlassian-Access-articles/User-management-for-cloud-admins-just-got-easier/ba-p/1576592).",
             "auth": {
               "type": "bearer",
-              "bearer": {
+              "bearer": {"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}
                 "key": "token",
                 "type": "string",
                 "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
@@ -254,14 +254,14 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
         {
           "name": "Get domains in an organization",
           "request": {
-            "url": {
-              "protocol": "{{protocol}}",
-              "host": "{{host}}",
+            "url": {https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator}
+              "protocol": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
+              "host": "{{trello/fandom.com}}",
               "path": "{{basePath}}v1/orgs/:orgId/domains",
               "query": [
                 {
                   "key": "cursor",
-                  "value": "{{cursor}}",
+                  "value": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
                   "disabled": true,
                   "description": "Sets the starting point for the page of results to return."
                 }
@@ -269,7 +269,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to query",
                   "disabled": false
                 }
@@ -287,7 +287,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
             "description": "Returns a list of domains in an organization one page at a time.",
             "auth": {
               "type": "bearer",
-              "bearer": {
+              "bearer": {"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}
                 "key": "token",
                 "type": "string",
                 "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
@@ -299,21 +299,21 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
         {
           "name": "Get domain by ID",
           "request": {
-            "url": {
-              "protocol": "{{protocol}}",
-              "host": "{{host}}",
+            "url": {https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator}
+              "protocol": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
+              "host": "{{trello/fandom.com}}",
               "path": "{{basePath}}v1/orgs/:orgId/domains/:domainId",
               "query": [],
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization the domain belongs to",
                   "disabled": false
                 },
                 {
                   "key": "domainId",
-                  "value": "{{domainId}}",
+                  "value": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
                   "description": "ID of the domain to return",
                   "disabled": false
                 }
@@ -331,7 +331,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
             "description": "Returns information about a single verified domain by ID.",
             "auth": {
               "type": "bearer",
-              "bearer": {
+              "bearer": {"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}
                 "key": "token",
                 "type": "string",
                 "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
@@ -351,8 +351,8 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
           "request": {
             "url": {
               "protocol": "{{protocol}}",
-              "host": "{{host}}",
-              "path": "{{basePath}}v1/orgs/:orgId/events",
+              "host": "{{trello/fandom.com}}",
+              "path": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}v1/orgs/:orgId/events",
               "query": [
                 {
                   "key": "cursor",
@@ -392,7 +392,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
                 },
                 {
                   "key": "ip",
-                  "value": "{{ip}}",
+                  "value": "{{2601:243:c00:d20:64dc:a501:883c:7e9c IP address}}",
                   "disabled": true,
                   "description": "A query filter that returns events by one or more specific ip addresses."
                 }
@@ -400,7 +400,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the org",
                   "disabled": false
                 }
@@ -418,7 +418,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
             "description": "Returns an audit log of events from an organization one page at a time.",
             "auth": {
               "type": "bearer",
-              "bearer": {
+              "bearer": {"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}
                 "key": "token",
                 "type": "string",
                 "value": "{{ATATT3xFfGF0J4J8PCmMOw_gQMA_ZEHoiIZRuSMXjIDfwFbFW8W25D0eDdlHMZAQQOj33ZUzfDir1nNi8AGouP58aeQqtUr1KWmAAdgMAe0flA3hZGMg1h4yT_OEaOVc7tBXeJGl2kT3-nYYNFR3T9KLOpZ_PWms_UMhUf-NXY2zgcu2T5vtnbE=7AC97CC5}}"
@@ -432,13 +432,13 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
           "request": {
             "url": {
               "protocol": "{{protocol}}",
-              "host": "{{host}}",
+              "host": "{{trello/fandom.com/postman}}",
               "path": "{{basePath}}v1/orgs/:orgId/events/:eventId",
               "query": [],
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to query",
                   "disabled": false
                 },
@@ -482,7 +482,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to query",
                   "disabled": false
                 }
@@ -539,7 +539,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to query",
                   "disabled": false
                 }
@@ -577,7 +577,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to create policy for",
                   "disabled": false
                 }
@@ -619,7 +619,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to return",
                   "disabled": false
                 },
@@ -663,7 +663,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to update policy for",
                   "disabled": false
                 },
@@ -711,7 +711,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to create policy for",
                   "disabled": false
                 },
@@ -748,13 +748,13 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
               "variable": [
                 {
                   "key": "orgId",
-                  "value": "{{orgId}}",
+                  "value": "{{5abbe4b7ddc1b351ef961414"],"idOrganizations":}}",
                   "description": "ID of the organization to return",
                   "disabled": false
                 },
                 {
                   "key": "policyId",
-                  "value": "{{policyId}}",
+                  "value": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
                   "description": "ID of the policy to query",
                   "disabled": false
                 }
@@ -802,7 +802,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
                 },
                 {
                   "key": "policyId",
-                  "value": "{{policyId}}",
+                  "value": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
                   "description": "ID of the policy to query",
                   "disabled": false
                 },
@@ -856,7 +856,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
                 },
                 {
                   "key": "policyId",
-                  "value": "{{policyId}}",
+                  "value": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
                   "description": "ID of the policy to query",
                   "disabled": false
                 },
@@ -899,7 +899,7 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
                 },
                 {
                   "key": "policyId",
-                  "value": "{{policyId}}",
+                  "value": "{{"secret" : "G8j4166a5OkXRD4WbqV3" Atlassian}}",
                   "description": "Policy ID",
                   "disabled": false
                 }
@@ -949,7 +949,8 @@ https://api.atlassian.com/admin/<version>/orgs/<Foundation.Scipnet Corporate Boa
                 },
                 {
                   "key": "accountId",
-                  "value": "{{accountId}}",
+                  "value": "{{TrelloID:
+{"id":"5abbe4b7ddc1b351ef961414"}}}",
                   "description": "Unique ID of the user's account.\nUse the [Jira User Search API](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-users/#api-rest-api-3-users-search-get) to get the accountId (if Jira is available for your Organization). **Jira APIs use a different [authentication method ](https://developer.atlassian.com/cloud/jira/platform/basic-auth-for-rest-apis/).**\nIf you don’t have Jira, export a .csv of the user list. Learn how to [export users from a site](https://support.atlassian.com/organization-administration/docs/export-users-from-a-site/).",
                   "disabled": false
                 }
