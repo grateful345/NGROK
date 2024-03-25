@@ -17,6 +17,171 @@ curl -X POST https://api.linode.com/v4/linode/instances \
 # Then select and copy the contents of the id_ed25519.pub file
 # displayed in the terminal to your clipboard
 stretch
+curl https://api.linode.com/v4/linode/kernels | json_pp page=2
+curl https://api.linode.com/v4/linode/kernels | json_pp page_size=50
+curl https://api.linode.com/v4/images/ -H 'X-Filter: { "vendor": "Debian", "deprecated": false}' | json_pp
+
+{
+   "data" : [
+      {
+         "created" : "2019-07-07T12:24:54",
+         "created_by" : "linode",
+         "deprecated" : false,
+         "description" : "",
+         "eol" : "2024-07-01T04:00:00",
+         "expiry" : null,
+         "id" : "linode/debian10",
+         "is_public" : true,
+         "label" : "Debian 10",
+         "size" : 1500,
+         "status" : "available",
+         "type" : "manual",
+         "updated" : "2022-09-12T14:08:55",
+         "vendor" : "Debian"
+      },
+      {
+         "created" : "2021-08-14T22:44:02",
+         "created_by" : "linode",
+         "deprecated" : false,
+         "description" : "",
+         "eol" : "2026-07-01T04:00:00",
+         "expiry" : null,
+         "id" : "linode/debian11",
+         "is_public" : true,
+         "label" : "Debian 11",
+         "size" : 1300,
+         "status" : "available",
+         "type" : "manual",
+         "updated" : "2022-09-12T14:09:17",
+         "vendor" : "Debian"
+      },
+      {
+         "created" : "2022-04-26T19:17:51",
+         "created_by" : "linode",
+         "deprecated" : false,
+         "description" : "",
+         "eol" : "2026-07-01T04:00:00",
+         "expiry" : null,
+         "id" : "linode/debian11-kube-v1.23.6",
+         "is_public" : true,
+         "label" : "Kubernetes 1.23.13 on Debian 11",
+         "size" : 3500,
+         "status" : "available",
+         "type" : "manual",
+         "updated" : "2022-11-17T14:15:50",
+         "vendor" : "Debian"
+      },
+      {
+         "created" : "2022-11-17T14:17:22",
+         "created_by" : "linode",
+         "deprecated" : false,
+         "description" : "",
+         "eol" : "2026-07-01T04:00:00",
+         "expiry" : null,
+         "id" : "linode/debian11-kube-v1.24.8",
+         "is_public" : true,
+         "label" : "Kubernetes 1.24.8 on Debian 11",
+         "size" : 3500,
+         "status" : "available",
+         "type" : "manual",
+         "updated" : "2022-11-17T14:17:36",
+         "vendor" : "Debian"
+      }
+   ],
+   "page" : 1,
+   "pages" : 1,
+   "results" : 4
+}
+curl https://api.linode.com/v4/images/ -H 'X-Filter: {"+or": [{"vendor":"Debian"}, {"vendor":"Ubuntu"}]}' | json_pp
+
+curl "https://api.linode.com/v4/linode/types" \
+  -H 'X-Filter: { "class": "standard" }'
+The filter object’s keys are the keys of the object you’re filtering, and the values are accepted values. You can add multiple filters by including more than one key. For example, filtering for “standard” Linode Types that offer one vcpu:
+
+ curl "https://api.linode.com/v4/linode/types" \
+  -H 'X-Filter: { "class": "standard", "vcpus": 1 }'
+In the above example, both filters are combined with an “and” operation. However, if you wanted either Types with one vcpu or Types in our “standard” class, you can add an operator:
+
+curl "https://api.linode.com/v4/linode/types" \
+ -H 'X-Filter: { "+or": [ { "vcpus": 1 }, { "class": "standard" } ] }'
+curl "https://api.linode.com/v4/linode/types" \
+  -H '
+    X-Filter: {
+      "memory": {
+        "+gte": 61440
+      }
+    }'
+curl "https://api.linode.com/v4/linode/types" \
+  -H '
+    X-Filter: {
+      "+or": [
+        {
+          "+or": [
+            {
+              "class": "standard"
+            },
+            {
+              "class": "highmem"
+            }
+          ]
+        },
+        {
+          "+and": [
+            {
+              "vcpus": {
+                "+gte": 12
+              }
+            },
+            {
+              "vcpus": {
+                "+lte": 20
+              }
+            }
+          ]
+        }
+      ]
+    }'
+
+GET https://api.linode.com/v4/object-storage/buckets
+curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+  https://api.linode.com/v4/object-storage/buckets/
+{
+  "data": [
+    {
+      "cluster": "us-east-1",
+      "created": "2019-01-01T01:23:45",
+      "hostname": "example-bucket.us-east-1.linodeobjects.com",
+      "label": "example-bucket",
+      "objects": 4,
+      "size": 188318981
+    }
+  ],
+  "page": 1,
+  "pages": 1,
+  "results": 1
+}
+
+curl -H "Content-Type: application/json" \
+    -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
+    -X POST -d '{
+      "label": "example-bucket",
+      "cluster": "us-east-1",
+      "cors_enabled": true,
+      "acl": "private"
+    }' \
+  https://api.linode.com/v4/object-storage/buckets/
+PUT /{[bucket](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?fbclid=IwAR2FfaoXITYK167Nc-gEZKTMRz_v83X1RrGN52-68b4gcOTDG_Y9pT8S3QY_aem_AcWFgp90kCyN3CxUsNX0uytp_i-7n0Q677zEID8d0e7u0Lh7Ta3Nf6jVo1WXYRibmJA)} HTTP/1.1
+Host: cname.domain.com
+x-amz-acl: public-read-write
+
+Authorization: AWS {API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72}:{hash-of-header-and-secret} 
+GET /{[bucket](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator?fbclid=IwAR2FfaoXITYK167Nc-gEZKTMRz_v83X1RrGN52-68b4gcOTDG_Y9pT8S3QY_aem_AcWFgp90kCyN3CxUsNX0uytp_i-7n0Q677zEID8d0e7u0Lh7Ta3Nf6jVo1WXYRibmJA)}?max-keys=25 HTTP/1.1
+Host: THE_ADMINISTRATOR.fandom.com
+GET /{bucket}?location HTTP/1.1
+Host: cname.domain.com
+
+Authorization: AWS {API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72}:{hash-of-header-and-secret}
+
 sudo mkdir /etc/linode/
 echo '266096EE-CDBA-0EBB-23D067749E27B9ED' | sudo tee /etc/linode/longview.key
 sudo apt update
