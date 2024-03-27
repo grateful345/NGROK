@@ -6728,6 +6728,78 @@ index 7ab556e..71b805e 100644
 README
 AGENCY-WEBHOOK
 
+git config --global --unset gpg.format
+Use the gpg --list-secret-keys --keyid-format=long command to list the long form of the GPG keys for which you have both a public and private key. A private key is required for signing commits or tags.
+Shell
+gpg --list-secret-keys --keyid-format=long
+Note: Some GPG installations on Linux may require you to use gpg2 --list-keys --keyid-format LONG to view a list of your existing keys instead. In this case you will also need to configure Git to use gpg2 by running git config --global gpg.program gpg2.
+From the list of GPG keys, copy the long form of the GPG key ID you'd like to use. In this example, the GPG key ID is 3AA5C34371567BD2:
+Shell
+
+$ gpg --list-secret-keys --keyid-format=long
+/Users/hubot/.gnupg/secring.gpg
+------------------------------------
+sec   4096R/3AA5C34371567BD2 2016-03-10 [expires: 2017-03-10]
+uid                          Hubot <hubot@example.com>
+ssb   4096R/4BB6D45482678BE3 2016-03-10
+To set your primary GPG signing key in Git, paste the text below, substituting in the GPG primary key ID you'd like to use. In this example, the GPG key ID is 3AA5C34371567BD2:
+git config --global user.signingkey 3AA5C34371567BD2
+Alternatively, when setting a subkey include the ! suffix. In this example, the GPG subkey ID is 4BB6D45482678BE3:
+git config --global user.signingkey 4BB6D45482678BE3!
+Optionally, to configure Git to sign all commits by default, enter the following command:
+git config --global commit.gpgsign true
+For more information, see "Signing commits."
+To add your GPG key to your .bashrc startup file, run the following command:
+[ -f ~/.bashrc ] && echo -e '\nexport GPG_TTY=$(tty)' >> ~/.bashrc
+Telling Git about your SSH key
+
+You can use an existing SSH key to sign commits and tags, or generate a new one specifically for signing. For more information, see "Generating a new SSH key and adding it to the ssh-agent."
+
+Note: SSH signature verification is available in Git 2.34 or later. To update your version of Git, see the Git website.
+Open Terminal.
+Configure Git to use SSH to sign commits and tags:
+git config --global gpg.format ssh
+To set your SSH signing key in Git, paste the text below, substituting /PATH/TO/.SSH/KEY.PUB with the path to the public key you'd like to use.
+git config --global user.signingkey /PATH/TO/.SSH/KEY.PUB
+Telling Git about your X.509 key
+
+You can use smimesign to sign commits and tags using S/MIME.
+
+Note: S/MIME signature verification is available in Git 2.19 or later. To update your version of Git, see the Git website.
+Install smimesign.
+Open Terminal.
+Configure Git to use S/MIME to sign commits and tags. In Git 2.19 or later, use the git config gpg.x509.program and git config gpg.format commands:
+To use S/MIME to sign for all repositories:
+git config --global gpg.x509.program smimesign
+git config --global gpg.format x509
+To use S/MIME to sign for a single repository:
+cd PATH-TO-REPOSITORY
+git config --local gpg.x509.program smimesign
+git config --local gpg.format x509
+In Git 2.18 or earlier, use the git config gpg.program command:
+To use S/MIME to sign for all repositories:
+git config --global gpg.program smimesign
+To use S/MIME to sign for a single repository:
+cd  PATH-TO-REPOSITORY
+git config --local gpg.program smimesign
+If you're using an X.509 key that matches your committer identity, you can begin signing commits and tags.
+If you're not using an X.509 key that matches your committer identity, list X.509 keys for which you have both a certificate and private key using the smimesign --list-keys command.
+smimesign --list-keys
+From the list of X.509 keys, copy the certificate ID of the X.509 key you'd like to use. In this example, the certificate ID is 0ff455a2708394633e4bb2f88002e3cd80cbd76f:
+$ smimesign --list-keys
+             ID: 0ff455a2708394633e4bb2f88002e3cd80cbd76f
+            S/N: a2dfa7e8c9c4d1616f1009c988bb70f
+      Algorithm: SHA256-RSA
+       Validity: 2017-11-22 00:00:00 +0000 UTC - 2020-11-22 12:00:00 +0000 UTC
+         Issuer: CN=DigiCert SHA2 Assured ID CA,OU=www.digicert.com,O=DigiCert Inc,C=US
+        Subject: CN=Octocat,O=GitHub\, Inc.,L=San Francisco,ST=California,C=US
+         Emails: octocat@github.com
+To set your X.509 signing key in Git, paste the text below, substituting in the certificate ID you copied earlier.
+To use your X.509 key to sign for all repositories:
+git config --global user.signingkey 0ff455a2708394633e4bb2f88002e3cd80cbd76f
+To use your X.509 key to sign for a single repository:
+cd  PATH-TO-REPOSITORY
+git config --local user.signingkey 0ff455a2708394633e4bb2f88002e3cd80cbd76f
 API ID KEY SECRET KEY : pst_test_YWNjdF8xTTJKVGtMa2RJd0h1N2l4LE81ZEdIalZ6NlVuMUdjM3c3WkRnN0ZYRHZxRURwTXo_00gNK2DWAV
 
 HystrixCommand command = new HystrixCommand(arg1, arg2);
