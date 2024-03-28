@@ -19,6 +19,348 @@ const App = () => {
     },
   });
 
+Command Line
+Python
+
+
+# Install through pip
+pip3 install --upgrade stripe
+PyPi
+Python
+
+
+# Or find the Stripe package on http://pypi.python.org/pypi/stripe/
+requirements.txt
+Python
+
+
+# Find the version you want to pin:
+# https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
+# Specify that version in your requirements.txt file
+stripe>=5.0.0
+Client-side
+The Stripe iOS SDK is open source, fully documented, and compatible with apps supporting iOS 13 or above.
+
+Swift Package Manager
+
+CocoaPods
+
+Carthage
+
+Manual Framework
+To install the SDK, follow these steps:
+In Xcode, select File > Add Packages… and enter https://github.com/stripe/stripe-ios-spm as the repository URL.
+Select the latest version number from our releases page.
+Add the StripePaymentSheet product to the target of your app.
+Note
+For details on the latest SDK release and past versions, see the Releases page on GitHub. To receive notifications when a new release is published, watch releases for the repository.
+Configure the SDK with your Stripe publishable key on app start. This enables your app to make requests to the Stripe API.
+AppDelegate.swift
+Swift
+
+
+import UIKit
+import StripePaymentSheet
+
+@main
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        StripeAPI.defaultPublishableKey = "pk_test_51OzFAiHxLLCewi5zEitiMKvokSAXbjJCaN2ujPvr1mlaRwqtCaGnFdPP8dvSMuwhdu8FN8iIEtBzgPWNSbprzMKf00Yz0xxPPi""pk_test_51OzFAiHxLLCewi5zEi...NSbprzMKf00Yz0xxPPi"
+        // do any other necessary launch configuration
+        return true
+    }
+}
+Note
+Use your test mode keys while you test and develop, and your live mode keys when you publish your app.
+Create a connected account
+When a user (seller or service provider) signs up on your platform, create a user Account (referred to as a connected account) so you can accept payments and move funds to their bank account. Connected accounts represent your user in Stripe’s API and help facilitate the collection of onboarding requirements so Stripe can verify the user’s identity. In our store builder example, the connected account represents the business setting up their Internet store.
+Account creation flow
+Step 2.1: Create a connected Standard account and prefill information
+Server-side
+Use the /v1/accounts API to create a Standard account and set type to standard in the account creation request.
+server.py
+Python
+Resources
+
+
+
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OzFAiHxLLCewi5za87O8M5Zn1vrArix7jJCnlfEgefZtFOXGRmPzSpDErFKMBbsI5a7TmEpspKSTnnj25MGl0uZ00NyKQAZdE""sk_test_51OzFAiHxLLCewi5za8...j25MGl0uZ00NyKQAZdE"
+
+stripe.Account.create(type="standard")
+If you’ve already collected information for your connected accounts, you can prefill that information on the account object. You can prefill any account information, including personal and business information, external account information, and so on.
+Connect Onboarding doesn’t ask for the prefilled information. However, it does ask the account holder to confirm the prefilled information before accepting the Connect service agreement.
+When testing your integration, prefill account information using test data.
+Step 2.2: Create an account link
+Server-side
+You can create an account link by calling the Account Links API with the following parameters:
+account
+refresh_url
+return_url
+type = account_onboarding
+server.py
+Python
+Resources
+
+
+
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OzFAiHxLLCewi5za87O8M5Zn1vrArix7jJCnlfEgefZtFOXGRmPzSpDErFKMBbsI5a7TmEpspKSTnnj25MGl0uZ00NyKQAZdE""sk_test_51OzFAiHxLLCewi5za8...j25MGl0uZ00NyKQAZdE"
+
+stripe.AccountLink.create(
+  account='{{CONNECTED_ACCOUNT_ID}}',
+  refresh_url="https://example.com/reauth",
+  return_url="https://example.com/return",
+  type="account_onboarding",
+)
+Step 2.3: Redirect your user to the account link URL
+Client-side
+The response to your Account Links request includes a value for the key url. Redirect to this link to send your user into the flow. Account Links are temporary and are single-use only because they grant access to the connected account user’s personal information. Authenticate the user in your application before redirecting them to this URL. If you want to prefill information, you must do so before generating the account link. After you create the account link for a Standard account, you won’t be able to read or write information for the account.
+Security tip
+Don’t email, text, or otherwise send account link URLs outside of your platform application. Instead, provide them to the authenticated account holder within your application.
+ConnectOnboardViewController.swift
+Swift
+
+
+import UIKit
+import SafariServices
+
+let BackendAPIBaseURL: String = "" // Set to the URL of your backend server
+
+class ConnectOnboardViewController: UIViewController {
+
+    // ...
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let connectWithStripeButton = UIButton(type: .system)
+        connectWithStripeButton.setTitle("Connect with Stripe", for: .normal)
+        connectWithStripeButton.addTarget(self, action: #selector(didSelectConnectWithStripe), for: .touchUpInside)
+        view.addSubview(connectWithStripeButton)
+
+        // ...
+    }
+
+    @objc
+    func didSelectConnectWithStripe() {
+        if let url = URL(string: BackendAPIBaseURL)?.appendingPathComponent("onboard-user") {
+          var request = URLRequest(url: url)
+          request.httpMethod = "POST"
+          let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+              guard let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                  let accountURLString = json["url"] as? String,
+                  let accountURL = URL(string: accountURLString) else {
+                      // handle error
+              }
+
+              let safariViewController = SFSafariViewController(url: accountURL)
+              safariViewController.delegate = self
+
+              DispatchQueue.main.async {
+                  self.present(safariViewController, animated: true, completion: nil)
+              }
+          }
+        }
+    }
+
+    // ...
+}
+
+extension ConnectOnboardViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        // the user may have closed the SFSafariViewController instance before a redirect
+        // occurred. Sync with your backend to confirm the correct state
+    }
+}
+Step 2.4: Handle the user returning to your platform
+Client-side
+Connect Onboarding requires you to pass both a return_url and refresh_url to handle all cases where the user is redirected to your platform. It’s important that you implement these correctly to provide the best experience for your user. You can set up a universal link to enable iOS to redirect to your app automatically.
+return_url
+Stripe issues a redirect to this URL when the user completes the Connect Onboarding flow. This doesn’t mean that all information has been collected or that there are no outstanding requirements on the account. This only means the flow was entered and exited properly.
+No state is passed through this URL. After a user is redirected to your return_url, check the state of the details_submitted parameter on their account by doing either of the following:
+Listening to account.updated webhooks
+Calling the Accounts API and inspecting the returned object
+refresh_url
+Your user is redirected to the refresh_url in these cases:
+The link is expired (a few minutes went by since the link was created)
+The user already visited the link (the user refreshed the page or clicked back or forward in the browser)
+Your platform is no longer able to access the account
+The account has been rejected
+Your refresh_url should trigger a method on your server to call Account Links again with the same parameters, and redirect the user to the Connect Onboarding flow to create a seamless experience.
+Step 2.5: Handle users that haven’t completed onboarding
+A user that is redirected to your return_url might not have completed the onboarding process. Use the /v1/accounts endpoint to retrieve the user’s account and check for charges_enabled. If the account isn’t fully onboarded, provide UI prompts to allow the user to continue onboarding later. The user can complete their account activation through a new account link (generated by your integration). You can check the state of the details_submitted parameter on their account to see if they’ve completed the onboarding process.
+Enable payment methods
+View your payment methods settings and enable the payment methods you want to support. Card payments are enabled by default but you can enable and disable payment methods as needed.
+Add an endpoint
+Server-side
+Note
+If you want to present the payment sheet before creating a PaymentIntent, see Collect payment details before creating an Intent.
+This integration uses three Stripe API objects:
+A PaymentIntent. Stripe uses this to represent your intent to collect payment from a customer, tracking your charge attempts and payment state changes throughout the process.
+A Customer (optional). To set up a payment method for future payments, it must be attached to a Customer. Create a Customer object when your customer creates an account with your business. If your customer is making a payment as a guest, you can create a Customer object before payment and associate it with your own internal representation of the customer’s account later.
+A Customer Ephemeral Key (optional). Information on the Customer object is sensitive, and can’t be retrieved directly from an app. An Ephemeral Key grants the SDK temporary access to the Customer.
+Note
+If you never save cards to a Customer and don’t allow returning Customers to reuse saved cards, you can omit the Customer and Customer Ephemeral Key objects from your integration.
+For security reasons, your app can’t create these objects. Instead, add an endpoint on your server that:
+Retrieves the Customer, or creates a new one.
+Creates an Ephemeral Key for the Customer.
+Creates a PaymentIntent, with the amount, currency, and customer. You can also optionally include the automatic_payment_methods parameter. Stripe enables its functionality by default in the latest version of the API.
+Returns the Payment Intent’s client secret, the Ephemeral Key’s secret, the Customer’s id, and your publishable key to your app.
+The payment methods shown to customers during the checkout process are also included on the PaymentIntent. You can let Stripe pull payment methods from your Dashboard settings or you can list them manually. Regardless of the option you choose, know that the currency passed in the PaymentIntent filters the payment methods shown to the customer. For example, if you pass eur on the PaymentIntent and have OXXO enabled in the Dashboard, OXXO won’t be shown to the customer because OXXO doesn’t support eur payments.
+Unless your integration requires a code-based option for offering payment methods, Stripe recommends the automated option. This is because Stripe evaluates the currency, payment method restrictions, and other parameters to determine the list of supported payment methods. Payment methods that increase conversion and that are most relevant to the currency and customer’s location are prioritized.
+
+Manage payment methods from the Dashboard
+
+Listing payment methods manually
+Note
+You can find a running implementation of this endpoint available on Glitch for quick testing.
+You can manage payment methods from the Dashboard. Stripe handles the return of eligible payment methods based on factors such as the transaction’s amount, currency, and payment flow. The PaymentIntent is created using the payment methods you configured in the Dashboard. If you don’t want to use the Dashboard or if you want to specify payment methods manually, you can list them using the payment_method_types attribute.
+Python
+
+
+# This example sets up an endpoint using the Flask framework.
+# Watch this video to get started: https://youtu.be/7Ul1vfmsDck.
+
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+stripe.api_key = 'sk_test_51OzFAiHxLLCewi5za87O8M5Zn1vrArix7jJCnlfEgefZtFOXGRmPzSpDErFKMBbsI5a7TmEpspKSTnnj25MGl0uZ00NyKQAZdE''sk_test_51OzFAiHxLLCewi5za8...j25MGl0uZ00NyKQAZdE'
+
+@app.route('/payment-sheet', methods=['POST'])
+def payment_sheet():
+  # Use an existing Customer ID if this is a returning customer
+  customer = stripe.Customer.create()
+  ephemeralKey = stripe.EphemeralKey.create(
+    customer=customer['id'],
+    stripe_version='2023-10-16',
+  )
+  paymentIntent = stripe.PaymentIntent.create(
+    amount=1099,
+    currency='eur',
+    customer=customer['id'],
+    # In the latest version of the API, specifying the `automatic_payment_methods` parameter
+    # is optional because Stripe enables its functionality by default.
+    automatic_payment_methods={
+      'enabled': True,
+    },
+    application_fee_amount=123,
+    stripe_account='{{CONNECTED_ACCOUNT_ID}}',
+  )
+  return jsonify(paymentIntent=paymentIntent.client_secret,
+                 ephemeralKey=ephemeralKey.secret,
+                 customer=customer.id,
+                 publishableKey='pk_test_51OzFAiHxLLCewi5zEitiMKvokSAXbjJCaN2ujPvr1mlaRwqtCaGnFdPP8dvSMuwhdu8FN8iIEtBzgPWNSbprzMKf00Yz0xxPPi''pk_test_51OzFAiHxLLCewi5zEi...NSbprzMKf00Yz0xxPPi')
+Integrate the payment sheet
+Client-side
+Before displaying the mobile Payment Element, your checkout page should:
+Show the products being purchased and the total amount
+Collect any required shipping information using the Address Element
+Include a checkout button to present Stripe’s UI
+
+UIKit
+
+SwiftUI
+In the checkout of your app, fetch the PaymentIntent client secret, Ephemeral Key secret, Customer ID, and publishable key from the endpoint you created in the previous step. Set your publishable key using StripeAPI.shared and initialize PaymentSheet.
+Additionally, set StripeAPI.shared.stripeAccount to the connected account ID.
+
+
+import UIKit
+import StripePaymentSheet
+
+class CheckoutViewController: UIViewController {
+  @IBOutlet weak var checkoutButton: UIButton!
+  var paymentSheet: PaymentSheet?
+  let backendCheckoutUrl = URL(string: "Your backend endpoint/payment-sheet")! // Your backend endpoint
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    checkoutButton.addTarget(self, action: #selector(didTapCheckoutButton), for: .touchUpInside)
+    checkoutButton.isEnabled = false
+
+    // MARK: Fetch the PaymentIntent client secret, Ephemeral Key secret, Customer ID, and publishable key
+    var request = URLRequest(url: backendCheckoutUrl)
+    request.httpMethod = "POST"
+    let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+      guard let data = data,
+            let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+            let customerId = json["customer"] as? String,
+            let customerEphemeralKeySecret = json["ephemeralKey"] as? String,
+            let paymentIntentClientSecret = json["paymentIntent"] as? String,
+            let publishableKey = json["publishableKey"] as? String,
+            let self = self else {
+        // Handle error
+        return
+      }
+
+      STPAPIClient.shared.publishableKey = publishableKey
+      STPAPIClient.shared.stripeAccount = "{{CONNECTED_ACCOUNT_ID}}"
+      // MARK: Create a PaymentSheet instance
+      var configuration = PaymentSheet.Configuration()
+      configuration.merchantDisplayName = "Example, Inc."
+      configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
+      // Set `allowsDelayedPaymentMethods` to true if your business handles
+      // delayed notification payment methods like US bank accounts.
+      configuration.allowsDelayedPaymentMethods = true
+      self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
+
+      DispatchQueue.main.async {
+        self.checkoutButton.isEnabled = true
+      }
+    })
+    task.resume()
+  }
+
+}
+When the customer taps the Checkout button, call present to present the payment sheet. After the customer completes the payment, the sheet is dismissed and the completion block is called with a PaymentSheetResult.
+
+
+@objc
+func didTapCheckoutButton() {
+  // MARK: Start the checkout process
+  paymentSheet?.present(from: self) { paymentResult in
+    // MARK: Handle the payment result
+    switch paymentResult {
+    case .completed:
+      print("Your order is confirmed")
+    case .canceled:
+      print("Canceled!")
+    case .failed(let error):
+      print("Payment failed: \(error)")
+    }
+  }
+}
+If PaymentSheetResult is .completed, inform the user (for example, by displaying an order confirmation screen).
+Setting allowsDelayedPaymentMethods to true allows delayed notification payment methods like US bank accounts. For these payment methods, the final payment status isn’t known when the PaymentSheet completes, and instead succeeds or fails later. If you support these types of payment methods, inform the customer their order is confirmed and only fulfill their order (for example, ship their product) when the payment is successful.
+Set up a return URL
+Client-side
+The customer may go out of your app to authenticate, for example, in Safari or their banking app. To allow them to automatically return to your app after authenticating, configure a custom URL scheme or universal link and set up your app delegate to forward the URL to the SDK.
+
+SceneDelegate
+
+AppDelegate
+
+SwiftUI
+SceneDelegate.swift
+Swift
+
+
+// This method handles opening custom URL schemes (for example, "your-app://stripe-redirect")
+func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    guard let url = URLContexts.first?.url else {
+        return
+    }
+    let stripeHandled = StripeAPI.handleURLCallback(with: url)
+    if (!stripeHandled) {
+        // This was not a Stripe url – handle the URL normally as you would
+    }
+}
   return <div style={{ backgroundColor: token('elevation.surface') }}>...</div>;
 };
 import { token, setGlobalTheme } from '@atlaskit/tokens';
