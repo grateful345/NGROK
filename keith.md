@@ -1,7 +1,407 @@
+pip3 install --upgrade stripe
+pip3 install --upgrade stripe
+# Install through pip
+pip3 install --upgrade stripe
+PyPi
+Python
+
+
+# Or find the Stripe package on http://pypi.python.org/pypi/stripe/
+requirements.txt
+Python
+
+
+# Find the version you want to pin:
+# https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
+# Specify that version in your requirements.txt file
+stripe>=5.0.0
+Client-side
+The React Native SDK is open source and fully documented. Internally, it uses the native iOS and Android SDKs. To install Stripe’s React Native SDK, run one of the following commands in your project’s directory (depending on which package manager you use):
+
+yarn
+
+npm
+Command Line
+
+
+yarn add @stripe/stripe-react-native
+Next, install some other necessary dependencies:
+For iOS, navigate to the ios directory and run pod install to ensure that you also install the required native dependencies.
+For Android, there are no more dependencies to install.
+Stripe initialization
+To initialize Stripe in your React Native app, either wrap your payment screen with the StripeProvider component, or use the initStripe initialization method. Only the API publishable key in publishableKey is required. The following example shows how to initialize Stripe using the StripeProvider component.
+
+
+import { StripeProvider } from '@stripe/stripe-react-native';
+
+function App() {
+  return (
+    <StripeProvider
+      publishableKey="pk_test_51OR5ePGF83d3fsgWcl7ad29rrqOUNvjdYXN1JrElZlEyDloYQpFPuxSeRZH8KiCgvshlSaDYnuu1xxYiiWOCHj7W00Nrph1csX""pk_test_51OR5ePGF83d3fsgWcl...iiWOCHj7W00Nrph1csX"
+      urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+      merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
+    >
+      // Your app code here
+    </StripeProvider>
+  );
+}
+Note
+Use your API keys for test mode while you test and develop, and your live mode keys when you publish your app.
+Create a connected account
+When a user (seller or service provider) signs up on your platform, create a user Account (referred to as a connected account) so you can accept payments and move funds to their bank account. Connected accounts represent your user in Stripe’s API and help facilitate the collection of onboarding requirements so Stripe can verify the user’s identity. In our store builder example, the connected account represents the business setting up their Internet store.
+Step 2.1: Create an Express connected account and prefill information
+Server-side
+Use the /v1/accounts API to create an Express account and set type to express in the account creation request.
+server.py
+Python
+Resources
+
+
+
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq""sk_test_51OR5ePGF83d3fsgWlh...xbcYsf8OF00CdDfT6Xq"
+
+stripe.Account.create(type="express")
+If you’ve already collected information for your connected accounts, you can prefill that information on the account object. You can prefill any account information, including personal and business information, external account information, and so on.
+Connect Onboarding doesn’t ask for the prefilled information. However, it does ask the account holder to confirm the prefilled information before accepting the Connect service agreement.
+When testing your integration, prefill account information using test data.
+Step 2.2: Create an account link
+Server-side
+You can create an account link by calling the Account Links API with the following parameters:
+account
+refresh_url
+return_url
+type = account_onboarding
+server.py
+Python
+Resources
+
+
+
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq""sk_test_51OR5ePGF83d3fsgWlh...xbcYsf8OF00CdDfT6Xq"
+
+stripe.AccountLink.create(
+  account='{{CONNECTED_ACCOUNT_ID}}',
+  refresh_url="https://example.com/reauth",
+  return_url="https://example.com/return",
+  type="account_onboarding",
+)# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+[
+](https://dashboard.stripe.com/b/acct_1ORB1MBOdjLENdyb)
+{
+  "id": "ctoken_1NnQUf2eZvKYlo2CIObdtbnb",
+  "object": "confirmation_token",
+  "created": 1694025025,
+  "customer": "cus_9s6XKzkNRiz8i3",
+  "expires_at": 1694068225,
+  "livemode": true,
+  "mandate_data": null,
+  "payment_intent": null,
+  "payment_method": null,
+  "payment_method_preview": {
+    "acss_debit": {
+      "bank_name": "STRIPE TEST BANK",
+      "fingerprint": "l28rlxuUtQV4FjL6",
+      "institution_number": "000",
+      "last4": "6661",
+      "transit_number": "11000"
+    },
+    "billing_details": {
+      "address": {
+        "city": null,
+        "country": null,
+        "line1": null,
+        "line2": null,
+        "postal_code": null,
+        "state": null
+      },
+      "email": "jeremyc+skip_waiting@stripe.com",
+      "name": "Jeremy Cutler",
+      "phone": null
+    },
+    "type": "acss_debit"
+  },
+  "return_url": "https://example.com/return",
+  "setup_future_usage": "off_session",
+  "setup_intent": null,
+  "shipping": {
+    "address": {
+      "city": "Hyde Park",
+      "country": "US",
+      "line1": "50 Sprague St",
+      "line2": "",
+      "postal_code": "02136",
+      "state": "MA"
+    },
+    "name": "Gary Mahoney",
+    "phone": null
+  }
+}
+
+import stripe
+stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+stripe.ConfirmationToken.retrieve("ctoken_1NnQUf2eZvKYlo2CIObdtbnb")
+RESPONSE
+{
+  "id": "ctoken_1NnQUf2eZvKYlo2CIObdtbnb",
+  "object": "confirmation_token",
+  "created": 1694025025,
+  "customer": "cus_9s6XKzkNRiz8i3",
+  "expires_at": 1694068225,
+  "livemode": true,
+  "mandate_data": null,
+  "payment_intent": null,
+  "payment_method": null,
+  "payment_method_preview": {
+    "acss_debit": {
+      "bank_name": "STRIPE TEST BANK",
+      "fingerprint": "l28rlxuUtQV4FjL6",
+      "institution_number": "000",
+      "last4": "6661",
+      "transit_number": "11000"
+    },
+    "billing_details": {
+      "address": {
+        "city": null,
+        "country": null,
+        "line1": null,
+        "line2": null,
+        "postal_code": null,
+        "state": null
+      },
+      "email": "jeremyc+skip_waiting@stripe.com",
+      "name": "Jeremy Cutler",
+      "phone": null
+    },
+    "type": "acss_debit"
+  },
+  "return_url": "https://example.com/return",
+  "setup_future_usage": "off_session",
+  "setup_intent": null,
+  "shipping": {
+    "address": {
+      "city": "Hyde Park",
+      "country": "US",
+      "line1": "50 Sprague St",
+      "line2": "",
+      "postal_code": "02136",
+      "state": "MA"
+    },
+    "name": "Gary Mahoney",
+    "phone": null
+  }
+}
+Create a test Confirmation Token
+Test helper
+
+Creates a test mode Confirmation Token server side for your integration tests.
+Parameters
+
+
+payment_method
+string
+ID of an existing PaymentMethod.
+
+payment_method_data
+dictionary
+If provided, this hash will be used to create a PaymentMethod.
+Show child parameters
+
+return_url
+string
+Return URL used to confirm the Intent.
+
+setup_future_usage
+enum
+Indicates that you intend to make future payments with this ConfirmationToken’s payment method.
+The presence of this property will attach the payment method to the PaymentIntent’s Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete.
+Possible enum values
+off_session
+Use off_session if your customer may or may not be present in your checkout flow.
+on_session
+Use on_session if you intend to only reuse the payment method when your customer is present in your checkout flow.
+
+shipping
+dictionary
+Shipping information for this ConfirmationToken.
+Show child parameters
+Returns
+
+Returns a testmode Confirmation Token
+POST 
+/v1/test_helpers/confirmation_tokens
+Server-side language
+
+import stripe
+stripe.api_key = "sk_test_51OR5eP...OF00CdDfT6Xqsk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+stripe.ConfirmationToken.TestHelpers.create(payment_method="pm_card_visa")
+RESPONSE
+{
+  "id": "ctoken_1Ow71CL4FhS6zgoxWjxc7sfr",
+  "object": "confirmation_token",
+  "created": 1710871450,
+  "expires_at": 1710914650,
+  "livemode": false,
+  "payment_intent": null,
+  "payment_method_preview": {
+    "billing_details": {
+      "address": {
+        "city": null,
+        "country": null,
+        "line1": null,
+        "line2": null,
+        "postal_code": null,
+        "state": null
+      },
+      "email": null,
+      "name": null,
+      "phone": null
+    },
+    "card": {
+      "brand": "visa",
+      "checks": {
+        "address_line1_check": null,
+        "address_postal_code_check": null,
+        "cvc_check": "unchecked"
+      },
+      "country": "US",
+      "display_brand": "visa",
+      "exp_month": 3,
 # Set your secret key. Remember to switch to your live secret key in production.
 # See your keys here: https://dashboard.stripe.com/apikeys
 import stripe
 stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.SetupIntent.create(
+  customer="{{CUSTOMER_ID}}",
+  payment_method_types=["us_bank_account"],
+  payment_method_options={
+    "us_bank_account": {
+      "financial_connections": {"permissions": ["ownership", "payment_method"]},
+    },
+  },
+)
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.PaymentIntent.create(
+  amount=20000,
+  currency="usd",
+  customer="{{CUSTOMER_ID}}",
+  payment_method_types=["us_bank_account"],
+  payment_method_options={
+    "us_bank_account": {
+      "financial_connections": {"permissions": ["ownership", "payment_method"]},
+    },
+  },
+)
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.financial_connections.Session.create(
+  account_holder={"type": "customer", "customer": "{{CUSTOMER_ID}}"},
+  permissions=["ownership"],
+)
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.checkout.Session.create(
+  customer="{{CUSTOMER_ID}}",
+  payment_method_types=["us_bank_account"],
+  payment_method_options={
+    "us_bank_account": {
+      "financial_connections": {"permissions": ["ownership", "payment_method"]},
+    },
+  },
+)
+
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.SetupIntent.create(
+  customer="{{CUSTOMER_ID}}",
+  payment_method_types=["us_bank_account"],
+  payment_method_options={
+    "us_bank_account": {
+      "financial_connections": {
+        "prefetch": ["ownership"],
+        "permissions": ["payment_method", "ownership"],
+      },
+    },
+  },
+)
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.financial_connections.Account.retrieve(
+  "{{ACCOUNT_ID}}",
+  expand=["ownership"],
+)
+{
+  "id": "fca_zbyrdjTrwcYZJZc6WBs6GPid",
+  "object": "financial_connections.account",
+  "ownership": {
+    "id": "fcaowns_1MzTG4IG1CZuezXppfPbUpXb",
+    "object": "financial_connections.account_ownership",
+    "created": 1651784999,
+    "owners": {
+      "object": "list",
+      "data": [
+        {
+          "name": "Jenny Rosen",
+          "email": "jenny.rosen@example.com",
+          "phone": "+1 555-555-5555",
+          "ownership": "fcaowns_1MzTG4IG1CZuezXppfPbUpXb",
+          "raw_address": "510 Townsend San Francisco, CA 94103",
+          "refreshed_at": 1651784999
+        }
+      ],
+      "has_more": false,
+      "url": "/v1/financial_connections/accounts/fca_zbyrdjTrwcYZJZc6WBs6GPid/owners?ownership=fcaowns_1MzTG4IG1CZuezXppfPbUpXb"
+    }
+  },
+  "ownership_refresh": {
+    "status": "succeeded",
+    "last_attempted_at": 1651784999,
+    "next_refresh_available_at": 1651785000
+  },
+  // ...
+}
+
+# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.financial_connections.Account.refresh_account(
+  "{{ACCOUNT_ID}}",
+  features=["ownership"],
+)# Set your secret key. Remember to switch to your live secret key in production.
+# See your keys here: https://dashboard.stripe.com/apikeys
+import stripe
+stripe.api_key = "sk_test_51OR5ePGF83d3fsgWlh41IbGHGtqdiPuFhrcWczglEeFJvQxajyQVCQiZYVZz62HOuYL9tA8dxEQ2MRbxbcYsf8OF00CdDfT6Xq"
+
+stripe.Customer.create(email="{{grateful345i@gmail.com}}")
+      
+
 
 stripe.Customer.modify(
   "cus_V9T7vofUbZMqpv",
