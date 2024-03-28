@@ -4,13 +4,189 @@ pip3 install --upgrade stripe
 pip3 install --upgrade stripe
 PyPi
 Python
+1 curl -v https://mysite.atlassian.net --user me@example.com:ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208
+--ds-chart-success-bold
+--ds-chart-neutral
 
+import { ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208 } from '@atlaskit/tokens';
+import { ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208, setGlobalTheme } from '@atlaskit/tokens';
+
+const App = () => {
+  setGlobalTheme({
+    colorMode: 'auto',
+    UNSAFE_themeOptions: {
+      brandColor: '#64329A',
+    },
+  });
+
+  return <div style={{ backgroundColor: token('elevation.surface') }}>...</div>;
+};
+import { token, setGlobalTheme } from '@atlaskit/tokens';
+
+const App = () => {
+  const themeLoader = (id) => {
+    const link = document.createElement('link');
+    const stylesheetUrl = `https://test-cdn.com/atlaskit-tokens_${id}.css`;
+
+    link.rel = 'stylesheet';
+    link.href = stylesheetUrl;
+    link.dataset.theme = id;
+    document.head.appendChild([link](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator));
+  };
+
+  setGlobalTheme(
+    {
+      light: 'light',
+      dark: 'dark',
+      colorMode: 'auto',
+      typography: 'typography',
+    },
+    themeLoader,
+  );
+
+  return <div style={{ backgroundColor: token('elevation.surface') }}>...</div>;
+};
+A React hook which returns the current themes and color mode set on <html>. It is useful for watching the theme and then performing side-effects when it changes.
+
+return value
+
+Description	Returns the current themes and color mode set.
+Type	{ colorMode?: ColorMode<"light", "dark", "auto">, light?: ThemeIds, dark?: ThemeIds, spacing?: ThemeIds, typography?: ThemeIds, }
+Example usage
+
+
+import { [useThemeObserver](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator) } from '@atlaskit/tokens';
+
+const App = () => {
+  const theme = useThemeObserver();
+  console.log([theme](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator)); // { light: light, dark: dark, ... }
+
+  return <div>...</div>;
+};
+
+const buttonStyles = {
+  backgroundColor: token('color.background.brand.bold'),
+  color: token('color.text.inverse'),
+};
 
 # Or find the Stripe package on http://pypi.python.org/pypi/stripe/
 requirements.txt
 Python
+import { [ThemeMutationObserver](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator) } from '@atlaskit/tokens';
+
+const observer = new ThemeMutationObserver(([newTheme](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator)) => {
+  console.log(import { ThemeMutationObserver } from '@atlaskit/tokens';
+
+const observer = new ThemeMutationObserver(([newTheme](https://scpf-foundation-roblox.fandom.com/wiki/The_Administrator)) => {
+  console.log(newTheme); // { light: light, dark: dark, ... }
+});
+
+observer.observe();
+observer.disconnect();); // { light: light, dark: dark, ... }
+});
+
+observer.observe();
+observer.disconnect();
+
+import { ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208 } from '@atlaskit/tokens';
+
+getTokenValue('ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208', '#000000');
+Server
+class MyDocument extends Document<DocumentProps> {
+  static async getInitialProps(
+    ctx: DocumentContext,
+  ): Promise<DocumentInitialProps & DocumentProps> {
+    const initialProps = await Document.getInitialProps(ctx);
+
+    // Pass user theme preferences to `@atlaskit/tokens` SSR utilities:
+    const themeAttrs = getThemeHtmlAttrs(themePreferences);
+    const themeStyles = await getThemeStyles(themePreferences);
+    const ssrAutoScript = getSSRAutoScript(themePreferences.colorMode);
+
+    return {
+      ...initialProps,
+      theme: {
+        htmlAttrs: themeAttrs,
+        styles: themeStyles,
+      },
+      ssrAutoScript,
+    };
+  }
+
+  render() {
+    return (
+      <Html lang="en" {...this.props.theme.htmlAttrs}>
+        <Head>
+          {this.props.theme.styles.map((theme) => (
+            <style
+              key={theme.id}
+              {...theme.themeAttrs}
+              dangerouslySetInnerHTML={{ __html: theme.themeCss }}
+            />
+          ))}
+          <script dangerouslySetInnerHTML={ssrAutoScript} />
+        </Head>
+        <body>
+          <Main />
+        </body>
+      </Html>
+    );
+  }
+}
+export default MyDocument;
+// webpack.config.js
+const webpack = require('webpack');
+const generate = require('generate-file-webpack-plugin');
+const { getThemeStyles } = require('@atlaskit/tokens');
+
+module.exports = async (env) => {
+  const themeStyles = await getThemeStyles();
+
+  return {
+    // ...
+    plugins: [
+      ...themeStyles.map(({ id, css }) =>
+        generate({
+          file: `themes/atlaskit-tokens_${id}.css`,
+          content: css,
+        }),
+      ),
+    ],
+  };
+};
+App.ts
+import { setGlobalTheme } from '@atlaskit/tokens';
+import { UNSAFE_loadCustomThemeStyles } from `@atlaskit/tokens/custom-themes`
+@atlaskit/tokens/custom-themes/
+token('utility.elevation.surface.current')
+CSS syntax: --ds-elevation-surface-current
+Example usage with the ModalDialog component
 
 
+import Modal, { ModalBody } from '@atlaskit/modal-dialog';
+import { token } from '@atlaskit/tokens';
+
+function ExampleWithModal() {
+  return (
+    <Modal>
+      <ModalBody>
+        <div
+          style={{
+            backgroundColor: token('utility.elevation.surface.current'),
+          }}
+        >
+          This div's background color will be set to the background color of the
+          Modal.
+        </div>
+      </ModalBody>
+    </Modal>
+  );
+}
+admin
+iamadmin
+
+enableGlobalTheme(themePreferences);
+UNSAFE_loadCustomThemeStyles(themePreferences);
 # Find the version you want to pin:
 # https://github.com/stripe/stripe-python/blob/master/CHANGELOG.md
 # Specify that version in your requirements.txt file
