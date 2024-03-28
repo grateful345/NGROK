@@ -65,19 +65,19 @@ Open a terminal and navigate to your home or user directory using cd, for exampl
 cd ~
 Generate a SSH key pair using ssh-keygen, such as:
 1
-ssh-keygen -t ed25519 -b 4096 -C "{username@emaildomain.com}" -f {ssh-key-name}
+ssh-keygen -t ed25519 -b 4096 -C "{god964v@gmail.com}" -f {ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208}
 Where:
 {username@emaildomain.com} is the email address associated with the Bitbucket Cloud account, such as your work email account.
-{ssh-key-name} is the output filename for the keys. We recommend using a identifiable name such as bitbucket_work.
+{ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208} is the output filename for the keys. We recommend using a identifiable name such as bitbucket_work.
 When prompted to Enter passphrase, you can either provide a password or leave the password empty. If you input a password, you will be prompted for this password each time SSH is used, such as using Git command that contact Bitbucket Cloud (such as git push, git pull, and git fetch). Providing a password will prevent other users with access to the device from using your keys.
 Once complete, ssh-keygen will output two files:
-{ssh-key-name} — the private key.
-{ssh-key-name}.pub — the public key.
+{ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208} — the private key.
+{ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208}.pub — the public key.
 Add your key to the SSH agent
-To add the SSH key to your SSH agent (ssh-agent):
+To add the SSH key to your SSH agent (ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208):
 Run the following command, replacing the {ssh-key-name} with the name of the private key:
 1
-ssh-add ~/{ssh-key-name}
+ssh-add ~/{ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208}
 To ensure the correct SSH key is used when connecting to Bitbucket, update or create your SSH configuration file (~/.ssh/config) with the following settings:
 1
 2
@@ -85,7 +85,7 @@ To ensure the correct SSH key is used when connecting to Bitbucket, update or cr
 Host bitbucket.org
   AddKeysToAgent yes
   IdentityFile ~/.ssh/{ssh-key-name}
-Where {ssh-key-name} is the location of the private key file once it has been added to the ssh-agent.
+Where {ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208} is the location of the private key file once it has been added to the ssh-agent.
 Provide Bitbucket Cloud with your public key
 To add an SSH key to your user account:
 Select the Settings cog on the top navigation bar.
@@ -187,11 +187,11 @@ authenticated via ssh key.
 
 You can use git to connect to Bitbucket. Shell access is disabled
  curl -D- \
-   -u <god964v@gmail.com>:<your_user_api_token> \
+   -u <god964v@gmail.com>:<ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208> \
    -X GET \
    -H "Content-Type: application/json" \
    https://<your-domain.atlassian.net>/wiki/rest/api/space
-ssh-ed25529 LLoWYaPswHzVqQ7L7B07LzIJbntgmHqrE40t17nGXL71QX9IoFGKYoF5pJKUMvR+DZotTm user@example.com
+ssh-ed25529 LLoWYaPswHzVqQ7L7B07LzIJbntgmHqrE40t17nGXL71QX9IoFGKYoF5pJKUMvR+DZotTm god964v@gmail.com
 256 SHA256:ybgmFkzwOSotHTHLJgHO0QN8L0xErw6vd0VhFA9m3SM bitbucket.org (ED25519)
 2048 SHA256:46OSHA1Rmj8E8ERTC6xkNcmGOw9oFxYr0WF6zWW8l1E bitbucket.org (RSA)
 To get the format suitable for storage in the known hosts, you can use the following curl command:
@@ -235,7 +235,7 @@ curl -H "Authorization: 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb440
   "acl": "public-read",
   "acl_xml": "<AccessControlPolicy>...</AccessControlPolicy>"
 }
-curl -H "Content-Type: application/json" \ -H "Authorization: Bearer $TOKEN" \
+curl -H "Content-Type: application/json" \ -H "Authorization: ATATT3xFfGF0IX8viRW2BDgYVO0j8xqi17L0KZOj9Bj5_igAOigyuKxqYPZyQ26VdhQfdUZ4wLsyT2aT0trCgk7Br9m7Nugf60NEbrHW1fqxVSv0yc4vis_wbrT2cYs8p2OJsou_rjzplcfOE6DRPHpf76OUhGUDAGe0wFzbrsNsMW7_zSqRFzA=C0C42208/ 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72" \
   -X PUT -d '{
     "acl": "public-read",
     "name": "example.txt"
@@ -348,16 +348,814 @@ So, prior to start consuming the Ceph API, a valid JSON Web Token (JWT) has to b
 curl -X POST "https://example.com:8443/api/auth" \
 -H  "Accept: application/vnd.ceph.api.v1.0+json" \
 -H  "Content-Type: application/json" \
--d '{"username": <username>, "password": <password>}'
-{ "token": "<API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>", ...}
+-d '{"username": <username>, "password": <6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>}'
+{ "token": "<API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72/ 6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>", ...}
 The token obtained must be passed together with every API request in the Authorization HTTP header:
-
+https://auth.atlassian.com/authorize?
+  audience=api.atlassian.com&
+  client_id=YOUR_CLIENT_ID&
+  scope=REQUESTED_SCOPE_ONE%20REQUESTED_SCOPE_TWO&
+  redirect_uri=https://YOUR_APP_CALLBACK_URL&
+  state=YOUR_USER_BOUND_VALUE&
+  response_type=code&
+  prompt=consent
 curl -H "Authorization: Bearer <API Key: 14496832-187E-4897-8D420686F1A72ACB /6692099bd12f686556b7f4e2ae18d783cc500b6432e5a6c5944fb4405c41cd72>" ...
 Authentication and authorization can be further configured from the Ceph CLI, the Ceph-Dashboard UI and the Ceph API itself (please refer to User and Role Management).
+echo -n your_email@domain.com:your_user_api_token | base64
+curl --request POST \
+  --url 'https://auth.atlassian.com/oauth/token' \
+  --header 'Content-Type: application/json' \
+  --data '{"grant_type": "authorization_code","client_id": "YOUR_CLIENT_ID","client_secret": "YOUR_CLIENT_SECRET","code": "YOUR_AUTHORIZATION_CODE","redirect_uri": "https://YOUR_APP_CALLBACK_URL"}'
+Windows 7 and later, using Microsoft Powershell:
+1HTTP/1.1 200 OK
+Content-Type: application/json
 
+{
+  "access_token": <string>,
+  "expires_in": <expiry time of access_token in second>,
+  "scope": <string>
+}curl --request GET \
+  --url https://api.atlassian.com/oauth/token/accessible-resources \
+  --header 'Authorization: Bearer ACCESS_TOKEN' \
+  --header 'Accept: application/json'
+2
+3
+4
+$Text = ‘your_email@domain.com:your_user_api_token’
+$Bytes = [System.Text.Encoding]::UTF8.GetBytes($Text)
+$EncodedText = [Convert]::ToBase64String($Bytes)
+$EncodedText
+Supply an Authorization header with content Basic followed by the encoded string. Example: Authorization: Basic eW91cl9lbWFpbEBkb21haW4uY29tOnlvdXJfdXNlcl9hcGlfdG9rZW4=
+1
+2curl --request GET \
+  --url https://api.atlassian.com/oauth/token/accessible-resources \
+  --header 'Authorization: Bearer ACCESS_TOKEN' \
+  --header 'Accept: application/json'
+This will retrieve the sites that have scopes granted by the token (see Check site access for the app below for details). Find your site in the response and copy the id. This is the cloudid for your site.
+Here's a few example responses:
+A Jira site:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+[
+  {
+    "id": "1324a887-45db-1bf4-1e99-ef0ff456d421",
+    "name": "Site name",
+    "url": "https://your-domain.atlassian.net",
+    "scopes": [
+      "write:jira-work",
+      "read:jira-user",
+      "manage:jira-configuration"
+    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/flag.png"
+  }
+]
+A Jira Service Management site:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+[
+  {
+    "id": "1324a887-45db-1bf4-1e99-ef0ff456d421",
+    "name": "Site name",
+    "url": "https://your-domain.atlassian.net",
+    "scopes": [
+      "write:jira-work",
+      "read:jira-user",
+      "read:servicedesk-request"
+    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/flag.png"
+  }
+]
+A Confluence site:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+[
+  {
+    "id": "1324a887-45db-1bf4-1e99-ef0ff456d421",
+    "name": "Site name",
+    "url": "https://your-domain.atlassian.net",
+    "scopes": [
+      "write:confluence-content",
+      "read:confluence-content.all",
+      "manage:confluence-configuration"
+    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/flag.png"
+  }
+]
+3.2 Construct the request URL
+Requests that use OAuth 2.0 (3LO) are made via api.atlassian.com (not https://your-domain.atlassian.net). Construct your request URL using the following structure:
+Jira apps: https://api.atlassian.com/ex/jira/{cloudid}/{api}
+Confluence apps: https://api.atlassian.com/ex/confluence/{cloudid}/{api}
+where:
+{cloudid} is the cloudid for your site that you obtained in the previous step. For example, 11223344-a1b2-3b33-c444-def123456789.
+{api} is the base path and name of the API. For example:
+/rest/api/2/project for the project endpoint in the Jira REST API.
+/rest/servicedeskapi/request for the request endpoint in the Jira Service Management REST API.
+/rest/api/space for the space endpoint in the Confluence REST API.
+Your request URL should look something like this (using the example cloudid and Jira API above):
+https://api.atlassian.com/ex/jira/11223344-a1b2-3b33-c444-def123456789/rest/api/2/project
+Note that if you are copying the examples in the API documentation, you will need to amend the example URLs as they currently use https://your-domain.atlassian.net/{api} rather than the request URLs shown above.
+3.3 Call the API
+Make the API call passing the access token as a bearer token in the header of the request. This will authorize the request on the user's behalf.
+1
+2
+3
+4
+curl --request GET \
+  --url <request URL> \
+  --header 'Authorization: Bearer ACCESS_TOKEN' \
+  --header 'Accept: application/json'
+For example:
+1
+2
+3
+4
+curl --request GET \
+  --url https://api.atlassian.com/ex/jira/11223344-a1b2-3b33-c444-def123456789/rest/api/2/project \
+  --header 'Authorization: Bearer aBCxYz654123' \
+  --header 'Accept: application/json'
+4. Check site access for the app
+An authorization grant is when a user consents to your app. For OAuth 2.0 (3LO) apps, the consent is valid for all sites the app is installed in, as long as the scopes used by your app’s APIs don't change. A user's grant can change when either of the following occur:
+The user revokes the grant. The app cannot work anywhere after a user has revoked their consent to the app.
+The user consents to a new grant of the app. The scopes in the new grant override the scopes in the existing grant.
+Therefore, since a grant can change over time, it's important that you check that the user has granted the app the scopes it requires and that your app has correct access to a site and its APIs. To check this, call the accessible-resources endpoint on https://auth.atlassian.com (you used this endpoint in a previous step to get the cloudid for your site). The endpoint is described in detail below:
+Get list of resources
+GET /oauth/token/accessible-resources
+Request
+Request parameters: None
+Example:
+1
+2
+curl --header 'Authorization: Bearer <access_token>' \
+  --url 'https://api.atlassian.com/oauth/token/accessible-resources'
+Response
+200 OK example (Jira):
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+[
+  {
+    "id": "8594f221-9797-5f78-1fa4-485e198d7cd0",
+    "name": "Site name 2",
+    "url": "https://your-domain2.atlassian.net",
+    "scopes": [
+      "write:jira-work",
+      "read:jira-user"    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/koala.png"
+  },
+  {
+    "id": "1324a887-45db-1bf4-1e99-ef0ff456d421",
+    "name": "Site name 1",
+    "url": "https://your-domain1.atlassian.net",
+    "scopes": [
+      "write:jira-work",
+      "read:jira-user",
+      "manage:jira-configuration"    ],
+    "avatarUrl": "https:\/\/site-admin-avatar-cdn.prod.public.atl-paas.net\/avatars\/240\/flag.png"
+  }
+]
+Each item in the response describes a container (for example, a Jira site) that your app has access to, the scopes associated with that access, and metadata such as the name and avatar URL (if any). It's important to understand that this endpoint won't tell you anything about the user's permissions, which may limit the resources that your app can access via the site's APIs.
+Note, the id is not unique across containers (that is, two entries in the results can have the same id), so you may need to infer the type of container from its scopes.
+Managing your OAuth 2.0 (3LO) apps
+You can securely manage all your OAuth 2.0 (3LO) and Forge apps in one place using the Atlassian developer console. The console lets you view information about your apps, including their environments and scopes.
+To access the console:
+From any page on developer.atlassian.com, select your profile icon in the top-right corner.
+From the dropdown, select Developer console.
+Your existing OAuth 2.0 (3LO) and Forge apps are listed in the order they were created. OAuth 2.0 (3LO) apps are displayed with a 3LO lozenge.
+Connect apps are not listed in the console. To learn more about platform and framework options for building apps, see Cloud development platform overview.
+The following details are listed:
+App name: the name of your app
+Distribution status:
+Sharing: your app can be shared via link
+Not sharing: your app can't be shared via link
+Updated on: the time and date you created your app or updated its settings
+You can search for an app using the search bar above the app table.
+View app details
+Select any app on the My apps page to get more information about the app, including app ID, description, authorization, and permissions.
+The Overview page displays the following panels:
+App details
+App ID: the identifier for your app
+Description: the description of your app
+Distribution
+Distribution status: whether your app can be used by others
+Permissions
+API scopes: which scopes are currently defined in your app
+Authorization
+Authorization type: the authorization configured for your app
+Select Settings in the left menu to view your app's authentication details, or to change your app's name, description, or avatar.
+View app permissions
+You can view the level of access your Forge app has to an Atlassian user's account by selecting Permissions in the left menu, or selecting the Permissions panel.
+The Permissions page lists the APIs included in your app.
+To add or remove individual scopes for an API, select Configure, and in the list of scopes, select Add or Remove. Note that users who previously consented to the scopes will need to re-consent to the new scopes.
+Delete your app
+You can only delete an app if it's not installed anywhere.
+If your app is currently installed on a site, uninstall it.
+Select Settings in the left menu, and select Delete app.
+Distributing your OAuth 2.0 (3LO) apps
+When you create an OAuth 2.0 (3LO) app, it's private by default. This means that only you can install and use it. If you want to distribute your app to other users, you must enable sharing.
+From any page on developer.atlassian.com, select your profile icon in the top-right corner, and from the dropdown, select Developer console.
+Select your app from the list.
+Select Distribution in the left menu.
+Enable sharing using the toggle switch in the Enable sharing section.
+Select Authorization in the left menu, and under OAuth 2.0 (3LO), select Configure.
+Copy the Authorization URL(s) and distribute to your users.
+Users trying to install an unapproved OAuth 2.0 integration are warned that the app has not yet been reviewed by Atlassian. To get your integration reviewed and approved, follow the steps on Listing a third party integration on the Atlassian Marketplace. Note, you don't need an informative Atlassian Marketplace listing to submit your integration for approval.
+Note that:
+You'll have to send the link to all the users you want to grant access to.
+Enabling sharing doesn't make your app available on the Atlassian Marketplace. Although OAuth 2.0 (3LO) apps can be listed on the Atlassian Marketplace, they will appear as informational listings only, with limited Marketplace features.
+Known issues
+We are aware of the following issues with OAuth 2.0 (3LO). Some of the issues have workarounds, which are described below. Others do not have workarounds, but are listed so that you are aware of them. If you discover an issue that is not listed below, raise a ticket at https://ecosystem.atlassian.net/projects/ACJIRA.
+Implicit grant flow not supported
+Site-scoped grants limitations
+Apps cannot declare searchable entity properties
+Implicit grant flow not supported
+OAuth 2.0 (3LO) currently supports the code grant flow only. It does not support the implicit grant flow. We understand that this is preventing people from using OAuth 2.0 (3LO) for standalone mobile apps and web/JavaScript (Chrome, Electron) apps and we are investigating ways to address this.
+Site-scoped grants limitations
+The current implementation of OAuth 2.0 (3LO) uses site-scoped grants, which means that the user only grants access to a single site each time they complete the consent flow. Be aware that there are a few limitations to this:
+If your integration needs information from multiple sites at one time, then the user will be required to go through multiple consent flows (one for each site).
+The consent screen currently requires the user to select the site that they want to grant access to. This can be confusing for users if there are multiple sites.
+With site-scoped grants, an access token can have access to multiple sites. This means that an app can't delete an access token to revoke access. For example, an access token could grant access to site A, then delete it to remove access. However, if the user grants the app access to site C later, the app will be issued with an access token with access to sites A and B. The only way access can be removed is for the user to revoke access via the Connect apps tab in their account settings at https://{subdomain}.atlassian.net/people/{account_id}/settings/apps.
+(Jira only) Apps cannot declare searchable entity properties
+Jira apps can store and read the values of entity properties (issue properties and project properties) using the REST API. However, in the current implementation of OAuth 2.0 (3LO), Jira apps cannot declare searchable entity properties. This means that if your app uses OAuth 2.0 (3LO), it won't be able to refer to entity properties in JQL queries.
+Frequently asked questions
+How do I get a new access token, if my access token expires or is revoked?
+What happens if a user grants access to more than one Atlassian site for an app?
+What is the state parameter used for?
+How do I retrieve the public profile of the authenticated user?
+Is CORS whitelisting supported?
+How do I configure the refresh token behavior?
+How do I get a new access token, if my access token expires or is revoked?
+You have two options:
+Initiate the entire authorization flow from the beginning again.
+Use a refresh token to get another access token and refresh token pair.
+Use a refresh token to get another access token and refresh token pair
+Refresh tokens are implemented using rotating refresh tokens.
+Rotating refresh tokens issue a new, limited life refresh token each time they are used. This mechanism improves on single persistent refresh tokens by reducing the period in which a refresh token can be compromised and used to obtain a valid access token.
+These are the configuration options for a rotating refresh token:
+Term	Default	Description
+Inactivity expiry time	90 days	A rotating refresh token expires if the user is inactive for this period. Each new rotating refresh token resets the inactivty expiry time and allocates another 90 days. See Use the Dashboard in the auth0 Configure Refresh Token Expiration guide for more detail.
+Absolute expiry time	365 days	After this period the rotating refresh token expires and can not be used. This is different from inactivity expiry time because it doesn't depend on the user's activity. The absolute expiry is associated with the whole token family. When the refresh token is rotated, the app gets a new refresh token and the inactivity expiry is reset, but the absolute expiry stays the same. Even if your rotating refresh tokens never triggers inactivity expiration, the oauth flow must be completed when reaching the absolute expiry time. See Use the Dashboard in the auth0 Configure Refresh Token Expiration guide for more detail.
+Reuse interval or leeway	10 minutes	Within this period, the breach detection features don't apply when exchanging a refresh token multiple times. This interval helps avoid network concurrency issues. See Automatic reuse detection in the auth0 Refresh Token Rotation guide for more detail.
+To get a refresh token in your initial authorization flow, add offline_access to the scope parameter of the authorization URL. Once you have the refresh token, exchange it for an access token by calling the token URL.
+Use the following values to construct the request body:
+grant_type: Set to refresh_token.
+client_id: (required) Set this to the Client ID for your app. Find this in Settings for your app in the developer console.
+client_secret: (required) Set this to the Secret for your app. Find this in Settings for your app in the developer console.
+refresh_token: The refresh token that you obtained with your original access token.
+1
+2
+3
+4
+curl --request POST \
+  --url 'https://auth.atlassian.com/oauth/token' \
+  --header 'Content-Type: application/json' \
+  --data '{ "grant_type": "refresh_token", "client_id": "YOUR_CLIENT_ID", "client_secret": "YOUR_CLIENT_SECRET", "refresh_token": "YOUR_REFRESH_TOKEN" }'
+If successful, a new access token is returned that you use to make calls to the product API. You receive a new refresh token as well and the refresh token you used for the request is disabled.
+This is an example response with a refresh token:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "access_token": <string>,
+  "refresh_token": <string>,
+  "expires_in": <expiry time of access_token in second>,
+  "scope": <string>
+}
+Otherwise, if an error is returned, see the list below for possible causes:
+403 Forbidden with {"error": "invalid_grant", "error_description": "Unknown or invalid refresh token."
+This error is returned for the following reasons:
+The user's Atlassian account password has been changed. Change the password back to the original password, or initiate the entire authorization flow from the beginning again.
+Your app is using rotating refresh tokens and the exchange of refresh token failed because:
+Your refresh token has expired. Users need to initiate the entire authorization flow from the beginning to get a new refresh token.
+Your app is not replacing the previous refresh token with the new refresh token returned during access token request.
+What happens if a user grants access to more than one Atlassian site for an app?
+Only one grant exists per app for a given Atlassian account. If a user grants access to more than one Atlassian site for this app, then the additional sites are added to the same grant. This means that existing access tokens will give you access to all sites and scopes that a user has granted your app access to.
+What is the state parameter used for?
+The primary use for the state parameter is to associate a user with an authorization flow. This makes the authorization flow more secure, as the authorization flow cannot be hijacked to associate a user's account with another user's token. Consider the following example scenario using Jira:
+An application, named Incidents_Application, has a Jira integration that implements OAuth 2.0 authorization code grants but does not specify a state parameter.
+A malicious actor, Mallory, initiates a Jira authorization flow for herself. This could be via the Incidents_Application or by crafting an authorization URL that includes the Incidents_Application's client_id.
+Mallory blocks the request to the Incidents_Application's callback URL during the authorization flow. She records the URL, including the code parameter.
+Mallory tricks another user, Edward, into visiting the callback URL in his browser.
+The Incidents_Application handles the callback and exchanges Mallory's code for an access token to Jira. Edward is logged into the Incidents_Application and the callback request came from Edward's browser, so Mallory's token is now linked to Edward's account.
+Mallory now has access to information sent to Edward by the Incidents_Application via the Jira integration. For example, the Incidents_Application may create a Jira ticket about a confidential incident, where the ticket is intended to be restricted to Edward but is restricted to Mallory instead.
+If the Incidents_Application integration had used a state parameter, the Incidents_Application would have known that the callback URL belonged to Mallory and ignored the request.
+Other uses for the state parameter include:
+Acting as a key for keeping track of specific details about the flow.
+Returning the user to the right step in their workflow after sending them through the authorization flow.
+How do I retrieve the public profile of the authenticated user?
+The User Identity API is used to retrieve the public profile of the authenticated user. If you want to use this API, do the following:
+Add the User Identity API to your app in the developer console.
+Add the read:me scope to the authorization URL for your app.
+An example of a request to retrieve the public profile of the authenticated user is shown below:
+1
+2
+3
+4
+curl --request GET \
+  --url https://api.atlassian.com/me \
+  --header 'Authorization: Bearer ACCESS_TOKEN' \
+  --header 'Accept: application/json'
+Example response:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+{
+  "account_type": "atlassian",
+  "account_id": "112233aa-bb11-cc22-33dd-445566abcabc",
+  "email": "mia@example.com",
+  "name": "Mia Krystof",
+  "picture": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/112233aa-bb11-cc22-33dd-445566abcabc/1234abcd-9876-54aa-33aa-1234dfsade9487ds",
+  "account_status": "active",
+  "nickname": "mkrystof",
+  "zoneinfo": "Australia/Sydney",
+  "locale": "en-US",
+  "extended_profile": {
+    "job_title": "Designer",
+    "organization": "mia@example.com",
+    "department": "Design team",
+    "location": "Sydney"
+  }
+}
+Is CORS whitelisting supported?
+CORS whitelisting is supported for api.atlassian.com. CORS whitelisting allows OAuth 2.0 authorization code grants to work for browser-based XHR or fetch requests subject to cross-origin restrictions, such as Chrome or Electron apps.
+How do I configure the refresh token behavior?
+Each time they are used, rotating refresh tokens issue a new limited life refresh token that is valid for 90 days. This mechanism improves on single persistent refresh tokens by reducing the period in which a refresh token can be compromised and used to obtain a valid access token.
+If your refresh token expires, your user will need to complete the entire authorization flow from the beginning again.
+Every new refresh token returned invalidates the refresh token used to get the new access token. Your code should replace the existing refresh token with the new refresh token. See Use a refresh token to get another access token and refresh token pair for more details.
+This TypeScript example shows one way to update the refresh token:
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+  const response = await fetch(`https://auth.atlassian.com/oauth/token`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({
+        grant_type: 'refresh_token',
+        client_id: this.clientId,
+        client_secret: this.clientSecret,
+        refresh_token: this.refreshToken
+      })
+    });
+    
+    const json = response.json();
+3
+4
+5
+curl -D- \
+   -X GET \
+   -H "Authorization: Basic <your_encoded_string>" \
+   -H "Content-Type: application/json" \
+   "https://<your-domain.atlassian.net>/wiki/rest/api/space"
 VERSIONING
 
 One of the main goals of the Ceph API is to keep a stable interface. For this purpose, Ceph API is built upon the following principles:
+PATCH /api/v2/clients/{id}
+{
+  "refresh_token": {
+      "rotation_type": "non-rotating",
+      "expiration_type": "expiring",
+      "token_lifetime": 2592000,
+      "infinite_token_lifetime": false,
+      "idle_token_lifetime": 604800,
+      "infinite_idle_token_lifetime": false
+  }
+}{
+  "iss": "http://{yourDomain}/",
+  "sub": "auth0|123456",
+  "aud": "{yourClientId}",
+  "exp": 1311281970,
+  "iat": 1311280970,
+  "name": "Jane Doe",
+  "given_name": "Jane",
+  "family_name": "Doe",
+  "gender": "female",
+  "birthdate": "0000-10-31",
+  "email": "janedoe@example.com",
+  "picture": "http://example.com/janedoe/me.jpg"
+}
+{
+  "iss": "https://{yourDomain}/",
+  "sub": "auth0|123456",
+  "aud": [
+    "my-api-identifier",
+    "https://{yourDomain}/userinfo"
+  ],
+  "azp": "{yourClientId}",
+  "exp": 1489179954,
+  "iat": 1489143954,
+  "scope": "openid profile email address phone read:appointments"
+}
+{
+      "sub": "1234567890",
+      "name": "John Doe",
+      "admin": true
+    }
+PATCH /api/v2/clients/{id}
+{
+  "refresh_token": {
+      "rotation_type": "non-rotating",
+      "expiration_type": "expiring",
+      "token_lifetime": 2592000,
+      "infinite_token_lifetime": false,
+      "idle_token_lifetime": 604800,
+      "infinite_idle_token_lifetime": false
+  }
+}
+curl --request POST \
+  --url 'https://{yourDomain}/oauth/token' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data grant_type=client_credentials \
+  --data 'client_id={yourClientId}' \
+  --data 'client_secret={yourClientSecret}' \
+  --data 'audience=https://{yourDomain}/api/v2/'
+
+  {
+  "access_token": "eyJ...Ggg",
+  "expires_in": 86400,
+  "scope": "read:clients create:clients read:client_keys",
+  "token_type": "Bearer"
+}
+curl --request POST \
+  --url http:///%7BmgmtApiEndpoint%7D \
+  --header 'authorization: Bearer {yourMgmtApiAccessToken}' \
+  --header 'content-type: application/json'
+
+  import { ManagementClient } from 'auth0';
+
+var management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+Or, initialize your client class with an API v2 token and a domain.
+
+import { ManagementClient } from 'auth0';
+
+var management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  token: '{YOUR_API_V2_TOKEN}',
+});
+
+import { AuthenticationClient } from 'auth0';
+
+const auth = new AuthenticationClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+const { data: user } = await auth.database.signUp({
+  user: '{USER_EMAIL}',
+  password: '{USER_PASSWORD}',
+  connection: 'Username-Password-Authentication',
+});
+Use a client assertion
+
+import { AuthenticationClient } from 'auth0';
+
+const clientAssertionSigningKey = `-----BEGIN PRIVATE KEY-----
+...
+-----END PRIVATE KEY-----`;
+
+const auth = new AuthenticationClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientAssertionSigningKey,
+});
+
+const { data: tokens } = await auth.oauth.clientCredentialsGrant({
+  audience: 'you-api',
+});
+Use Refresh Tokens
+
+import { AuthenticationClient } from 'auth0';
+
+const auth = new AuthenticationClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+
+// Get a new access token
+const {
+  data: { access_token },
+} = await auth.oauth.refreshTokenGrant({
+  refresh_token: refreshToken,
+});
+
+// Revoke a refresh token
+await auth.oauth.revokeRefreshToken({
+  token: refreshToken,
+});
+Complete the Authorization Code flow with PKCE
+
+import { AuthenticationClient } from 'auth0';
+
+const auth = new AuthenticationClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+const { data: tokens } = await auth.oauth.authorizationCodeGrantWithPKCE(
+  {
+    code_verifier: '{key used to generate the code_challenge passed to /authorize}',
+    code: '{code from authorization response}',
+    redirect_uri: '{application redirect uri}',
+  },
+  {
+    idTokenValidateOptions: {
+      nonce: '{random string passed to /authorize to check against the nonce claim}',
+      maxAge: '{number of seconds to check against the auth_time claim}',
+      organization: '{organization name or ID to check against the org_id or org_name claim}',
+    },
+  }
+);
+Note: We recommend one of our Regular Web Application SDK Libraries for this.
+Login with Passwordless
+
+import { AuthenticationClient } from 'auth0';
+
+const auth = new AuthenticationClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+
+// Or you can `sendSMS`
+await auth.passwordless.sendEmail({
+  email: '{user email}',
+  send: 'code',
+});
+
+const { data: tokens } = await auth.passwordless.loginWithEmail({
+  email: '{user email}',
+  code: '{code from email}',
+});
+Management Client
+
+Paginate through a list of users
+
+import { ManagementClient } from 'auth0';
+
+const management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+
+const allUsers = [];
+let page = 0;
+while (true) {
+  const {
+    data: { users, total },
+  } = await management.users.getAll({
+    include_totals: true,
+    page: page++,
+  });
+  allUsers.push(...users);
+  if (allUsers.length === total) {
+    break;
+  }
+}
+Note: The maximum number of users you can get with this endpoint is 1000. For more use users.exportUsers.
+Paginate through a list of logs using checkpoint pagination
+
+import { ManagementClient } from 'auth0';
+
+const management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+
+const allLogs = [];
+let from = '';
+while (true) {
+  const { data: logs } = await mgmntClient.logs.getAll({ from });
+  if (!logs.length) {
+    break;
+  }
+  allLogs.push(...logs);
+  ({ log_id: from } = logs[logs.length - 1]);
+}
+Import users from a JSON file
+
+import { ManagementClient } from 'auth0';
+import { fileFrom } from 'fetch-blob/from.js';
+
+const management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+
+const {
+  data: { job: id },
+} = await management.jobs.importUsers({
+  users: await fileFrom('./users.json', 'application/json'),
+  connection_id: 'con_{your connection id}',
+});
+
+let done = false;
+while (!done) {
+  const {
+    data: {
+      job: { status },
+    },
+  } = await management.jobs.get({ id });
+  if (status === 'completed') {
+    done = true;
+  } else if (status === 'failed') {
+    const { data: errors } = await management.jobs.getErrors({ id });
+    throw new Error(errors);
+  } else {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+}
+Update a user's user_metadata
+
+import { ManagementClient } from 'auth0';
+
+const management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+});
+
+await management.users.update({ id: '{user id}' }, { user_metadata: { foo: 'bar' } });
+Customizing the request
+
+Passing custom options to fetch
+
+import https from 'https';
+import { ManagementClient } from 'auth0';
+
+const management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+  headers: { 'foo': 'applied to all requests' },
+  agent: new https.Agent({ ... }),
+  httpTimeout: 5000
+});
+
+await management.users.get({ id: '{user id}' }, { headers: { 'bar': 'applied to this request' } });
+Overriding fetch
+
+import { ManagementClient } from 'auth0';
+import { myFetch } from './fetch';
+
+const management = new ManagementClient({
+  domain: '{YOUR_TENANT_AND REGION}.auth0.com',
+  clientId: '{YOUR_CLIENT_ID}',
+  clientSecret: '{YOUR_CLIENT_SECRET}',
+  async fetch(url, init) {
+    log('before', url, init.method);
+    const res = await myFetch(url, init);
+    log('after', url, init.method, res.status);
+    return res;
+  },
+});
+
+await management.users.get({ id: '{user id}' });
+curl --request POST \
+  --url https://%7ByourAuth0Domain/api/v2/organizations \
+  --header 'authorization: Bearer {yourMgmtApiAccessToken}' \
+  --header 'cache-control: no-cache' \
+  --header 'content-type: application/json' \
+  --data '{ "name": "ORG_NAME", "display_name": "ORG_DISPLAY_NAME", "branding": [ { "logo_url": "{orgLogo}", "colors": [ { "primary": "{orgPrimaryColor}", "page_background": "{orgPageBackground}" } ] } ], "metadata": [ { "{key}": "{value}", "{key}": "{value}", "{key}": "{value}" } ] }, "enabled_connections": [ { "connection_id": "{connectionId}", "assign_membership_on_login": "{assignMembershipOption}" }, { "connection_id": "{connectionId}", "assign_membership_on_login": "{assignMembershipOption}" } ] }'
+
+# /requirements.txt
+
+flask
+python-dotenv
+python-jose
+flask-cors
+six
+# /server.py
+
+import json
+from six.moves.urllib.request import urlopen
+from functools import wraps
+
+from flask import Flask, request, jsonify, _request_ctx_stack
+from flask_cors import cross_origin
+from jose import jwt
+
+AUTH0_DOMAIN = '{yourDomain}'
+API_AUDIENCE = YOUR_API_AUDIENCE
+ALGORITHMS = ["RS256"]
+
+APP = Flask(__name__)
+
+# Error handler
+class AuthError(Exception):
+    def __init__(self, error, status_code):
+        self.error = error
+        self.status_code = status_code
+
+@APP.errorhandler(AuthError)
+def handle_auth_error(ex):
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+    return response
+
+
+
+    
+
+
 
 Mandatory: in order to avoid implicit defaults, all endpoints require an explicit default version (starting with 1.0).
 Per-endpoint: as this API wraps many different Ceph components, this allows for a finer-grained change control.
